@@ -20,13 +20,9 @@ var stream = client.blockchain.getBlockStream()
 stream
 .on('data', function(block) {
 
-    try {
-        block = JSON.parse(block)
-        console.log('block ' + block)
-        
-    } catch (e) {
-
-    }   
+   
+    console.log(block)
+    console.log('block ' + block.block_id)
 
     // try {
     //     var newblock = JSON.parse(block)
