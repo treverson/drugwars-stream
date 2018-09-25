@@ -25,6 +25,7 @@ stream
     } catch (e) {
 
     }
+    console.log(block)
     console.log("ID :" + block.block_id)
     console.log('Block : ' + JSON.parse(JSON.stringify(newblock.transactions)))
     // console.log("Transactions :" + transactions)
