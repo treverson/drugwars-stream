@@ -25,23 +25,32 @@ stream
         object.replace('\\','')
         object= JSON.parse(object)
         console.log('object '+ object)
-        //
-        if(object[0].operations)
+        
+        for(i=0; i <object.length; i++)
         {
-            var type = object[0].operations[0][0]
-            if(type === 'transfer')
-            {
-                console.log('transfer')
-                console.log(object[0].operations[0])
-            }
-    
-            var type2 = object[1].operations[0][0]
-            if(type2 === 'transfer')
-            {
-                console.log('transfer2')
-                console.log(object[1].operations[0])
-            }
+            console.log(object[i])
         }
+
+        // if(object[0].operations)
+        // {
+        //     var type = object[0].operations[0][0]
+        //     if(type === 'transfer')
+        //     {
+        //         console.log('transfer')
+        //         console.log(object[0].operations[0][0])
+        //     }
+    
+        //     if(object[1].operations[0][0])
+        //     {
+        //         var type2 = object[1].operations[0][0]
+        //         if(type2 === 'transfer')
+        //         {
+        //             console.log('transfer2')
+        //             console.log(object[1].operations[0][0])
+        //         }
+        //     }
+ 
+        // }
 
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
