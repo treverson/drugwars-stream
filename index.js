@@ -21,6 +21,7 @@ stream
 .on('data', function(block) {
     // console.log(block);
     console.log("ID :" + block.block_id)
+    console.log("Operations :" + block.operations)
     // blocks.unshift(
     //     `<div class="list-group-item"><h5 class="list-group-item-heading">Block id: ${
     //         block.block_id
