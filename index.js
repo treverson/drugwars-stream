@@ -15,10 +15,10 @@ console.log('listening on port 5000');
 
 const client = new Client('https://api.steemit.com')
 
-async function main() {
-    const props = await client.database.getChainProperties()
-    console.log(`Maximum blocksize consensus: ${ props.maximum_block_size } bytes`)
-    client.disconnect()
-}
+var dsteem = require('dsteem')
 
-main().catch(console.error)
+var client = new dsteem.Client('https://api.steemit.com')
+
+for (const block of client.blockchain.getBlocks()) {
+    console.log(`New block, id: ${ block.block_id }`)
+}
