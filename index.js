@@ -24,6 +24,7 @@ stream
     //console.log(block)
     console.log('block ' + block.block_id)
     if(block.transactions[0])
+    console.log('block ' + JSON.stringify(block.transactions[0]))
     console.log('block ' + block.transactions[0])
     // try {
     //     var newblock = JSON.parse(block)
