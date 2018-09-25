@@ -32,8 +32,9 @@ stream
         var type = object.operations[0][0]
         if(type === 'transfer')
         {
-            console.log(object.operations[0][0])
             console.log('transfer')
+            console.log(object.operations[0])
+
         }
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
