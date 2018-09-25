@@ -69,8 +69,9 @@ var con = mysql.createConnection({
 con.connect(function (err) {
     if (err) throw err;
     var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
-    var username = "hightouch"
-    var query = "INSERT INTO users (id, name, inventory) VALUES ('"+username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
+    var id = getHash('hightouch')
+    username = "hightouch"
+    var query = "INSERT INTO users (id, name, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
 
     console.log("Connected!");
     var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
@@ -79,3 +80,13 @@ con.connect(function (err) {
         console.log("1 record inserted");
     });
 });
+
+function getHash(input){
+    var hash = 0, len = input.length;
+    for (var i = 0; i < len; i++) {
+      hash  = ((hash << 5) - hash) + input.charCodeAt(i);
+      hash |= 0; // to 32bit integer
+    }
+    return hash;
+  }
+  
