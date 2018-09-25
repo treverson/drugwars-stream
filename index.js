@@ -3,16 +3,15 @@ var dsteem = require('dsteem')
 const express = require('express')
 var es = require('event-stream') 
 var util = require('util')
-import {Client} from 'dsteem'
 const app = express()
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on ${port}`));
 console.log('listening on port 5000');
 
+var client = new dsteem.Client('https://api.steemit.com')
 
+var stream = client.blockchain.getBlockStream()
 
-const client = new Client('https://api.steemit.com')
-
-for await (const block of client.blockchain.getBlocks()) {
-    console.log(`New block, id: ${ block.block_id }`)
-}
+stream.pipe(es.map(function(block, callback) {
+    callback(null, util.inspect(block, {colors: true, depth: null}) + '\n')
+})).pipe(process.stdout)
