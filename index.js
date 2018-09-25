@@ -20,10 +20,13 @@ stream.on('data', function (block) {
             for (i = 0; i < object.length; i++) {
                 var operation = object[i].operations
                 if (operation[0][0] === 'transfer') {
-                    console.log('transfer operation')
-                    console.log(operation[0][1].from)
+                    if(operation[0][1].from === "hightouch" || operation[0][1].to === "hightouch")
+                    {
+                        ongametransaction = operation[0][1]
+                        console.log('transfer operation')
+                        console.log(ongametransaction)
+                    }
                 }
-
             }
 
             // if(object[0].operations)
