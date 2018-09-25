@@ -23,7 +23,7 @@ stream
     try {
         checkTransaction(block)
     } catch (e) {
-        console.log('error with ' + block.transactions)
+        console.log('error with ' +e+ block.transactions)
     }
     console.log("ID :" + block.block_id)
 
@@ -48,5 +48,6 @@ stream
 });
 
 function checkTransaction(transaction){
+    if(!transaction) return
     console.log(JSON.parse(transaction))
 }
