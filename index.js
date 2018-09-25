@@ -22,13 +22,12 @@ stream
             console.log('block ' + block.block_id)
             var object = JSON.stringify(block.transactions)
             object.replace('\\', '')
-            object = JSON.parse(object)
-            //console.log('object ' + object)
+            object = JSON.parse(object) 
             for (i = 0; i < object.length; i++) {
-                console.log(object[i].operations)
-                if (object[i].operations[0][0] === 'transfer') {
-                    console.log('transfer')
-                    console.log(object[i].operations[0][0])
+                var operation = object[i].operations
+                if (operation[0][0] === 'transfer') {
+                    console.log('transfer operation')
+                    console.log(operation)
                 }
 
             }
