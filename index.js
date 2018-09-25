@@ -27,7 +27,7 @@ stream
                 var operation = object[i].operations
                 if (operation[0][0] === 'transfer') {
                     console.log('transfer operation')
-                    console.log(operation)
+                    console.log(operation[0][0].from)
                 }
 
             }
