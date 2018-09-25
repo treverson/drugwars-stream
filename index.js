@@ -28,7 +28,8 @@ stream
         console.log(newblock.transactions.operations);
     }
     try {
-        checkTransaction(block)
+        var newa = JSON.parse(block)
+        console.log(newa)
     } catch (e) {
         console.log('error with ' +e+ block)
     }
