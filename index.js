@@ -1,19 +1,20 @@
 
-const express = require('express');
-const SocketServer = require('ws').Server;
-var dsteem = require('dsteem')
-
-const app = express();
-
 const port = process.env.PORT || 5000;
-const server = app.listen(port, () => console.log(`Listening on ${port}`));
+var dsteem = require('dsteem')
+var es = require('event-stream') // npm install event-stream
+var util = require('util')
+
+app.listen(port, () => console.log(`Listening on ${port}`));
 console.log('listening on port 5000');
+
 
 
 
 
 var client = new dsteem.Client('https://api.steemit.com')
 
-for (const block of client.blockchain.getBlocks()) {
-    console.log(`New block, id: ${ block.block_id }`)
-}
+var stream = client.blockchain.getBlockStream()
+
+stream.pipe(es.map(function(block, callback) {
+    callback(null, util.inspect(block, {colors: true, depth: null}) + '\n')
+})).pipe(process.stdout)
