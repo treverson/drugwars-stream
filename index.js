@@ -28,21 +28,6 @@ stream
         object.replace('\\','')
         object= JSON.parse(object)
         console.log(object.transaction_id)
-        try {
-            var object = JSON.stringify(block.transactions[0])
-            object.replace('\\','')
-            console.log(JSON.parse(object))
-            if(object.operations)
-            console.log(object.operations[0])
-            //console.log(JSON.stringify(block.transactions[0]))
-
-            // var transactions = JSON.stringify(block.transactions[0])
-            // if(!transactions)
-            // console.log(transactions.operations)
-            
-        } catch (e) {
-    
-        }   
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
