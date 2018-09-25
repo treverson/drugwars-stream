@@ -22,7 +22,7 @@ stream
     var newblock = util.inspect(block, {colors: true, depth: null})
     console.log(typeof newblock);
     console.log(typeof block);
-    console.log("newblock" + newblock);
+    //console.log("newblock" + newblock);
     try {
         var newa = JSON.parse(JSON.stringify(block))
         console.log(newa)
