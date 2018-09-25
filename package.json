@@ -1,5 +1,5 @@
 {
-    "name": "stream_blockchain_transactions",
+    "name": "ongame_transactions",
     "scripts": {
         "start": "node ./index.js"
     },

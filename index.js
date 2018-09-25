@@ -19,7 +19,7 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
-    console.log(util.inspect(block, {colors: true, depth: null}))
+    console.log(util.inspect(block.transactions.operations, {colors: false, depth: null}))
     // console.log(block);
     try {
         checkTransaction(block)
