@@ -23,10 +23,6 @@ stream
     console.log(typeof newblock);
     console.log(typeof block);
     console.log("newblock" + newblock);
-    if(newblock.transactions.operations)
-    {
-        console.log(newblock.transactions.operations);
-    }
     try {
         var newa = JSON.parse(block)
         console.log(newa)
