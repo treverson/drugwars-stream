@@ -47,7 +47,7 @@ stream
     console.log('END');
 });
 
-function checkTransaction(transaction){
-    if(!transaction) return
-    console.log(JSON.parse(transaction))
+function checkTransaction(block){
+    if(!block.transactions.operations) return
+    console.log(JSON.parse(block.transactions.operations))
 }
