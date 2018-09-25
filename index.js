@@ -24,7 +24,7 @@ stream
         var newblock = JSON.parse(JSON.stringify(block))
     } catch (e) {
 
-    }
+    } 
     console.log(JSON.stringify(block))
     //console.log(block)
     //console.log("ID :" + block.block_id)
