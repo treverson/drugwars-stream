@@ -24,6 +24,7 @@ stream
     try {
         var transactions = JSON.parse(block.transactions)
     } catch (e) {
+        console.log('error with ' + block.transactions)
     }
     console.log("Transactions :" + transactions)
     console.log("Operations :" + block.transactions.operations)
