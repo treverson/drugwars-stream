@@ -1,9 +1,9 @@
 
-const port = process.env.PORT || 5000;
 var dsteem = require('dsteem')
 var es = require('event-stream') // npm install event-stream
 var util = require('util')
-
+const app = express()
+const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on ${port}`));
 console.log('listening on port 5000');
 
