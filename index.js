@@ -19,7 +19,8 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
-    console.log(block);
+    // console.log(block);
+    console.log("ID :" + block.block_id)
     // blocks.unshift(
     //     `<div class="list-group-item"><h5 class="list-group-item-heading">Block id: ${
     //         block.block_id
