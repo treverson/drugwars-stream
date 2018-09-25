@@ -2,13 +2,11 @@
     "name": "stream_blockchain_transactions",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
     "scripts": {
         "start": "node ./index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
     },
-    "author": "",
-    "license": "ISC",
+    "author": "hightouch",
     "dependencies": {
         "dsteem": "^0.8.7"
     }
