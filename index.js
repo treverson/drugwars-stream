@@ -26,7 +26,11 @@ stream
         console.log('Transactions' + block.transactions)
         console.log(typeof block.transactions[0])
         try {
-            console.log(JSON.stringify(block.transactions[0]))
+            var object = JSON.stringify(block.transactions[0])
+            object.replace('\\','')
+            console.log(JSON.parse(object))
+            //console.log(JSON.stringify(block.transactions[0]))
+
             // var transactions = JSON.stringify(block.transactions[0])
             // if(!transactions)
             // console.log(transactions.operations)
