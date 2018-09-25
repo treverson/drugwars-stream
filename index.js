@@ -39,7 +39,7 @@ stream
         if(type2 === 'transfer')
         {
             console.log('transfer2')
-            console.log(object[1.operations[0])
+            console.log(object[1].operations[0])
         }
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
