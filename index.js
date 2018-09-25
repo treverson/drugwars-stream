@@ -21,7 +21,11 @@ stream
 .on('data', function(block) {
     //console.log(block)
     console.log('block ' + block.block_id)
-    console.log('Transactions' + block.transactions[0])
+    if(block.transactions[0] != undefined)
+    {
+        console.log('Transactions' + block.transactions[0])
+        console.log(typeof block.transactions[0])
+    }
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
     try {
