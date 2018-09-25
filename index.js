@@ -19,18 +19,14 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
-    var newblock = util.inspect(block, {colors: true, depth: null})
-    console.log(typeof newblock);
-    console.log(typeof block);
-    //console.log("newblock" + newblock);
+
     try {
-        var newa = JSON.parse(JSON.stringify(block))
-        console.log(newa)
+        var newblock = JSON.parse(JSON.stringify(block))
     } catch (e) {
-        console.log('error with ' +e+ block)
+
     }
     console.log("ID :" + block.block_id)
-
+    console.log('Block : ' + newblock)
     // console.log("Transactions :" + transactions)
     // console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
