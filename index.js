@@ -1,4 +1,3 @@
-
 var dsteem = require('dsteem')
 const express = require('express')
 var es = require('event-stream') 
@@ -12,9 +11,7 @@ var client = new dsteem.Client('https://api.steemit.com')
 
 var stream = client.blockchain.getBlockStream()
 
-
 stream.pipe(es.map(function(block, callback) {
-    console.log('test' + block)
-    callback(null, util.inspect(block, {colors: true, depth: null}) + '\n'
-    )
-})).pipe(process.stdout)
+    console.log(block)
+    callback(null, util.inspect(block, {colors: true, depth: null}) + '\n')
+})).pipe(process.stdout) 
