@@ -70,7 +70,7 @@ con.connect(function (err) {
     if (err) throw err;
     var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
     var username = "hightouch"
-    var query = "INSERT INTO users (name, inventory) VALUES ('"+username +"','"+json+"') ON DUPLICATE KEY UPDATE name=name+1"
+    var query = "INSERT INTO users (id, name, inventory) VALUES ('"+username +"','"+json+"') ON DUPLICATE KEY UPDATE name="+username+ ",inventory={'skin': 'none'}"
 
     console.log("Connected!");
     var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
