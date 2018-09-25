@@ -68,8 +68,16 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
     if (err) throw err;
+    var json = {
+        "skin": "none",
+        "hr_weapon": "none",
+        "hl_weapon": "none",
+        "body": "none",
+        "bottom": "none",
+        "hat": "none"
+    }
     console.log("Connected!");
-    var sql = "INSERT INTO users (name) VALUES ('Company Inc')";
+    var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch',"+json+" )";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
