@@ -1,8 +1,7 @@
 
 const express = require('express');
 const SocketServer = require('ws').Server;
-const {Client} = require('dsteem')
-
+var dsteem = require('dsteem')
 
 const app = express();
 
@@ -12,10 +11,6 @@ console.log('listening on port 5000');
 
 
 
-
-const client = new Client('https://api.steemit.com')
-
-var dsteem = require('dsteem')
 
 var client = new dsteem.Client('https://api.steemit.com')
 
