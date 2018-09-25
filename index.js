@@ -19,11 +19,9 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
-    //console.log(block)
-    console.log('block ' + block.block_id)
-    
     if(block.transactions[0] != undefined)
     {
+        console.log('block ' + block.block_id)
         var object = JSON.stringify(block.transactions[0])
         object.replace('\\','')
         object= JSON.parse(object)
