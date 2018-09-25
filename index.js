@@ -21,16 +21,12 @@ stream
 .on('data', function(block) {
     // console.log(block);
     try {
-        console.log("ID :" + JSON.parse(block))
+        checkTransaction(block)
     } catch (e) {
         console.log('error with ' + block.transactions)
     }
     console.log("ID :" + block.block_id)
-    try {
-        var transactions = JSON.parse(block.transactions)
-    } catch (e) {
-        console.log('error with ' + block.transactions)
-    }
+
     console.log("Transactions :" + transactions)
     console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
@@ -50,3 +46,7 @@ stream
     // done
     console.log('END');
 });
+
+function checkTransaction(transaction){
+    console.log(JSON.parse(transaction))
+}
