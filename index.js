@@ -21,22 +21,22 @@ stream
     if(block.transactions[0] != undefined)
     {
         console.log('block ' + block.block_id)
-        var object = JSON.stringify(block.transactions[0])
+        var object = JSON.stringify(block.transactions)
         object.replace('\\','')
         object= JSON.parse(object)
         //console.log(object)
         console.log(object.operations)
         //
 
-        var type = object.operations[0][0]
+        var type = object[0].operations[0][0]
         if(type === 'transfer')
         {
             console.log('transfer')
             console.log(object.operations[0])
             console.log(object.operations[0])
         }
-        
-        var type2 = object.operations[0][1]
+
+        var type2 = object[1].operations[0][1]
         if(type2 === 'transfer')
         {
             console.log('transfer2')
