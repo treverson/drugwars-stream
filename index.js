@@ -21,15 +21,22 @@ stream
 .on('data', function(block) {
 
     try {
-        block = JSON.stringify(block)
-        var newblock = JSON.parse(block)
-        console.log(newblock.transactions[0])
-        var array = newblock.transactions[0]
-        console.log('array' + array)
+        block = JSON.parse(block)
+        console.log('block ' + block)
         
     } catch (e) {
 
     }   
+
+    // try {
+    //     var newblock = JSON.parse(block)
+    //     console.log(newblock.transactions[0])
+    //     var array = newblock.transactions[0]
+    //     console.log('array' + array)
+        
+    // } catch (e) {
+
+    // }   
 
     //console.log(block)
     //console.log("ID :" + block.block_id)
