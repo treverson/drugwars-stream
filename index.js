@@ -26,7 +26,7 @@ stream
         try {
             var object = JSON.stringify(block.transactions[0])
             object.replace('\\','')
-            //console.log(JSON.parse(object))
+            console.log(JSON.parse(object))
             if(object.operations)
             console.log(object.operations[0])
             //console.log(JSON.stringify(block.transactions[0]))
