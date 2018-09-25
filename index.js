@@ -80,7 +80,7 @@ con.connect(function (err) {
         console.log("1 record inserted");
         console.log(result)
         for (var i = 0; i < result.length; i++) {
-        console.log(result[i])
+        console.log(result[i].name)
         }
     });
 });
