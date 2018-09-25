@@ -25,9 +25,9 @@ stream
     } catch (e) {
 
     }
-    console.log(block)
+    //console.log(block)
     console.log("ID :" + block.block_id)
-    console.log('Block : ' + JSON.parse(JSON.stringify(newblock.transactions)))
+    //console.log('Block : ' + JSON.parse(JSON.stringify(newblock.transactions)))
     console.log("Transactions :" + block.extensions)
     // console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
