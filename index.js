@@ -71,13 +71,14 @@ con.connect(function (err) {
     var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
     var id = getHash('hightouch')
     username = "hightouch"
-    var query = "INSERT INTO users (id, name, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
-
+    //var query = "INSERT INTO users (id, name, level, xp, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
+    var query ="SELECT name FROM users"
     console.log("Connected!");
     var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
     con.query(query, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
+        console.log(result)
     });
 });
 
