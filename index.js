@@ -76,9 +76,12 @@ con.connect(function (err) {
         "bottom": "none",
         "hat": "none"
     }
+    var username = "hightouch"
+    var query = "INSERT INTO users (name, inventory) VALUES ('"+username +"','"+json+"')"
+
     console.log("Connected!");
-    var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch',"+json+" )";
-    con.query(sql, function (err, result) {
+    var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
+    con.query(query, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
     });
