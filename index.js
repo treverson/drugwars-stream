@@ -1,6 +1,6 @@
 
 const dsteem = require('dsteem');
-import {Client} from 'dsteem'
+
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => console.log(`Listening on ${port}`));
