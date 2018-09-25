@@ -19,15 +19,16 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
+    console.log(util.inspect(block, {colors: true, depth: null}))
     // console.log(block);
     try {
         checkTransaction(block)
     } catch (e) {
-        console.log('error with ' +e+ block.transactions)
+        console.log('error with ' +e+ block)
     }
     console.log("ID :" + block.block_id)
 
-    console.log("Transactions :" + transactions)
+    // console.log("Transactions :" + transactions)
     console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
     //     `<div class="list-group-item"><h5 class="list-group-item-heading">Block id: ${
