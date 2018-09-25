@@ -19,12 +19,9 @@ var stream = client.blockchain.getBlockStream()
 
 stream
 .on('data', function(block) {
-
-   
     //console.log(block)
     console.log('block ' + block.block_id)
-
-    // console.log('2 ' + block.transactions[0])
+    console.log(block.transactions[0])
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
     try {
@@ -37,7 +34,6 @@ stream
     } catch (e) {
 
     }   
-
     //console.log(block)
     //console.log("ID :" + block.block_id)
     //console.log('Block : ' + JSON.parse(JSON.stringify(newblock.transactions)))
