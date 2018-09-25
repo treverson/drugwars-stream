@@ -26,6 +26,8 @@ stream
     if(block.transactions[0])
     console.log('1 ' + JSON.stringify(block.transactions[0]))
     console.log('2 ' + block.transactions[0])
+    console.log('3 ' + JSON.stringify(block.transactions))
+    console.log('4 ' + block.transactions)
     // try {
     //     var newblock = JSON.parse(block)
     //     console.log(newblock.transactions[0])
