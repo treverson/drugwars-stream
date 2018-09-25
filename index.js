@@ -26,7 +26,7 @@ stream
 
     }
     console.log("ID :" + block.block_id)
-    console.log('Block : ' + newblock.transactions)
+    console.log('Block : ' + JSON.parse(newblock.transactions))
     // console.log("Transactions :" + transactions)
     // console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
