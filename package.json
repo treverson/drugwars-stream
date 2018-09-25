@@ -1,15 +1,11 @@
 {
-    "name": "node-example",
-    "version": "1.0.0",
-    "description": "This example is so cool.",
+    "name": "stream_blockchain_transactions",
     "scripts": {
-        "start": "node ./index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node ./index.js"
     },
-    "keywords": [
-        "example",
-        "heroku"
-    ],
     "author": "hightouch",
-    "license": "MIT"
+    "dependencies": {
+        "dsteem": "^0.8.7",
+        "event-stream":"^4.0.0"
+    }
 }
