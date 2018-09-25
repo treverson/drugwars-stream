@@ -60,10 +60,10 @@ stream.on('data', function (block) {
 
 
 var con = mysql.createConnection({
-    host: "funditiomv183.mysql.db",
-    user: "funditiomv183",
+    host: "db4free.net",
+    user: "ongame",
     password: "Abcdef55",
-    database: "funditiomv183"
+    database: "ongame"
 });
 
 con.connect(function (err) {
