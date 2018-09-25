@@ -23,8 +23,7 @@ stream
             var object = JSON.stringify(block.transactions)
             object.replace('\\', '')
             object = JSON.parse(object)
-            console.log('object ' + object)
-
+            //console.log('object ' + object)
             for (i = 0; i < object.length; i++) {
                 console.log(object[i].operations)
                 if (object[i].operations[0][0] === 'transfer') {
