@@ -20,10 +20,13 @@ var stream = client.blockchain.getBlockStream()
 stream
 .on('data', function(block) {
     var newblock = util.inspect(block, {colors: true, depth: null})
-    
+    console.log(typeof newblock);
+    console.log(typeof block);
     console.log("newblock" + newblock);
     if(newblock.transactions.operations)
-    console.log(newblock.transactions.operations);
+    {
+        console.log(newblock.transactions.operations);
+    }
     try {
         checkTransaction(block)
     } catch (e) {
