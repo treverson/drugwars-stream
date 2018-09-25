@@ -30,9 +30,9 @@ stream
     try {
         if(block.transactions[0])
         console.log(JSON.parse(block.transactions[0]))
-        var transactions = JSON.stringify(block.transactions[0])
-        if(!transactions)
-        console.log(transactions.operations)
+        // var transactions = JSON.stringify(block.transactions[0])
+        // if(!transactions)
+        // console.log(transactions.operations)
         
     } catch (e) {
 
