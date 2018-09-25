@@ -23,8 +23,8 @@ stream
     try {
         block = JSON.stringify(block)
         var newblock = JSON.parse(block)
-        console.log(newblock.transactions)
-        var array = newblock.transactions
+        console.log(newblock.transactions[0])
+        var array = newblock.transactions[0]
         console.log('array' + array)
         
     } catch (e) {
