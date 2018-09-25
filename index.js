@@ -1,5 +1,6 @@
 
 var dsteem = require('dsteem')
+const express = require('express')
 var es = require('event-stream') // npm install event-stream
 var util = require('util')
 const app = express()
