@@ -26,7 +26,14 @@ stream
         object.replace('\\','')
         object= JSON.parse(object)
         //console.log(object)
+        console.log(object.operations[0])
         console.log(object.operations[0][0])
+
+        var type = object.operations[0][0]
+        if(type === 'transfer')
+        {
+            console.log('transfer')
+        }
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
