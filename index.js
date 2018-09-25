@@ -12,6 +12,6 @@ var client = new dsteem.Client('https://api.steemit.com')
 
 var stream = client.blockchain.getBlockStream()
 
-stream.pipe(es.map(function(block, callback) {
-    callback(null, util.inspect(block, {colors: true, depth: null}) + '\n')
+stream.pipe(es.map(function(operation, callback) {
+    callback(null, util.inspect(operation, {colors: true, depth: null}) + '\n')
 })).pipe(process.stdout)
