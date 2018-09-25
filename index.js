@@ -16,7 +16,6 @@ var stream = client.blockchain.getBlockStream()
 //     callback(null, util.inspect(block, {colors: true, depth: null}) + '\n')
 // })).pipe(process.stdout) 
 
-
 stream
 .on('data', function(block) {
     if(block.transactions[0] != undefined)
@@ -34,7 +33,14 @@ stream
         {
             console.log('transfer')
             console.log(object.operations[0])
-
+            console.log(object.operations[0])
+        }
+        
+        var type2 = object.operations[0][1]
+        if(type2 === 'transfer')
+        {
+            console.log('transfer2')
+            console.log(object.operations[0][1])
         }
     }
     // console.log('3 ' + JSON.stringify(block.transactions))
@@ -62,8 +68,3 @@ stream
     // done
     console.log('END');
 });
-
-function checkTransaction(block){
-    if(!block.transactions.operations) return
-    console.log(JSON.parse(block.transactions.operations))
-}
