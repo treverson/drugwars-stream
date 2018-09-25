@@ -21,8 +21,12 @@ stream
 .on('data', function(block) {
     //console.log(block)
     console.log('block ' + block.block_id)
+    
     if(block.transactions[0] != undefined)
     {
+        var object = JSON.stringify(block.transactions[0])
+        object.replace('\\','')
+        console.log(JSON.parse(object))
         try {
             var object = JSON.stringify(block.transactions[0])
             object.replace('\\','')
