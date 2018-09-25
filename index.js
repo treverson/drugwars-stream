@@ -79,6 +79,9 @@ con.connect(function (err) {
         if (err) throw err;
         console.log("1 record inserted");
         console.log(result)
+        for (var i = 0; i < result.length; i++) {
+        console.log(result[i])
+        }
     });
 });
 
