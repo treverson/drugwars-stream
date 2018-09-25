@@ -24,21 +24,18 @@ stream
     //console.log(block)
     console.log('block ' + block.block_id)
     if(block.transactions[0])
-    var transactions = JSON.stringify(block.transactions[0])
-    if(!transactions)
-    console.log(transactions.operations)
+
     // console.log('2 ' + block.transactions[0])
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
-    // try {
-    //     var newblock = JSON.parse(block)
-    //     console.log(newblock.transactions[0])
-    //     var array = newblock.transactions[0]
-    //     console.log('array' + array)
+    try {
+        var transactions = JSON.stringify(block.transactions[0])
+        if(!transactions)
+        console.log(transactions.operations)
         
-    // } catch (e) {
+    } catch (e) {
 
-    // }   
+    }   
 
     //console.log(block)
     //console.log("ID :" + block.block_id)
