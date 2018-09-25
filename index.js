@@ -68,14 +68,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
     if (err) throw err;
-    var json = {
-        "skin": "none",
-        "hr_weapon": "none",
-        "hl_weapon": "none",
-        "body": "none",
-        "bottom": "none",
-        "hat": "none"
-    }
+    var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
     var username = "hightouch"
     var query = "INSERT INTO users (name, inventory) VALUES ('"+username +"','"+json+"')"
 
