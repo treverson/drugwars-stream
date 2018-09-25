@@ -24,7 +24,7 @@ stream
     console.log(typeof block);
     console.log("newblock" + newblock);
     try {
-        var newa = JSON.parse(block)
+        var newa = JSON.parse(JSON.stringify(block))
         console.log(newa)
     } catch (e) {
         console.log('error with ' +e+ block)
