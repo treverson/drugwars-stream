@@ -23,12 +23,12 @@ stream
     console.log('block ' + block.block_id)
     if(block.transactions[0] != undefined)
     {
-        console.log('Transactions' + block.transactions)
-        console.log(typeof block.transactions[0])
         try {
             var object = JSON.stringify(block.transactions[0])
             object.replace('\\','')
-            console.log(JSON.parse(object))
+            //console.log(JSON.parse(object))
+            if(object.operations)
+            console.log(object.operations[0])
             //console.log(JSON.stringify(block.transactions[0]))
 
             // var transactions = JSON.stringify(block.transactions[0])
