@@ -23,12 +23,11 @@ stream
    
     //console.log(block)
     console.log('block ' + block.block_id)
-    if(block.transactions[0])
-
     // console.log('2 ' + block.transactions[0])
     // console.log('3 ' + JSON.stringify(block.transactions))
     // console.log('4 ' + block.transactions)
     try {
+        if(block.transactions[0])
         var transactions = JSON.stringify(block.transactions[0])
         if(!transactions)
         console.log(transactions.operations)
