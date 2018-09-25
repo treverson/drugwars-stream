@@ -36,7 +36,7 @@ stream
     console.log("ID :" + block.block_id)
 
     // console.log("Transactions :" + transactions)
-    console.log("Operations :" + block.transactions.operations)
+    // console.log("Operations :" + block.transactions.operations)
     // blocks.unshift(
     //     `<div class="list-group-item"><h5 class="list-group-item-heading">Block id: ${
     //         block.block_id
