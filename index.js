@@ -8,8 +8,6 @@ const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on ${port}`));
 console.log('listening on port 5000');
 
-console.log(process.env.JAWSDB_URL)
-
 var client = new dsteem.Client('https://api.steemit.com')
 
 var stream = client.blockchain.getBlockStream()
@@ -60,10 +58,10 @@ stream.on('data', function (block) {
 
 OpenConnection = function(){
     var con = mysql.createConnection({
-        host: "db4free.net",
-        user: "ongame",
-        password: "Abcdef55",
-        database: "ongame"
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASSWORD,
+        database: MYSQL_DB
     });
 }
 
