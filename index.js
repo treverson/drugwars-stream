@@ -21,13 +21,11 @@ stream.on('data', function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var operation = object[i].operations
-            if (operation[0][0] === 'transfer') {
-                if (operation[0][1].from === "hightouch" || operation[0][1].to === "hightouch") {
+            if (operation[0][0] === 'transfer') {       
                     console.log('block ' + block.block_id)
                     ongametransaction = operation[0][1]
                     console.log('Ongame Transaction For a Character')
-                    console.log(ongametransaction)
-                }
+                    console.log(ongametransaction) 
             }
         }
 
@@ -60,32 +58,36 @@ stream.on('data', function (block) {
     });
 
 
-
-var con = mysql.createConnection({
-    host: "db4free.net",
-    user: "ongame",
-    password: "Abcdef55",
-    database: "ongame"
-});
-
-con.connect(function (err) {
-    if (err) throw err;
-    var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
-    var id = getHash('hightouch')
-    username = "hightouch"
-    //var query = "INSERT INTO users (id, name, level, xp, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
-    var query ="SELECT name FROM users"
-    console.log("Connected!");
-    var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
-    con.query(query, function (err, result) {
-        if (err) throw err;
-        console.log("1 record inserted");
-        console.log(result)
-        for (var i = 0; i < result.length; i++) {
-        console.log(result[i].name)
-        }
+OpenConnection = function(){
+    var con = mysql.createConnection({
+        host: "db4free.net",
+        user: "ongame",
+        password: "Abcdef55",
+        database: "ongame"
     });
-});
+}
+
+Connect = function(){
+    con.connect(function (err) {
+        if (err) throw err;
+        var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
+        var id = getHash('hightouch')
+        username = "hightouch"
+        //var query = "INSERT INTO users (id, name, level, xp, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
+        var query ="SELECT name FROM users"
+        console.log("Connected!");
+        var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
+        con.query(query, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+            console.log(result)
+            for (var i = 0; i < result.length; i++) {
+            console.log(result[i].name)
+            }
+        });
+    });
+}
+
 
 function getHash(input){
     var hash = 0, len = input.length;
