@@ -5,8 +5,9 @@ var es = require('event-stream')
 var util = require('util')
 const app = express()
 const port = process.env.PORT || 3000
-app.listen(port, () => console.log(`Listening on ${port}`));
-console.log('listening on port 5000');
+app.listen(port, function(error){
+    console.log(error)
+});
 
 var client = new dsteem.Client('https://api.steemit.com')
 
