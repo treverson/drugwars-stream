@@ -8,6 +8,8 @@ const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on ${port}`));
 console.log('listening on port 5000');
 
+console.log(process.env.JAWSDB_URL)
+
 var client = new dsteem.Client('https://api.steemit.com')
 
 var stream = client.blockchain.getBlockStream()
