@@ -30,14 +30,7 @@ stream.on('data', function (block) {
                     var player = transaction.from
                     checkForPlayer(player, function (error) {
                         if (error) {
-                            createNewPlayer(player, function (error) {
-                                if (!error) {
-                                    StartTransaction(transaction, function (error) {
-                                        if (error)
-                                            console.log(error)
-                                    })
-                                }
-                            })
+
                         }
                         else {
                             StartTransaction(transaction, function (error) {
@@ -85,9 +78,21 @@ checkForPlayer = function (player, cb) {
             if (result[0] != undefined) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
-                    cb(null)
+
                 }
-                else return cb(true)
+                else {
+                    createNewPlayer(player, function (error) {
+                        if (!error) {
+                            StartTransaction(transaction, function (error) {
+                                if (error)
+                                    console.log(error)
+                                else {
+                                    cb(null)
+                                }
+                            })
+                        }
+                    })
+                }
             }
         });
     });
