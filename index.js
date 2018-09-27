@@ -20,9 +20,13 @@ stream.on('data', function (block) {
             var operation = object[i].operations
             if (operation[0][0] === 'transfer') {       
                     console.log('block ' + block.block_id)
-                    ongametransaction = operation[0][1]
-                    console.log('Ongame Transaction For a Character')
-                    console.log(ongametransaction) 
+                    var transaction = operation[0][1]
+                    if (transaction.to = "ongame")
+                    {
+                        console.log('Ongame Transaction For a Character')
+                        console.log(ongametransaction) 
+                    }
+
             }
         }
 
@@ -67,6 +71,9 @@ OpenConnection = function(){
 Connect = function(){
     con.connect(function (err) {
         if (err) throw err;
+
+
+
         var json = '{"skin": "none","hr_weapon": "none","hl_weapon": "none", "body": "none","bottom": "none","hat": "none"}'
         var id = getHash('hightouch')
         username = "hightouch"
@@ -94,4 +101,6 @@ function getHash(input){
     }
     return hash;
   }
+  
+
   
