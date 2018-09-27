@@ -26,6 +26,7 @@ stream.on('data', function (block) {
                 var transaction = object[i].operations[0][1]
                 if (transaction.to === "ongame") {
                     console.log('Transfer block ' + block.block_id)
+                    console.log(transaction.from)
                     var player = transaction.from
                     checkForPlayer(player, function (error) {
                         if (error) {
@@ -84,7 +85,6 @@ checkForPlayer = function (player, cb) {
             if (result[0] != undefined) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
-                    connection.release();
                     cb(null)
                 }
                 else return cb(true)
