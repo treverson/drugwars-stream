@@ -74,13 +74,14 @@ checkForPlayer = function (player, cb) {
         var query = "SELECT * FROM user WHERE username='" + player + "'"
         connection.query(query, function (err, result) {
             // Always release the connection back to the pool after the (last) query.
-            if (err) return cb(true);
+            if (err) throw err;
             if (result[0] != undefined) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
 
                 }
                 else {
+                    console.log("New player creation")
                     createNewPlayer(player, function (error) {
                         if (!error) {
                             StartTransaction(transaction, function (error) {
