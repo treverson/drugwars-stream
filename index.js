@@ -25,18 +25,18 @@ stream.on('data', function (block) {
             var operation = object[i].operations
             if (operation[0][0] === 'transfer') {
                 var transaction = operation[0][1]
+                StartTransaction(transaction)
                 if (transaction.to === "ongame") {
-                    console.log('Ongame Transaction For a Character')
-                    console.log('With the block ' + block.block_id)
+                    console.log('Transfer block ' + block.block_id)
                     var player = transaction.from
-                    checkForPlayer(player, function (ifExist) {
-                        if (ifExist) {
-                            StartTransaction(transaction)
+                    checkForPlayerAndGetIt(player, function (id) {
+                        if (id) {
+                            StartTransaction(id,transaction)
                         }
                         else {
-                            createNewPlayer(player, function (ifExist) {
-                                if (ifExist) {
-                                    StartTransaction(transaction)
+                            createNewPlayer(player, function (id) {
+                                if (id) {
+                                    StartTransaction(id,transaction)
                                 }
                             })
                         }
@@ -46,7 +46,7 @@ stream.on('data', function (block) {
             else {
                 var operation = object[i].operations
                 if (operation[0][0] === 'comment') {
-                    console.log('block ' + block.block_id)
+                    console.log('Comment block ' + block.block_id)
                     var transaction = operation[0][1]
                     var post = transaction
                     if (post.parent_permlink === "ongame-battle") {
@@ -70,7 +70,8 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-checkForPlayer = function (player, cb) {
+
+checkForPlayerAndGetIt = function (player, cb) {
     pool.getConnection(function (err, connection) {
         var query = "SELECT * FROM user WHERE username='" + player + "'"
         connection.query(query, function (err, result) {
@@ -80,7 +81,7 @@ checkForPlayer = function (player, cb) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
                     connection.release();
-                    cb(true)
+                    cb(result[0].user_id)
                 }
             }
         });
@@ -117,7 +118,7 @@ createNewPlayer = function (user, cb) {
                                     else {
                                         console.log("User : " + player + " is now ready to play")
                                         connection.release();
-                                        cb(true)
+                                        cb(player_id)
                                     }
                                 })
                             }
@@ -130,8 +131,32 @@ createNewPlayer = function (user, cb) {
         })
     });
 }
-StartTransaction= function (transaction){
-    console.log(transaction)
+StartTransaction= function (id,transaction){
+    console.log("Username : "+transaction.from + " Amount : " + transaction.amount.split(' ')[0] + " Memo : " +  transaction.memo.split('-')[1])
+    var username = transaction.from
+    var amount = amount.split(' ')[0]
+    var item = transaction.memo.split('-')[1]
+    pool.getConnection(function (err, connection) {
+
+        var query = "SELECT * FROM item WHERE item_id='" + item + "'"
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            else {
+                console.log("Item Found")
+                if(result.price <= amount)
+                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item +")";
+                connection.query(query, function (err, result) {
+                    if (err) throw err;
+                    else {
+                        console.log("Item Added for "+ username)
+                        connection.release();
+                        cb(true)
+                    }
+                })
+            }
+        })
+
+    })
 }
 
 function getRandomInt(max) {
