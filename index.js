@@ -16,50 +16,6 @@ var stream = client.blockchain.getBlockStream()
 
 
 
-stream.on('data', function (block) {
-    if (block.transactions[0] != undefined) {
-        var object = JSON.stringify(block.transactions)
-        object.replace('\\', '')
-        object = JSON.parse(object)
-        for (i = 0; i < object.length; i++) {
-            if (object[i].operations[0][0] === 'transfer') {
-                var transaction = object[i].operations[0][1]
-                if (transaction.to === "ongame") {
-                    console.log('Transfer block ' + block.block_id)
-                    console.log(transaction.from)
-                    var player = transaction.from
-                    checkForPlayer(player, function (error) {
-                        if (error) {
-                            console.log(error)
-                        }
-                        else {
-                            StartTransaction(transaction, function (error) {
-                                if (error)
-                                    console.log(error)
-                            })
-                        }
-                    })
-                }
-            }
-            else {
-                var operation = object[i].operations
-                if (operation[0][0] === 'comment') {
-                    console.log('Comment block ' + block.block_id)
-                    var transaction = operation[0][1]
-                    var post = transaction
-                    if (post.parent_permlink === "life") {
-                        console.log('new fight' + post.json_metadata.fightnumber)
-                    }
-                }
-            }
-        }
-    }
-})
-    .on('end', function () {
-        // done
-        console.log('END');
-    });
-
 var pool = mysql.createPool({
     connectionLimit: 5,
     host: process.env.MYSQL_HOST,
@@ -67,6 +23,9 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
+
+
+
 
 
 checkForPlayer = function (player, cb) {
@@ -99,6 +58,13 @@ checkForPlayer = function (player, cb) {
         });
     });
 }
+
+checkForPlayer("hightouch", function (error) {
+    if (error) {
+        console.log(error)
+    }
+})
+
 
 createNewPlayer = function (user, cb) {
     pool.getConnection(function (err, connection) {
@@ -204,3 +170,50 @@ function CreateAttributes(id) {
     query = query.replace(')(', '),(')
     return query
 }
+
+
+
+
+stream.on('data', function (block) {
+    if (block.transactions[0] != undefined) {
+        var object = JSON.stringify(block.transactions)
+        object.replace('\\', '')
+        object = JSON.parse(object)
+        for (i = 0; i < object.length; i++) {
+            if (object[i].operations[0][0] === 'transfer') {
+                var transaction = object[i].operations[0][1]
+                if (transaction.to === "ongame") {
+                    console.log('Transfer block ' + block.block_id)
+                    console.log(transaction.from)
+                    var player = transaction.from
+                    checkForPlayer(player, function (error) {
+                        if (error) {
+                            console.log(error)
+                        }
+                        else {
+                            StartTransaction(transaction, function (error) {
+                                if (error)
+                                    console.log(error)
+                            })
+                        }
+                    })
+                }
+            }
+            else {
+                var operation = object[i].operations
+                if (operation[0][0] === 'comment') {
+                    console.log('Comment block ' + block.block_id)
+                    var transaction = operation[0][1]
+                    var post = transaction
+                    if (post.parent_permlink === "life") {
+                        console.log('new fight' + post.json_metadata.fightnumber)
+                    }
+                }
+            }
+        }
+    }
+})
+    .on('end', function () {
+        // done
+        console.log('END');
+    });
