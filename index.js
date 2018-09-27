@@ -31,8 +31,11 @@ stream.on('data', function (block) {
                 if (operation[0][0] === 'comment') {
                     console.log('block ' + block.block_id)
                     var transaction = operation[0][1]
-                    
-                    console.log('op ' + transaction)
+                    var post = transaction
+                    if(post.parent_permlink = "ongame-battle")
+                    {
+                        console.log('new fight' + post.json_metadata.fightnumber)
+                    }
                 }
             }
         }
