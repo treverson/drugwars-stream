@@ -80,7 +80,7 @@ checkForPlayer = function (player, cb) {
         var query = "SELECT * FROM user WHERE username='" + player + "'"
         connection.query(query, function (err, result) {
             // Always release the connection back to the pool after the (last) query.
-            if (err) throw err;
+            if (err) return cb(true);
             if (result[0] != undefined) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
@@ -100,7 +100,7 @@ createNewPlayer = function (user, cb) {
         var player_id;
         var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
         connection.query(query, function (err, result) {
-            if (err) throw err;
+            if (err) cb(true);
             else {
                 console.log("User : " + player + " is now recorded in db")
                 //RECUPERATE USER ID
