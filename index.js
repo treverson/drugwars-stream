@@ -139,13 +139,13 @@ StartTransaction = function (transaction) {
         console.log("Username : " + username + " Amount : " + amount + " Memo : " + item)
 
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM user WHERE username='" + player + "'"
+            var query = "SELECT * FROM user WHERE username='" + username + "'"
             connection.query(query, function (err, result) {
                 // Always release the connection back to the pool after the (last) query.
                 if (err) throw err;
                 if (result[0] != undefined) {
                     id = result[0].user_id
-                    console.log("User : " + player + " is already recorded");
+                    console.log("User : " + username + " is already recorded");
                     var query = "SELECT * FROM item WHERE item_id='" + item + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
