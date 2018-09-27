@@ -18,15 +18,23 @@ stream.on('data', function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var operation = object[i].operations
-            if (operation[0][0] === 'transfer') {       
+            if (operation[0][0] === 'transfer') {
+                console.log('block ' + block.block_id)
+                var transaction = operation[0][1]
+                if (transaction.to = "ongame") {
+                    console.log('Ongame Transaction For a Character')
+                    console.log(ongametransaction)
+                }
+
+            }
+            else {
+                var operation = object[i].operations
+                if (operation[0][0] === 'comment') {
                     console.log('block ' + block.block_id)
                     var transaction = operation[0][1]
-                    if (transaction.to = "ongame")
-                    {
-                        console.log('Ongame Transaction For a Character')
-                        console.log(ongametransaction) 
-                    }
-
+                    
+                    console.log('op ' + transaction)
+                }
             }
         }
 
@@ -59,7 +67,7 @@ stream.on('data', function (block) {
     });
 
 
-OpenConnection = function(){
+OpenConnection = function () {
     var con = mysql.createConnection({
         host: process.env.MYSQL_HOST,
         user: process.env.MYSQL_USERNAME,
@@ -68,7 +76,7 @@ OpenConnection = function(){
     });
 }
 
-Connect = function(){
+Connect = function () {
     con.connect(function (err) {
         if (err) throw err;
 
@@ -78,7 +86,7 @@ Connect = function(){
         var id = getHash('hightouch')
         username = "hightouch"
         //var query = "INSERT INTO users (id, name, level, xp, inventory) VALUES ('"+id +"," +username +"','"+json+"') ON DUPLICATE KEY UPDATE id = id + 1"
-        var query ="SELECT name FROM users"
+        var query = "SELECT name FROM users"
         console.log("Connected!");
         var sql = "INSERT INTO users (name, inventory) VALUES ('hightouch','[name1]')";
         con.query(query, function (err, result) {
@@ -86,21 +94,20 @@ Connect = function(){
             console.log("1 record inserted");
             console.log(result)
             for (var i = 0; i < result.length; i++) {
-            console.log(result[i].name)
+                console.log(result[i].name)
             }
         });
     });
 }
 
 
-function getHash(input){
+function getHash(input) {
     var hash = 0, len = input.length;
     for (var i = 0; i < len; i++) {
-      hash  = ((hash << 5) - hash) + input.charCodeAt(i);
-      hash |= 0; // to 32bit integer
+        hash = ((hash << 5) - hash) + input.charCodeAt(i);
+        hash |= 0; // to 32bit integer
     }
     return hash;
-  }
-  
+}
 
-  
+
