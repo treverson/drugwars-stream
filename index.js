@@ -16,55 +16,21 @@ var stream = client.blockchain.getBlockStream()
 
 
 
+// var pool = mysql.createPool({
+//     connectionLimit: 5,
+//     host: process.env.MYSQL_HOST,
+//     user: process.env.MYSQL_USERNAME,
+//     password: process.env.MYSQL_PASSWORD,
+//     database: process.env.MYSQL_DB
+// });
+
 var pool = mysql.createPool({
     connectionLimit: 5,
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB
+    host: "us-cdbr-iron-east-01.cleardb.net",
+    user: "bce50ec26bedce",
+    password: "13c7ceb6",
+    database: "heroku_38540d920d933f3"
 });
-
-
-
-
-
-checkForPlayer = function (player, cb) {
-    console.log("check for player : " + player)
-    pool.getConnection(function (err, connection) {
-        var query = "SELECT * FROM user WHERE username='" + player + "'"
-        connection.query(query, function (err, result) {
-            // Always release the connection back to the pool after the (last) query.
-            if (err) throw err;
-            if (result[0] != undefined) {
-                if (player = result[0].username) {
-                    console.log("User : " + player + " is already recorded");
-
-                }
-                else {
-                    console.log("New player creation")
-                    createNewPlayer(player, function (error) {
-                        if (!error) {
-                            StartTransaction(transaction, function (error) {
-                                if (error)
-                                    console.log(error)
-                                else {
-                                    cb(null)
-                                }
-                            })
-                        }
-                    })
-                }
-            }
-        });
-    });
-}
-
-checkForPlayer("hightouch", function (error) {
-    if (error) {
-        console.log(error)
-    }
-})
-
 
 createNewPlayer = function (user, cb) {
     pool.getConnection(function (err, connection) {
@@ -109,6 +75,38 @@ createNewPlayer = function (user, cb) {
         })
     });
 }
+
+checkForPlayer = function (player, cb) {
+    console.log("check for player : " + player)
+    pool.getConnection(function (err, connection) {
+        var query = "SELECT * FROM user WHERE username='" + player + "'"
+        connection.query(query, function (err, result) {
+            // Always release the connection back to the pool after the (last) query.
+            if (err) throw err;
+            if (result[0] != undefined) {
+                if (player = result[0].username) {
+                    console.log("User : " + player + " is already recorded");
+
+                }
+                else {
+                    console.log("New player creation")
+                    createNewPlayer(player, function (error) {
+                        if (!error) {
+                            StartTransaction(transaction, function (error) {
+                                if (error)
+                                    console.log(error)
+                                else {
+                                    cb(null)
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        });
+    });
+}
+
 StartTransaction = function (transaction, cb) {
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
