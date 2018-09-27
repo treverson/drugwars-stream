@@ -21,9 +21,8 @@ stream.on('data', function (block) {
             if (operation[0][0] === 'transfer') {
                 console.log('block ' + block.block_id)
                 var transaction = operation[0][1]
-                if (transaction.to = "ongame") {
+                if (transaction.to === "ongame") {
                     console.log('Ongame Transaction For a Character')
-                    console.log(ongametransaction)
                 }
 
             }
