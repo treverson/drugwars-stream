@@ -144,12 +144,11 @@ StartTransaction = function (transaction) {
                 if (err) throw err;
                 if (result[0] != undefined) {
                     id = result[0].user_id
-                    console.log("User : " + username + " is already recorded");
                     var query = "SELECT * FROM item WHERE item_id='" + item + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Item Found")
+                            console.log("Item price = " + result.price+"Amount  = " +amount)
                             if (result.price = amount) {
                                 var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item + ")";
                                 connection.query(query, function (err, result) {
