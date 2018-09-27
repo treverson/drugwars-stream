@@ -28,14 +28,14 @@ stream.on('data', function (block) {
                 if (transaction.to === "ongame") {
                     console.log('Transfer block ' + block.block_id)
                     var player = transaction.from
-                    checkForPlayerAndGetIt(player, function (id) {
-                        if (id) {
-                            StartTransaction(id,transaction)
+                    checkForPlayer(player, function (Exist) {
+                        if (Exist) {
+                            StartTransaction(transaction)
                         }
                         else {
-                            createNewPlayer(player, function (id) {
-                                if (id) {
-                                    StartTransaction(id,transaction)
+                            createNewPlayer(player, function (Exist) {
+                                if (Exist) {
+                                    StartTransaction(transaction)
                                 }
                             })
                         }
@@ -70,7 +70,7 @@ var pool = mysql.createPool({
 });
 
 
-checkForPlayerAndGetIt = function (player, cb) {
+checkForPlayer = function (player, cb) {
     pool.getConnection(function (err, connection) {
         var query = "SELECT * FROM user WHERE username='" + player + "'"
         connection.query(query, function (err, result) {
@@ -80,7 +80,7 @@ checkForPlayerAndGetIt = function (player, cb) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
                     connection.release();
-                    cb(result[0].user_id)
+                    cb(true)
                 }
             }
         });
@@ -117,7 +117,7 @@ createNewPlayer = function (user, cb) {
                                     else {
                                         console.log("User : " + player + " is now ready to play")
                                         connection.release();
-                                        cb(player_id)
+                                        cb(true)
                                     }
                                 })
                             }
@@ -130,36 +130,46 @@ createNewPlayer = function (user, cb) {
         })
     });
 }
-StartTransaction= function (id,transaction){
+StartTransaction = function (transaction) {
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
-    if(transaction.memo!= undefined)
-    {
+    var id;
+    if (transaction.memo != undefined) {
         var item = transaction.memo.split('-')[1]
-        console.log("Username : "+username + " Amount : " + amount + " Memo : " +  item)
-    
+        console.log("Username : " + username + " Amount : " + amount + " Memo : " + item)
+
         pool.getConnection(function (err, connection) {
-    
-            var query = "SELECT * FROM item WHERE item_id='" + item + "'"
+            var query = "SELECT * FROM user WHERE username='" + player + "'"
             connection.query(query, function (err, result) {
+                // Always release the connection back to the pool after the (last) query.
                 if (err) throw err;
-                else {
-                    console.log("Item Found")
-                    if(result.price <= amount)
-                    var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item +")";
+                if (result[0] != undefined) {
+                    id = result[0].user_id
+                    console.log("User : " + player + " is already recorded");
+                    var query = "SELECT * FROM item WHERE item_id='" + item + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Item Added for "+ username)
-                            connection.release();
+                            console.log("Item Found")
+                            if (result.price = amount)
+                                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item + ")";
+                            connection.query(query, function (err, result) {
+                                if (err) throw err;
+                                else {
+                                    console.log("Item Added for " + username)
+                                    connection.release();
+                                }
+                            })
                         }
                     })
+
                 }
-            })
-    
+            });
+
+
         })
     }
-  
+
 }
 
 function getRandomInt(max) {
