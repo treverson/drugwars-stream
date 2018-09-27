@@ -25,7 +25,6 @@ stream.on('data', function (block) {
             var operation = object[i].operations
             if (operation[0][0] === 'transfer') {
                 var transaction = operation[0][1]
-                StartTransaction(transaction)
                 if (transaction.to === "ongame") {
                     console.log('Transfer block ' + block.block_id)
                     var player = transaction.from
