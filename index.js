@@ -168,7 +168,6 @@ stream.on('data', function (block) {
                     var player = transaction.from
                     checkForPlayer(player, function (exist) {
                         if (exist) {
-                            console.log(error)
                             StartTransaction(transaction, function (error) {
                                 if (error)
                                     console.log(error)
