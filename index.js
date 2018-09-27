@@ -22,9 +22,8 @@ stream.on('data', function (block) {
         object.replace('\\', '')
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
-            var operation = object[i].operations
-            if (operation[0][0] === 'transfer') {
-                var transaction = operation[0][1]
+            if (object[i].operations[0][0] === 'transfer') {
+                var transaction = object[i].operations[0][1]
                 if (transaction.to === "ongame") {
                     console.log('Transfer block ' + block.block_id)
                     var player = transaction.from
@@ -151,15 +150,20 @@ StartTransaction = function (transaction) {
                         if (err) throw err;
                         else {
                             console.log("Item Found")
-                            if (result.price = amount)
+                            if (result.price = amount) {
                                 var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item + ")";
-                            connection.query(query, function (err, result) {
-                                if (err) throw err;
-                                else {
-                                    console.log("Item Added for " + username)
-                                    connection.release();
-                                }
-                            })
+                                connection.query(query, function (err, result) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log("Item Added for " + username)
+                                        connection.release();
+                                    }
+                                })
+                            }
+                            else {
+                                console.log('not enough money')
+                            }
+
                         }
                     })
 
