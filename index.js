@@ -16,21 +16,21 @@ var stream = client.blockchain.getBlockStream()
 
 
 
-// var pool = mysql.createPool({
-//     connectionLimit: 5,
-//     host: process.env.MYSQL_HOST,
-//     user: process.env.MYSQL_USERNAME,
-//     password: process.env.MYSQL_PASSWORD,
-//     database: process.env.MYSQL_DB
-// });
-
 var pool = mysql.createPool({
     connectionLimit: 5,
-    host: "us-cdbr-iron-east-01.cleardb.net",
-    user: "bce50ec26bedce",
-    password: "13c7ceb6",
-    database: "heroku_38540d920d933f3"
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB
 });
+
+// var pool = mysql.createPool({
+//     connectionLimit: 5,
+//     host: "us-cdbr-iron-east-01.cleardb.net",
+//     user: "bce50ec26bedce",
+//     password: "13c7ceb6",
+//     database: "heroku_38540d920d933f3"
+// });
 
 createNewPlayer = function (user, cb) {
     pool.getConnection(function (err, connection) {
