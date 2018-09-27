@@ -24,30 +24,25 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-// var pool = mysql.createPool({
-//     connectionLimit: 5,
-//     host: "us-cdbr-iron-east-01.cleardb.net",
-//     user: "bce50ec26bedce",
-//     password: "13c7ceb6",
-//     database: "heroku_38540d920d933f3"
-// });
 
-createNewPlayer = function (user, cb) {
+
+createNewPlayer = function (player, cb) {
     pool.getConnection(function (err, connection) {
         //INSERT USER
         console.log("User : " + player + " will be recorded");
-        var player_id;
         var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
         connection.query(query, function (err, result) {
-            if (err) cb(true);
+            if (err) throw err;
             else {
+                console.log(result)
                 console.log("User : " + player + " is now recorded in db")
                 //RECUPERATE USER ID
                 var query = "SELECT * FROM user WHERE username='" + player + "'"
                 connection.query(query, function (err, result) {
                     if (err) throw err;
                     if (result[0] != undefined) {
-                        player_id = result[0].player_id
+                        console.log(result)
+                        var player_id = result[0].user_id
                         console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                         //INSERT USER CHARACTER
                         var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100)"
@@ -79,29 +74,18 @@ createNewPlayer = function (user, cb) {
 checkForPlayer = function (player, cb) {
     console.log("check for player : " + player)
     pool.getConnection(function (err, connection) {
-        var query = "SELECT * FROM user WHERE username='" + player + "'"
+        var query = "SELECT * FROM user WHERE username = '" + player + "'"
         connection.query(query, function (err, result) {
-            // Always release the connection back to the pool after the (last) query.
             if (err) throw err;
             if (result[0] != undefined) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
-
+                    cb(true)
                 }
-                else {
-                    console.log("New player creation")
-                    createNewPlayer(player, function (error) {
-                        if (!error) {
-                            StartTransaction(transaction, function (error) {
-                                if (error)
-                                    console.log(error)
-                                else {
-                                    cb(null)
-                                }
-                            })
-                        }
-                    })
-                }
+            }
+            else{
+                console.log("User : " + player + " isnt recorded");
+                cb(null)
             }
         });
     });
@@ -170,7 +154,11 @@ function CreateAttributes(id) {
 }
 
 
-
+checkForPlayer("eeeeffeaeeaz", function (error) {
+    if (error) {
+        console.log(error)
+    }
+})
 
 stream.on('data', function (block) {
     if (block.transactions[0] != undefined) {
@@ -184,14 +172,26 @@ stream.on('data', function (block) {
                     console.log('Transfer block ' + block.block_id)
                     console.log(transaction.from)
                     var player = transaction.from
-                    checkForPlayer(player, function (error) {
-                        if (error) {
+                    checkForPlayer(player, function (exist) {
+                        if (exist) {
                             console.log(error)
-                        }
-                        else {
                             StartTransaction(transaction, function (error) {
                                 if (error)
                                     console.log(error)
+                            })
+                        }
+                        else {
+                            console.log("New player creation")
+                            createNewPlayer(player, function (error) {
+                                if (error) {
+                                    console.log("couldnt create charachter")
+                                }
+                                else {
+                                    StartTransaction(transaction, function (error) {
+                                        if (error)
+                                            console.log(error)
+                                    })
+                                }
                             })
                         }
                     })
