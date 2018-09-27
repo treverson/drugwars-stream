@@ -48,7 +48,7 @@ stream.on('data', function (block) {
                     console.log('Comment block ' + block.block_id)
                     var transaction = operation[0][1]
                     var post = transaction
-                    if (post.parent_permlink === "ongame-battle") {
+                    if (post.parent_permlink === "life") {
                         console.log('new fight' + post.json_metadata.fightnumber)
                     }
                 }
@@ -133,30 +133,33 @@ createNewPlayer = function (user, cb) {
 StartTransaction= function (id,transaction){
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
-    var item = transaction.memo.split('-')[1]
-    console.log("Username : "+username + " Amount : " + amount + " Memo : " +  item)
-
-    pool.getConnection(function (err, connection) {
-
-        var query = "SELECT * FROM item WHERE item_id='" + item + "'"
-        connection.query(query, function (err, result) {
-            if (err) throw err;
-            else {
-                console.log("Item Found")
-                if(result.price <= amount)
-                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item +")";
-                connection.query(query, function (err, result) {
-                    if (err) throw err;
-                    else {
-                        console.log("Item Added for "+ username)
-                        connection.release();
-                        cb(true)
-                    }
-                })
-            }
+    if(transaction.memo!= undefined)
+    {
+        var item = transaction.memo.split('-')[1]
+        console.log("Username : "+username + " Amount : " + amount + " Memo : " +  item)
+    
+        pool.getConnection(function (err, connection) {
+    
+            var query = "SELECT * FROM item WHERE item_id='" + item + "'"
+            connection.query(query, function (err, result) {
+                if (err) throw err;
+                else {
+                    console.log("Item Found")
+                    if(result.price <= amount)
+                    var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item +")";
+                    connection.query(query, function (err, result) {
+                        if (err) throw err;
+                        else {
+                            console.log("Item Added for "+ username)
+                            connection.release();
+                        }
+                    })
+                }
+            })
+    
         })
-
-    })
+    }
+  
 }
 
 function getRandomInt(max) {
