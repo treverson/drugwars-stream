@@ -132,7 +132,7 @@ createNewPlayer = function (user, cb) {
 }
 StartTransaction= function (id,transaction){
     var username = transaction.from
-    var amount = amount.split(' ')[0]
+    var amount = transaction.amount.split(' ')[0]
     var item = transaction.memo.split('-')[1]
     console.log("Username : "+username + " Amount : " + amount + " Memo : " +  item)
 
