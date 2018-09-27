@@ -30,7 +30,7 @@ stream.on('data', function (block) {
                     var player = transaction.from
                     checkForPlayer(player, function (error) {
                         if (error) {
-
+                            console.log(error)
                         }
                         else {
                             StartTransaction(transaction, function (error) {
