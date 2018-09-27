@@ -87,6 +87,7 @@ checkForPlayer = function (player, cb) {
                     connection.release();
                     cb(null)
                 }
+                else return cb(true)
             }
         });
     });
