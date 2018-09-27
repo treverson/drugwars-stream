@@ -131,10 +131,11 @@ createNewPlayer = function (user, cb) {
     });
 }
 StartTransaction= function (id,transaction){
-    console.log("Username : "+transaction.from + " Amount : " + transaction.amount.split(' ')[0] + " Memo : " +  transaction.memo.split('-')[1])
     var username = transaction.from
     var amount = amount.split(' ')[0]
     var item = transaction.memo.split('-')[1]
+    console.log("Username : "+username + " Amount : " + amount + " Memo : " +  item)
+
     pool.getConnection(function (err, connection) {
 
         var query = "SELECT * FROM item WHERE item_id='" + item + "'"
