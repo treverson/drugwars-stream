@@ -27,15 +27,21 @@ stream.on('data', function (block) {
                 if (transaction.to === "ongame") {
                     console.log('Transfer block ' + block.block_id)
                     var player = transaction.from
-                    checkForPlayer(player, function (Exist) {
-                        if (Exist) {
-                            StartTransaction(transaction)
+                    checkForPlayer(player, function (error) {
+                        if (error) {
+                            createNewPlayer(player, function (error) {
+                                if (!error) {
+                                    StartTransaction(transaction, function (error) {
+                                        if (error)
+                                            console.log(error)
+                                    })
+                                }
+                            })
                         }
                         else {
-                            createNewPlayer(player, function (Exist) {
-                                if (Exist) {
-                                    StartTransaction(transaction)
-                                }
+                            StartTransaction(transaction, function (error) {
+                                if (error)
+                                    console.log(error)
                             })
                         }
                     })
@@ -79,7 +85,7 @@ checkForPlayer = function (player, cb) {
                 if (player = result[0].username) {
                     console.log("User : " + player + " is already recorded");
                     connection.release();
-                    cb(true)
+                    cb(null)
                 }
             }
         });
@@ -116,7 +122,7 @@ createNewPlayer = function (user, cb) {
                                     else {
                                         console.log("User : " + player + " is now ready to play")
                                         connection.release();
-                                        cb(true)
+                                        cb(null)
                                     }
                                 })
                             }
@@ -129,7 +135,7 @@ createNewPlayer = function (user, cb) {
         })
     });
 }
-StartTransaction = function (transaction) {
+StartTransaction = function (transaction, cb) {
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
     var id;
@@ -148,18 +154,20 @@ StartTransaction = function (transaction) {
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Item price = " + result.price+"Amount  = " +amount)
+                            console.log("Item price = " + result.price + "Amount  = " + amount)
                             if (result.price <= amount) {
                                 var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + item + ")";
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
                                         console.log("Item Added for " + username)
+                                        cb(null)
                                         connection.release();
                                     }
                                 })
                             }
                             else {
+                                cb(true)
                                 console.log('not enough money')
                             }
 
