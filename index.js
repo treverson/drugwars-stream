@@ -154,12 +154,6 @@ function CreateAttributes(id) {
 }
 
 
-checkForPlayer("eeeeffeaeeaz", function (error) {
-    if (error) {
-        console.log(error)
-    }
-})
-
 stream.on('data', function (block) {
     if (block.transactions[0] != undefined) {
         var object = JSON.stringify(block.transactions)
