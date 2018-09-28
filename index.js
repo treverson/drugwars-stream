@@ -85,10 +85,7 @@ checkForPlayer = function (player, cb) {
         });
     });
 }
-addXpToCharacter(341,50,function(error){
-    if(error)
-    console.log(error)
-})
+
 
 addXpToCharacter = function (character_id, xp, cb) {
     pool.getConnection(function (err, connection) {
@@ -115,6 +112,11 @@ addXpToCharacter = function (character_id, xp, cb) {
         });
     });
 }
+
+addXpToCharacter(341,50,function(error){
+    if(error)
+    console.log(error)
+})
 
 StartTransaction = function (transaction, cb) {
     var username = transaction.from
