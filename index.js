@@ -107,20 +107,27 @@ StartTransaction = function (transaction, cb) {
                         else {
                             console.log("Item price = " + result[0].item_price + "Amount  = " + amount)
                             if (result[0].item_price <= amount) {
-                                var newitemid = 0
-                                newitemid = createUniqueId()
-                                var query = createAndInserNewItem(result[0],newitemid)
+                                var item_ref = 0
+                                item_ref = createUniqueId()
+                                var query = createAndInserNewItem(result[0],item_ref)
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
                                         console.log("Item Successfully Created")
-                                        var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + newitemid +")";
+                                        var query = "SELECT * FROM item WHERE item_ref='" + item_ref + "'"
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
-                                                console.log("Item " +newitemid+ " Successfully Added to " + id)
-                                                connection.release();
-                                                cb(null)
+                                                console.log("Item " +result[0].item_id+ "with reference" + item_ref +" Successfully Added to " + id)
+                                                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + result[0].item_id +")";
+                                                connection.query(query, function (err, result) {
+                                                    if (err) throw err;
+                                                    else {
+                                                        console.log("Item " +newitemid+ " move to " + id)
+                                                        connection.release();
+                                                        cb(null)
+                                                    }
+                                                })
                                             }
                                         })
                                     }
