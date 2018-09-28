@@ -163,13 +163,12 @@ stream.on('data', function (block) {
         var object = JSON.stringify(block.transactions)
         object.replace('\\', '')
         object = JSON.parse(object)
+        console.log(object.length)
         for (i = 0; i < object.length; i++) {
             if (object[i].operations[0][0] === 'transfer') {
-                var transaction = object[i].operations[0][1]
-                if (transaction.to === "ongame") {
+                if (object[i].operations[0][1] === "ongame") {
                     console.log('Transfer block ' + block.block_id)
-                    console.log(transaction.from)
-                    var player = transaction.from
+                    var player = object[i].operations[0][1].from
                     checkForPlayer(player, function (exist) {
                         if (exist) {
                             StartTransaction(transaction, function (error) {
@@ -194,17 +193,17 @@ stream.on('data', function (block) {
                     })
                 }
             }
-            else {
-                var operation = object[i].operations
-                if (operation[0][0] === 'comment') {
-                    console.log('Comment block ' + block.block_id)
-                    var transaction = operation[0][1]
-                    var post = transaction
-                    if (post.parent_permlink === "life") {
-                        console.log('new fight' + post.json_metadata.fightnumber)
-                    }
-                }
-            }
+            // else {
+            //     var operation = object[i].operations
+            //     if (operation[0][0] === 'custom_json') {
+            //         //console.log('Fight block ' + block.block_id)
+            //         var transaction = operation[0][1]
+            //         var post = transaction
+            //         if (post.parent_permlink === "life") {
+            //             console.log('new fight' + post.json_metadata.fightnumber)
+            //         }
+            //     }
+            // }
         }
     }
 })
