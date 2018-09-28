@@ -138,7 +138,7 @@ StartTransaction = function (transaction, cb) {
 
 }
 createUniqueId = function () {
-    return Math.random().toString(36).substr(2, 13);
+    return new Date().valueOf();
 };
 
 
