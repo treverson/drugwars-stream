@@ -26,39 +26,41 @@ function createNewPlayer(transaction, cb) {
     var player = transaction.from
     var player_id;
     console.log("User : " + player + " will be recorded");
-    var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
-    connection.query(query, function (err, result) {
-        if (err) console.log(error);
-        else {
-            console.log("User : " + player + " is now recorded in db")
-            //RECUPERATE USER ID
-            var query = "SELECT * FROM user WHERE username='" + player + "'"
-            connection.query(query, function (err, result) {
-                if (err) console.log(error);
-                if (result[0] != undefined) {
-                    player_id = result[0].user_id
-                    console.log("User : " + player + " will get his character and will have this id now : " + player_id);
-                    //INSERT USER CHARACTER
-                    var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100)"
-                    connection.query(query, function (err, result) {
-                        if (err) console.log(error);
-                        else {
-                            console.log("User : " + player + " have now starting values and will now get his attributes")
-                            //INSERT USER ATTRIBUTES
-                            var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
-                            connection.query(query, function (err, result) {
-                                if (err) console.log(error);
-                                else {
-                                    console.log("User : " + player + " is now ready to play")
-                                    connection.release();
-                                    cb(null)
-                                }
-                            })
-                        }
-                    })
-                }
-            })
-        }
+    pool.getConnection(function (err, connection) {
+        var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
+        connection.query(query, function (err, result) {
+            if (err) console.log(error);
+            else {
+                console.log("User : " + player + " is now recorded in db")
+                //RECUPERATE USER ID
+                var query = "SELECT * FROM user WHERE username='" + player + "'"
+                connection.query(query, function (err, result) {
+                    if (err) console.log(error);
+                    if (result[0] != undefined) {
+                        player_id = result[0].user_id
+                        console.log("User : " + player + " will get his character and will have this id now : " + player_id);
+                        //INSERT USER CHARACTER
+                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100)"
+                        connection.query(query, function (err, result) {
+                            if (err) console.log(error);
+                            else {
+                                console.log("User : " + player + " have now starting values and will now get his attributes")
+                                //INSERT USER ATTRIBUTES
+                                var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
+                                connection.query(query, function (err, result) {
+                                    if (err) console.log(error);
+                                    else {
+                                        console.log("User : " + player + " is now ready to play")
+                                        connection.release();
+                                        cb(null)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
     })
 }
 
@@ -151,22 +153,22 @@ function createAndInserNewItem(shop_item) {
     switch (item_quality) {
         case 1:
             item_name = "Epic " + shop_item.name
-            requirel_level+= 5
+            requirel_level += 5
             item_durability = item_durability * 5
             break;
         case 2:
             item_name = "Legenday " + shop_item.name
-            requirel_level+= 4
+            requirel_level += 4
             item_durability = item_durability * 4
             break;
         case 3:
             item_name = "Rare " + shop_item.name
-            requirel_level+= 3
+            requirel_level += 3
             item_durability = item_durability * 3
             break;
         case 4:
             item_name = "Magical " + shop_item.name
-            requirel_level+= 2
+            requirel_level += 2
             item_durability = item_durability * 2
             break;
         default:
@@ -178,18 +180,18 @@ function createAndInserNewItem(shop_item) {
             damage = CreateWeapon(damage, item_quality)
             break;
         case 2:
-            armor = CreateArmor(armor,item_quality)
+            armor = CreateArmor(armor, item_quality)
             break;
         case 3:
             damage = CreateWeapon(damage, item_quality)
-            armor = CreateArmor(armor,item_quality)
+            armor = CreateArmor(armor, item_quality)
             break;
         case 4:
             break;
         default:
     }
 
-    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + item + "," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage +","+ armor +")";
+    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + item + "," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
     return query
 };
 
@@ -215,11 +217,11 @@ function SetItemQuality() {
 
 
 function CreateWeapon(damage, item_quality) {
-    return damage = damage * 7/ item_quality
+    return damage = damage * 7 / item_quality
 }
 
 function CreateArmor(armor, item_quality) {
-    return armor = armor * 7/ item_quality
+    return armor = armor * 7 / item_quality
 }
 
 function CreateAccessories(damage, item_quality) {
