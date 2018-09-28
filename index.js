@@ -13,8 +13,7 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 
 let rawdata = fs.readFileSync('prefix.json');
-let prefix = JSON.parse(rawdata);
-var prefix = prefix
+var prefix = JSON.parse(rawdata);
 
 
 var client = new dsteem.Client('https://api.steemit.com')
