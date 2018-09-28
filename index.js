@@ -118,8 +118,8 @@ StartTransaction = function (transaction, cb) {
                                 })
                             }
                             else {
-                                cb(true)
                                 console.log('not enough money')
+                                cb(true)
                             }
 
                         }
