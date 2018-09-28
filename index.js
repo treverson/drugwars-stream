@@ -166,6 +166,7 @@ stream.on('data', function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
+                console.log(object[i].operations[0][1])
                 console.log('Transfer block ' + block.block_id)
                 checkForPlayer(object[i].operations[0][1].from, function (exist) {
                     if (exist) {
