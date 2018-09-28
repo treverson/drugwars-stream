@@ -150,7 +150,7 @@ function createUniqueId() {
     return id
 };
 
-function createAndInserNewItem(shop_item,id) {
+function createAndInserNewItem(shop_item,newitemid) {
     var item_quality = SetItemQuality()
     var item_name;
     var requirel_level = shop_item.item_required_level
