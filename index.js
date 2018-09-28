@@ -138,7 +138,7 @@ StartTransaction = function (transaction, cb) {
     }
 
 }
-createUniqueId = function () {
+function createUniqueId() {
     return new Date().valueOf();
 };
 
