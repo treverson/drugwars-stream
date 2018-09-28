@@ -13,9 +13,6 @@ var client = new dsteem.Client('https://api.steemit.com')
 
 var stream = client.blockchain.getBlockStream()
 
-
-
-
 var pool = mysql.createPool({
     connectionLimit: 5,
     host: process.env.MYSQL_HOST,
@@ -24,9 +21,7 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-
-
-createNewPlayer = function (player, cb) {
+function createNewPlayer(player, cb) {
     //INSERT USER
     var player_id;
     console.log("User : " + player + " will be recorded");
@@ -102,13 +97,13 @@ StartTransaction = function (transaction, cb) {
                 if (err) throw err;
                 if (result[0] != undefined) {
                     id = result[0].user_id
-                    var query = "SELECT * FROM item WHERE item_id='" + item + "'"
+                    var query = "SELECT * FROM shop WHERE item_id='" + item + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
                             console.log("Item price = " + result[0].price + "Amount  = " + amount)
                             if (result[0].price <= amount) {
-                                var query = "INSERT INTO character_item (character_id, item_id, item_type_id) VALUES (" + id + "," + createUniqueId() + "," + item + ")";
+                                var query = createAndInserNewItem(result[0])
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
@@ -145,6 +140,94 @@ function createUniqueId() {
     return id
 };
 
+function createAndInserNewItem(shop_item) {
+    var item_quality = SetItemQuality()
+    var item_name;
+    var requirel_level = shop_item.item_required_level
+    var item_durability = shop_item.item_durability
+    var damage = shop_item.item_damage
+    var armor = shop_item.item_armor
+    switch (item_quality) {
+        case 1:
+            item_name = "Epic " + shop_item.name
+            requirel_level+= 5
+            item_durability = item_durability * 5
+            break;
+        case 2:
+            item_name = "Legenday " + shop_item.name
+            requirel_level+= 4
+            item_durability = item_durability * 4
+            break;
+        case 3:
+            item_name = "Rare " + shop_item.name
+            requirel_level+= 3
+            item_durability = item_durability * 3
+            break;
+        case 4:
+            item_name = "Magical " + shop_item.name
+            requirel_level+= 2
+            item_durability = item_durability * 2
+            break;
+        default:
+            item_name = "Simple " + shop_item.name
+    }
+
+    switch (shop_item.item_type_id) {
+        case 1:
+            damage = CreateWeapon(damage, item_quality)
+            break;
+        case 2:
+            armor = CreateArmor(armor,item_quality)
+            break;
+        case 3:
+            damage = CreateWeapon(damage, item_quality)
+            armor = CreateArmor(armor,item_quality)
+            break;
+        case 4:
+            break;
+        default:
+    }
+
+    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + item + "," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage +","+ armor +")";
+    return query
+};
+
+function SetItemQuality() {
+    var rnd = getRandomInt(max)
+    if (rnd = 100) {
+        item_quality = 1
+    }
+    if (rnd > 95) {
+        item_quality = 2
+    }
+    if (rnd > 87) {
+        item_quality = 3
+    }
+    if (rnd > 71) {
+        item_quality = 4
+    }
+    else {
+        item_quality = 5
+    }
+    return item_quality
+}
+
+
+function CreateWeapon(damage, item_quality) {
+    return damage = damage * 7/ item_quality
+}
+
+function CreateArmor(armor, item_quality) {
+    return armor = armor * 7/ item_quality
+}
+
+function CreateAccessories(damage, item_quality) {
+
+}
+
+function CreateAttribute(item_quality) {
+
+}
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
