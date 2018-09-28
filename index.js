@@ -21,6 +21,8 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
+var maxpic = 5;
+
 function createNewPlayer(transaction, cb) {
     //INSERT USER
     var player = transaction.from
@@ -40,7 +42,7 @@ function createNewPlayer(transaction, cb) {
                         player_id = result[0].user_id
                         console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                         //INSERT USER CHARACTER
-                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100)"
+                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100,"+  getRandomInt(maxpic) +")"
                         connection.query(query, function (err, result) {
                             if (err) console.log(error);
                             else {
@@ -110,12 +112,12 @@ StartTransaction = function (transaction, cb) {
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
-                                        console.log("Item Successfully Added in Game")
-                                        var query = 
+                                        console.log("Item Successfully Created")
+                                        var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + newitemid +")";
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
-                                                "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + newitemid +")";
+                                                console.log("Item " +newitemid+ " Successfully Added to " + id)
                                                 connection.release();
                                                 cb(null)
                                             }
