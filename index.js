@@ -162,6 +162,7 @@ function createUniqueId() {
 
 function createAndInserNewItem(shop_item,newitemid) {
     var item_quality = SetItemQuality()
+    console.log(item_quality)
     var item_name;
     var requirel_level = shop_item.item_required_level
     var item_durability = shop_item.item_durability
@@ -214,26 +215,20 @@ function createAndInserNewItem(shop_item,newitemid) {
 function SetItemQuality() {
     var rnd = getRandomInt(100)
     console.log("quality " + rnd)
-    var item_quality;
     if (rnd = 100) {
-        item_quality = 1
-        return item_quality
+        return 1
     }
     if (rnd > 95) {
-        item_quality = 2
-        return item_quality
+        return 2
     }
     if (rnd > 87) {
-        item_quality = 3
-        return item_quality
+        return 3
     }
     if (rnd > 71) {
-        item_quality = 4
-        return item_quality
+        return 4
     }
     else {
-        item_quality = 5
-        return item_quality
+        return 5
     }
 }
 
