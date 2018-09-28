@@ -85,7 +85,6 @@ checkForPlayer = function (player, cb) {
 }
 
 StartTransaction = function (transaction, cb) {
-    console.log("transaction = " + transaction)
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
     var id;
@@ -196,7 +195,7 @@ function createAndInserNewItem(shop_item) {
 };
 
 function SetItemQuality() {
-    var rnd = getRandomInt(max)
+    var rnd = getRandomInt(100)
     if (rnd = 100) {
         item_quality = 1
     }
