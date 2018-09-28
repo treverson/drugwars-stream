@@ -123,7 +123,7 @@ StartTransaction = function (transaction, cb) {
                                                 connection.query(query, function (err, result) {
                                                     if (err) throw err;
                                                     else {
-                                                        console.log("Item " +newitemid+ " move to " + id)
+                                                        console.log("Item " +item_ref + " move to " + id)
                                                         connection.release();
                                                         cb(null)
                                                     }
