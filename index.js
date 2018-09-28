@@ -95,7 +95,7 @@ addXpToCharacter = function (character_id, xp, cb) {
             if (result[0] != undefined) {
                 console.log(xp + "XP will be add to " +character_id)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE characters SET xp=" + xp + " WHERE  character_id="+ character_id;
+                    var query = "UPDATE characters SET xp=" + character_new_xp + " WHERE  character_id="+ character_id;
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
