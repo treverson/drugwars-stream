@@ -255,7 +255,7 @@ function CreateAttribute(item_quality) {
 }
 
 function getRandomInt(max) {
-    return new Math.floor(Math.random() * Math.floor(max));
+    return Math.floor(Math.random() * Math.floor(max));
 }
 
 function CreateAttributes(id) {
