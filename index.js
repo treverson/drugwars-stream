@@ -28,6 +28,7 @@ var pool = mysql.createPool({
 
 createNewPlayer = function (player, cb) {
     //INSERT USER
+    var player_id;
     console.log("User : " + player + " will be recorded");
     var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
     connection.query(query, function (err, result) {
@@ -39,7 +40,7 @@ createNewPlayer = function (player, cb) {
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 if (result[0] != undefined) {
-                    var player_id = result[0].user_id
+                    player_id = result[0].user_id
                     console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                     //INSERT USER CHARACTER
                     var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100)"
@@ -111,7 +112,7 @@ StartTransaction = function (transaction, cb) {
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
-                                        console.log("Item Added for " + username)
+                                        console.log("Item Successfully Added for " + username)
                                         connection.release();
                                         cb(null)
                                     }
@@ -132,7 +133,7 @@ StartTransaction = function (transaction, cb) {
 
         })
     }
-    else{
+    else {
         console.log("cannt read memo")
         console.log(transaction.memo)
     }
@@ -163,47 +164,32 @@ stream.on('data', function (block) {
         var object = JSON.stringify(block.transactions)
         object.replace('\\', '')
         object = JSON.parse(object)
-        console.log(object.length)
         for (i = 0; i < object.length; i++) {
-            if (object[i].operations[0][0] === 'transfer') {
-                if (object[i].operations[0][1] === "ongame") {
-                    console.log('Transfer block ' + block.block_id)
-                    var player = object[i].operations[0][1].from
-                    checkForPlayer(player, function (exist) {
-                        if (exist) {
-                            StartTransaction(transaction, function (error) {
-                                if (error)
-                                    console.log(error)
-                            })
-                        }
-                        else {
-                            console.log("New player creation")
-                            createNewPlayer(player, function (error) {
-                                if (error) {
-                                    console.log("couldnt create charachter")
-                                }
-                                else {
-                                    StartTransaction(transaction, function (error) {
-                                        if (error)
-                                            console.log(error)
-                                    })
-                                }
-                            })
-                        }
-                    })
-                }
+            if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1] === "ongame") {
+                console.log('Transfer block ' + block.block_id)
+                checkForPlayer(object[i].operations[0][1].from, function (exist) {
+                    if (exist) {
+                        StartTransaction(transaction, function (error) {
+                            if (error)
+                                console.log(error)
+                        })
+                    }
+                    else {
+                        console.log("New player creation")
+                        createNewPlayer(object[i].operations[0][1].from, function (error) {
+                            if (error) {
+                                console.log("couldnt create charachter")
+                            }
+                            else {
+                                StartTransaction(transaction, function (error) {
+                                    if (error)
+                                        console.log(error)
+                                })
+                            }
+                        })
+                    }
+                })
             }
-            // else {
-            //     var operation = object[i].operations
-            //     if (operation[0][0] === 'custom_json') {
-            //         //console.log('Fight block ' + block.block_id)
-            //         var transaction = operation[0][1]
-            //         var post = transaction
-            //         if (post.parent_permlink === "life") {
-            //             console.log('new fight' + post.json_metadata.fightnumber)
-            //         }
-            //     }
-            // }
         }
     }
 })
