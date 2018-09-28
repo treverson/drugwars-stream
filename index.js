@@ -107,7 +107,8 @@ StartTransaction = function (transaction, cb) {
                         else {
                             console.log("Item price = " + result[0].item_price + "Amount  = " + amount)
                             if (result[0].item_price <= amount) {
-                                var newitemid = createUniqueId()
+                                var newitemid = 0
+                                newitemid = createUniqueId()
                                 var query = createAndInserNewItem(result[0],newitemid)
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
