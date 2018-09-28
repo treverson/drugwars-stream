@@ -3,11 +3,19 @@ var mysql = require('mysql');
 const express = require('express')
 var es = require('event-stream')
 var util = require('util')
-
+const fs = require('fs');
 const app = express()
 const port = process.env.PORT || 4000
 
 app.listen(port, () => console.log(`Listening on ${port}`));
+
+
+
+
+let rawdata = fs.readFileSync('prefix.json');
+let prefix = JSON.parse(rawdata);
+
+
 
 var client = new dsteem.Client('https://api.steemit.com')
 
@@ -22,6 +30,8 @@ var pool = mysql.createPool({
 });
 
 var maxpic = 5;
+
+
 
 function createNewPlayer(transaction, cb) {
     //INSERT USER
@@ -42,7 +52,7 @@ function createNewPlayer(transaction, cb) {
                         player_id = result[0].user_id
                         console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                         //INSERT USER CHARACTER
-                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100,"+  getRandomInt(maxpic) +")"
+                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + getRandomInt(maxpic) + ")"
                         connection.query(query, function (err, result) {
                             if (err) console.log(error);
                             else {
@@ -93,17 +103,17 @@ addXpToCharacter = function (character_id, xp, cb) {
         connection.query(query, function (err, result) {
             if (err) throw err;
             if (result[0] != undefined) {
-                console.log(xp + "XP will be add to " +character_id)
-                    var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE characters SET xp=" + character_new_xp + " WHERE  character_id="+ character_id;
-                    connection.query(query, function (err, result) {
-                        if (err) throw err;
-                        else {
-                            console.log(xp + "XP added to character" +character_id)
-                            connection.release();
-                            cb(true)
-                        }
-                    })
+                console.log(xp + "XP will be add to " + character_id)
+                var character_new_xp = result[0].xp + xp
+                var query = "UPDATE characters SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
+                connection.query(query, function (err, result) {
+                    if (err) throw err;
+                    else {
+                        console.log(xp + "XP added to character" + character_id)
+                        connection.release();
+                        cb(true)
+                    }
+                })
             }
             else {
                 console.log("User : " + player + " isnt recorded");
@@ -138,7 +148,7 @@ StartTransaction = function (transaction, cb) {
                             if (result[0].item_price <= amount) {
                                 var item_ref = 0
                                 item_ref = createUniqueId()
-                                var query = createAndInserNewItem(result[0],item_ref)
+                                var query = createAndInserNewItem(result[0], item_ref)
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
@@ -147,25 +157,24 @@ StartTransaction = function (transaction, cb) {
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
-                                                console.log("Item " +result[0].item_id+ "with reference" + item_ref +" Successfully Added to " + id)
-                                                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + result[0].item_id +")";
+                                                console.log("Item " + result[0].item_id + "with reference" + item_ref + " Successfully Added to " + id)
+                                                var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + result[0].item_id + ")";
                                                 connection.query(query, function (err, result) {
                                                     if (err) throw err;
                                                     else {
-                                                        console.log("Item " +item_ref + " move to " + id)
-                                                        addXpToCharacter(id,10,function(result){
-                                                            if(result)
-                                                            {
+                                                        console.log("Item " + item_ref + " move to " + id)
+                                                        addXpToCharacter(id, 10, function (result) {
+                                                            if (result) {
                                                                 connection.release();
                                                                 cb(null)
                                                             }
-                                                            else{
+                                                            else {
                                                                 connection.release();
                                                                 cb(true)
                                                             }
 
                                                         })
-   
+
                                                     }
                                                 })
                                             }
@@ -200,7 +209,7 @@ function createUniqueId() {
     return id
 };
 
-function createAndInserNewItem(shop_item,newitemid) {
+function createAndInserNewItem(shop_item, newitemid) {
     var item_quality = SetItemQuality()
     console.log(item_quality)
     var item_name;
@@ -210,27 +219,32 @@ function createAndInserNewItem(shop_item,newitemid) {
     var armor = shop_item.item_armor
     switch (item_quality) {
         case 1:
-            item_name = "Epic " + shop_item.item_name
+            prefix = prefix.weapon_quality_prefix.epic[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            item_name = prefix +" " + shop_item.item_name
             requirel_level += 5
             item_durability = item_durability * 5
             break;
         case 2:
-            item_name = "Legenday " + shop_item.item_name
+            prefix = prefix.weapon_quality_prefix.legendary[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            item_name = prefix +" " + shop_item.item_name
             requirel_level += 4
             item_durability = item_durability * 4
             break;
         case 3:
-            item_name = "Rare " + shop_item.item_name
+            prefix = prefix.weapon_quality_prefix.rare[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            item_name = prefix +" " + shop_item.item_name
             requirel_level += 3
             item_durability = item_durability * 3
             break;
         case 4:
-            item_name = "Magical " + shop_item.item_name
+            prefix = prefix.weapon_quality_prefix.magic[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            item_name = prefix +" " + shop_item.item_name
             requirel_level += 2
             item_durability = item_durability * 2
             break;
         default:
-            item_name = "Simple " + shop_item.item_name
+            prefix = prefix.weapon_quality_prefix.normal[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            item_name = prefix +" " + shop_item.item_name
     }
 
     switch (shop_item.item_type_id) {
@@ -248,7 +262,7 @@ function createAndInserNewItem(shop_item,newitemid) {
             break;
         default:
     }
-    var query = "INSERT INTO item (item_ref, item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" +newitemid +"," + shop_item.item_type_id + ",'" + item_name + "'," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
+    var query = "INSERT INTO item (item_ref, item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + newitemid + "," + shop_item.item_type_id + ",'" + item_name + "'," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
     return query
 };
 
@@ -346,3 +360,5 @@ stream.on('data', function (block) {
         // done
         console.log('END');
     });
+
+
