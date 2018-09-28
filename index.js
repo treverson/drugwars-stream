@@ -131,6 +131,10 @@ StartTransaction = function (transaction, cb) {
 
         })
     }
+    else{
+        console.log("cannt read memo")
+        console.log(transaction.memo)
+    }
 
 }
 createUniqueId = function () {
