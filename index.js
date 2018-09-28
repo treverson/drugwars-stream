@@ -105,13 +105,21 @@ StartTransaction = function (transaction, cb) {
                         else {
                             console.log("Item price = " + result[0].item_price + "Amount  = " + amount)
                             if (result[0].item_price <= amount) {
-                                var query = createAndInserNewItem(result[0])
+                                var newitemid = createUniqueId()
+                                var query = createAndInserNewItem(result[0],newitemid)
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
-                                        console.log("Item Successfully Added for " + username)
-                                        connection.release();
-                                        cb(null)
+                                        console.log("Item Successfully Added in Game")
+                                        var query = 
+                                        connection.query(query, function (err, result) {
+                                            if (err) throw err;
+                                            else {
+                                                "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + newitemid +")";
+                                                connection.release();
+                                                cb(null)
+                                            }
+                                        })
                                     }
                                 })
                             }
@@ -142,7 +150,7 @@ function createUniqueId() {
     return id
 };
 
-function createAndInserNewItem(shop_item) {
+function createAndInserNewItem(shop_item,id) {
     var item_quality = SetItemQuality()
     var item_name;
     var requirel_level = shop_item.item_required_level
@@ -151,27 +159,27 @@ function createAndInserNewItem(shop_item) {
     var armor = shop_item.item_armor
     switch (item_quality) {
         case 1:
-            item_name = "Epic " + shop_item.name
+            item_name = "Epic " + shop_item.item_name
             requirel_level += 5
             item_durability = item_durability * 5
             break;
         case 2:
-            item_name = "Legenday " + shop_item.name
+            item_name = "Legenday " + shop_item.item_name
             requirel_level += 4
             item_durability = item_durability * 4
             break;
         case 3:
-            item_name = "Rare " + shop_item.name
+            item_name = "Rare " + shop_item.item_name
             requirel_level += 3
             item_durability = item_durability * 3
             break;
         case 4:
-            item_name = "Magical " + shop_item.name
+            item_name = "Magical " + shop_item.item_name
             requirel_level += 2
             item_durability = item_durability * 2
             break;
         default:
-            item_name = "Simple " + shop_item.name
+            item_name = "Simple " + shop_item.item_name
     }
 
     switch (shop_item.item_type_id) {
@@ -189,8 +197,7 @@ function createAndInserNewItem(shop_item) {
             break;
         default:
     }
-
-    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
+    var query = "INSERT INTO item (item_id, item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" +newitemid +"," + shop_item.item_type_id + ",'" + item_name + "'," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
     return query
 };
 
