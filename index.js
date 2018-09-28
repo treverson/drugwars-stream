@@ -277,14 +277,11 @@ stream.on('data', function (block) {
         for (i = 0; i < object.length; i++) {
             var transaction;
             if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
-                console.log(object[i].operations[0][1])
                 console.log('Transfer block ' + block.block_id)
                 transaction = object[i].operations[0][1]
-
                 checkForPlayer(transaction.from, function (exist) {
                     if (exist) {
                         console.log('Transfer block ' + block.block_id)
-                        console.log(transaction)
                         StartTransaction(transaction, function (error) {
                             if (error)
                                 console.log(error)
