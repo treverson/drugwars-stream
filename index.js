@@ -212,23 +212,28 @@ function createAndInserNewItem(shop_item,newitemid) {
 };
 
 function SetItemQuality() {
-    var rnd = getRandomInt(100)
+    var rnd = new getRandomInt(100)
+    var item_quality;
     if (rnd = 100) {
         item_quality = 1
+        return item_quality
     }
     if (rnd > 95) {
         item_quality = 2
+        return item_quality
     }
     if (rnd > 87) {
         item_quality = 3
+        return item_quality
     }
     if (rnd > 71) {
         item_quality = 4
+        return item_quality
     }
     else {
         item_quality = 5
+        return item_quality
     }
-    return item_quality
 }
 
 
