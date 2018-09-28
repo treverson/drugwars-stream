@@ -190,7 +190,7 @@ function createAndInserNewItem(shop_item) {
         default:
     }
 
-    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + item + "," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
+    var query = "INSERT INTO item (item_type_id, item_name, item_required_level, item_durability, item_quality, item_damage, item_armor) VALUES (" + shop_item.item_type_id + ",'" + item_name + "'," + requirel_level + "," + item_durability + "," + item_quality + ", " + damage + "," + armor + ")";
     return query
 };
 
