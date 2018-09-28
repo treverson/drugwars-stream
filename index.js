@@ -27,21 +27,18 @@ var pool = mysql.createPool({
 
 
 createNewPlayer = function (player, cb) {
-    pool.getConnection(function (err, connection) {
         //INSERT USER
         console.log("User : " + player + " will be recorded");
         var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
         connection.query(query, function (err, result) {
             if (err) throw err;
             else {
-                console.log(result)
                 console.log("User : " + player + " is now recorded in db")
                 //RECUPERATE USER ID
                 var query = "SELECT * FROM user WHERE username='" + player + "'"
                 connection.query(query, function (err, result) {
                     if (err) throw err;
                     if (result[0] != undefined) {
-                        console.log(result)
                         var player_id = result[0].user_id
                         console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                         //INSERT USER CHARACTER
@@ -64,11 +61,8 @@ createNewPlayer = function (player, cb) {
                         })
                     }
                 })
-
-
             }
         })
-    });
 }
 
 checkForPlayer = function (player, cb) {
@@ -92,6 +86,7 @@ checkForPlayer = function (player, cb) {
 }
 
 StartTransaction = function (transaction, cb) {
+    console.log("transaction = " + transaction)
     var username = transaction.from
     var amount = transaction.amount.split(' ')[0]
     var id;
