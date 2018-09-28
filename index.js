@@ -212,7 +212,8 @@ function createAndInserNewItem(shop_item,newitemid) {
 };
 
 function SetItemQuality() {
-    var rnd = new getRandomInt(100)
+    var rnd = getRandomInt(100)
+    console.log("quality " + rnd)
     var item_quality;
     if (rnd = 100) {
         item_quality = 1
@@ -254,7 +255,7 @@ function CreateAttribute(item_quality) {
 }
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+    return new Math.floor(Math.random() * Math.floor(max));
 }
 
 function CreateAttributes(id) {
