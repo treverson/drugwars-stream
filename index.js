@@ -85,6 +85,36 @@ checkForPlayer = function (player, cb) {
         });
     });
 }
+addXpToCharacter(341,50,function(error){
+    if(error)
+    console.log(error)
+})
+
+addXpToCharacter = function (character_id, xp, cb) {
+    pool.getConnection(function (err, connection) {
+        var query = "SELECT * FROM characters WHERE character_id = '" + character_id + "'"
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            if (result[0] != undefined) {
+                console.log(xp + "XP will be add to " +character_id)
+                    var character_new_xp = result[0].xp + xp
+                    var query = "UPDATE characters SET xp=" + xp + " WHERE  character_id="+ character_id;
+                    connection.query(query, function (err, result) {
+                        if (err) throw err;
+                        else {
+                            console.log(xp + "XP added to character" +character_id)
+                            connection.release();
+                            cb(true)
+                        }
+                    })
+            }
+            else {
+                console.log("User : " + player + " isnt recorded");
+                cb(null)
+            }
+        });
+    });
+}
 
 StartTransaction = function (transaction, cb) {
     var username = transaction.from
