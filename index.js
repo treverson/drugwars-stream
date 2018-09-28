@@ -140,7 +140,9 @@ StartTransaction = function (transaction, cb) {
 
 }
 function createUniqueId() {
-    return new Date().valueOf();
+    var id = new Date().valueOf();
+    console.log(id)
+    return id
 };
 
 
