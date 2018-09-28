@@ -12,8 +12,7 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 
 
-let rawdata = fs.readFileSync('prefix.json');
-var prefix = JSON.parse(rawdata);
+
 
 
 var client = new dsteem.Client('https://api.steemit.com')
@@ -209,6 +208,8 @@ function createUniqueId() {
 };
 
 function createAndInserNewItem(shop_item, newitemid) {
+    let rawdata = fs.readFileSync('prefix.json');
+    let prefix = JSON.parse(rawdata);
     var item_quality = SetItemQuality()
     console.log(item_quality)
     var item_name;
