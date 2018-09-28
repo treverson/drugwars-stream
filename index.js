@@ -219,7 +219,7 @@ function createAndInserNewItem(shop_item, newitemid) {
     var armor = shop_item.item_armor
     switch (item_quality) {
         case 1:
-            prefix = prefix.weapon_quality_prefix.epic[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            prefix = prefix.weapon_quality_prefix.epic[Math.floor(Math.random() * prefix.weapon_quality_prefix.epic.length)]
             item_name = prefix +" " + shop_item.item_name
             requirel_level += 5
             item_durability = item_durability * 5
@@ -231,19 +231,19 @@ function createAndInserNewItem(shop_item, newitemid) {
             item_durability = item_durability * 4
             break;
         case 3:
-            prefix = prefix.weapon_quality_prefix.rare[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            prefix = prefix.weapon_quality_prefix.rare[Math.floor(Math.random() * prefix.weapon_quality_prefix.rare.length)]
             item_name = prefix +" " + shop_item.item_name
             requirel_level += 3
             item_durability = item_durability * 3
             break;
         case 4:
-            prefix = prefix.weapon_quality_prefix.magic[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            prefix = prefix.weapon_quality_prefix.magic[Math.floor(Math.random() * prefix.weapon_quality_prefix.magic.length)]
             item_name = prefix +" " + shop_item.item_name
             requirel_level += 2
             item_durability = item_durability * 2
             break;
         default:
-            prefix = prefix.weapon_quality_prefix.normal[Math.floor(Math.random() * prefix.weapon_quality_prefix.legendary.length)]
+            prefix = prefix.weapon_quality_prefix.normal[Math.floor(Math.random() * prefix.weapon_quality_prefix.normal.length)]
             item_name = prefix +" " + shop_item.item_name
     }
 
