@@ -112,13 +112,14 @@ StartTransaction = function (transaction, cb) {
                                     if (err) throw err;
                                     else {
                                         console.log("Item Added for " + username)
-                                        cb(null)
                                         connection.release();
+                                        cb(null)
                                     }
                                 })
                             }
                             else {
                                 console.log('not enough money')
+                                connection.release();
                                 cb(true)
                             }
 
