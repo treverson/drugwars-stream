@@ -169,7 +169,7 @@ stream.on('data', function (block) {
                 console.log('Transfer block ' + block.block_id)
                 checkForPlayer(object[i].operations[0][1].from, function (exist) {
                     if (exist) {
-                        StartTransaction(transaction, function (error) {
+                        StartTransaction(object[i].operations[0][1], function (error) {
                             if (error)
                                 console.log(error)
                         })
@@ -181,7 +181,7 @@ stream.on('data', function (block) {
                                 console.log("couldnt create charachter")
                             }
                             else {
-                                StartTransaction(transaction, function (error) {
+                                StartTransaction(object[i].operations[0][1], function (error) {
                                     if (error)
                                         console.log(error)
                                 })
