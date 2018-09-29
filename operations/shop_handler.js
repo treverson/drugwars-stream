@@ -1,4 +1,5 @@
 var player = require('./player_handler')
+const fs = require('fs');
 
 var mysql = require('mysql');
 var pool = mysql.createPool({
