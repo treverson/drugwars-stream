@@ -62,7 +62,7 @@ function ResolveBattle(battle_id, cb) {
                         battle_result.battle_looser_id = result[0].battle_player_two_id
                         else
                         battle_result.battle_looser_id = result[0].battle_player_one_id
-                        var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result.result + "',"+battleresult.winner_id+","+battle_looser_id+")"
+                        var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result.result + "',"+battle_result.winner_id+","+battle_result.battle_looser_id+")"
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
