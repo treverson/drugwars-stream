@@ -51,7 +51,7 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-fight") {
                 try {
-                    var fight = json.parse(object[i].operations[0][1].json)
+                    var fight = JSON.parse(object[i].operations[0][1].json)
                     console.log(fight)
                     battle.createBattle(fight.user_id, function (error) {
                         if (error) {
