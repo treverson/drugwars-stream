@@ -1,4 +1,5 @@
-var dsteem = require('dsteem')
+const { Client, BlockchainMode } = require('dsteem');
+
 var mysql = require('mysql');
 const express = require('express')
 var es = require('event-stream')
@@ -7,17 +8,13 @@ const fs = require('fs');
 const app = express()
 const port = process.env.PORT || 4000
 
+
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 
+const client = new Client('https://api.steemit.com')
 
-
-
-
-
-var client = new dsteem.Client('https://api.steemit.com')
-
-var stream = client.blockchain.getBlockStream()
+var stream = client.blockchain.getOperationsStream({ mode: BlockchainMode.Irreversible })
 
 var pool = mysql.createPool({
     connectionLimit: 5,
@@ -32,7 +29,7 @@ var maxpic = 5;
 
 
 function createNewPlayer(transaction, cb) {
-    //INSERT USER
+    //INSERT USER 
     var player = transaction.from
     var player_id;
     console.log("User : " + player + " will be recorded");
@@ -318,7 +315,7 @@ function CreateAttributes(id) {
     return query
 }
 
-
+var count = 0;
 stream.on('data', function (block) {
     if (block.transactions[0] != undefined) {
         var object = JSON.stringify(block.transactions)
@@ -326,8 +323,8 @@ stream.on('data', function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var transaction;
-            if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
-                console.log('Transfer block ' + block.block_id)
+           if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
+                console.log('Transfer block for Ongame ' + block.block_id)
                 transaction = object[i].operations[0][1]
                 checkForPlayer(transaction.from, function (exist) {
                     if (exist) {
@@ -352,7 +349,7 @@ stream.on('data', function (block) {
                         })
                     }
                 })
-            }
+           }
         }
     }
 })
