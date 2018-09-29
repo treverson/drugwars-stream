@@ -8,8 +8,22 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-const battle_handler={
-    createBattle : function (player_id, cb) {
+function StartNewBattle(player_id, cb) {
+    pool.getConnection(function (err, connection) {
+        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now()+ ")"
+        connection.query(query, function (err, result) {
+            if (err) console.log(error);
+            else {
+                console.log("User : " + player_id + " Started a new battle")
+                connection.release();
+            }
+        })
+    })
+}
+
+
+const battle_handler = {
+    checkForABattle: function (player_id, cb) {
         //INSERT USER 
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE user_id='" + player_id + "'"
@@ -21,7 +35,17 @@ const battle_handler={
                     connection.query(query, function (err, result) {
                         if (err) console.log(error);
                         else {
-                            console.log(result)
+                            if (result.length > 0) {
+
+                            }
+                            else {
+                                console.log('there is no battle')
+                                StartNewBattle(player_id,function(error)
+                                {
+                                    if(error)
+                                    console.log(error)
+                                })
+                            }
                         }
                     })
                 }

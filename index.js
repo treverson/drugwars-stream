@@ -53,7 +53,7 @@ stream.on("data", function (block) {
                 try {
                     var fight = JSON.parse(object[i].operations[0][1].json)
                     console.log(fight)
-                    battle.createBattle(fight.user_id, function (error) {
+                    battle.checkForABattle(fight.user_id, function (error) {
                         if (error) {
                             console.log(error)
                         }
