@@ -7,7 +7,8 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
-var rpg_mode = require('./battle/rpg_mode')
+const rpg_mode = require('./battle/rpg_mode')
+rpg_mode = new rpg_mode();
 
 function StartNewBattle(player_id, cb) {
     pool.getConnection(function (err, connection) {
@@ -53,8 +54,6 @@ function ResolveBattle(battle_id, cb) {
             if (err) console.log(err);
             else {
                 console.log(result)
-                var rpg_mode 
-                rpg_mode = new rpg_mode();
                 rpg_mode.createCharacter('player_1',result.battle_player_one_id,'King');
                 rpg_mode.createCharacter('player_2',result.battle_player_two_id,'Slave');
                 rpg_mode.startBattle(rpg_mode.characters,function(battleresult){
