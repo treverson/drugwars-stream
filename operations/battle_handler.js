@@ -23,7 +23,7 @@ function StartNewBattle(player_id, cb) {
 
 function JoinBattle(player_id,battle_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now()+ ")"
+        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toLocaleString();+ ")"
         connection.query(query, function (err, result) {
             if (err) console.log(error);
             else {
@@ -48,7 +48,6 @@ const battle_handler = {
             connection.query(query, function (err, result) {
                 if (err) console.log(error);
                 else {
-                    console.log(result)
                     var query = "SELECT * FROM battle"
                     connection.query(query, function (err, result) {
                         if (err) console.log(error);
