@@ -1,4 +1,4 @@
-const { Client, BlockchainMode } = require('dsteem');
+var dsteem = require('dsteem')
 const battle = require('./operations/battle_handler')
 const player = require('./operations/player_handler')
 var mysql = require('mysql');
@@ -13,9 +13,9 @@ const port = process.env.PORT || 4000
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 
-const client = new Client('https://api.steemit.com')
+var client = new dsteem.Client('https://api.steemit.com')
 
-var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Irreversible })
+var stream = client.blockchain.getBlockStream()
 
 var pool = mysql.createPool({
     connectionLimit: 5,
