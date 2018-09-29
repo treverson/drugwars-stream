@@ -7,8 +7,6 @@ const battle_handler={
     }
 }
 
-
-
 battle_handler.StartBattle = function() {
     console.log('Battle Started !');
 }

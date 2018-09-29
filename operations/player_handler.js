@@ -7,6 +7,15 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
+function CreateAttributes(id) {
+    var query = "";
+    for (i = 1; i < 11; i++) {
+        query += "(" + id + "," + [i] + "," + getRandomInt(12) + ")"
+        query = query.replace(')(', '),(')
+    }
+    query = query.replace(')(', '),(')
+    return query
+}
 
 const player_handler = {
     createNewPlayer : function (transaction, cb) {
