@@ -12,10 +12,11 @@ function StartNewBattle(player_id, cb) {
     pool.getConnection(function (err, connection) {
         var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toLocaleString()+ ")"
         connection.query(query, function (err, result) {
-            if (err) console.log(error);
+            if (err) console.log(err);
             else {
                 console.log("User : " + player_id + " Started a new battle")
                 connection.release();
+                cb(null)
             }
         })
     })
