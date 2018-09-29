@@ -67,7 +67,8 @@ const battle_handler = {
                             if (result.length > 0) {
                                 if(checkFreeBattle(player_id,result))
                                 {
-
+                                    var battle_to_join = checkFreeBattle(player_id,result)
+                                    console.log(battle_to_join)
                                 }
                                 else{
                                     console.log('There is no available battle')
