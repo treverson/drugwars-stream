@@ -58,9 +58,10 @@ function ResolveBattle(battle_id, cb) {
                 rpg_mode.createCharacter('player_2',result[0].battle_player_two_id,'Slave');
                 rpg_mode.startBattle(rpg_mode.characters,function(battleresult){
                     if(battleresult){
-                        if(battleresult.winner_id = battle_player_one_id)
-                        battleresult.battle_looser_id = battle_player_two_id
-                        elbattleresult.battle_looser_id = battle_player_one_id
+                        if(battleresult.winner_id = result[0].battle_player_one_id)
+                        battleresult.battle_looser_id = result[0].battle_player_two_id
+                        else
+                        battleresult.battle_looser_id = result[0].battle_player_one_id
                         var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result + "',"+battleresult.winner_id+","+battle_looser_id+")"
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
