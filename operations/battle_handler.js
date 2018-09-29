@@ -26,7 +26,7 @@ function JoinBattle(player_id,battle_id, cb) {
     pool.getConnection(function (err, connection) {
         var query = "INSERT INTO battle (battle_player_two_id) WHERE battle_id='"+battle_id + "' VALUES (" + player_id + ")"
         connection.query(query, function (err, result) {
-            if (err) console.log(error);
+            if (err) console.log(err);
             else {
                 console.log("User : " + player_id + " joined battle " + battle_id)
                 connection.release();
