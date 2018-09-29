@@ -37,7 +37,6 @@ function JoinBattle(player_id, battle_id, cb) {
                     else {
                         console.log("Battle "+ battle_id + " solved")
                         cb(null)
-                        connection.release();
                     }
                 })
 
@@ -53,7 +52,6 @@ function ResolveBattle(battle_id, cb) {
         connection.query(query, function (err, result) {
             if (err) console.log(err);
             else {
-                console.log(result)
                 rpg_mode.createCharacter('player_1',result[0].battle_player_one_id,'King');
                 rpg_mode.createCharacter('player_2',result[0].battle_player_two_id,'Slave');
                 rpg_mode.startBattle(rpg_mode.characters,function(battle_result){
@@ -66,12 +64,10 @@ function ResolveBattle(battle_id, cb) {
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
-                                console.log(result)
                                 var query = "DELETE FROM battle WHERE battle_id=" + battle_id
                                 connection.query(query, function (err, result) {
                                     if (err) console.log(err);
                                     else {
-                                        console.log(result)
                                         cb(null)
                                     }
                                 })
