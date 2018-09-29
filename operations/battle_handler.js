@@ -65,7 +65,7 @@ const battle_handler = {
                         if (err) console.log(error);
                         else {
                             if (result.length > 0) {
-                                if(checkFreeBattle(result))
+                                if(checkFreeBattle(player_id,result))
                                 {
 
                                 }
