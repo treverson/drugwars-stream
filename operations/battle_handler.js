@@ -10,7 +10,7 @@ var pool = mysql.createPool({
 
 function StartNewBattle(player_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toISOString().slice(0, 19).replace('T', ' ');+ ")"
+        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toLocaleString()+ ")"
         connection.query(query, function (err, result) {
             if (err) console.log(error);
             else {
@@ -23,7 +23,7 @@ function StartNewBattle(player_id, cb) {
 
 function JoinBattle(player_id,battle_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toLocaleString();+ ")"
+        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now().toLocaleString()+ ")"
         connection.query(query, function (err, result) {
             if (err) console.log(error);
             else {
