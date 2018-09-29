@@ -11,6 +11,7 @@ const port = process.env.PORT || 4000
 var player = require('./operations/player_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
+var helpers = require('./helpers/helpers')
 
 
 app.listen(port, () => console.log(`Listening on ${port}`));

@@ -1,4 +1,5 @@
 var player = require('./player_handler')
+var helpers = require('./helpers/helpers')
 const fs = require('fs');
 
 var mysql = require('mysql');
@@ -9,12 +10,6 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
-
-function createUniqueId() {
-    var id = new Date().valueOf();
-    console.log(id)
-    return id
-};
 
 function getQueryForNewItem(shop_item, newitemid) {
     let rawdata = fs.readFileSync('./operations/prefix.json');
@@ -129,7 +124,6 @@ const shop_handler = {
             pool.getConnection(function (err, connection) {
                 var query = "SELECT * FROM user WHERE username='" + username + "'"
                 connection.query(query, function (err, result) {
-                    // Always release the connection back to the pool after the (last) query.
                     if (err) throw err;
                     if (result[0] != undefined) {
                         id = result[0].user_id
@@ -140,17 +134,17 @@ const shop_handler = {
                                 console.log("Item price = " + result[0].item_price + "Amount  = " + amount)
                                 if (result[0].item_price <= amount) {
                                     var item_ref = 0
-                                    item_ref = createUniqueId()
+                                    item_ref = helpers.createUniqueId()
                                     var query = getQueryForNewItem(result[0], item_ref)
                                     connection.query(query, function (err, result) {
                                         if (err) throw err;
                                         else {
-                                            console.log("Item Successfully Created")
+                                            console.log("Item successfully created")
                                             var query = "SELECT * FROM item WHERE item_ref='" + item_ref + "'"
                                             connection.query(query, function (err, result) {
                                                 if (err) throw err;
                                                 else {
-                                                    console.log("Item " + result[0].item_id + "with reference" + item_ref + " Successfully Added to " + id)
+                                                    console.log("Item " + result[0].item_id + " with reference " + item_ref + " successfully added to " + id)
                                                     var query = "INSERT INTO character_item (character_id, item_id) VALUES (" + id + "," + result[0].item_id + ")";
                                                     connection.query(query, function (err, result) {
                                                         if (err) throw err;
