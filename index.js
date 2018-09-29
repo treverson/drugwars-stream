@@ -1,5 +1,6 @@
 const { Client, BlockchainMode } = require('dsteem');
-
+const battle = require('./operations/battle_handler')
+const player = require('./operations/player_handler')
 var mysql = require('mysql');
 const express = require('express')
 var es = require('event-stream')
@@ -14,7 +15,7 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 const client = new Client('https://api.steemit.com')
 
-var stream = client.blockchain.getOperationsStream({ mode: BlockchainMode.Irreversible })
+var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Irreversible })
 
 var pool = mysql.createPool({
     connectionLimit: 5,
@@ -26,50 +27,9 @@ var pool = mysql.createPool({
 
 var maxpic = 5;
 
+battle.CreateBattle()
 
 
-function createNewPlayer(transaction, cb) {
-    //INSERT USER 
-    var player = transaction.from
-    var player_id;
-    console.log("User : " + player + " will be recorded");
-    pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
-        connection.query(query, function (err, result) {
-            if (err) console.log(error);
-            else {
-                console.log("User : " + player + " is now recorded in db")
-                //RECUPERATE USER ID
-                var query = "SELECT * FROM user WHERE username='" + player + "'"
-                connection.query(query, function (err, result) {
-                    if (err) console.log(error);
-                    if (result[0] != undefined) {
-                        player_id = result[0].user_id
-                        console.log("User : " + player + " will get his character and will have this id now : " + player_id);
-                        //INSERT USER CHARACTER
-                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + getRandomInt(maxpic) + ")"
-                        connection.query(query, function (err, result) {
-                            if (err) console.log(error);
-                            else {
-                                console.log("User : " + player + " have now starting values and will now get his attributes")
-                                //INSERT USER ATTRIBUTES
-                                var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
-                                connection.query(query, function (err, result) {
-                                    if (err) console.log(error);
-                                    else {
-                                        console.log("User : " + player + " is now ready to play")
-                                        connection.release();
-                                        cb(null)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    })
-}
 
 checkForPlayer = function (player, cb) {
     console.log("check for player : " + player)
@@ -317,7 +277,12 @@ function CreateAttributes(id) {
 
 var count = 0;
 stream.on('data', function (block) {
-    if (block.transactions[0] != undefined) {
+    // try {
+    //     console.log(block.transactions)
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    if (block.transactions.op != undefined) {
         var object = JSON.stringify(block.transactions)
         object.replace('\\', '')
         object = JSON.parse(object)
@@ -336,7 +301,7 @@ stream.on('data', function (block) {
                     }
                     else {
                         console.log("New player creation")
-                        createNewPlayer(transaction, function (error) {
+                        player.createNewPlayer(transaction, function (error) {
                             if (error) {
                                 console.log("couldnt create charachter")
                             }
