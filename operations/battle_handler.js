@@ -21,9 +21,27 @@ function StartNewBattle(player_id, cb) {
     })
 }
 
+function JoinBattle(player_id,battle_id, cb) {
+    pool.getConnection(function (err, connection) {
+        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + Date.now()+ ")"
+        connection.query(query, function (err, result) {
+            if (err) console.log(error);
+            else {
+                console.log("User : " + player_id + " Started a new battle")
+                connection.release();
+            }
+        })
+    })
+}
 
 const battle_handler = {
-    checkForABattle: function (player_id, cb) {
+    checkForABattle: function (player_id,battle_id, cb) {
+        if(battle_id > 0){
+            JoinBattle(player_id,battle_id,function(error){
+                if(error)
+                console.log(error)
+            })
+        }
         //INSERT USER 
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE user_id='" + player_id + "'"
@@ -35,8 +53,12 @@ const battle_handler = {
                     connection.query(query, function (err, result) {
                         if (err) console.log(error);
                         else {
-                            if (result.length > 0) {
-                                console.log(result)
+                            if (result[0].length > 0) {
+                                console.log(result[0])
+                                for (i=0; result[0].length > i; i++)
+                                {
+                                    console.log(result[i])
+                                }
                             }
                             else {
                                 console.log('There is no battle')
