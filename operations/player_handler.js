@@ -8,7 +8,7 @@ var pool = mysql.createPool({
 });
 
 
-var player_handler = {
+const player_handler = {
     createNewPlayer : function (transaction, cb) {
         //INSERT USER 
         var player = transaction.from
@@ -51,7 +51,6 @@ var player_handler = {
             })
         })
     },
-    
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {

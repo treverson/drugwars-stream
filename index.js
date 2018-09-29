@@ -14,7 +14,7 @@ var shop = require('./operations/shop_handler')
 
 
 app.listen(port, () => console.log(`Listening on ${port}`));
-
+battle.createBattle(555)
 
 var client = new Client('https://api.steemit.com')
 
@@ -230,20 +230,19 @@ function CreateAttributes(id) {
 }
 
 var count = 0;
-stream.on('data', function (block) {
+stream.on("data", function (block) {
     try {
         var object = JSON.stringify(block.transactions)
-        object.replace('\\', '')
+        object.replace("\\", "")
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var transaction;
-            console.log(object[i].operations[0][0])
-           if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
-                console.log('Transfer block for Ongame ' + block.block_id)
+           if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
+                console.log("Transfer block for Ongame " + block.block_id)
                 transaction = object[i].operations[0][1]
                 player.checkForPlayer(transaction.from, function (exist) {
                     if (exist) {
-                        console.log('Transfer block ' + block.block_id)
+                        console.log("Transfer block " + block.block_id)
                         StartTransaction(transaction, function (error) {
                             if (error)
                                 console.log(error)
