@@ -7,10 +7,11 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
+var rpg_mode = require('./operations/battle/rpg_mode')
 
 function StartNewBattle(player_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO battle (battle_player_one_id) VALUES (" + player_id +")"
+        var query = "INSERT INTO battle (battle_player_one_id) VALUES (" + player_id + ")"
         connection.query(query, function (err, result) {
             if (err) console.log(err);
             else {
@@ -22,36 +23,85 @@ function StartNewBattle(player_id, cb) {
     })
 }
 
-function JoinBattle(player_id,battle_id, cb) {
+function JoinBattle(player_id, battle_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "UPDATE battle SET battle_player_two_id=" + player_id + " WHERE battle_id="+battle_id
+        var query = "UPDATE battle SET battle_player_two_id=" + player_id + " WHERE battle_id=" + battle_id
         connection.query(query, function (err, result) {
-            if (err) console.log(err);
+            if (err) cb(true);
             else {
                 console.log("User : " + player_id + " joined battle " + battle_id)
-                connection.release();
+                ResolveBattle(battle_id, function (error) {
+                    if (error)
+                        console.log(error)
+                    else {
+                        console.log("Battle "+ battle_id + " solved")
+                        cb(null)
+                        connection.release();
+                    }
+                })
+
             }
         })
     })
 }
 
 
-function checkFreeBattle(player_id,battles) {
-    for (i=0; battles.length > i; i++)
-    {
+function ResolveBattle(battle_id, cb) {
+    pool.getConnection(function (err, connection) {
+        var query = "SELECT * FROM battle WHERE battle_id=" + battle_id
+        connection.query(query, function (err, result) {
+            if (err) console.log(err);
+            else {
+                console.log(result)
+                var rpg_mode 
+                rpg_mode = new rpg_mode();
+                rpg_mode.createCharacter('player_1',result.battle_player_one_id,'King');
+                rpg_mode.createCharacter('player_2',result.battle_player_two_id,'Slave');
+                rpg_mode.startBattle(rpg_mode.characters,function(battleresult){
+                    if(battleresult){
+                        if(battleresult.winner_id = battle_player_one_id)
+                        battleresult.battle_looser_id = battle_player_two_id
+                        elbattleresult.battle_looser_id = battle_player_one_id
+                        var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result + "',"+battleresult.winner_id+","+battle_looser_id+")"
+                        connection.query(query, function (err, result) {
+                            if (err) console.log(err);
+                            else {
+                                console.log(result)
+                                var query = "DELETE battle WHERE battle_id=" + battle_id
+                                connection.query(query, function (err, result) {
+                                    if (err) console.log(err);
+                                    else {
+                                        console.log(result)
+                                        cb(null)
+                                    }
+                                })
+                                cb(null)
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    })
+}
+
+
+
+function checkFreeBattle(player_id, battles) {
+    for (i = 0; battles.length > i; i++) {
         console.log(battles[i])
-        if(battles[i].battle_player_one_id != player_id)
-        return battles[i]
+        if (battles[i].battle_player_one_id != player_id)
+            return battles[i]
     }
     return false
 }
 
 const battle_handler = {
-    checkForABattle: function (player_id,battle_id, cb) {
-        if(battle_id > 0){
-            JoinBattle(player_id,battle_id,function(error){
-                if(error)
-                console.log(error)
+    checkForABattle: function (player_id, battle_id, cb) {
+        if (battle_id > 0) {
+            JoinBattle(player_id, battle_id, function (error) {
+                if (error)
+                    console.log(error)
             })
         }
         //INSERT USER 
@@ -65,33 +115,29 @@ const battle_handler = {
                         if (err) console.log(err);
                         else {
                             if (result.length > 0) {
-                                if(checkFreeBattle(player_id,result))
-                                {
-                                    var battle_to_join = checkFreeBattle(player_id,result)
-                                    JoinBattle(player_id,battle_to_join.battle_id,function(error)
-                                    {
-                                        if(error)
-                                        console.log(error)
-                                        else{
+                                if (checkFreeBattle(player_id, result)) {
+                                    var battle_to_join = checkFreeBattle(player_id, result)
+                                    JoinBattle(player_id, battle_to_join.battle_id, function (error) {
+                                        if (error)
+                                            console.log(error)
+                                        else {
                                             console.log(player_id + " successfully joined battle with id " + battle_to_join.battle_id)
                                         }
                                     })
                                 }
-                                else{
+                                else {
                                     console.log('There is no available battle')
-                                    StartNewBattle(player_id,function(error)
-                                    {
-                                        if(error)
-                                        console.log(error)
+                                    StartNewBattle(player_id, function (error) {
+                                        if (error)
+                                            console.log(error)
                                     })
                                 }
                             }
                             else {
                                 console.log('There is no battle')
-                                StartNewBattle(player_id,function(error)
-                                {
-                                    if(error)
-                                    console.log(error)
+                                StartNewBattle(player_id, function (error) {
+                                    if (error)
+                                        console.log(error)
                                 })
                             }
                         }
@@ -104,13 +150,3 @@ const battle_handler = {
 
 
 module.exports = battle_handler;
-
-// var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + helpers.CreateAttributes(player_id);
-// connection.query(query, function (err, result) {
-//     if (err) console.log(error);
-//     else {
-//         console.log("User : " + player + " is now ready to play")
-//         connection.release();
-//         cb(null)
-//     }
-// })
