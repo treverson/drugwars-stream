@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var helpers = require('./helpers/helpers')
+var helpers = require('./helpers.js')
 var pool = mysql.createPool({
     connectionLimit: 5,
     host: process.env.MYSQL_HOST,
@@ -7,7 +7,7 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
-
+var maxpic = 5;
 
 const player_handler = {
     createNewPlayer : function (transaction, cb) {

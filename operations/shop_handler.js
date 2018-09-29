@@ -1,5 +1,5 @@
 var player = require('./player_handler')
-var helpers = require('./helpers/helpers')
+var helpers = require('./helpers.js')
 const fs = require('fs');
 
 var mysql = require('mysql');
