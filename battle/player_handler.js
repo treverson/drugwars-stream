@@ -1,4 +1,3 @@
-const express = require('express');
 var mysql = require('mysql');
 
 const player_handler={}
@@ -61,6 +60,26 @@ player_handler.createNewPlayer = function (transaction, cb) {
             }
         })
     })
+}
+
+player_handler.checkForPlayer = function (player, cb) {
+    console.log("check for player : " + player)
+    pool.getConnection(function (err, connection) {
+        var query = "SELECT * FROM user WHERE username = '" + player + "'"
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            if (result[0] != undefined) {
+                if (player = result[0].username) {
+                    console.log("User : " + player + " is already recorded");
+                    cb(true)
+                }
+            }
+            else {
+                console.log("User : " + player + " isnt recorded");
+                cb(null)
+            }
+        });
+    });
 }
 
 module.exports = player_handler;

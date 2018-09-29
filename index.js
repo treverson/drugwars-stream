@@ -27,26 +27,6 @@ var pool = mysql.createPool({
 
 var maxpic = 5;
 
-checkForPlayer = function (player, cb) {
-    console.log("check for player : " + player)
-    pool.getConnection(function (err, connection) {
-        var query = "SELECT * FROM user WHERE username = '" + player + "'"
-        connection.query(query, function (err, result) {
-            if (err) throw err;
-            if (result[0] != undefined) {
-                if (player = result[0].username) {
-                    console.log("User : " + player + " is already recorded");
-                    cb(true)
-                }
-            }
-            else {
-                console.log("User : " + player + " isnt recorded");
-                cb(null)
-            }
-        });
-    });
-}
-
 
 addXpToCharacter = function (character_id, xp, cb) {
     pool.getConnection(function (err, connection) {
@@ -273,17 +253,13 @@ function CreateAttributes(id) {
 
 var count = 0;
 stream.on('data', function (block) {
-    // try {
-    //     console.log(block.transactions)
-    // } catch (error) {
-    //     console.log(error)
-    // }
-    if (block.transactions.op != undefined) {
+    try {
         var object = JSON.stringify(block.transactions)
         object.replace('\\', '')
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var transaction;
+            console.log(object[i].operations[0][0])
            if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
                 console.log('Transfer block for Ongame ' + block.block_id)
                 transaction = object[i].operations[0][1]
@@ -312,6 +288,8 @@ stream.on('data', function (block) {
                 })
            }
         }
+    } catch (error) {
+        console.log(error)
     }
 })
     .on('end', function () {
