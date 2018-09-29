@@ -13,9 +13,9 @@ const port = process.env.PORT || 4000
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 
-var client = new dsteem.Client('https://api.steemit.com')
+var client = new Client('https://api.steemit.com')
 
-var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Irreversible })
+var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 
 var pool = mysql.createPool({
     connectionLimit: 5,
