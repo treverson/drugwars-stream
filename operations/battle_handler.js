@@ -24,11 +24,11 @@ function StartNewBattle(player_id, cb) {
 
 function JoinBattle(player_id,battle_id, cb) {
     pool.getConnection(function (err, connection) {
-        var query = "INSERT INTO battle (battle_player_one_id, battle_time) VALUES (" + player_id + "," + new Date().toJSON().slice(0, 19).replace('T', ' ')+ ")"
+        var query = "INSERT INTO battle (battle_player_two_id) WHERE battle_id='"+battle_id + "' VALUES (" + player_id + ")"
         connection.query(query, function (err, result) {
             if (err) console.log(error);
             else {
-                console.log("User : " + player_id + " Started a new battle")
+                console.log("User : " + player_id + " joined battle " + battle_id)
                 connection.release();
             }
         })
@@ -68,7 +68,14 @@ const battle_handler = {
                                 if(checkFreeBattle(player_id,result))
                                 {
                                     var battle_to_join = checkFreeBattle(player_id,result)
-                                    console.log(battle_to_join)
+                                    JoinBattle(player_id,battle_to_join.battle_id,function(error)
+                                    {
+                                        if(error)
+                                        console.log(error)
+                                        else{
+                                            console.log(player_id + " successfully joined battle with id " + battle_to_join.battle_id)
+                                        }
+                                    })
                                 }
                                 else{
                                     console.log('There is no available battle')
