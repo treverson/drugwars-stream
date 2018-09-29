@@ -27,10 +27,6 @@ var pool = mysql.createPool({
 
 var maxpic = 5;
 
-battle.CreateBattle()
-
-
-
 checkForPlayer = function (player, cb) {
     console.log("check for player : " + player)
     pool.getConnection(function (err, connection) {
