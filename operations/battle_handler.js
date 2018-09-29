@@ -12,7 +12,7 @@ const battle_handler={
     createBattle : function (player_id, cb) {
         //INSERT USER 
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM user WHERE username='" + player + "'"
+            var query = "SELECT * FROM user WHERE username='" + player_id + "'"
             connection.query(query, function (err, result) {
                 if (err) console.log(error);
                 else {
