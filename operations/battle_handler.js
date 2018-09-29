@@ -36,7 +36,7 @@ function JoinBattle(player_id, battle_id, cb) {
                         console.log(error)
                     else {
                         connection.release();
-                        console.log("Battle "+ battle_id + " solved")
+                        console.log("Battle " + battle_id + " solved")
                         cb(null)
                     }
                 })
@@ -53,15 +53,15 @@ function ResolveBattle(battle_id, cb) {
         connection.query(query, function (err, result) {
             if (err) console.log(err);
             else {
-                rpg_mode.createCharacter('player_1',result[0].battle_player_one_id,'King');
-                rpg_mode.createCharacter('player_2',result[0].battle_player_two_id,'Slave');
-                rpg_mode.startBattle(rpg_mode.characters,function(battle_result){
-                    if(battle_result){
-                        if(battle_result.winner_id = result[0].battle_player_one_id)
-                        battle_result.battle_looser_id = result[0].battle_player_two_id
+                rpg_mode.createCharacter('player_1', result[0].battle_player_one_id, 'King');
+                rpg_mode.createCharacter('player_2', result[0].battle_player_two_id, 'Slave');
+                rpg_mode.startBattle(rpg_mode.characters, function (battle_result) {
+                    if (battle_result) {
+                        if (battle_result.winner_id = result[0].battle_player_one_id)
+                            battle_result.battle_looser_id = result[0].battle_player_two_id
                         else
-                        battle_result.battle_looser_id = result[0].battle_player_one_id
-                        var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result.result + "',"+battle_result.winner_id+","+battle_result.battle_looser_id+")"
+                            battle_result.battle_looser_id = result[0].battle_player_one_id
+                        var query = "INSERT INTO battle_history (battle_id,battle_result,battle_winner_id,battle_looser_id) VALUES (" + battle_id + ",'" + battle_result.result + "'," + battle_result.winner_id + "," + battle_result.battle_looser_id + ")"
                         connection.query(query, function (err, result) {
                             if (err) cb(err);
                             else {
@@ -83,17 +83,18 @@ function ResolveBattle(battle_id, cb) {
 
 
 
-function checkFreeBattle(player_id, battles) {
+function checkFreeBattle(player_id, battles,cb) {
     for (i = 0; battles.length > i; i++) {
         if (battles[i].battle_player_one_id != player_id && battles[i].battle_player_two_id != player_id)
-            return battles[i]
+            cb(battles[i])
     }
-    return false
+    return cb(false)
 }
 
 const battle_handler = {
     checkForABattle: function (player_id, battle_id, cb) {
-        if (battle_id > 0) {
+        if (cb) {
+            console.log(cb)
             JoinBattle(player_id, battle_id, function (error) {
                 if (error)
                     console.log(error)
@@ -110,12 +111,17 @@ const battle_handler = {
                         if (err) console.log(err);
                         else {
                             if (result.length > 0) {
-                                if (checkFreeBattle(player_id, result)) {
-                                    var battle_to_join = checkFreeBattle(player_id, result)
-                                    JoinBattle(player_id, battle_to_join.battle_id, function (error) {
-                                        if (error)
-                                            console.log(error)
-                                    })
+                                if (checkFreeBattle(player_id, result, function (error) {
+                                    if (error)
+                                        console.log(error)
+                                    else {
+                                        var battle_to_join = checkFreeBattle(player_id, result)
+                                        JoinBattle(player_id, battle_to_join.battle_id, function (error) {
+                                            if (error)
+                                                console.log(error)
+                                        })
+                                    }
+                                })) {
                                 }
                                 else {
                                     console.log('There is no available battle')
