@@ -50,12 +50,18 @@ stream.on("data", function (block) {
                 transferForShop(object[i].operations[0][1])
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-fight") {
-                console.log(object[i].operations[0][1].json)
-                battle.createBattle(object[i].operations[0][1].json.user_id, function (error) {
-                    if (error) {
-                        console.log(error)
-                    }
-                })
+                try {
+                    var fight = json.parse(object[i].operations[0][1].json)
+                    console.log(fight)
+                    battle.createBattle(fight.user_id, function (error) {
+                        if (error) {
+                            console.log(error)
+                        }
+                    })
+
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
     } catch (error) {
