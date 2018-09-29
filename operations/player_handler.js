@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-var helpers = require('./helpers.js')
 var pool = mysql.createPool({
     connectionLimit: 5,
     host: process.env.MYSQL_HOST,
@@ -8,6 +7,24 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 var maxpic = 5;
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+CreateAttributes= function (id) {
+    var query = "";
+    for (i = 1; i < 11; i++) {
+        query += "(" + id + "," + [i] + "," + getRandomInt(12) + ")"
+        query = query.replace(')(', '),(')
+    }
+    query = query.replace(')(', '),(')
+    return query
+},
+createUniqueId=function () {
+    var id = new Date().valueOf();
+    return id
+}
+
 
 const player_handler = {
     createNewPlayer : function (transaction, cb) {
@@ -35,7 +52,7 @@ const player_handler = {
                                 else {
                                     console.log("User : " + player + " have now starting values and will now get his attributes")
                                     //INSERT USER ATTRIBUTES
-                                    var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + helpers.CreateAttributes(player_id);
+                                    var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
                                     connection.query(query, function (err, result) {
                                         if (err) console.log(error);
                                         else {

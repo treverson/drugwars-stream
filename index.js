@@ -6,13 +6,6 @@ const port = process.env.PORT || 4000
 var player = require('./operations/player_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
-var helpers = require('./operations/helpers')
-
-var Character = require('./operations/battle/character')
-var Weapon = require('./operations/battle/weapon')
-var attributes = require('./operations/battle/attributes')
-var rpg_mode = require('./operations/battle/rpg_mode')
-
 
 var client = new Client('https://api.steemit.com')
 

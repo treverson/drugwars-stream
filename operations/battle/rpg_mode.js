@@ -1,6 +1,4 @@
 var Character = require('./character')
-var Weapon = require('./weapon')
-var Attributes = require('./attributes')
 
 function rpg_mode(){
 	this.characters = [];
