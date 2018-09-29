@@ -89,8 +89,7 @@ function ResolveBattle(battle_id, cb) {
 
 function checkFreeBattle(player_id, battles) {
     for (i = 0; battles.length > i; i++) {
-        console.log(battles[i])
-        if (battles[i].battle_player_one_id != player_id)
+        if (battles[i].battle_player_one_id != player_id && battles[i].battle_player_two_id != player_id)
             return battles[i]
     }
     return false
