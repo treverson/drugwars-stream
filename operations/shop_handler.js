@@ -1,5 +1,4 @@
 var player = require('./player_handler')
-var helpers = require('./helpers.js')
 const fs = require('fs');
 
 var mysql = require('mysql');
@@ -111,7 +110,10 @@ function CreateAttribute(item_quality) {
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
-
+createUniqueId=function () {
+    var id = new Date().valueOf();
+    return id
+}
 const shop_handler = {
     StartTransaction : function (transaction, cb) {
         var username = transaction.from
@@ -133,7 +135,7 @@ const shop_handler = {
                                 console.log("Item price = " + result[0].item_price + "Amount  = " + amount)
                                 if (result[0].item_price <= amount) {
                                     var item_ref = 0
-                                    item_ref = helpers.createUniqueId()
+                                    item_ref = createUniqueId()
                                     var query = getQueryForNewItem(result[0], item_ref)
                                     connection.query(query, function (err, result) {
                                         if (err) throw err;

@@ -19,7 +19,8 @@ CreateAttributes= function (id) {
     }
     query = query.replace(')(', '),(')
     return query
-},
+}
+
 createUniqueId=function () {
     var id = new Date().valueOf();
     return id
