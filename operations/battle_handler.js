@@ -39,9 +39,9 @@ function JoinBattle(player_id,battle_id, cb) {
 function checkFreeBattle(player_id,battles) {
     for (i=0; battles.length > i; i++)
     {
-        console.log(result[i])
-        if(result[i].battle_player_one_id != player_id)
-        return result[i]
+        console.log(battles[i])
+        if(battles[i].battle_player_one_id != player_id)
+        return battles[i]
     }
     return false
 }
