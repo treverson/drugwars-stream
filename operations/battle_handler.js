@@ -7,7 +7,7 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
-var rpg_mode = require('./operations/battle/rpg_mode')
+var rpg_mode = require('./battle/rpg_mode')
 
 function StartNewBattle(player_id, cb) {
     pool.getConnection(function (err, connection) {
