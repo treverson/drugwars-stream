@@ -36,10 +36,10 @@ const battle_handler = {
                         if (err) console.log(error);
                         else {
                             if (result.length > 0) {
-
+                                console.log(result)
                             }
                             else {
-                                console.log('there is no battle')
+                                console.log('There is no battle')
                                 StartNewBattle(player_id,function(error)
                                 {
                                     if(error)
