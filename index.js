@@ -72,7 +72,7 @@ StartTransaction = function (transaction, cb) {
                                                     if (err) throw err;
                                                     else {
                                                         console.log("Item " + item_ref + " move to " + id)
-                                                        addXpToCharacter(id, 10, function (result) {
+                                                        player.addXpToCharacter(id, 10, function (result) {
                                                             if (result) {
                                                                 connection.release();
                                                                 cb(null)
