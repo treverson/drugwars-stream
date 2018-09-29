@@ -17,7 +17,7 @@ function createUniqueId() {
 };
 
 function getQueryForNewItem(shop_item, newitemid) {
-    let rawdata = fs.readFileSync('./prefix.json');
+    let rawdata = fs.readFileSync('../prefix.json');
     let prefix = JSON.parse(rawdata);
     var item_quality = SetItemQuality()
     console.log(item_quality)
