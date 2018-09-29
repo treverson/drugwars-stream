@@ -1,4 +1,4 @@
-var dsteem = require('dsteem')
+const { Client, BlockchainMode } = require('dsteem');
 const battle = require('./operations/battle_handler')
 const player = require('./operations/player_handler')
 var mysql = require('mysql');
@@ -15,7 +15,7 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 var client = new dsteem.Client('https://api.steemit.com')
 
-var stream = client.blockchain.getBlockStream()
+var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Irreversible })
 
 var pool = mysql.createPool({
     connectionLimit: 5,
@@ -263,7 +263,7 @@ stream.on('data', function (block) {
            if (object[i].operations[0][0] === 'transfer' && object[i].operations[0][1].to === "ongame") {
                 console.log('Transfer block for Ongame ' + block.block_id)
                 transaction = object[i].operations[0][1]
-                checkForPlayer(transaction.from, function (exist) {
+                player.checkForPlayer(transaction.from, function (exist) {
                     if (exist) {
                         console.log('Transfer block ' + block.block_id)
                         StartTransaction(transaction, function (error) {
