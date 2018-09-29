@@ -67,7 +67,7 @@ function ResolveBattle(battle_id, cb) {
                             if (err) console.log(err);
                             else {
                                 console.log(result)
-                                var query = "DELETE battle WHERE battle_id=" + battle_id
+                                var query = "DELETE FROM battle WHERE battle_id=" + battle_id
                                 connection.query(query, function (err, result) {
                                     if (err) console.log(err);
                                     else {
