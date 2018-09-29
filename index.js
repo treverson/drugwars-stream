@@ -46,6 +46,9 @@ stream.on("data", function (block) {
                     }
                 })
             }
+            if (object[i].operations[0][0] === "custom_json") {
+                console.log(object[i].operations[0][1])
+            }
         }
     } catch (error) {
         console.log(error)
