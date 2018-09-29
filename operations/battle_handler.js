@@ -53,9 +53,9 @@ const battle_handler = {
                     connection.query(query, function (err, result) {
                         if (err) console.log(error);
                         else {
-                            if (result[0].length > 0) {
-                                console.log(result[0])
-                                for (i=0; result[0].length > i; i++)
+                            if (result.length > 0) {
+                                console.log(result)
+                                for (i=0; result.length > i; i++)
                                 {
                                     console.log(result[i])
                                 }
