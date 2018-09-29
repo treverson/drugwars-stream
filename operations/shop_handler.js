@@ -120,7 +120,6 @@ const shop_handler = {
         if (transaction.memo != undefined) {
             var item = transaction.memo.split('-')[1]
             console.log("Username : " + username + " Amount : " + amount + " Memo : " + item)
-    
             pool.getConnection(function (err, connection) {
                 var query = "SELECT * FROM user WHERE username='" + username + "'"
                 connection.query(query, function (err, result) {

@@ -12,6 +12,31 @@ var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
+transferForShop = function (transaction) {
+    player.checkForPlayer(transaction.from, function (exist) {
+        if (exist) {
+            shop.StartTransaction(transaction, function (error) {
+                if (error)
+                    console.log(error)
+            })
+        }
+        else {
+            player.createNewPlayer(transaction, function (error) {
+                if (error) {
+                    console.log("couldnt create charachter")
+                }
+                else {
+                    shop.StartTransaction(transaction, function (error) {
+                        if (error)
+                            console.log(error)
+                    })
+                }
+            })
+        }
+    })
+}
+
+
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 stream.on("data", function (block) {
@@ -22,32 +47,14 @@ stream.on("data", function (block) {
         for (i = 0; i < object.length; i++) {
             var transaction;
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
-                transaction = object[i].operations[0][1]
-                player.checkForPlayer(transaction.from, function (exist) {
-                    if (exist) {
-                        console.log("Transfer block for Ongame " + block.block_id)
-                        shop.StartTransaction(transaction, function (error) {
-                            if (error)
-                                console.log(error)
-                        })
-                    }
-                    else {
-                        player.createNewPlayer(transaction, function (error) {
-                            if (error) {
-                                console.log("couldnt create charachter")
-                            }
-                            else {
-                                shop.StartTransaction(transaction, function (error) {
-                                    if (error)
-                                        console.log(error)
-                                })
-                            }
-                        })
+                transferForShop(object[i].operations[0][1])
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-fight") {
+                battle.createBattle(object[i].operations[0][1].json.user_id, function (error) {
+                    if (error) {
+                        console.log(error)
                     }
                 })
-            }
-            if (object[i].operations[0][0] === "custom_json") {
-                console.log(object[i].operations[0][1])
             }
         }
     } catch (error) {
@@ -58,5 +65,6 @@ stream.on("data", function (block) {
         // done
         console.log('END');
     });
+
 
 
