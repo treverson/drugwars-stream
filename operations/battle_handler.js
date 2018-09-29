@@ -35,6 +35,17 @@ function JoinBattle(player_id,battle_id, cb) {
     })
 }
 
+
+function checkFreeBattle(player_id,battles) {
+    for (i=0; battles.length > i; i++)
+    {
+        console.log(result[i])
+        if(result[i].battle_player_one_id != player_id)
+        return result[i]
+    }
+    return false
+}
+
 const battle_handler = {
     checkForABattle: function (player_id,battle_id, cb) {
         if(battle_id > 0){
@@ -54,10 +65,17 @@ const battle_handler = {
                         if (err) console.log(error);
                         else {
                             if (result.length > 0) {
-                                console.log(result)
-                                for (i=0; result.length > i; i++)
+                                if(checkFreeBattle(result))
                                 {
-                                    console.log(result[i])
+
+                                }
+                                else{
+                                    console.log('There is no available battle')
+                                    StartNewBattle(player_id,function(error)
+                                    {
+                                        if(error)
+                                        console.log(error)
+                                    })
                                 }
                             }
                             else {
