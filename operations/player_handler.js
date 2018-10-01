@@ -48,13 +48,13 @@ const player_handler = {
                             //INSERT USER CHARACTER
                             var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
                             connection.query(query, function (err, result) {
-                                if (err) console.log(error);
+                                if (err) console.log(err);
                                 else {
                                     console.log("User : " + player + " have now starting values and will now get his attributes")
                                     //INSERT USER ATTRIBUTES
                                     var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
                                     connection.query(query, function (err, result) {
-                                        if (err) console.log(error);
+                                        if (err) console.log(err);
                                         else {
                                             console.log("User : " + player + " is now ready to play")
                                             connection.release();
