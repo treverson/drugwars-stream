@@ -20,7 +20,7 @@ transferForShop = function (transaction) {
             })
         }
         else {
-            player.createNewPlayer(transaction, function (error) {
+            player.createNewPlayer(transaction.from, function (error) {
                 if (error) {
                     console.log("couldnt create charachter")
                 }
@@ -47,7 +47,7 @@ stream.on("data", function (block) {
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
                 transferForShop(object[i].operations[0][1])
             }
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-fight") {
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
                 try {
                     var fight = JSON.parse(object[i].operations[0][1].json)
                     battle.checkForABattle(fight.user_id, function (error) {
@@ -56,6 +56,22 @@ stream.on("data", function (block) {
                         }
                     })
 
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
+                try {
+
+                    player.checkForPlayer(object[i].operations[0][1].author, function (exist) {
+                        if (!exist) {
+                            player.createNewPlayer(object[i].operations[0][1].author, function (error) {
+                                if (error) {
+                                    console.log("couldnt create charachter")
+                                }
+                            })
+                        }
+                    })
                 } catch (error) {
                     console.log(error)
                 }

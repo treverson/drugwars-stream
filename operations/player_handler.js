@@ -28,9 +28,8 @@ createUniqueId=function () {
 
 
 const player_handler = {
-    createNewPlayer : function (transaction, cb) {
+    createNewPlayer : function (player, cb) {
         //INSERT USER 
-        var player = transaction.from
         var player_id;
         console.log("User : " + player + " will be recorded");
         pool.getConnection(function (err, connection) {
