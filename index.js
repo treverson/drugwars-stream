@@ -19,19 +19,6 @@ transferForShop = function (transaction) {
                     console.log(error)
             })
         }
-        else {
-            player.createNewPlayer(transaction.from, function (error) {
-                if (error) {
-                    console.log("couldnt create charachter")
-                }
-                else {
-                    shop.StartTransaction(transaction, function (error) {
-                        if (error)
-                            console.log(error)
-                    })
-                }
-            })
-        }
     })
 }
 
@@ -65,7 +52,7 @@ stream.on("data", function (block) {
                     var json = JSON.parse(object[i].operations[0][1].json)
                     player.checkForPlayer(json.username, function (exist) {
                         if (!exist) {
-                            player.createNewPlayer(json.username, function (error) {
+                            player.createNewPlayer(json.username,json.icone, function (error) {
                                 if (error) {
                                     console.log("couldnt create charachter")
                                 }

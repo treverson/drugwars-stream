@@ -28,7 +28,7 @@ createUniqueId=function () {
 
 
 const player_handler = {
-    createNewPlayer : function (player, cb) {
+    createNewPlayer : function (player,icon, cb) {
         //INSERT USER 
         var player_id;
         console.log("User : " + player + " will be recorded");
@@ -46,7 +46,7 @@ const player_handler = {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                             //INSERT USER CHARACTER
-                            var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + getRandomInt(maxpic) + ")"
+                            var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
                             connection.query(query, function (err, result) {
                                 if (err) console.log(error);
                                 else {
