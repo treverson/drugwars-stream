@@ -41,7 +41,7 @@ const player_handler = {
                     //RECUPERATE USER ID
                     var query = "SELECT * FROM user WHERE username='" + player + "'"
                     connection.query(query, function (err, result) {
-                        if (err) console.log(error);
+                        if (err) console.log(err);
                         if (result[0] != undefined) {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
