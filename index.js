@@ -62,10 +62,10 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
                 try {
-
-                    player.checkForPlayer(object[i].operations[0][1].author, function (exist) {
+                    var json = JSON.parse(object[i].operations[0][1].json)
+                    player.checkForPlayer(json.username, function (exist) {
                         if (!exist) {
-                            player.createNewPlayer(object[i].operations[0][1].author, function (error) {
+                            player.createNewPlayer(json.username, function (error) {
                                 if (error) {
                                     console.log("couldnt create charachter")
                                 }

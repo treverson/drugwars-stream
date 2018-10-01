@@ -100,50 +100,49 @@ const battle_handler = {
     }
 }
 
-  //INSERT USER 
-  pool.getConnection(function (err, connection) {
-    var query = "SELECT * FROM user WHERE user_id='" + player_id + "'"
-    connection.query(query, function (err, result) {
-        if (err) console.log(err);
-        else {
-            var query = "SELECT * FROM battle"
-            connection.query(query, function (err, result) {
-                if (err) console.log(err);
-                else {
-                    if (result.length > 0) {
-                        if (checkFreeBattle(player_id, result, function (error) {
-                            if (error)
-                                console.log(error)
-                            else {
-                                var battle_to_join = checkFreeBattle(player_id, result)
-                                JoinBattle(player_id, battle_to_join.battle_id, function (error) {
-                                    if (error)
-                                        console.log(error)
-                                })
-                            }
-                        })) {
-                        }
-                        else {
-                            console.log('There is no available battle')
-                            StartNewBattle(player_id, function (error) {
-                                if (error)
-                                    console.log(error)
-                            })
-                        }
-                    }
-                    else {
-                        console.log('There is no battle')
-                        StartNewBattle(player_id, function (error) {
-                            if (error)
-                                console.log(error)
-                        })
-                    }
-                }
-            })
-        }
-    })
-})
-}
+//   //INSERT USER 
+//   pool.getConnection(function (err, connection) {
+//     var query = "SELECT * FROM user WHERE user_id='" + player_id + "'"
+//     connection.query(query, function (err, result) {
+//         if (err) console.log(err);
+//         else {
+//             var query = "SELECT * FROM battle"
+//             connection.query(query, function (err, result) {
+//                 if (err) console.log(err);
+//                 else {
+//                     if (result.length > 0) {
+//                         if (checkFreeBattle(player_id, result, function (error) {
+//                             if (error)
+//                                 console.log(error)
+//                             else {
+//                                 var battle_to_join = checkFreeBattle(player_id, result)
+//                                 JoinBattle(player_id, battle_to_join.battle_id, function (error) {
+//                                     if (error)
+//                                         console.log(error)
+//                                 })
+//                             }
+//                         })) {
+//                         }
+//                         else {
+//                             console.log('There is no available battle')
+//                             StartNewBattle(player_id, function (error) {
+//                                 if (error)
+//                                     console.log(error)
+//                             })
+//                         }
+//                     }
+//                     else {
+//                         console.log('There is no battle')
+//                         StartNewBattle(player_id, function (error) {
+//                             if (error)
+//                                 console.log(error)
+//                         })
+//                     }
+//                 }
+//             })
+//         }
+//     })
+// })
 
 
 
