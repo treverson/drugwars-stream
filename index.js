@@ -4,6 +4,7 @@ const app = express()
 const port = process.env.PORT || 4000
 
 var player = require('./operations/player_handler')
+var gift = require('./operations/gift_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
 
@@ -57,6 +58,18 @@ stream.on("data", function (block) {
                                     console.log("couldnt create charachter")
                                 }
                             })
+                        }
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "gift-claim") {
+                try {
+                    var json = JSON.parse(object[i].operations[0][1].json)
+                    gift.createNewGift(json.username, function (error) {
+                        if (!error) {
+                            console.log('gift updated')
                         }
                     })
                 } catch (error) {
