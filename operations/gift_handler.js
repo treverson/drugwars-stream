@@ -20,7 +20,7 @@ const gift_handler = {
                 else {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
-                        console.log(result.date)
+                        console.log(result[0].date)
                         var today = new Date(date);
                         var dd = today.getDate();
                         var mm = today.getMonth() + 1; //January is 0!
@@ -32,8 +32,11 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd;
-                        if(result.date = today){
+                        if(result.date === today){
                             console.log('sameday')
+                        }
+                        else{
+                            console.log('not the sameday')
                         }
                     }
 
