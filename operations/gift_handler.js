@@ -21,7 +21,7 @@ const gift_handler = {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
                         console.log(result.date)
-                        var today = date;
+                        var today = new Date(date);
                         var dd = today.getDate();
                         var mm = today.getMonth() + 1; //January is 0!
                         var yyyy = today.getFullYear();
