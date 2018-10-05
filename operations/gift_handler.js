@@ -47,7 +47,8 @@ const gift_handler = {
                         }
                         today = yyyy + '/' + mm + '/' + dd;
 
-                        if((zz+1) = dd)
+                        var b = zz + 1
+                        if(b = dd)
                         {
                             console.log("new day")
                         }
