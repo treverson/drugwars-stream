@@ -48,40 +48,47 @@ const gift_handler = {
 
                         if(result[0].day > 6)
                         {
-                            console.log("reseting days")
-                            var query = "UPDATE gift SET day=1 WHERE username='" + user + "'"
-                            connection.query(query, function (err, result) {
-                                if (err) throw err;
-                                else {
-                                    console.log("Days reset for user" + user)
-                                    connection.release();
-                                    cb(null)
-                                }
-                            }) 
-                        }
+                            if(lastday === today){
+                                console.log('same day for ' + user)
+                                connection.release();
+                                cb(null)
+                            }
+                            else{
+                                console.log("reseting days")
+                                var query = "UPDATE gift SET day=1 WHERE username='" + user + "'"
+                                connection.query(query, function (err, result) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log("Days reset for user" + user)
+                                        connection.release();
+                                        cb(null)
+                                    }
+                                }) 
+                            }
 
-
-                        if(lastday === today){
-                            console.log('same day for ' + user)
-                            connection.release();
-                            cb(null)
                         }
                         else{
-                            var newday = parseFloat(result[0].day + 1)
-                            console.log('updating days')
-                            console.log(result[0])
-                            var query = "UPDATE gift SET day=" + newday + ", date='"+today+"' WHERE gift_id=" + result[0].gift_id
-                            connection.query(query, function (err, result) {
-                                if (err) throw err;
-                                else {
-                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Reward', function(err, result) {
-                                        console.log(err, result);
-                                    });
-                                    console.log("Day added to user" + user)
-                                    connection.release();
-                                    cb(null)
-                                }
-                            }) 
+                            if(lastday === today){
+                                console.log('same day for ' + user)
+                                connection.release();
+                                cb(null)
+                            }
+                            else{
+                                var newday = parseFloat(result[0].day + 1)
+                                console.log('updating days')
+                                console.log(result[0])
+                                var query = "UPDATE gift SET day=" + newday + ", date='"+today+"' WHERE gift_id=" + result[0].gift_id
+                                connection.query(query, function (err, result) {
+                                    if (err) throw err;
+                                    else {
+                                        steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Reward', function(err, result) {
+                                            console.log(err, result);
+                                        });
+                                        console.log("Day added to user" + user)
+                                        cb(null)
+                                    }
+                                }) 
+                            }
                         }
                     }
                     else {
