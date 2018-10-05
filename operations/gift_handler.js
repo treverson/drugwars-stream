@@ -20,6 +20,19 @@ const gift_handler = {
                 else {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
+                        //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
+                        if(result[0].day = 6)
+                        {
+                            var query = "UPDATE gift SET day=" + 1 + " WHERE  username=" + user;
+                            connection.query(query, function (err, result) {
+                                if (err) throw err;
+                                else {
+                                    console.log("Days reset for user" + user)
+                                    connection.release();
+                                    cb(true)
+                                }
+                            }) 
+                        }
                         console.log(result[0].date)
                         var lastday = new Date(result[0].date)
                         var dd = lastday.getDate();
@@ -45,10 +58,19 @@ const gift_handler = {
                         }
                         today = yyyy + '/' + mm + '/' + dd;
                         if(lastday === today){
-                            console.log('sameday')
+                            connection.release();
+                            cb(null)
                         }
                         else{
-                            console.log('not the sameday')
+                            var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE  username=" + user;
+                            connection.query(query, function (err, result) {
+                                if (err) throw err;
+                                else {
+                                    console.log("Day added to user" + user)
+                                    connection.release();
+                                    cb(true)
+                                }
+                            }) 
                         }
                     }
 
