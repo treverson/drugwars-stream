@@ -22,9 +22,9 @@ const gift_handler = {
                     if (result.length >= 1) {
                         console.log(result[0].date)
                         var lastday = new Date(result[0].date)
-                        var dd = today.getDate();
-                        var mm = today.getMonth() + 1; //January is 0!
-                        var yyyy = today.getFullYear();
+                        var dd = lastday.getDate();
+                        var mm = lastday.getMonth() + 1; //January is 0!
+                        var yyyy = lastday.getFullYear();
                         if (dd < 10) {
                             dd = '0' + dd
                         }
