@@ -32,7 +32,7 @@ const gift_handler = {
                         var dd = today.getDate();
                         var mm = today.getMonth() + 1; //January is 0!
                         var yyyy = today.getFullYear();
-
+                        today = yyyy + '/' + mm + '/' + dd;
                         if (zz + 1 != dd) {
                             console.log("day are different")
                             var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
