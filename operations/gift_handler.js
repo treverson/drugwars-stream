@@ -48,7 +48,7 @@ const gift_handler = {
                         today = yyyy + '/' + mm + '/' + dd;
 
                         var b = zz + 1
-                        if(b = dd)
+                        if(b === dd)
                         {
                             console.log("new day")
                         }
@@ -89,9 +89,13 @@ const gift_handler = {
                         }
                     }
                     else {
-                        date = new Date()
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        today = yyyy + '/' + mm + '/' + dd;
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
+                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + today + "')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
