@@ -23,7 +23,7 @@ const gift_handler = {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
                         if(result[0].day = 6)
                         {
-                            var query = "UPDATE gift SET day=" + 1 + " WHERE  username=" + user + "'";
+                            var query = "UPDATE gift SET day=" + 1 + " WHERE  username='" + user + "'";
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
@@ -33,7 +33,6 @@ const gift_handler = {
                                 }
                             }) 
                         }
-                        console.log(result[0].date)
                         var lastday = new Date(result[0].date)
                         var dd = lastday.getDate();
                         var mm = lastday.getMonth() + 1; //January is 0!
@@ -62,7 +61,7 @@ const gift_handler = {
                             cb(null)
                         }
                         else{
-                            var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE  username=" + user + "'";
+                            var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE  username='" + user + "'";
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
