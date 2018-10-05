@@ -8,7 +8,7 @@ var pool = mysql.createPool({
 });
 
 const gift_handler = {
-    createNewGift : function (json, cb) {
+    createNewGift: function (json, cb) {
         //INSERT USER 
         var user = json.name
         var date = json.date
@@ -19,12 +19,25 @@ const gift_handler = {
                 if (err) console.log(error);
                 else {
                     //RECUPERATE USER ACTUAL GIFT
-                    if(result.length>=1)
-                    {
-
+                    if (result.length >= 1) {
+                        console.log(result.date)
+                        var today = date;
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yyyy + '/' + mm + '/' + dd;
+                        if(result.date = today){
+                            console.log('sameday')
+                        }
                     }
 
-                    else{
+                    else {
                         console.log('no result')
                         var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
                         connection.query(query, function (err, result) {
@@ -36,7 +49,7 @@ const gift_handler = {
                             }
                         })
                     }
-                    
+
                 }
             })
         })
