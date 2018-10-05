@@ -47,6 +47,10 @@ const gift_handler = {
                         }
                         today = yyyy + '/' + mm + '/' + dd;
 
+                        if((zz+1) = dd)
+                        {
+                            console.log("new day")
+                        }
                         if (result[0].day > 6) {
                             if (lastday === today) {
                                 console.log('same day for ' + user)
