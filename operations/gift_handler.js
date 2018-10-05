@@ -116,7 +116,7 @@ const gift_handler = {
                     else {
                         date = new Date()
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','2','" + date + "')";
+                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
