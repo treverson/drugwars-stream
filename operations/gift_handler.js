@@ -71,7 +71,7 @@ const gift_handler = {
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
-                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 Steem', 'Reward', function(err, result) {
+                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Reward', function(err, result) {
                                         console.log(err, result);
                                     });
                                     console.log("Day added to user" + user)
