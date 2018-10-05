@@ -55,7 +55,7 @@ const gift_handler = {
                             }
                             else{
                                 console.log("reseting days")
-                                var query = "UPDATE gift SET day=1 WHERE username='" + user + "'"
+                                var query = "UPDATE gift SET day=1 , date='"+today+"' WHERE username='" + user + "'"
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
@@ -93,11 +93,14 @@ const gift_handler = {
                     }
                     else {
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
+                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','2','" + date + "')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
                                 console.log('inserted')
+                                steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Reward', function(err, result) {
+                                    console.log(err, result);
+                                });
                                 connection.release();
                                 cb(null)
                             }
