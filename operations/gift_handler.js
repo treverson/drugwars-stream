@@ -21,6 +21,18 @@ const gift_handler = {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
                         console.log(result[0].date)
+                        var lastday = new Date(result[0].date)
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        lastday = yyyy + '/' + mm + '/' + dd;
+
                         var today = new Date(date);
                         var dd = today.getDate();
                         var mm = today.getMonth() + 1; //January is 0!
@@ -32,7 +44,7 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd;
-                        if(result.date === today){
+                        if(lastday === today){
                             console.log('sameday')
                         }
                         else{
