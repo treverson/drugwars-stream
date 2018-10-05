@@ -52,6 +52,7 @@ const gift_handler = {
                             return cb(null)
                         }
                         var b = zz + 1
+                        console.log( b + zz)
                         if(b === dd)
                         {
                             if (result[0].day > 6) {
