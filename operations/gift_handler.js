@@ -34,7 +34,7 @@ const gift_handler = {
                         var yyyy = today.getFullYear();
 
                         if (zz + 1 != dd) {
-                            console.log("reseting days")
+                            console.log("day are different")
                             var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
@@ -110,6 +110,7 @@ const gift_handler = {
 
                     }
                     else {
+                        var date = new Date()
                         console.log('no result')
                         var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','2','" + date + "')";
                         connection.query(query, function (err, result) {
