@@ -18,19 +18,25 @@ const gift_handler = {
             connection.query(query, function (err, result) {
                 if (err) console.log(error);
                 else {
-                    console.log(result)
                     //RECUPERATE USER ACTUAL GIFT
                     if(result.length>=1)
                     {
-                        
+
                     }
 
                     else{
                         console.log('no result')
+                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
+                        connection.query(query, function (err, result) {
+                            if (err) console.log(error);
+                            else {
+                                console.log('inserted')
+                                connection.release();
+                                cb(null)
+                            }
+                        })
                     }
                     
-                    connection.release();
-                    cb(null)
                 }
             })
         })
