@@ -23,6 +23,7 @@ const gift_handler = {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
                         if(result[0].day >= 6)
                         {
+                            console.log("reseting days")
                             var query = "UPDATE gift SET day=1 WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
@@ -61,6 +62,7 @@ const gift_handler = {
                             cb(null)
                         }
                         else{
+                            console.log('updating days')
                             var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
