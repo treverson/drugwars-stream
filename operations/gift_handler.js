@@ -46,7 +46,11 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd;
-
+                        if (lastday === today) {
+                            console.log('same day for ' + user)
+                            connection.release();
+                            return cb(null)
+                        }
                         var b = zz + 1
                         if(b === dd)
                         {
