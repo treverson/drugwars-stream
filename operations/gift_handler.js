@@ -35,7 +35,7 @@ const gift_handler = {
                         today = yyyy + '/' + mm + '/' + dd;
                         if (zz + 1 != dd) {
                             console.log("day are different")
-                            var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
+                            var query = "UPDATE gift SET day=1 , date='" + new Date() + "' WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
@@ -54,13 +54,17 @@ const gift_handler = {
                             }
                             lastday = tttt + '/' + ff + '/' + zz;
 
+                            var today = new Date(date);
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1; //January is 0!
+                            var yyyy = today.getFullYear();
+                            today = yyyy + '/' + mm + '/' + dd;
                             if (dd < 10) {
                                 dd = '0' + dd
                             }
                             if (mm < 10) {
                                 mm = '0' + mm
                             }
-                            today = yyyy + '/' + mm + '/' + dd;
 
 
                             if (result[0].day > 6) {
