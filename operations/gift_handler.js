@@ -64,6 +64,7 @@ const gift_handler = {
                         else{
                             var newday = parseFloat(result[0].date + 1)
                             console.log('updating days')
+                            console.log(result[0])
                             var query = "UPDATE gift SET day=" + newday + " WHERE gift_id=" + result[0].gift_id
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
