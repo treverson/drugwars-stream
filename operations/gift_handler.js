@@ -20,6 +20,15 @@ const gift_handler = {
                 else {
                     console.log(result)
                     //RECUPERATE USER ACTUAL GIFT
+                    if(result.length>=1)
+                    {
+                        
+                    }
+
+                    else{
+                        console.log('no result')
+                    }
+                    
                     connection.release();
                     cb(null)
                 }
