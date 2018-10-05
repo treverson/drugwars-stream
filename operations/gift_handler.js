@@ -95,7 +95,7 @@ const gift_handler = {
                         console.log('no result')
                         var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + date + "')";
                         connection.query(query, function (err, result) {
-                            if (err) console.log(error);
+                            if (err) console.log(err);
                             else {
                                 console.log('inserted')
                                 connection.release();
