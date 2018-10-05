@@ -21,9 +21,9 @@ const gift_handler = {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
-                        if(result[0].day = 6)
+                        if(result[0].day >= 6)
                         {
-                            var query = "UPDATE gift SET day=" + 1 + " WHERE  username='" + user + "'";
+                            var query = "UPDATE gift SET day=1 WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
@@ -61,7 +61,7 @@ const gift_handler = {
                             cb(null)
                         }
                         else{
-                            var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE  username='" + user + "'";
+                            var query = "UPDATE gift SET day=" + result[0].date+1 + " WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
