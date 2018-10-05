@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var steem = require('steem');
 var pool = mysql.createPool({
     connectionLimit: 5,
     host: process.env.MYSQL_HOST,
@@ -30,7 +31,7 @@ const gift_handler = {
                                 else {
                                     console.log("Days reset for user" + user)
                                     connection.release();
-                                    cb(true)
+                                    cb(null)
                                 }
                             }) 
                         }
@@ -58,6 +59,7 @@ const gift_handler = {
                         }
                         today = yyyy + '/' + mm + '/' + dd;
                         if(lastday === today){
+                            console.log('same day for ' + user)
                             connection.release();
                             cb(null)
                         }
@@ -69,9 +71,12 @@ const gift_handler = {
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
+                                    steem.broadcast.transfer('fundition.help', process.env.STEEM_PASS, 'fundition.help', user, '0.001 Steem', 'Reward', function(err, result) {
+                                        console.log(err, result);
+                                    });
                                     console.log("Day added to user" + user)
                                     connection.release();
-                                    cb(true)
+                                    cb(null)
                                 }
                             }) 
                         }
