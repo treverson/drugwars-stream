@@ -7,7 +7,7 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-const player_handler = {
+const gift_handler = {
     createNewGift : function (player,icon, cb) {
         //INSERT USER 
         var player_id;
