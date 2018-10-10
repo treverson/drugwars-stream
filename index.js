@@ -78,40 +78,43 @@ stream.on("data", function (block) {
                 }
             }
             if (object[i].operations[0][0] === "comment") {
-                
+
                 var json = object[i].operations[0][1]
                 try {
                     json.json_metadata = JSON.parse(object[i].operations[0][1].json_metadata)
+                    if (json.json_metadata) {
+                        if (json.json_metadata.tags) {
+                            for (b = 0; json.json_metadata.tags.length > b; b++) {
+                                if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
+                                    console.log('its an update from ' + json.author)
+                                    $.ajax({
+                                        url: "https://ongameapi.herokuapp.com/api/addupdate/" + json.author + "/" + json.permlink,
+                                        data: 'go',
+                                        dataType: "json",
+                                        success: function (json) {
+                                            console.log('success')
+                                        }
+                                    })
+                                }
+                                if (json.json_metadata.tags[b].includes('myfundition')) {
+                                    console.log('its a project from ' + json.author)
+                                    $.ajax({
+                                        url: "https://ongameapi.herokuapp.com/api/addproject/" + json.author + "/" + json.permlink + "/other",
+                                        data: 'go',
+                                        dataType: "json",
+                                        success: function (json) {
+                                            console.log('success')
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
 
                 } catch (error) {
                     console.log(error)
                 }
-                if (json.json_metadata && json.json_metadata.tags) {
-                    for (b = 0; json.json_metadata.tags.length > b; b++) {
-                        if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
-                            console.log('its an update from ' + json.author)
-                            $.ajax({
-                                url: "https://ongameapi.herokuapp.com/api/addupdate/" + json.author + "/" + json.permlink,
-                                data: 'go',
-                                dataType: "json",
-                                success: function (json) {
-                                    console.log('success')
-                                }
-                            })
-                        }
-                        if (json.json_metadata.tags[b].includes('myfundition')) {
-                            console.log('its a project from ' + json.author)
-                            $.ajax({
-                                url: "https://ongameapi.herokuapp.com/api/addproject/" + json.author + "/" + json.permlink+"/other",
-                                data: 'go',
-                                dataType: "json",
-                                success: function (json) {
-                                    console.log('success')
-                                }
-                            })
-                        }
-                    }
-                }
+
             }
         }
     } catch (error) {
