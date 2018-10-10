@@ -78,7 +78,7 @@ stream.on("data", function (block) {
                 }
             }
             if (object[i].operations[0][0] === "comment") {
-
+                
                 var json = object[i].operations[0][1]
                 try {
                     json.json_metadata = JSON.parse(object[i].operations[0][1].json_metadata)
@@ -86,7 +86,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                if (json.json_metadata.tags) {
+                if (json.json_metadata && json.json_metadata.tags) {
                     for (b = 0; json.json_metadata.tags.length > b; b++) {
                         if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
                             console.log('its an update from ' + json.author)
