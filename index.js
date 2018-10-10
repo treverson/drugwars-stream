@@ -2,6 +2,7 @@ const { Client, BlockchainMode } = require('dsteem');
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
+const sql = require('mssql')
 
 var player = require('./operations/player_handler')
 var gift = require('./operations/gift_handler')
@@ -22,7 +23,6 @@ transferForShop = function (transaction) {
         }
     })
 }
-
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 stream.on("data", function (block) {
@@ -53,7 +53,7 @@ stream.on("data", function (block) {
                     var json = JSON.parse(object[i].operations[0][1].json)
                     player.checkForPlayer(json.username, function (exist) {
                         if (!exist) {
-                            player.createNewPlayer(json.username,json.icon, function (error) {
+                            player.createNewPlayer(json.username, json.icon, function (error) {
                                 if (error) {
                                     console.log("couldnt create charachter")
                                 }
@@ -75,6 +75,42 @@ stream.on("data", function (block) {
                     })
                 } catch (error) {
                     console.log(error)
+                }
+            }
+            if (object[i].operations[0][0] === "comment") {
+
+                var json = object[i].operations[0][1]
+                try {
+                    json.json_metadata = JSON.parse(object[i].operations[0][1].json_metadata)
+
+                } catch (error) {
+                    console.log(error)
+                }
+                if (json.json_metadata.tags) {
+                    for (b = 0; json.json_metadata.tags.length > b; b++) {
+                        if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
+                            console.log('its an update from ' + json.author)
+                            $.ajax({
+                                url: "https://ongameapi.herokuapp.com/api/addupdate/" + json.author + "/" + json.permlink,
+                                data: 'go',
+                                dataType: "json",
+                                success: function (json) {
+                                    console.log('success')
+                                }
+                            })
+                        }
+                        if (json.json_metadata.tags[b].includes('myfundition')) {
+                            console.log('its a project from ' + json.author)
+                            $.ajax({
+                                url: "https://ongameapi.herokuapp.com/api/addproject/" + json.author + "/" + json.permlink+"/other",
+                                data: 'go',
+                                dataType: "json",
+                                success: function (json) {
+                                    console.log('success')
+                                }
+                            })
+                        }
+                    }
                 }
             }
         }
