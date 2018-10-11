@@ -28,48 +28,48 @@ transferForShop = function (transaction) {
 
 cryptoToUSD = function (amount) {
     var totalUSD = 0;
-        if (amount.match("SBD")) {
-            var xtr = new XMLHttpRequest();
-            xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
-            xtr.send();
-            xtr.onreadystatechange = function () {
-                if (xtr.readyState == 4) {
-                    if (xtr.status == 200) {
-                        if (xtr.responseText) {
-                            var ticker = JSON.parse(xtr.responseText)
-                            var number = amount.replace(/[^0-9\.]+/g, "");
-                            totalUSD = number * ticker[0].price_usd
-                            return parseFloat(totalUSD).toFixed(3)
-                        }
-                    } else {
-                        console.log("Error: API not responding!");
+    if (amount.match("SBD")) {
+        var xtr = new XMLHttpRequest();
+        xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
+        xtr.send();
+        xtr.onreadystatechange = function () {
+            if (xtr.readyState == 4) {
+                if (xtr.status == 200) {
+                    if (xtr.responseText) {
+                        var ticker = JSON.parse(xtr.responseText)
+                        var number = amount.replace(/[^0-9\.]+/g, "");
+                        totalUSD = number * ticker[0].price_usd
+                        return parseFloat(totalUSD).toFixed(3)
                     }
+                } else {
+                    console.log("Error: API not responding!");
                 }
             }
         }
-        if (amount.match("STEEM")) {
-            var xtr = new XMLHttpRequest();
-            xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
-            xtr.send();
-            xtr.onreadystatechange = function () {
-                if (xtr.readyState == 4) {
-                    if (xtr.status == 200) {
-                        if (xtr.responseText) {
-                            var ticker = JSON.parse(xtr.responseText)
-                            var number = amount.replace(/[^0-9\.]+/g, "");
-                            totalUSD = number * ticker[0].price_usd
-                            return parseFloat(totalUSD).toFixed(3)
-                        }
-                    } else {
-                        console.log("Error: API not responding!");
+    }
+    if (amount.match("STEEM")) {
+        var xtr = new XMLHttpRequest();
+        xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
+        xtr.send();
+        xtr.onreadystatechange = function () {
+            if (xtr.readyState == 4) {
+                if (xtr.status == 200) {
+                    if (xtr.responseText) {
+                        var ticker = JSON.parse(xtr.responseText)
+                        var number = amount.replace(/[^0-9\.]+/g, "");
+                        totalUSD = number * ticker[0].price_usd
+                        return parseFloat(totalUSD).toFixed(3)
                     }
+                } else {
+                    console.log("Error: API not responding!");
                 }
             }
         }
+    }
     return parseFloat(totalUSD).toFixed(3)
 }
 
-var stream = client.blockchain.getBlockStream({  })
+var stream = client.blockchain.getBlockStream({})
 stream.on("data", function (block) {
     try {
         var object = JSON.stringify(block.transactions)
@@ -184,7 +184,7 @@ stream.on("data", function (block) {
                         }
                     }
                 } catch (error) {
-                   
+
                 }
             }
             if (object[i].operations[0][0] === "transfer") {
@@ -199,11 +199,8 @@ stream.on("data", function (block) {
                         if (op.from === "blocktrades") {
                             amount = cryptoToUSD(op.amount)
                             amount = parseFloat(amount).toFixed(3)
-                            var mail = memo[2]
-                            if (mail)
-                                mail = mail.replace('Secret=', '')
                             var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/"  + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
                             xtr.send();
                             xtr.onreadystatechange = function () {
                                 if (xtr.readyState == 4) {
@@ -221,30 +218,26 @@ stream.on("data", function (block) {
                         (op.from === "fundition") {
                             amount = cryptoToUSD(op.amount)
                             amount = parseFloat(amount).toFixed(3)
-                            var mail = memo[2]
-                            if (mail)
-                                mail = mail.replace('Secret=', '')
-                                var xtr = new XMLHttpRequest();
-                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/" + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
-                                xtr.send();
-                                xtr.onreadystatechange = function () {
-                                    if (xtr.readyState == 4) {
-                                        if (xtr.status == 200) {
-                                            if (xtr.responseText) {
-                                                console.log(xtr.responseText)
-                                            }
-                                        } else {
-                                            console.log("Error: API not responding!");
+                            var xtr = new XMLHttpRequest();
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
+                            xtr.send();
+                            xtr.onreadystatechange = function () {
+                                if (xtr.readyState == 4) {
+                                    if (xtr.status == 200) {
+                                        if (xtr.responseText) {
+                                            console.log(xtr.responseText)
                                         }
+                                    } else {
+                                        console.log("Error: API not responding!");
                                     }
                                 }
+                            }
                         }
                         else {
                             amount = cryptoToUSD(op.amount)
                             amount = parseFloat(amount).toFixed(3)
-                            var mail = memo[2].split('=')[1]
                             var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/" + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
                             xtr.send();
                             xtr.onreadystatechange = function () {
                                 if (xtr.readyState == 4) {
