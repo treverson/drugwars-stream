@@ -203,7 +203,7 @@ stream.on("data", function (block) {
                             if (mail)
                                 mail = mail.replace('Secret=', '')
                             var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + amount + "/"+memo+ "/"+ mail, true);
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/"  + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
                             xtr.send();
                             xtr.onreadystatechange = function () {
                                 if (xtr.readyState == 4) {
@@ -225,7 +225,7 @@ stream.on("data", function (block) {
                             if (mail)
                                 mail = mail.replace('Secret=', '')
                                 var xtr = new XMLHttpRequest();
-                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + amount + "/"+memo+ "/"+ mail, true);
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/" + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
                                 xtr.send();
                                 xtr.onreadystatechange = function () {
                                     if (xtr.readyState == 4) {
@@ -244,7 +244,7 @@ stream.on("data", function (block) {
                             amount = parseFloat(amount).toFixed(3)
                             var mail = memo[2].split('=')[1]
                             var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + amount + "/"+memo+ "/"+ mail, true);
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/"+ op.to + "/" + amount + "/"+memo+ "/"+ mail+ "/"+ op.amount, true);
                             xtr.send();
                             xtr.onreadystatechange = function () {
                                 if (xtr.readyState == 4) {
