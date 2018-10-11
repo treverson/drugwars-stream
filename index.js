@@ -198,7 +198,7 @@ stream.on("data", function (block) {
                         var name = memo[1].split('=')[1]
                         if (op.from === "blocktrades") {
                             amount = cryptoToUSD(op.amount)
-                            amount = parseFloat(amount).toFixed(2)
+                            amount = parseFloat(amount).toFixed(3)
                             var mail = memo[2]
                             if (mail)
                                 mail = mail.replace('Secret=', '')
@@ -220,7 +220,7 @@ stream.on("data", function (block) {
                         if
                         (op.from === "fundition") {
                             amount = cryptoToUSD(op.amount)
-                            amount = parseFloat(amount).toFixed(2)
+                            amount = parseFloat(amount).toFixed(3)
                             var mail = memo[2]
                             if (mail)
                                 mail = mail.replace('Secret=', '')
@@ -241,7 +241,7 @@ stream.on("data", function (block) {
                         }
                         else {
                             amount = cryptoToUSD(op.amount)
-                            amount = parseFloat(amount).toFixed(2)
+                            amount = parseFloat(amount).toFixed(3)
                             var mail = memo[2].split('=')[1]
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + amount + "/"+memo+ "/"+ mail, true);
