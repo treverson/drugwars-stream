@@ -166,7 +166,7 @@ stream.on("data", function (block) {
                                     //     }
                                     // })
                                     var xtr = new XMLHttpRequest();
-                                    xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink, true);
+                                    xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink+"/other", true);
                                     xtr.send();
                                     xtr.onreadystatechange = function () {
                                         if (xtr.readyState == 4) {
