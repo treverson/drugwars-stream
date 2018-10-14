@@ -68,7 +68,7 @@ cryptoToUSD = function (amount) {
     }
     return parseFloat(totalUSD).toFixed(3)
 }
-
+var permlinks = []
 var stream = client.blockchain.getBlockStream({})
 stream.on("data", function (block) {
     try {
@@ -77,6 +77,7 @@ stream.on("data", function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var transaction;
+            console.log(object[i].operations[0][0])
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
                 transferForShop(object[i].operations[0][1])
             }
@@ -123,7 +124,6 @@ stream.on("data", function (block) {
                 }
             }
             if (object[i].operations[0][0] === "comment") {
-
                 var json = object[i].operations[0][1]
                 try {
                     json.json_metadata = JSON.parse(json.json_metadata)
@@ -146,25 +146,9 @@ stream.on("data", function (block) {
                                             }
                                         }
                                     }
-                                    // $.ajax({
-                                    //     url: "https://ongameapi.herokuapp.com/api/addupdate/" + json.author + "/" + json.permlink,
-                                    //     data: 'go',
-                                    //     dataType: "json",
-                                    //     success: function (json) {
-                                    //         console.log('success')
-                                    //     }
-                                    // })
                                 }
                                 if (json.json_metadata.tags[b].includes('myfundition')) {
                                     console.log('its a project from ' + json.author)
-                                    // $.ajax({
-                                    //     url: "https://ongameapi.herokuapp.com/api/addproject/" + json.author + "/" + json.permlink + "/other",
-                                    //     data: 'go',
-                                    //     dataType: "json",
-                                    //     success: function (json) {
-                                    //         console.log('success')
-                                    //     }
-                                    // })
                                     var xtr = new XMLHttpRequest();
                                     xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink+"/other", true);
                                     xtr.send();

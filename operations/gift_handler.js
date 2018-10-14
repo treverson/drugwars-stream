@@ -34,7 +34,7 @@ const gift_handler = {
                         }
                         lastday = tttt + '/' + ff + '/' + zz;
 
-                        var today = new Date(date);
+                        var today = new Date();
                         var dd = today.getDate();
                         var mm = today.getMonth() + 1; //January is 0!
                         var yyyy = today.getFullYear();
