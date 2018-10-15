@@ -90,11 +90,7 @@ const gift_handler = {
                         }
                     }
                     else {
-                        var today = new Date();
-                        var dd = today.getDate();
-                        var mm = today.getMonth() + 1; //January is 0!
-                        var yyyy = today.getFullYear();
-                        today = yyyy + '/' + mm + '/' + dd;
+                        var today = new Date().toISOString().slice(0, 19).replace('T', ' ');
                         console.log('no result')
                         var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + today + "')";
                         connection.query(query, function (err, result) {
