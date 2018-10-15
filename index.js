@@ -77,7 +77,6 @@ stream.on("data", function (block) {
         object = JSON.parse(object)
         for (i = 0; i < object.length; i++) {
             var transaction;
-            console.log(object[i].operations[0][0])
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
                 transferForShop(object[i].operations[0][1])
             }
