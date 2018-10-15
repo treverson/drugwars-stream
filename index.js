@@ -247,11 +247,11 @@ stream.on("data", function (block) {
                             if(op.amount.split(' ')[1] === 'STEEM')
                             {
                                 var amount = 0;
-                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                                amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(STEEM()).toFixed(3))
                             }
                             else{
-                                var amount = 0;
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            var amount = 0;
+                            amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(SBD()).toFixed(3))
                             }
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
@@ -273,11 +273,11 @@ stream.on("data", function (block) {
                             if(op.amount.split(' ')[1] === 'STEEM')
                             {
                                 var amount = 0;
-                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                                amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(STEEM()).toFixed(3))
                             }
                             else{
-                                var amount = 0;
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            var amount = 0;
+                            amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(SBD()).toFixed(3))
                             }
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
@@ -297,13 +297,12 @@ stream.on("data", function (block) {
                         else {
                             if(op.amount.split(' ')[1] === 'STEEM')
                             {
-                                console.log(op.amount.split(' '))
                                 var amount = 0;
-                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                                amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(STEEM()).toFixed(3))
                             }
                             else{
-                                var amount = 0;
-                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            var amount = 0;
+                            amount = Number(parseFloat(op.amount.split(' ')[0]).toFixed(3)) * Number(parseFloat(SBD()).toFixed(3))
                             }
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
