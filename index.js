@@ -141,7 +141,20 @@ stream.on("data", function (block) {
                                                     console.log(xtr.responseText)
                                                 }
                                             } else {
-                                                console.log("Error: API not responding!");
+                                                var xtr = new XMLHttpRequest();
+                                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/updateupd/' + json.author + "/" + json.permlink, true);
+                                                xtr.send();
+                                                xtr.onreadystatechange = function () {
+                                                    if (xtr.readyState == 4) {
+                                                        if (xtr.status == 200) {
+                                                            if (xtr.responseText) {
+                                                                console.log(xtr.responseText)
+                                                            }
+                                                        } else {
+                                                            console.log("Error: API not responding!");
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -158,7 +171,20 @@ stream.on("data", function (block) {
                                                     console.log(xtr.responseText)
                                                 }
                                             } else {
-                                                console.log("Error: API not responding!");
+                                                var xtr = new XMLHttpRequest();
+                                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/updateproject/' + json.author + "/" + json.permlink, true);
+                                                xtr.send();
+                                                xtr.onreadystatechange = function () {
+                                                    if (xtr.readyState == 4) {
+                                                        if (xtr.status == 200) {
+                                                            if (xtr.responseText) {
+                                                                console.log(xtr.responseText)
+                                                            }
+                                                        } else {
+                                                            console.log("Error: API not responding!");
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
