@@ -35,17 +35,18 @@ const gift_handler = {
                         lastday = tttt + '/' + ff + '/' + zz;
 
                         var today = new Date();
-                        var dd = today.getDate();
-                        var mm = today.getMonth() + 1; //January is 0!
-                        var yyyy = today.getFullYear();
-                        today = yyyy + '/' + mm + '/' + dd;
-                        if (dd < 10) {
-                            dd = '0' + dd
-                        }
-                        if (mm < 10) {
-                            mm = '0' + mm
-                        }
-                        today = yyyy + '/' + mm + '/' + dd;
+                        console.log(today)
+                        // var dd = today.getDate();
+                        // var mm = today.getMonth() + 1; //January is 0!
+                        // var yyyy = today.getFullYear();
+                        // today = yyyy + '/' + mm + '/' + dd;
+                        // if (dd < 10) {
+                        //     dd = '0' + dd
+                        // }
+                        // if (mm < 10) {
+                        //     mm = '0' + mm
+                        // }
+                        // today = yyyy + '/' + mm + '/' + dd;
                         if (lastday === today) {
                             console.log('same day for ' + user)
                             connection.release();
