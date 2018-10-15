@@ -51,7 +51,7 @@ const gift_handler = {
                         if (mm < 10) {
                             mm = '0' + mm
                         }
-                        today = yyyy + '/' + mm + '/' + dd + ' ' + hh + ':' + mm + ':' + ss;
+                        today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
                         if (zz === dd && mm == ff) {
                             console.log('same day for ' + user)
                             connection.release();
