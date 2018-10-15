@@ -34,6 +34,7 @@ function SBD() {
           if (xtr.responseText) {
             var ticker = JSON.parse(xtr.responseText)
             totalUSD = ticker[0].price_usd
+            console.log(totalUSD)
             return parseFloat(totalUSD).toFixed(3)
           }
         } else {
@@ -53,6 +54,7 @@ function SBD() {
           if (xtr.responseText) {
             var ticker = JSON.parse(xtr.responseText)
             totalUSD =  ticker[0].price_usd
+            console.log(totalUSD)
             return parseFloat(totalUSD).toFixed(3)
           }
         } else {
@@ -243,8 +245,12 @@ stream.on("data", function (block) {
                         var name = memo[1].split('=')[1]
                         if (op.from === "blocktrades") {
                             if(op.amount.split(' ')[1] === 'STEEM')
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            {
+                                var amount = 0;
+                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            }
                             else{
+                                var amount = 0;
                             amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
                             }
                             var xtr = new XMLHttpRequest();
@@ -265,11 +271,14 @@ stream.on("data", function (block) {
                         if
                         (op.from === "fundition") {
                             if(op.amount.split(' ')[1] === 'STEEM')
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            {
+                                var amount = 0;
+                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            }
                             else{
+                                var amount = 0;
                             amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
                             }
-                            amount = parseFloat(amount).toFixed(3)
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
                             xtr.send();
@@ -287,11 +296,15 @@ stream.on("data", function (block) {
                         }
                         else {
                             if(op.amount.split(' ')[1] === 'STEEM')
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
-                            else{
-                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            {
+                                console.log(op.amount.split(' '))
+                                var amount = 0;
+                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
                             }
-                            amount = parseFloat(amount).toFixed(3)
+                            else{
+                                var amount = 0;
+                                amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            }
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
                             xtr.send();
