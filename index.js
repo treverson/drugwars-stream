@@ -24,11 +24,47 @@ transferForShop = function (transaction) {
     })
 }
 
-
+function SBD() {
+    var xtr = new XMLHttpRequest();
+    xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
+    xtr.send();
+    xtr.onreadystatechange = function () {
+      if (xtr.readyState == 4) {
+        if (xtr.status == 200) {
+          if (xtr.responseText) {
+            var ticker = JSON.parse(xtr.responseText)
+            totalUSD = ticker[0].price_usd
+            return parseFloat(totalUSD).toFixed(3)
+          }
+        } else {
+          console.log("Error: API not responding!");
+        }
+      }
+    }
+  }
+  
+  function STEEM() {
+    var xtr = new XMLHttpRequest();
+    xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
+    xtr.send();
+    xtr.onreadystatechange = function () {
+      if (xtr.readyState == 4) {
+        if (xtr.status == 200) {
+          if (xtr.responseText) {
+            var ticker = JSON.parse(xtr.responseText)
+            totalUSD =  ticker[0].price_usd
+            return parseFloat(totalUSD).toFixed(3)
+          }
+        } else {
+          console.log("Error: API not responding!");
+        }
+      }
+    }
+  }
 
 cryptoToUSD = function (amount) {
     var totalUSD = 0;
-    if (amount.match("SBD")) {
+    if (amount.includes("SBD")) {
         var xtr = new XMLHttpRequest();
         xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
         xtr.send();
@@ -47,7 +83,7 @@ cryptoToUSD = function (amount) {
             }
         }
     }
-    if (amount.match("STEEM")) {
+    if (amount.includes("STEEM")) {
         var xtr = new XMLHttpRequest();
         xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
         xtr.send();
@@ -206,8 +242,11 @@ stream.on("data", function (block) {
                     if (memo[0].includes('Fundition-') || memo[0].includes('fundition-') || memo[0].includes('Project=Fundition-')) {
                         var name = memo[1].split('=')[1]
                         if (op.from === "blocktrades") {
-                            amount = cryptoToUSD(op.amount)
-                            amount = parseFloat(amount).toFixed(3)
+                            if(op.amount.split(' ')[1] === 'STEEM')
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            else{
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            }
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
                             xtr.send();
@@ -225,7 +264,11 @@ stream.on("data", function (block) {
                         }
                         if
                         (op.from === "fundition") {
-                            amount = cryptoToUSD(op.amount)
+                            if(op.amount.split(' ')[1] === 'STEEM')
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            else{
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            }
                             amount = parseFloat(amount).toFixed(3)
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
@@ -243,7 +286,11 @@ stream.on("data", function (block) {
                             }
                         }
                         else {
-                            amount = cryptoToUSD(op.amount)
+                            if(op.amount.split(' ')[1] === 'STEEM')
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * STEEM()
+                            else{
+                            amount = parseFloat(op.amount.split(' ')[0]).toFixed(3) * SBD()
+                            }
                             amount = parseFloat(amount).toFixed(3)
                             var xtr = new XMLHttpRequest();
                             xtr.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
