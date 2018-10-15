@@ -23,38 +23,43 @@ const gift_handler = {
                     if (result.length >= 1) {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
                         var lastday = new Date(result[0].date)
-                        var zz = lastday.getDate();
-                        var ff = lastday.getMonth() + 1; //January is 0!
-                        var tttt = lastday.getFullYear();
+                        var zz = lastday.getUTCDate();
+                        var ff = lastday.getUTCMonth() + 1; //January is 0!
+                        var tttt = lastday.getUTCFullYear();
+                        var hh = lastday.getUTCHours() 
+                        var mm = lastday.getUTCMinutes()  
+                        var ss = lastday.getUTCSeconds()  
                         if (zz < 10) {
                             zz = '0' + zz
                         }
                         if (ff < 10) {
                             ff = '0' + ff
                         }
-                        lastday = tttt + '/' + ff + '/' + zz;
+                        lastday = tttt + '/' + ff + '/' + zz + ' ' + hh + ':' + mm + ':' + ss;
 
-                        var today = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                        console.log(today)
-                        // var dd = today.getDate();
-                        // var mm = today.getMonth() + 1; //January is 0!
-                        // var yyyy = today.getFullYear();
-                        // today = yyyy + '/' + mm + '/' + dd;
-                        // if (dd < 10) {
-                        //     dd = '0' + dd
-                        // }
-                        // if (mm < 10) {
-                        //     mm = '0' + mm
-                        // }
-                        // today = yyyy + '/' + mm + '/' + dd;
-                        if (lastday === today) {
+                        var today = new Date()
+                        var dd = today.getUTCDate();
+                        var mm = today.getUTCMonth() + 1; //January is 0!
+                        var yyyy = today.getUTCFullYear();
+                        var hhhh = lastday.getUTCHours() 
+                        var mmmm = lastday.getUTCMinutes()  
+                        var ssss = lastday.getUTCSeconds()  
+                        today = yyyy + '/' + mm + '/' + dd;
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yyyy + '/' + mm + '/' + dd + ' ' + hh + ':' + mm + ':' + ss;
+                        if (zz === dd && mm == ff) {
                             console.log('same day for ' + user)
                             connection.release();
                             return cb(null)
                         }
 
                         if (result[0].day > 6) {
-                            if (lastday === today) {
+                            if (zz === dd && mm == ff) {
                                 console.log('same day for ' + user)
                                 connection.release();
                                 cb(null)
