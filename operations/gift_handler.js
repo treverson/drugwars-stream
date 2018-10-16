@@ -49,14 +49,14 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-                        if (zz === dd && mm == ff) {
+                        if (zz === dd && mm === ff) {
                             console.log('same day for ' + user)
                             connection.release();
                             return cb(null)
                         }
 
                         if (result[0].day > 6) {
-                            if (zz === dd && mm == ff) {
+                            if (zz === dd && mm === ff) {
                                 console.log('same day for ' + user)
                                 connection.release();
                                 cb(null)
