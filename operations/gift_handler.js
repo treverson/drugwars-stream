@@ -32,12 +32,15 @@ const gift_handler = {
                         if (ff < 10) {
                             ff = '0' + ff
                         }
-                        lastday = tttt + '/' + ff + '/' + zz
+                        lastday = tttt + '/' + ff + '/' + zz;
 
                         var today = new Date()
                         var dd = today.getUTCDate();
                         var mm = today.getUTCMonth() + 1; //January is 0!
                         var yyyy = today.getUTCFullYear();
+                        var hhhh = lastday.getUTCHours() 
+                        var mmmm = lastday.getUTCMinutes()  
+                        var ssss = lastday.getUTCSeconds()  
                         today = yyyy + '/' + mm + '/' + dd;
                         if (dd < 10) {
                             dd = '0' + dd
