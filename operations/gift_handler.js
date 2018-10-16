@@ -38,9 +38,9 @@ const gift_handler = {
                         var dd = today.getUTCDate();
                         var mm = today.getUTCMonth() + 1; //January is 0!
                         var yyyy = today.getUTCFullYear();
-                        var hhhh = lastday.getUTCHours() 
-                        var mmmm = lastday.getUTCMinutes()  
-                        var ssss = lastday.getUTCSeconds()  
+                        var hhhh = today.getUTCHours() 
+                        var mmmm = today.getUTCMinutes()  
+                        var ssss = today.getUTCSeconds()  
                         today = yyyy + '/' + mm + '/' + dd;
                         if (dd < 10) {
                             dd = '0' + dd
