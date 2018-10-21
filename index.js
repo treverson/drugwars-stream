@@ -158,8 +158,7 @@ stream.on("data", function (block) {
                     if (json.json_metadata) {
                         if (json.json_metadata.tags) {
                             for (b = 0; json.json_metadata.tags.length > b; b++) {
-                                if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
-                                    console.log('its an update from ' + json.author)
+                                if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.parent_author === '' || json.author != parent_author) {
                                     var xtr = new XMLHttpRequest();
                                     xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
                                     xtr.send();
@@ -232,7 +231,6 @@ stream.on("data", function (block) {
                 if (op.memo.includes('Fundition-') || op.memo.includes('fundition-') || op.memo.includes('Project=Fundition-')) {
                     var memo = op.memo.split(" ")
                     var newperm = memo[0].split("-")
-                    if (memo[0].includes('Fundition-') || memo[0].includes('fundition-') || memo[0].includes('Project=Fundition-')) {
                         var name = memo[1].split('=')[1]
                         if (op.from === "blocktrades") {
                             WriteDonation(block,name,op,memo)
@@ -244,8 +242,6 @@ stream.on("data", function (block) {
                         else {
                             WriteDonation(block,name,op,memo)
                         }
-
-                    }
                 }
 
             }
