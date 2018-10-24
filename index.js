@@ -157,11 +157,13 @@ stream.on("data", function (block) {
                     json.json_metadata = JSON.parse(json.json_metadata)
                 }
                 catch (e) {
-                    console.log(e)
+                  
                 }
                     if (json.json_metadata.tags) {
                         for (b = 0; json.json_metadata.tags.length > b; b++) {
                             if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.root_permlink === json.permlink || json.root_permlink === '') {
+                                console.log(json.json_metadata.tags)
+                                console.log('its a update from ' + json.author)
                                 var xtr = new XMLHttpRequest();
                                 xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
                                 xtr.send();
