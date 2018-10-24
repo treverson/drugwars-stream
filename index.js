@@ -24,7 +24,7 @@ transferForShop = function (transaction) {
     })
 }
 
-function WriteDonation(block,name,op,memo) {
+function WriteDonation(block, name, op, memo) {
     if (op.amount.split(' ')[1] === 'STEEM') {
         var xtr = new XMLHttpRequest();
         xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
@@ -153,76 +153,47 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "comment") {
                 var json = object[i].operations[0][1]
-                try {
-                    json.json_metadata = JSON.parse(json.json_metadata)
-                    if (json.json_metadata) {
-                        if (json.json_metadata.tags) {
-                            for (b = 0; json.json_metadata.tags.length > b; b++) {
-                                if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.root_permlink === json.permlink) {
-                                    var xtr = new XMLHttpRequest();
-                                    xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
-                                    xtr.send();
-                                    xtr.onreadystatechange = function () {
-                                        if (xtr.readyState == 4) {
-                                            if (xtr.status == 200) {
-                                                if (xtr.responseText) {
-                                                    console.log(xtr.responseText)
-                                                }
-                                            } else {
-                                                var xpz = new XMLHttpRequest();
-                                                xpz.open('GET', 'https://ongameapi.herokuapp.com/api/updateupd/' + json.author + "/" + json.permlink, true);
-                                                xpz.send();
-                                                xpz.onreadystatechange = function () {
-                                                    if (xpz.readyState == 4) {
-                                                        if (xpz.status == 200) {
-                                                            if (xpz.responseText) {
-                                                                console.log(xpz.responseText)
-                                                            }
-                                                        } else {
-                                                            console.log("Error: API not responding!");
-                                                        }
-                                                    }
-                                                }
+                json.json_metadata = JSON.parse(json.json_metadata)
+                if (json.json_metadata) {
+                    if (json.json_metadata.tags) {
+                        for (b = 0; json.json_metadata.tags.length > b; b++) {
+                            if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.root_permlink === json.permlink || json.root_permlink === '') {
+                                var xtr = new XMLHttpRequest();
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
+                                xtr.send();
+                                xtr.onreadystatechange = function () {
+                                    if (xtr.readyState == 4) {
+                                        if (xtr.status == 200) {
+                                            if (xtr.responseText) {
+                                                console.log(xtr.responseText)
                                             }
+                                        } else {
+                                            console.log("Error: API not responding!");
                                         }
                                     }
                                 }
-                                if (json.json_metadata.tags[b].includes('myfundition')) {
-                                    console.log('its a project from ' + json.author)
-                                    var xtr = new XMLHttpRequest();
-                                    xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
-                                    xtr.send();
-                                    xtr.onreadystatechange = function () {
-                                        if (xtr.readyState == 4) {
-                                            if (xtr.status == 200) {
-                                                if (xtr.responseText) {
-                                                    console.log(xtr.responseText)
-                                                }
-                                            } else {
-                                                var xpz = new XMLHttpRequest();
-                                                xpz.open('GET', 'https://ongameapi.herokuapp.com/api/updateproject/' + json.author + "/" + json.permlink, true);
-                                                xpz.send();
-                                                xpz.onreadystatechange = function () {
-                                                    if (xpz.readyState == 4) {
-                                                        if (xpz.status == 200) {
-                                                            if (xpz.responseText) {
-                                                                console.log(xpz.responseText)
-                                                            }
-                                                        } else {
-                                                            console.log("Error: API not responding!");
-                                                        }
-                                                    }
-                                                }
+                            }
+                            if (json.json_metadata.tags[b].includes('myfundition') && json.root_permlink === json.permlink || json.root_permlink === '') {
+                                console.log('its a project from ' + json.author)
+                                var xtr = new XMLHttpRequest();
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
+                                xtr.send();
+                                xtr.onreadystatechange = function () {
+                                    if (xtr.readyState == 4) {
+                                        if (xtr.status == 200) {
+                                            if (xtr.responseText) {
+                                                console.log(xtr.responseText)
                                             }
+                                        } else {
+                                            console.log("Error: API not responding!");
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                } catch (error) {
-
                 }
+
             }
             if (object[i].operations[0][0] === "transfer") {
                 var op = object[i].operations[0][1]
@@ -231,17 +202,17 @@ stream.on("data", function (block) {
                 if (op.memo.includes('Fundition-') || op.memo.includes('fundition-') || op.memo.includes('Project=Fundition-')) {
                     var memo = op.memo.split(" ")
                     var newperm = memo[0].split("-")
-                        var name = memo[1].split('=')[1]
-                        if (op.from === "blocktrades") {
-                            WriteDonation(block,name,op,memo)
-                        }
-                        if
-                        (op.from === "fundition") {
-                            WriteDonation(block,name,op,memo)
-                        }
-                        else {
-                            WriteDonation(block,name,op,memo)
-                        }
+                    var name = memo[1].split('=')[1]
+                    if (op.from === "blocktrades") {
+                        WriteDonation(block, name, op, memo)
+                    }
+                    if
+                    (op.from === "fundition") {
+                        WriteDonation(block, name, op, memo)
+                    }
+                    else {
+                        WriteDonation(block, name, op, memo)
+                    }
                 }
 
             }
