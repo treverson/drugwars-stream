@@ -153,8 +153,12 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "comment") {
                 var json = object[i].operations[0][1]
-                json.json_metadata = JSON.parse(json.json_metadata)
-                if (json.json_metadata) {
+                try {
+                    json.json_metadata = JSON.parse(json.json_metadata)
+                }
+                catch (e) {
+                    console.log(e)
+                }
                     if (json.json_metadata.tags) {
                         for (b = 0; json.json_metadata.tags.length > b; b++) {
                             if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.root_permlink === json.permlink || json.root_permlink === '') {
@@ -192,7 +196,7 @@ stream.on("data", function (block) {
                             }
                         }
                     }
-                }
+                
 
             }
             if (object[i].operations[0][0] === "transfer") {
