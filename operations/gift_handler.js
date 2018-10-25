@@ -8,8 +8,8 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
-function getRandomNumber(min, max){
-    return Math.floor(Math.random()*(max-min))+min;
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
@@ -19,20 +19,50 @@ function getRandomReward() {
     rnd = getRandomInt(100)
     console.log("reward " + rnd)
     if (rnd > 99) {
-        return 1
+        return 10
     }
     if (rnd > 95) {
-        return 2
+        return 8
     }
     if (rnd > 87) {
-        return 3
-    }
-    if (rnd > 71) {
-        return 4
-    }
-    else {
         return 5
     }
+    if (rnd > 71) {
+        return 3
+    }
+    else {
+        return 1
+    }
+}
+
+function getReward(day) {
+    var multiplicateur = 1;
+    switch (day) {
+        case 1:
+            multiplicateur = 1
+            break;
+        case 2:
+            multiplicateur = 5
+            break;
+        case 3:
+            multiplicateur = 10
+            break;
+        case 4:
+            multiplicateur = 25
+            break;
+        case 5:
+            multiplicateur = 50
+            break;
+        case 6:
+            multiplicateur = 75
+            break;
+        case 7:
+            multiplicateur = 100
+            break;
+        default:
+            multiplicateur = 1
+    }
+    return parseFloat((multiplicateur / 1000) * getRandomReward()).toFixed(3)
 }
 
 const gift_handler = {
@@ -49,6 +79,8 @@ const gift_handler = {
                     //RECUPERATE USER ACTUAL GIFT
                     if (result.length >= 1) {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
+                        var chest = result[0].chest
+                        chest++
                         var lastday = new Date(result[0].date)
                         var zz = lastday.getUTCDate();
                         var ff = lastday.getUTCMonth() + 1; //January is 0!
@@ -65,9 +97,9 @@ const gift_handler = {
                         var dd = today.getUTCDate();
                         var mm = today.getUTCMonth() + 1; //January is 0!
                         var yyyy = today.getUTCFullYear();
-                        var hhhh = today.getUTCHours() 
-                        var mmmm = today.getUTCMinutes()  
-                        var ssss = today.getUTCSeconds()  
+                        var hhhh = today.getUTCHours()
+                        var mmmm = today.getUTCMinutes()
+                        var ssss = today.getUTCSeconds()
                         today = yyyy + '/' + mm + '/' + dd;
                         if (dd < 10) {
                             dd = '0' + dd
@@ -76,16 +108,16 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-                        if (zz-1 != dd-1) {
+                        if (zz - 1 != dd - 1) {
                             console.log("reseting days")
-                            var reward =  parseFloat((1/getRandomReward())/7).toFixed(3)
-                            var query = "UPDATE gift SET day=2 , date='" + today + "' WHERE username='" + user + "'"
+                            var reward = parseFloat((1 / getRandomReward()) / 7).toFixed(3)
+                            var query = "UPDATE gift SET day=2 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
-                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
-                                        if(err)
-                                        console.log(err, result);
+                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward + ' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
+                                        if (err)
+                                            console.log(err, result);
                                     });
                                     console.log("Days reset for user" + user)
                                     connection.release();
@@ -107,14 +139,14 @@ const gift_handler = {
                             }
                             else {
                                 console.log("reseting days")
-                                var reward =  parseFloat((result[0].day/getRandomReward())/7).toFixed(3)
-                                var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
+                                var reward = getReward(result[0].day)
+                                var query = "UPDATE gift SET day=1 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
-                                        steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
-                                            if(err)
-                                            console.log(err, result);
+                                        steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward + ' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
+                                            if (err)
+                                                console.log(err, result);
                                         });
                                         console.log("Days reset for user" + user)
                                         connection.release();
@@ -126,15 +158,15 @@ const gift_handler = {
                         else {
                             var newday = parseFloat(result[0].day + 1)
                             console.log('updating days')
-                            var reward =  parseFloat((newday/getRandomReward())/7).toFixed(3)
+                            var reward = getReward(result[0].day)
 
-                            var query = "UPDATE gift SET day=" + newday + ", date='" + today + "' WHERE gift_id=" + result[0].gift_id
+                            var query = "UPDATE gift SET day=" + newday + ", date='" + today + "', chest='" + chest + "' WHERE gift_id=" + result[0].gift_id
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
-                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
-                                        if(err)
-                                        console.log(err, result);
+                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward + ' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
+                                        if (err)
+                                            console.log(err, result);
                                     });
                                     console.log("Day added to user" + user)
                                     cb(null)
@@ -145,13 +177,13 @@ const gift_handler = {
                     else {
                         var today = new Date().toISOString().slice(0, 19).replace('T', ' ');
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date) VALUES ('" + user + "','1','" + today + "')";
+                        var query = "INSERT INTO gift (username, day, date,chest) VALUES ('" + user + "','1','" + today + "','1')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
                                 console.log('inserted')
-                                var reward =  parseFloat((1/getRandomReward())/7).toFixed(3)
-                                steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
+                                var reward = getReward(1)
+                                steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward + ' STEEM', 'Your reward for claiming your daily chest on Fundition.io!', function (err, result) {
                                     console.log(err, result);
                                 });
                                 connection.release();
