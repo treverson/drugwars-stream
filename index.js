@@ -157,9 +157,7 @@ stream.on("data", function (block) {
                     json.json_metadata = JSON.parse(json.json_metadata)
                 }
                 catch (e) {
-                    json.json_metadata = JSON.stringify(json.json_metadata)
-                    json.json_metadata.replace("\\", "")
-                    json.json_metadata = JSON.parse(json.json_metadata)
+                    console.log('error with' + json)
                 }
                     if (json.json_metadata.tags) {
                         for (b = 0; json.json_metadata.tags.length > b; b++) {
