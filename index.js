@@ -97,7 +97,7 @@ function WriteDonation(block, name, op, memo) {
 
 
 var permlinks = []
-var stream = client.blockchain.getBlockStream({})
+var stream = client.blockchain.getBlockStream({mode: BlockchainMode.Latest})
 stream.on("data", function (block) {
     try {
         var object = JSON.stringify(block.transactions)

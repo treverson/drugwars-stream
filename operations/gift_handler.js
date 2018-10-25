@@ -8,6 +8,33 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
+function getRandomNumber(min, max){
+    return Math.floor(Math.random()*(max-min))+min;
+}
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+function getRandomReward() {
+    var rnd = 0
+    rnd = getRandomInt(100)
+    console.log("reward " + rnd)
+    if (rnd > 99) {
+        return 1
+    }
+    if (rnd > 95) {
+        return 2
+    }
+    if (rnd > 87) {
+        return 3
+    }
+    if (rnd > 71) {
+        return 4
+    }
+    else {
+        return 5
+    }
+}
+
 const gift_handler = {
     createNewGift: function (json, cb) {
         //INSERT USER 
@@ -77,11 +104,13 @@ const gift_handler = {
                         else {
                             var newday = parseFloat(result[0].day + 1)
                             console.log('updating days')
+                            var reward =  parseFloat((newday/getRandomReward())/7).toFixed(3)
+
                             var query = "UPDATE gift SET day=" + newday + ", date='" + today + "' WHERE gift_id=" + result[0].gift_id
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
-                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.00'+newday+' STEEM', 'Reward', function (err, result) {
+                                    steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Reward', function (err, result) {
                                         console.log(err, result);
                                     });
                                     console.log("Day added to user" + user)
@@ -98,7 +127,8 @@ const gift_handler = {
                             if (err) console.log(err);
                             else {
                                 console.log('inserted')
-                                steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Reward', function (err, result) {
+                                var reward =  parseFloat((1/getRandomReward())/7).toFixed(3)
+                                steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Reward', function (err, result) {
                                     console.log(err, result);
                                 });
                                 connection.release();
