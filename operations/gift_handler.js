@@ -76,6 +76,19 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
+                        if (zz-1 === dd-1) {
+                            console.log("reseting days")
+                            var reward =  parseFloat((result[0].day/getRandomReward())/7).toFixed(3)
+                            var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
+                            connection.query(query, function (err, result) {
+                                if (err) throw err;
+                                else {
+                                    console.log("Days reset for user" + user)
+                                    connection.release();
+                                    cb(null)
+                                }
+                            })
+                        }
                         if (zz === dd && mm === ff) {
                             console.log('same day for ' + user)
                             connection.release();
@@ -90,10 +103,15 @@ const gift_handler = {
                             }
                             else {
                                 console.log("reseting days")
+                                var reward =  parseFloat((result[0].day/getRandomReward())/7).toFixed(3)
                                 var query = "UPDATE gift SET day=1 , date='" + today + "' WHERE username='" + user + "'"
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
+                                        steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Reward', function (err, result) {
+                                            if(err)
+                                            console.log(err, result);
+                                        });
                                         console.log("Days reset for user" + user)
                                         connection.release();
                                         cb(null)
@@ -111,6 +129,7 @@ const gift_handler = {
                                 if (err) throw err;
                                 else {
                                     steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, reward+' STEEM', 'Reward', function (err, result) {
+                                        if(err)
                                         console.log(err, result);
                                     });
                                     console.log("Day added to user" + user)
