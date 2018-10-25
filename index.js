@@ -93,7 +93,6 @@ function WriteDonation(block, name, op, memo) {
             }
         }
     }
-
 }
 
 
@@ -158,46 +157,45 @@ stream.on("data", function (block) {
                 }
                 catch (e) {
                 }
-                    if (json.json_metadata.tags) {
-                        for (b = 0; json.json_metadata.tags.length > b; b++) {
-                            if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.root_author === json.author) {
-                                console.log(json.json_metadata.tags)
-                                console.log('its a update from ' + json.author)
-                                var xtr = new XMLHttpRequest();
-                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
-                                xtr.send();
-                                xtr.onreadystatechange = function () {
-                                    if (xtr.readyState == 4) {
-                                        if (xtr.status == 200) {
-                                            if (xtr.responseText) {
-                                                console.log(xtr.responseText)
-                                            }
-                                        } else {
-                                            console.log("Error: API not responding!");
+                if (json.json_metadata.tags) {
+                    for (b = 0; json.json_metadata.tags.length > b; b++) {
+                        if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-')) {
+                            console.log('its a update from ' + json.author)
+                            var xtr = new XMLHttpRequest();
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
+                            xtr.send();
+                            xtr.onreadystatechange = function () {
+                                if (xtr.readyState == 4) {
+                                    if (xtr.status == 200) {
+                                        if (xtr.responseText) {
+                                            console.log(xtr.responseText)
                                         }
+                                    } else {
+                                        console.log("Error: API not responding!");
                                     }
                                 }
                             }
-                            if (json.json_metadata.tags[b].includes('myfundition') && json.root_author === json.author) {
-                                console.log('its a project from ' + json.author)
-                                var xtr = new XMLHttpRequest();
-                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
-                                xtr.send();
-                                xtr.onreadystatechange = function () {
-                                    if (xtr.readyState == 4) {
-                                        if (xtr.status == 200) {
-                                            if (xtr.responseText) {
-                                                console.log(xtr.responseText)
-                                            }
-                                        } else {
-                                            console.log("Error: API not responding!");
+                        }
+                        if (json.json_metadata.tags[b].includes('myfundition')) {
+                            console.log('its a project from ' + json.author)
+                            var xtr = new XMLHttpRequest();
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
+                            xtr.send();
+                            xtr.onreadystatechange = function () {
+                                if (xtr.readyState == 4) {
+                                    if (xtr.status == 200) {
+                                        if (xtr.responseText) {
+                                            console.log(xtr.responseText)
                                         }
+                                    } else {
+                                        console.log("Error: API not responding!");
                                     }
                                 }
                             }
                         }
                     }
-                
+                }
+
 
             }
             if (object[i].operations[0][0] === "transfer") {
