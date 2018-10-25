@@ -89,17 +89,17 @@ const gift_handler = {
                                     });
                                     console.log("Days reset for user" + user)
                                     connection.release();
-                                    cb(null)
+                                    return cb(null)
                                 }
                             })
                         }
-                        if (zz === dd && mm === ff) {
+                        else if (zz === dd && mm === ff) {
                             console.log('same day for ' + user)
                             connection.release();
                             return cb(null)
                         }
 
-                        if (result[0].day > 6) {
+                        else if (result[0].day > 6) {
                             if (zz === dd && mm === ff) {
                                 console.log('same day for ' + user)
                                 connection.release();
