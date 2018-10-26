@@ -80,7 +80,6 @@ const gift_handler = {
                     if (result.length >= 1) {
                         //CHECK IF ITS ALREADY 6 DAY AND RESET GIFT
                         var chest = result[0].chest
-                        chest++
                         var lastday = new Date(result[0].date)
                         var zz = lastday.getUTCDate();
                         var ff = lastday.getUTCMonth() + 1; //January is 0!
@@ -115,6 +114,8 @@ const gift_handler = {
                         }
                         else if (zz != dd - 1) {
                             console.log("reseting days")
+
+                            chest = chest+5
                             var reward = parseFloat((1 / getRandomReward()) / 7).toFixed(3)
                             var query = "UPDATE gift SET day=2 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
@@ -137,7 +138,8 @@ const gift_handler = {
                                 cb(null)
                             }
                             else {
-                                console.log("reseting days")
+                                console.log("7 days GG")
+                                chest = chest + 20
                                 var reward = getReward(result[0].day)
                                 var query = "UPDATE gift SET day=1 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
                                 connection.query(query, function (err, result) {
@@ -158,7 +160,7 @@ const gift_handler = {
                             var newday = parseFloat(result[0].day + 1)
                             console.log('updating days')
                             var reward = getReward(result[0].day)
-
+                            chest = chest + 5
                             var query = "UPDATE gift SET day=" + newday + ", date='" + today + "', chest='" + chest + "' WHERE gift_id=" + result[0].gift_id
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
@@ -174,9 +176,9 @@ const gift_handler = {
                         }
                     }
                     else {
-                        var today = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                        var today = new Date()
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date,chest) VALUES ('" + user + "','1','" + today + "','1')";
+                        var query = "INSERT INTO gift (username, day, date, chest) VALUES ('" + user + "','1','" + today + "','5')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
