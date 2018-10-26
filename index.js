@@ -35,7 +35,7 @@ function WriteDonation(block, name, op, memo) {
                     if (xtr.responseText) {
                         var ticker = JSON.parse(xtr.responseText)
                         totalUSD = ticker[0].price_usd
-                        console.log(totalUSD)
+                        console.log('Donator= '+ name +' Amount= '+ totalUSD)
                         var amount = op.amount.split(' ')[0];
                         amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
                         var xkt = new XMLHttpRequest();
@@ -69,7 +69,7 @@ function WriteDonation(block, name, op, memo) {
                     if (xtr.responseText) {
                         var ticker = JSON.parse(xtr.responseText)
                         totalUSD = ticker[0].price_usd
-                        console.log(totalUSD)
+                        console.log('Donator= '+ name +' Amount= '+ totalUSD)
                         var amount = op.amount.split(' ')[0];
                         amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
                         var xpz = new XMLHttpRequest();
