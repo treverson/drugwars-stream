@@ -108,7 +108,12 @@ const gift_handler = {
                             mm = '0' + mm
                         }
                         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-                        if (zz - 1 != dd - 1) {
+                        if (zz === dd && mm === ff) {
+                            console.log('same day for ' + user)
+                            connection.release();
+                            return cb(null)
+                        }
+                        else if (zz != dd - 1) {
                             console.log("reseting days")
                             var reward = parseFloat((1 / getRandomReward()) / 7).toFixed(3)
                             var query = "UPDATE gift SET day=2 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
@@ -125,12 +130,6 @@ const gift_handler = {
                                 }
                             })
                         }
-                        else if (zz === dd && mm === ff) {
-                            console.log('same day for ' + user)
-                            connection.release();
-                            return cb(null)
-                        }
-
                         else if (result[0].day > 6) {
                             if (zz === dd && mm === ff) {
                                 console.log('same day for ' + user)
