@@ -192,7 +192,7 @@ const gift_handler = {
                         }
                         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
                         console.log('no result')
-                        var query = "INSERT INTO gift (username, day, date, chest) VALUES ('" + user + "','1','" + today + "','5')";
+                        var query = "INSERT INTO gift (username, day, date, chest) VALUES ('" + user + "','2','" + today + "','5')";
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
