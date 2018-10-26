@@ -177,6 +177,20 @@ const gift_handler = {
                     }
                     else {
                         var today = new Date()
+                        var dd = today.getUTCDate();
+                        var mm = today.getUTCMonth() + 1; //January is 0!
+                        var yyyy = today.getUTCFullYear();
+                        var hhhh = today.getUTCHours()
+                        var mmmm = today.getUTCMinutes()
+                        var ssss = today.getUTCSeconds()
+                        today = yyyy + '/' + mm + '/' + dd;
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
                         console.log('no result')
                         var query = "INSERT INTO gift (username, day, date, chest) VALUES ('" + user + "','1','" + today + "','5')";
                         connection.query(query, function (err, result) {
