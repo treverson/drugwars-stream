@@ -203,6 +203,7 @@ stream.on("data", function (block) {
                 var date = object[i].expiration
                 var block = object[i].block_num
                 if (op.memo.includes('Fundition-') || op.memo.includes('fundition-') || op.memo.includes('Project=Fundition-')) {
+                    op.memo = op.memo.replace("/","°")
                     var memo = op.memo.split(" ")
                     var newperm = memo[0].split("-")
                     var name = memo[1].split('=')[1]
