@@ -116,7 +116,7 @@ const gift_handler = {
                             console.log("reseting days")
 
                             chest = chest+5
-                            var reward = parseFloat((1 / getRandomReward()) / 7).toFixed(3)
+                            var reward =  getReward(1)
                             var query = "UPDATE gift SET day=2 , date='" + today + "', chest='" + chest + "' WHERE username='" + user + "'"
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
