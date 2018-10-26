@@ -82,9 +82,9 @@ const gift_handler = {
                         var chest = result[0].chest
                         chest++
                         var lastday = new Date(result[0].date)
-                        var zz = lastday.getUTCDate();
-                        var ff = lastday.getUTCMonth() + 1; //January is 0!
-                        var tttt = lastday.getUTCFullYear();
+                        var zz = lastday.getDate();
+                        var ff = lastday.getMonth() + 1; //January is 0!
+                        var tttt = lastday.getFullYear();
                         if (zz < 10) {
                             zz = '0' + zz
                         }
