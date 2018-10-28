@@ -95,8 +95,7 @@ const gift_handler = {
                 if (err)
                     console.log(err, result);
             });
-            console.log("Days reset for user" + user)
-            connection.release();
+            console.log("Is it a bot? " + user)
             return cb(null)
         }
         else 
