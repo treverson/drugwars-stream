@@ -8,6 +8,24 @@ var pool = mysql.createPool({
     database: process.env.MYSQL_DB
 });
 
+const blacklist = ['nemesio','rimavera','benture','tiagosare','teodera',
+'mioteo','tristana','urbanot','sulinare','nesave','segundod','rufinac',
+'nannie','sebelita','chakwaina','daunte','lisanove','mudenate','adabella',
+'kantiago','sancha','nivera','atividad','narcisco' , 'tenegrore', 'enserrat', 
+'odeste', 'rabella','lagritos','senlagra','dardonat','reanuelo','faitea','carenama','modeste',
+'jeraldo','javiera','josefinaf','joakina','josune','jeraldo','jeraldo','gabrieldat','missvlada',
+'tumblrykid','coppercoins','lakedamon','lancita','countonyou','godofredo','desiderio','inmaculadat','belisama',
+'makhaon','mitrain','atividade','tihania','benedito','hermelinda','lonewolfahat','ignacia',
+'melhemi42','isandro','garbine','piridion','analeigh','onofrete','quidea','kasif','aciencia','kalmira','herfecta',
+'eyeserhe','epione','jaimica','carminda','jaione','isidoro','gualterio','inocencio','henriqua','glivana','aralyno','felisaleo',
+'anbessa','eleanora','fundition.help']
+
+function isBlacklisted(string) {
+    if(blacklist.includes(string))
+    return true
+    else return false
+}
+
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -71,6 +89,17 @@ const gift_handler = {
         var user = json.name
         var date = json.date
         console.log("User : " + user + " will be verified");
+        if(isBlacklisted(user))
+        {
+            steem.broadcast.transfer(process.env.STEEM_PASS, 'fundition.help', user, '0.001 STEEM', 'Bots are not authorized to claim a daily chest on Fundition.io! If you are a human you can be whitelisted by joining our discord here : https://discord.me/fundition', function (err, result) {
+                if (err)
+                    console.log(err, result);
+            });
+            console.log("Days reset for user" + user)
+            connection.release();
+            return cb(null)
+        }
+        else 
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM gift WHERE username='" + user + "'"
             connection.query(query, function (err, result) {
