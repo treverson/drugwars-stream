@@ -154,8 +154,9 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-sell") {
                 try {
+                    console.log(object[i].operations[0][1])
                     var item = JSON.parse(object[i].operations[0][1].json)
-                    item.seller = object[i].operations[0][1].from
+                    item.seller = object[i].operations[0][1].required_posting_auths[0]
                     var today = new Date()
                     var dd = today.getUTCDate();
                     var mm = today.getUTCMonth() + 1; //January is 0!
