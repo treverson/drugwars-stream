@@ -11,9 +11,9 @@ var pool = mysql.createPool({
 
 const market_handler = {
     insertItem: function (item, cb) {
-        var query = `INSERT INTO ongamemarket (seller,appid,fee,usd_price,name,date,sold) 
+        var query = `INSERT INTO ongamemarket (seller,appid,fee,usd_price,name,date,image,sold) 
           VALUES
-              ('${item.seller}','${item.appid}','${item.fee}','${item.usdprice}','${item.name}','${item.date}','0')`
+              ('${item.seller}','${item.appid}','${item.fee}','${item.usdprice}','${item.name}','${item.date}','${item.image}','0')`
           pool.getConnection(function (error, connection) {
             connection.query(query, function (err, result) {
               if (err) {
