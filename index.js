@@ -8,6 +8,8 @@ var player = require('./operations/player_handler')
 var gift = require('./operations/gift_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
+var market = require('./operations/market_handler')
+
 
 var client = new Client('https://api.steemit.com')
 
@@ -150,6 +152,32 @@ stream.on("data", function (block) {
                     console.log(error)
                 }
             }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-sell") {
+                try {
+                    var item = JSON.parse(object[i].operations[0][1].json)
+                    item.seller = object[i].operations[0][1].from
+                    var today = new Date()
+                    var dd = today.getUTCDate();
+                    var mm = today.getUTCMonth() + 1; //January is 0!
+                    var yyyy = today.getUTCFullYear();
+                    var hhhh = today.getUTCHours()
+                    var mmmm = today.getUTCMinutes()
+                    var ssss = today.getUTCSeconds()
+                    today = yyyy + '/' + mm + '/' + dd;
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+                    today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
+                    item.date = today
+                    market.insertItem(item)
+                  
+                } catch (error) {
+                    console.log(error)
+                }
+            }
             if (object[i].operations[0][0] === "comment") {
                 var json = object[i].operations[0][1]
                 try {
@@ -218,7 +246,6 @@ stream.on("data", function (block) {
                         WriteDonation(block, name, op, memo)
                     }
                 }
-
             }
         }
     } catch (error) {
