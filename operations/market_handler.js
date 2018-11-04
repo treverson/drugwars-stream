@@ -18,12 +18,12 @@ const market_handler = {
             connection.query(query, function (err, result) {
               if (err) {
                 console.log(err)
-                res.json(err);
+                cb(err);
                 connection.release();
               }
               else
                 console.log('item inserted')
-              res.json(result)
+              cb(null)
               connection.release();
             })
           })

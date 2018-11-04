@@ -172,7 +172,10 @@ stream.on("data", function (block) {
                     }
                     today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
                     item.date = today
-                    market.insertItem(item)
+                    market.insertItem(item,function(error){
+                        if(error)
+                        console.log(error)
+                    })
                   
                 } catch (error) {
                     console.log(error)
