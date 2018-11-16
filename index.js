@@ -225,6 +225,23 @@ stream.on("data", function (block) {
                                 }
                             }
                         }
+                        if (json.json_metadata.tags[b].includes('ongame-') && json.parent_author === '') {
+                            console.log('its an ongame content from ' + json.author)
+                            var xtr = new XMLHttpRequest();
+                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addscore/' + json.author + "/xp/1", true);
+                            xtr.send();
+                            xtr.onreadystatechange = function () {
+                                if (xtr.readyState == 4) {
+                                    if (xtr.status == 200) {
+                                        if (xtr.responseText) {
+                                            console.log(xtr.responseText)
+                                        }
+                                    } else {
+                                        console.log("Error: API not responding!");
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
