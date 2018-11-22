@@ -35,7 +35,12 @@ function WriteDonation(block, name, op, memo) {
             if (xtr.readyState == 4) {
                 if (xtr.status == 200) {
                     if (xtr.responseText) {
-                        var ticker = JSON.parse(xtr.responseText)
+                        try{
+                            var ticker = JSON.parse(xtr.responseText)
+                        }
+                        catch(e){
+                            
+                        }
                         totalUSD = ticker[0].price_usd
                         console.log('Donator= '+ name +' Amount= '+ totalUSD)
                         var amount = op.amount.split(' ')[0];
@@ -69,7 +74,12 @@ function WriteDonation(block, name, op, memo) {
             if (xtr.readyState == 4) {
                 if (xtr.status == 200) {
                     if (xtr.responseText) {
-                        var ticker = JSON.parse(xtr.responseText)
+                        try{
+                            var ticker = JSON.parse(xtr.responseText)
+                        }
+                        catch(e){
+                            
+                        }
                         totalUSD = ticker[0].price_usd
                         console.log('Donator= '+ name +' Amount= '+ totalUSD)
                         var amount = op.amount.split(' ')[0];
