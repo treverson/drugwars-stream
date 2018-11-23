@@ -9,22 +9,9 @@ var gift = require('./operations/gift_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
 var market = require('./operations/market_handler')
-
-
 var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
-
-transferForShop = function (transaction) {
-    player.checkForPlayer(transaction.from, function (exist) {
-        if (exist) {
-            shop.StartTransaction(transaction, function (error) {
-                if (error)
-                    console.log(error)
-            })
-        }
-    })
-}
 
 function WriteDonation(block, name, op, memo) {
     if (op.amount.split(' ')[1] === 'STEEM') {
@@ -35,14 +22,14 @@ function WriteDonation(block, name, op, memo) {
             if (xtr.readyState == 4) {
                 if (xtr.status == 200) {
                     if (xtr.responseText) {
-                        try{
+                        try {
                             var ticker = JSON.parse(xtr.responseText)
                         }
-                        catch(e){
-                            
+                        catch (e) {
+
                         }
                         totalUSD = ticker[0].price_usd
-                        console.log('Donator= '+ name +' Amount= '+ totalUSD)
+                        console.log('Donator= ' + name + ' Amount= ' + totalUSD)
                         var amount = op.amount.split(' ')[0];
                         amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
                         var xkt = new XMLHttpRequest();
@@ -74,14 +61,14 @@ function WriteDonation(block, name, op, memo) {
             if (xtr.readyState == 4) {
                 if (xtr.status == 200) {
                     if (xtr.responseText) {
-                        try{
+                        try {
                             var ticker = JSON.parse(xtr.responseText)
                         }
-                        catch(e){
-                            
+                        catch (e) {
+
                         }
                         totalUSD = ticker[0].price_usd
-                        console.log('Donator= '+ name +' Amount= '+ totalUSD)
+                        console.log('Donator= ' + name + ' Amount= ' + totalUSD)
                         var amount = op.amount.split(' ')[0];
                         amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
                         var xpz = new XMLHttpRequest();
@@ -107,48 +94,57 @@ function WriteDonation(block, name, op, memo) {
     }
 }
 
-
-var permlinks = []
-var stream = client.blockchain.getBlockStream({mode: BlockchainMode.Latest})
+var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 stream.on("data", function (block) {
-    try {
-        var object = JSON.stringify(block.transactions)
-        object.replace("\\", "")
-        object = JSON.parse(object)
+    if (block != null) {
+        try {
+            var object = JSON.stringify(block.transactions)
+            object.replace("\\", "")
+            object = JSON.parse(object)
+        } catch (error) {
+            console.log(error)
+        }
         for (i = 0; i < object.length; i++) {
             var transaction;
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "ongame") {
-                transferForShop(object[i].operations[0][1])
+                player.checkForPlayer(object[i].operations[0][1].from, function (exist) {
+                    if (exist) {
+                        shop.StartTransaction(transaction, function (error) {
+                            if (error)
+                                console.log(error)
+                        })
+                    }
+                })
             }
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
-                try {
-                    var fight = JSON.parse(object[i].operations[0][1].json)
-                    battle.checkForABattle(fight.user_id, function (error) {
-                        if (error) {
-                            console.log(error)
-                        }
-                    })
+            // if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
+            //     try {
+            //         var fight = JSON.parse(object[i].operations[0][1].json)
+            //         battle.checkForABattle(fight.user_id, function (error) {
+            //             if (error) {
+            //                 console.log(error)
+            //             }
+            //         })
 
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
-                try {
-                    var json = JSON.parse(object[i].operations[0][1].json)
-                    player.checkForPlayer(json.username, function (exist) {
-                        if (!exist) {
-                            player.createNewPlayer(json.username, json.icon, function (error) {
-                                if (error) {
-                                    console.log("couldnt create charachter")
-                                }
-                            })
-                        }
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
+            //     } catch (error) {
+            //         console.log(error)
+            //     }
+            // }
+            // if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
+            //     try {
+            //         var json = JSON.parse(object[i].operations[0][1].json)
+            //         player.checkForPlayer(json.username, function (exist) {
+            //             if (!exist) {
+            //                 player.createNewPlayer(json.username, json.icon, function (error) {
+            //                     if (error) {
+            //                         console.log("couldnt create charachter")
+            //                     }
+            //                 })
+            //             }
+            //         })
+            //     } catch (error) {
+            //         console.log(error)
+            //     }
+            // }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "gift-claim") {
                 try {
                     var json = JSON.parse(object[i].operations[0][1].json)
@@ -183,11 +179,11 @@ stream.on("data", function (block) {
                     }
                     today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
                     item.date = today
-                    market.insertItem(item,function(error){
-                        if(error)
-                        console.log(error)
+                    market.insertItem(item, function (error) {
+                        if (error)
+                            console.log(error)
                     })
-                  
+
                 } catch (error) {
                     console.log(error)
                 }
@@ -259,10 +255,9 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "transfer") {
                 var op = object[i].operations[0][1]
-                var date = object[i].expiration
                 var block = object[i].block_num
                 if (op.memo.includes('Fundition-') || op.memo.includes('fundition-') || op.memo.includes('Project=Fundition-')) {
-                    op.memo = op.memo.replace("/","°")
+                    op.memo = op.memo.replace("/", "°")
                     var memo = op.memo.split(" ")
                     var newperm = memo[0].split("-")
                     var name = memo[1].split('=')[1]
@@ -279,8 +274,6 @@ stream.on("data", function (block) {
                 }
             }
         }
-    } catch (error) {
-        console.log(error)
     }
 })
     .on('end', function () {
