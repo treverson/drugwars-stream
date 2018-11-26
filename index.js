@@ -145,47 +145,49 @@ stream.on("data", function (block) {
             //         console.log(error)
             //     }
             // }
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "gift-claim") {
-                try {
-                    var json = JSON.parse(object[i].operations[0][1].json)
-                    console.log(json)
-                    gift.createNewGift(json, function (error) {
-                        if (!error) {
-                            console.log('gift updated')
-                        }
-                    })
-                } catch (error) {
-                    console.log(error)
+            if (object[i].operations[0][1].id) {
+                if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "gift-claim") {
+                    try {
+                        var json = JSON.parse(object[i].operations[0][1].json)
+                        console.log(json)
+                        gift.createNewGift(json, function (error) {
+                            if (!error) {
+                                console.log('gift updated')
+                            }
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
                 }
-            }
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-sell") {
-                try {
-                    console.log(object[i].operations[0][1])
-                    var item = JSON.parse(object[i].operations[0][1].json)
-                    item.seller = object[i].operations[0][1].required_posting_auths[0]
-                    var today = new Date()
-                    var dd = today.getUTCDate();
-                    var mm = today.getUTCMonth() + 1; //January is 0!
-                    var yyyy = today.getUTCFullYear();
-                    var hhhh = today.getUTCHours()
-                    var mmmm = today.getUTCMinutes()
-                    var ssss = today.getUTCSeconds()
-                    today = yyyy + '/' + mm + '/' + dd;
-                    if (dd < 10) {
-                        dd = '0' + dd
-                    }
-                    if (mm < 10) {
-                        mm = '0' + mm
-                    }
-                    today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-                    item.date = today
-                    market.insertItem(item, function (error) {
-                        if (error)
-                            console.log(error)
-                    })
+                if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "ongame-sell") {
+                    try {
+                        console.log(object[i].operations[0][1])
+                        var item = JSON.parse(object[i].operations[0][1].json)
+                        item.seller = object[i].operations[0][1].required_posting_auths[0]
+                        var today = new Date()
+                        var dd = today.getUTCDate();
+                        var mm = today.getUTCMonth() + 1; //January is 0!
+                        var yyyy = today.getUTCFullYear();
+                        var hhhh = today.getUTCHours()
+                        var mmmm = today.getUTCMinutes()
+                        var ssss = today.getUTCSeconds()
+                        today = yyyy + '/' + mm + '/' + dd;
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
+                        item.date = today
+                        market.insertItem(item, function (error) {
+                            if (error)
+                                console.log(error)
+                        })
 
-                } catch (error) {
-                    console.log(error)
+                    } catch (error) {
+                        console.log(error)
+                    }
                 }
             }
             if (object[i].operations[0][0] === "comment") {
@@ -197,53 +199,55 @@ stream.on("data", function (block) {
                 }
                 if (json.json_metadata.tags) {
                     for (b = 0; json.json_metadata.tags.length > b; b++) {
-                        if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.parent_author === '') {
-                            console.log('its an update from ' + json.author)
-                            var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
-                            xtr.send();
-                            xtr.onreadystatechange = function () {
-                                if (xtr.readyState == 4) {
-                                    if (xtr.status == 200) {
-                                        if (xtr.responseText) {
-                                            console.log(xtr.responseText)
+                        if (json.json_metadata.tags[b]) {
+                            if (json.json_metadata.tags[b].includes('fundition_') || json.json_metadata.tags[b].includes('fundition-') && json.parent_author === '') {
+                                console.log('its an update from ' + json.author)
+                                var xtr = new XMLHttpRequest();
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addupdate/' + json.author + "/" + json.permlink, true);
+                                xtr.send();
+                                xtr.onreadystatechange = function () {
+                                    if (xtr.readyState == 4) {
+                                        if (xtr.status == 200) {
+                                            if (xtr.responseText) {
+                                                console.log(xtr.responseText)
+                                            }
+                                        } else {
+                                            console.log("Error: API not responding!");
                                         }
-                                    } else {
-                                        console.log("Error: API not responding!");
                                     }
                                 }
                             }
-                        }
-                        if (json.json_metadata.tags[b].includes('myfundition') && json.parent_author === '') {
-                            console.log('its a project from ' + json.author)
-                            var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
-                            xtr.send();
-                            xtr.onreadystatechange = function () {
-                                if (xtr.readyState == 4) {
-                                    if (xtr.status == 200) {
-                                        if (xtr.responseText) {
-                                            console.log(xtr.responseText)
+                            if (json.json_metadata.tags[b].includes('myfundition') && json.parent_author === '') {
+                                console.log('its a project from ' + json.author)
+                                var xtr = new XMLHttpRequest();
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addproject/' + json.author + "/" + json.permlink + "/other", true);
+                                xtr.send();
+                                xtr.onreadystatechange = function () {
+                                    if (xtr.readyState == 4) {
+                                        if (xtr.status == 200) {
+                                            if (xtr.responseText) {
+                                                console.log(xtr.responseText)
+                                            }
+                                        } else {
+                                            console.log("Error: API not responding!");
                                         }
-                                    } else {
-                                        console.log("Error: API not responding!");
                                     }
                                 }
                             }
-                        }
-                        if (json.json_metadata.tags[b].includes('ongame-') && json.parent_author === '') {
-                            console.log('its an ongame content from ' + json.author)
-                            var xtr = new XMLHttpRequest();
-                            xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addscore/' + json.author + "/xp/1", true);
-                            xtr.send();
-                            xtr.onreadystatechange = function () {
-                                if (xtr.readyState == 4) {
-                                    if (xtr.status == 200) {
-                                        if (xtr.responseText) {
-                                            console.log(xtr.responseText)
+                            if (json.json_metadata.tags[b].includes('ongame-') && json.parent_author === '') {
+                                console.log('its an ongame content from ' + json.author)
+                                var xtr = new XMLHttpRequest();
+                                xtr.open('GET', 'https://ongameapi.herokuapp.com/api/addscore/' + json.author + "/xp/1", true);
+                                xtr.send();
+                                xtr.onreadystatechange = function () {
+                                    if (xtr.readyState == 4) {
+                                        if (xtr.status == 200) {
+                                            if (xtr.responseText) {
+                                                console.log(xtr.responseText)
+                                            }
+                                        } else {
+                                            console.log("Error: API not responding!");
                                         }
-                                    } else {
-                                        console.log("Error: API not responding!");
                                     }
                                 }
                             }
