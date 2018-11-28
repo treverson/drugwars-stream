@@ -14,84 +14,88 @@ var client = new Client('https://api.steemit.com')
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 function WriteDonation(block, name, op, memo) {
-    if (op.amount.split(' ')[1] === 'STEEM') {
-        var xtr = new XMLHttpRequest();
-        xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
-        xtr.send();
-        xtr.onreadystatechange = function () {
-            if (xtr.readyState == 4) {
-                if (xtr.status == 200) {
-                    if (xtr.responseText) {
-                        try {
-                            var ticker = JSON.parse(xtr.responseText)
-                        }
-                        catch (e) {
-
-                        }
-                        totalUSD = ticker[0].price_usd
-                        console.log('Donator= ' + name + ' Amount= ' + totalUSD)
-                        var amount = op.amount.split(' ')[0];
-                        amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
-                        var xkt = new XMLHttpRequest();
-                        xkt.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
-                        xkt.send();
-                        xkt.onreadystatechange = function () {
-                            if (xkt.readyState == 4) {
-                                if (xkt.status == 200) {
-                                    if (xkt.responseText) {
-                                        console.log(xkt.responseText)
+    if(op.amount)
+    {
+        if (op.amount.split(' ')[1] === 'STEEM') {
+            var xtr = new XMLHttpRequest();
+            xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
+            xtr.send();
+            xtr.onreadystatechange = function () {
+                if (xtr.readyState == 4) {
+                    if (xtr.status == 200) {
+                        if (xtr.responseText) {
+                            try {
+                                var ticker = JSON.parse(xtr.responseText)
+                            }
+                            catch (e) {
+    
+                            }
+                            totalUSD = ticker[0].price_usd
+                            console.log('Donator= ' + name + ' Amount= ' + totalUSD)
+                            var amount = op.amount.split(' ')[0];
+                            amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
+                            var xkt = new XMLHttpRequest();
+                            xkt.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
+                            xkt.send();
+                            xkt.onreadystatechange = function () {
+                                if (xkt.readyState == 4) {
+                                    if (xkt.status == 200) {
+                                        if (xkt.responseText) {
+                                            console.log(xkt.responseText)
+                                        }
+                                    } else {
+                                        console.log("Error: API not responding!");
                                     }
-                                } else {
-                                    console.log("Error: API not responding!");
                                 }
                             }
                         }
+                    } else {
+                        console.log("Error: API not responding!");
                     }
-                } else {
-                    console.log("Error: API not responding!");
+                }
+            }
+        }
+        else {
+            var xtr = new XMLHttpRequest();
+            xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
+            xtr.send();
+            xtr.onreadystatechange = function () {
+                if (xtr.readyState == 4) {
+                    if (xtr.status == 200) {
+                        if (xtr.responseText) {
+                            try {
+                                var ticker = JSON.parse(xtr.responseText)
+                            }
+                            catch (e) {
+    
+                            }
+                            totalUSD = ticker[0].price_usd
+                            console.log('Donator= ' + name + ' Amount= ' + totalUSD)
+                            var amount = op.amount.split(' ')[0];
+                            amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
+                            var xpz = new XMLHttpRequest();
+                            xpz.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
+                            xpz.send();
+                            xpz.onreadystatechange = function () {
+                                if (xpz.readyState == 4) {
+                                    if (xpz.status == 200) {
+                                        if (xpz.responseText) {
+                                            console.log(xpz.responseText)
+                                        }
+                                    } else {
+                                        console.log("Error: API not responding!");
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        console.log("Error: API not responding!");
+                    }
                 }
             }
         }
     }
-    else {
-        var xtr = new XMLHttpRequest();
-        xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem-dollars/', true);
-        xtr.send();
-        xtr.onreadystatechange = function () {
-            if (xtr.readyState == 4) {
-                if (xtr.status == 200) {
-                    if (xtr.responseText) {
-                        try {
-                            var ticker = JSON.parse(xtr.responseText)
-                        }
-                        catch (e) {
-
-                        }
-                        totalUSD = ticker[0].price_usd
-                        console.log('Donator= ' + name + ' Amount= ' + totalUSD)
-                        var amount = op.amount.split(' ')[0];
-                        amount = Number(parseFloat(amount).toFixed(3)) * Number(parseFloat(totalUSD).toFixed(3))
-                        var xpz = new XMLHttpRequest();
-                        xpz.open('GET', 'https://ongameapi.herokuapp.com/api/adddonation/' + block + "/" + name + "/" + op.to + "/" + amount + "/" + memo + "/" + op.amount, true);
-                        xpz.send();
-                        xpz.onreadystatechange = function () {
-                            if (xpz.readyState == 4) {
-                                if (xpz.status == 200) {
-                                    if (xpz.responseText) {
-                                        console.log(xpz.responseText)
-                                    }
-                                } else {
-                                    console.log("Error: API not responding!");
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    console.log("Error: API not responding!");
-                }
-            }
-        }
-    }
+   
 }
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
@@ -262,19 +266,23 @@ stream.on("data", function (block) {
                 var block = object[i].block_num
                 if (op.memo.includes('Fundition-') || op.memo.includes('fundition-') || op.memo.includes('Project=Fundition-')) {
                     op.memo = op.memo.replace("/", "°")
-                    var memo = op.memo.split(" ")
-                    var newperm = memo[0].split("-")
-                    var name = memo[1].split('=')[1]
-                    if (op.from === "blocktrades") {
-                        WriteDonation(block, name, op, memo)
+                    if(op.memo)
+                    {
+                        var memo = op.memo.split(" ")
+                        var newperm = memo[0].split("-")
+                        var name = memo[1].split('=')[1]
+                        if (op.from === "blocktrades") {
+                            WriteDonation(block, name, op, memo)
+                        }
+                        if
+                        (op.from === "fundition") {
+                            WriteDonation(block, name, op, memo)
+                        }
+                        else {
+                            WriteDonation(block, name, op, memo)
+                        }
                     }
-                    if
-                    (op.from === "fundition") {
-                        WriteDonation(block, name, op, memo)
-                    }
-                    else {
-                        WriteDonation(block, name, op, memo)
-                    }
+                   
                 }
             }
         }
