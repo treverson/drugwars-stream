@@ -23,8 +23,8 @@ const ongame_handler = {
                 }
                 else
                     console.log('ongame content inserted')
-                cb(null)
                 connection.release();
+                cb(null)
             })
         })
     },
