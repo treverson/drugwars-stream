@@ -255,8 +255,8 @@ stream.on("data", function (block) {
                                         }
                                     }
                                 }
-                                console.log('22'+object[i].operations[0])
-                                console.log(object[i].operations[0][1])
+                                console.log('22'+object[i].operations[0].created)
+                            
                                 ongame.insertItem(ongame.parseContent(json),function(error){
                                     if(error)
                                     console.log(error)
