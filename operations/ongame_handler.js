@@ -29,7 +29,6 @@ const ongame_handler = {
         })
     },
     parseContent: function (post) {
-        console.log(post)
         var content = {}
         content.author = post.author
         content.permlink = post.permlink
