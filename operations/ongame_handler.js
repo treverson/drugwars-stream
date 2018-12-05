@@ -31,11 +31,6 @@ const ongame_handler = {
     parseContent: function (post) {
         var content = {}
         console.log(post)
-        try {
-            content.json_metadata = JSON.parse(post)
-          } catch (e) {
-            console.log(e)
-          }
         if (!content) content = {}
         content.author = post.author
         content.permlink = post.permlink
