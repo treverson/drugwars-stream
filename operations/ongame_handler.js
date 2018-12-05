@@ -13,7 +13,7 @@ const ongame_handler = {
     insertItem: function (content, cb) {
         var query = `INSERT INTO ongamecontents (author,permlink,title, created, body, json_metadata, game, last_update, type ) 
         VALUES ('${content.author}','${content.permlink}','${content.title}','${content.created}','${content.body}', '${content.json_metadata}','${content.game}','${content.last_update}','${content.type}')
-        ON DUPLICATE KEY UPDATE  title='${content.title}', created='${content.created}', body='${content.body}', json_metadata='${content.json_metadata}',game='${content.game}', last_update='${content.last_update}', type='${content.type}'`
+        ON DUPLICATE KEY UPDATE  title='${content.title}', body='${content.body}', json_metadata='${content.json_metadata}',game='${content.game}', last_update='${content.last_update}', type='${content.type}'`
         pool.getConnection(function (error, connection) {
             connection.query(query, function (err, result) {
                 if (err) {
@@ -35,8 +35,24 @@ const ongame_handler = {
         content.permlink = post.permlink
         content.title = post.title.toString().replace(/\'/g, "''")
         content.body = post.body.toString().replace(/\'/g, "''")
-        content.created = post.created
-        content.last_update = post.last_update
+        var today = new Date()
+        var dd = today.getUTCDate();
+        var mm = today.getUTCMonth() + 1; //January is 0!
+        var yyyy = today.getUTCFullYear();
+        var hhhh = today.getUTCHours()
+        var mmmm = today.getUTCMinutes()
+        var ssss = today.getUTCSeconds()
+        today = yyyy + '/' + mm + '/' + dd;
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
+        item.date = today
+        content.created = post.today
+        content.last_update = post.today
         content.tags = post.json_metadata.tags
         for (i = 0; content.tags.length > i; i++) {
             if (content.tags[i].includes('ongame-news') || content.tags[i].includes('ongame-streaming') || content.tags[i].includes('ongame-video') 

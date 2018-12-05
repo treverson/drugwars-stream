@@ -254,9 +254,7 @@ stream.on("data", function (block) {
                                             console.log("Error: API not responding!");
                                         }
                                     }
-                                }
-                                console.log('22'+object[i].operations[0].created)
-                            
+                                }                            
                                 ongame.insertItem(ongame.parseContent(json),function(error){
                                     if(error)
                                     console.log(error)
