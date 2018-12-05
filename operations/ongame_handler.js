@@ -49,7 +49,6 @@ const ongame_handler = {
             mm = '0' + mm
         }
         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-        item.date = today
         content.created = post.today
         content.last_update = post.today
         content.tags = post.json_metadata.tags
