@@ -259,7 +259,7 @@ stream.on("data", function (block) {
                                     if(error)
                                     console.log(error)
                                 })
-                        
+                                return
                             }
                         }
                     }
