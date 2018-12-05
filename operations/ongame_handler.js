@@ -28,21 +28,22 @@ const ongame_handler = {
             })
         })
     },
-    parseContent: function (update) {
+    parseContent: function (post) {
         var content = {}
         try {
-            content.json_metadata = JSON.parse(update.json_metadata)
+            content.json_metadata = JSON.parse(post.json_metadata)
         } catch (e) {
             console.log(e)
         }
         if (!content) content = {}
-        content.author = update.author
-        content.permlink = update.permlink
-        content.title = update.title.toString().replace(/\'/g, "''")
-        content.body = update.body.toString().replace(/\'/g, "''")
-        content.last_update = update.last_update
-        content.created = update.created
-        content.url = update.url
+        content.author = post.author
+        content.permlink = post.permlink
+        content.title = post.title.toString().replace(/\'/g, "''")
+        content.body = post.body.toString().replace(/\'/g, "''")
+        content.last_post = post.last_post
+        content.created = post.created
+        content.tags = post.json_metadata.tags
+        content.url = post.url
         for (i = 0; content.tags.length > i; i++) {
             if (content.tags[i].includes('ongame-news') || content.tags[i].includes('ongame-streaming') || content.tags[i].includes('ongame-video') 
             || content.tags[i].includes('ongame-screenshot') || content.tags[i].includes('ongame-review') || content.tags[i].includes('ongame-tips')  ) {
