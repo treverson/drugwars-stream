@@ -11,6 +11,7 @@ var pool = mysql.createPool({
 
 const ongame_handler = {
     insertItem: function (content, cb) {
+        console.log(content)
         var query = `INSERT INTO ongamecontents (author,permlink,title, created, body, json_metadata, game, last_update, type ) 
         VALUES ('${content.author}','${content.permlink}','${content.title}','${content.created}','${content.body}', '${content.json_metadata}','${content.game}','${content.last_update}','${content.type}')
         ON DUPLICATE KEY UPDATE  title='${content.title}', created='${content.created}', body='${content.body}', json_metadata='${content.json_metadata}',game='${content.game}', last_update='${content.last_update}', type='${content.type}'`
@@ -30,13 +31,10 @@ const ongame_handler = {
     },
     parseContent: function (post) {
         var content = {}
-        console.log(post)
-        console.log(post.json_metadata.tags)
         if (!content) content = {}
         content.author = post.author
         content.permlink = post.permlink
         content.title = post.title.toString().replace(/\'/g, "''")
-        content.created = post.created
         content.body = post.body.toString().replace(/\'/g, "''")
         content.created = post.created
         content.last_update = post.last_update
