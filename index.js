@@ -255,6 +255,7 @@ stream.on("data", function (block) {
                                         }
                                     }
                                 }
+                                console.log(json)
                                 ongame.insertItem(ongame.parseContent(json),function(error){
                                     if(error)
                                     console.log(error)
