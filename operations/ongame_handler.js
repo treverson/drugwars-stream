@@ -35,9 +35,10 @@ const ongame_handler = {
         content.author = post.author
         content.permlink = post.permlink
         content.title = post.title.toString().replace(/\'/g, "''")
-        content.body = post.body.toString().replace(/\'/g, "''")
-        content.last_post = post.last_post
         content.created = post.created
+        content.body = post.body.toString().replace(/\'/g, "''")
+        content.created = post.created
+        content.last_update = post.last_update
         content.tags = content.json_metadata.tags
         for (i = 0; content.tags.length > i; i++) {
             if (content.tags[i].includes('ongame-news') || content.tags[i].includes('ongame-streaming') || content.tags[i].includes('ongame-video') 
