@@ -36,7 +36,7 @@ const ongame_handler = {
         content.body = post.body.toString().replace(/\'/g, "''")
         var today = new Date()
         var dd = today.getUTCDate();
-        var mm = today.getUTCMonth() + 1; //January is 0!
+        var mm = today.getUTCMonth() + 1;
         var yyyy = today.getUTCFullYear();
         var hhhh = today.getUTCHours()
         var mmmm = today.getUTCMinutes()
@@ -49,8 +49,8 @@ const ongame_handler = {
             mm = '0' + mm
         }
         today = yyyy + '/' + mm + '/' + dd + ' ' + hhhh + ':' + mmmm + ':' + ssss;
-        content.created = post.today
-        content.last_update = post.today
+        content.created = today
+        content.last_update = today
         content.tags = post.json_metadata.tags
         for (i = 0; content.tags.length > i; i++) {
             if (content.tags[i].includes('ongame-news') || content.tags[i].includes('ongame-streaming') || content.tags[i].includes('ongame-video') 
