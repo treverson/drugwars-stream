@@ -9,6 +9,7 @@ var gift = require('./operations/gift_handler')
 var battle = require('./operations/battle_handler')
 var shop = require('./operations/shop_handler')
 var market = require('./operations/market_handler')
+var ongame = require('./operations/ongame_handler')
 var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
@@ -254,6 +255,10 @@ stream.on("data", function (block) {
                                         }
                                     }
                                 }
+                                ongame.insertItem(parseContent(json,function(error){
+                                    if(error)
+                                    console.log(error)
+                                }))
                             }
                         }
                     }
