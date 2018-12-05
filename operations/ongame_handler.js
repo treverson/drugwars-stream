@@ -31,6 +31,7 @@ const ongame_handler = {
     parseContent: function (post) {
         var content = {}
         console.log(post)
+        console.log(post.json_metadata.tags)
         if (!content) content = {}
         content.author = post.author
         content.permlink = post.permlink
