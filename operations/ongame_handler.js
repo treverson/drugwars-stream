@@ -32,7 +32,7 @@ const ongame_handler = {
         var content = {}
         console.log(post)
         try {
-            content.json_metadata = JSON.parse(post.json_metadata)
+            content.json_metadata = JSON.parse(post)
           } catch (e) {
             console.log(e)
           }
@@ -44,7 +44,7 @@ const ongame_handler = {
         content.body = post.body.toString().replace(/\'/g, "''")
         content.created = post.created
         content.last_update = post.last_update
-        content.tags = content.json_metadata.tags
+        content.tags = post.json_metadata.tags
         for (i = 0; content.tags.length > i; i++) {
             if (content.tags[i].includes('ongame-news') || content.tags[i].includes('ongame-streaming') || content.tags[i].includes('ongame-video') 
             || content.tags[i].includes('ongame-screenshot') || content.tags[i].includes('ongame-review') || content.tags[i].includes('ongame-tips')  ) {
