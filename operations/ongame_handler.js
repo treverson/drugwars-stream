@@ -30,6 +30,7 @@ const ongame_handler = {
     },
     parseContent: function (post) {
         var content = {}
+        console.log(post)
         try {
             content.json_metadata = JSON.parse(post.json_metadata)
         } catch (e) {
