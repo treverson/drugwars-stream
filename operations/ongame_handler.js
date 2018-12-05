@@ -51,7 +51,7 @@ const ongame_handler = {
             }
         }
         try {
-            content.json_metadata = JSON.stringify(content.json_metadata).toString().replace(/\'/g, "''")
+            content.json_metadata = JSON.stringify(post.json_metadata).toString().replace(/\'/g, "''")
         } catch (e) {
             console.log(e)
         }
