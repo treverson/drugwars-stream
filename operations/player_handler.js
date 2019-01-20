@@ -6,6 +6,8 @@ var pool = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB
 });
+
+
 var maxpic = 5;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
