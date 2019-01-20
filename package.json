@@ -8,7 +8,6 @@
         "dsteem": "^0.8.7",
         "event-stream": "^3.3.4",
         "express": "^4.16.2",
-        "mssql": "^4.2.1",
         "mysql": "^2.16.0",
         "steem": "^0.7.2",
         "xmlhttprequest": "^1.8.0"
