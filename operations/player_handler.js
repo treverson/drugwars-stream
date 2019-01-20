@@ -1,4 +1,4 @@
-var connection = require('./lib/dbconn')
+var connection = require('../lib/dbconn');
 
 var maxpic = 5;
 function getRandomInt(max) {
