@@ -26,7 +26,6 @@ const player_handler = {
         //INSERT USER 
         var player_id;
         console.log("User : " + player + " will be recorded");
-        pool1.getConnection(function (err, connection) {
             var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
                 if (err) console.log(error);
                 else {
@@ -59,7 +58,6 @@ const player_handler = {
                         }
                     })
                 }
-            })
     },
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
@@ -81,7 +79,6 @@ const player_handler = {
             });
     },
     addXpToCharacter : function (character_id, xp, cb) {
-        pool1.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
@@ -103,7 +100,6 @@ const player_handler = {
                     cb(null)
                 }
             });
-        });
     }
 }
 module.exports = player_handler;
