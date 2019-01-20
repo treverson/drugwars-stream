@@ -39,7 +39,7 @@ const player_handler = {
                         player_id = result[0].user_id
                         console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                         //INSERT USER CHARACTER
-                        var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
+                        var query = "INSERT INTO character (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
                         connection.query(query, function (err, result) {
                             if (err) console.log(err);
                             else {
@@ -71,17 +71,18 @@ const player_handler = {
                 if (result[0] != undefined) {
                     if (player = result[0].username) {
                         console.log("User : " + player + " is already recorded");
+                        connection.release()
                         cb(true)
                     }
                 }
                 else {
                     console.log("User : " + player + " isnt recorded");
+                    connection.release()
                     cb(null)
                 }
             });
     },
     addXpToCharacter : function (character_id, xp, cb) {
-        pool1.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
@@ -103,7 +104,6 @@ const player_handler = {
                     cb(null)
                 }
             });
-        });
     }
 }
 module.exports = player_handler;
