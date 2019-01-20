@@ -57,8 +57,6 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                console.log(json)
-                if(json)
                 player.checkForPlayer(json.username, function (exist) {
                     if (!exist) {
                         player.createNewPlayer(json.username, json.icon, function (error) {

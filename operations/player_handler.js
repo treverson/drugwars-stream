@@ -72,7 +72,8 @@ const player_handler = {
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM user WHERE username='" + player + "'"
+            var query = "SELECT * FROM user WHERE username='" + player + "'";
+            console.log(query)
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 if (result[0] != undefined) {
