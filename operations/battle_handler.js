@@ -1,11 +1,11 @@
-const express = require('express');
 var mysql = require('mysql');
 var pool = mysql.createPool({
-    connectionLimit: 5,
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB
+    database: process.env.MYSQL_DB,
+    connectionLimit : 10,               // this is the max number of connections before your pool starts waiting for a release
+    multipleStatements : true           // I like this because it helps prevent nested sql statements, it can be buggy though, so be careful
 });
 var rpg_mode = require('./battle/rpg_mode')
 rpg_mode = new rpg_mode();
