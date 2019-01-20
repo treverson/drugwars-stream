@@ -51,20 +51,6 @@ stream.on("data", function (block) {
                     console.log(error)
                 }
             }
-
-            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
-                try {
-                    var fight = JSON.parse(object[i].operations[0][1].json)
-                    battle.checkForABattle(fight.user_id, function (error) {
-                        if (error) {
-                            console.log(error)
-                        }
-                    })
-
-                } catch (error) {
-                    console.log(error)
-                }
-            }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
                 try {
                     var json = JSON.parse(object[i].operations[0][1].json)
