@@ -1,10 +1,10 @@
 var mysql = require('mysql');
-var pool = mysql.createPool({
+var pool1 = mysql.createPool({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DB,
-    connectionLimit : 10,               // this is the max number of connections before your pool starts waiting for a release
+    connectionLimit : 10,               // this is the max number of connections before your pool1 starts waiting for a release
     multipleStatements : true           // I like this because it helps prevent nested sql statements, it can be buggy though, so be careful
 });
 
@@ -34,7 +34,7 @@ const player_handler = {
         //INSERT USER 
         var player_id;
         console.log("User : " + player + " will be recorded");
-        pool.getConnection(function (err, connection) {
+        pool1.getConnection(function (err, connection) {
             var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
             connection.query(query, function (err, result) {
                 if (err) console.log(error);
@@ -73,7 +73,7 @@ const player_handler = {
     },
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
-        pool.getConnection(function (err, connection) {
+        pool1.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE username = '" + player + "'"
             connection.query(query, function (err, result) {
                 if (err) 
@@ -93,7 +93,7 @@ const player_handler = {
         });
     },
     addXpToCharacter : function (character_id, xp, cb) {
-        pool.getConnection(function (err, connection) {
+        pool1.getConnection(function (err, connection) {
             var query = "SELECT * FROM characters WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
