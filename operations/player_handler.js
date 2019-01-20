@@ -1,12 +1,4 @@
-var mysql = require('mysql');
-var pool1 = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB,
-    connectionLimit : 10,               // this is the max number of connections before your pool1 starts waiting for a release
-    multipleStatements : true           // I like this because it helps prevent nested sql statements, it can be buggy though, so be careful
-});
+var connection = require('./lib/dbconn')
 
 var maxpic = 5;
 function getRandomInt(max) {
@@ -36,7 +28,6 @@ const player_handler = {
         console.log("User : " + player + " will be recorded");
         pool1.getConnection(function (err, connection) {
             var query = "INSERT INTO user (username, user_type_id) VALUES ('" + player + "','1')";
-            connection.query(query, function (err, result) {
                 if (err) console.log(error);
                 else {
                     console.log("User : " + player + " is now recorded in db")
@@ -48,7 +39,7 @@ const player_handler = {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                             //INSERT USER CHARACTER
-                            var query = "INSERT INTO characters (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
+                            var query = "INSERT INTO character (character_id, character_type_id, name, alive, level, xp, money, picture) VALUES (" + player_id + ",1,'" + player + "',1,1,1,100," + icon + ")"
                             connection.query(query, function (err, result) {
                                 if (err) console.log(err);
                                 else {
@@ -69,11 +60,9 @@ const player_handler = {
                     })
                 }
             })
-        })
     },
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
-        pool1.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE username='" + player + "'";
             connection.query(query, function (err, result) {
                 if (err) 
@@ -90,17 +79,16 @@ const player_handler = {
                     cb(null)
                 }
             });
-        });
     },
     addXpToCharacter : function (character_id, xp, cb) {
         pool1.getConnection(function (err, connection) {
-            var query = "SELECT * FROM characters WHERE character_id = '" + character_id + "'"
+            var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 if (result[0] != undefined) {
                     console.log(xp + "XP will be add to " + character_id)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE characters SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
