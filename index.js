@@ -54,18 +54,20 @@ stream.on("data", function (block) {
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-char") {
                 try {
                     var json = JSON.parse(object[i].operations[0][1].json)
-                    player.checkForPlayer(json.username, function (exist) {
-                        if (!exist) {
-                            player.createNewPlayer(json.username, json.icon, function (error) {
-                                if (error) {
-                                    console.log("couldnt create charachter")
-                                }
-                            })
-                        }
-                    })
                 } catch (error) {
                     console.log(error)
                 }
+                console.log(json)
+                if(json.username)
+                player.checkForPlayer(json.username, function (exist) {
+                    if (!exist) {
+                        player.createNewPlayer(json.username, json.icon, function (error) {
+                            if (error) {
+                                console.log("couldnt create charachter")
+                            }
+                        })
+                    }
+                })
             }
         }
     }
