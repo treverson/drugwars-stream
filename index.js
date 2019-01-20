@@ -3,12 +3,26 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var ongame = require('./operations/ongame_handler')
+var battle = require('./operations/battle_handler')
+var player = require('./operations/player_handler')
+var shop = require('./operations/shop_handler')
 var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
+
+
+transferForShop = function (transaction) {
+    player.checkForPlayer(transaction.from, function (exist) {
+        if (exist) {
+            shop.StartTransaction(transaction, function (error) {
+                if (error)
+                    console.log(error)
+            })
+        }
+    })
+}
 
 stream.on("data", function (block) {
     if (block != null) {
@@ -20,24 +34,24 @@ stream.on("data", function (block) {
             console.log(error)
         }
         for (i = 0; i < object.length; i++) {
-            if (object[i].operations[0][0] === "transfer") {
-                var op = object[i].operations[0][1]
-                console.log(op)
-                var block = object[i].block_num
-                if (op.memo.includes('Project=Fundition-')) {
-                    op.memo = op.memo.replace("/", "°")
-                    if (op.memo) {
-                        var memo = op.memo.split(" ")
-                        if (memo[1].split('=')[1])
-                            var name = memo[1].split('=')[1]
-                        else {
-                            var name = 'anonymous'
-                        }
-                        fundition.writeDonation(block, name, op, memo)
-                    }
 
+            if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars") {
+                transferForShop(object[i].operations[0][1])
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
+                try {
+                    var fight = JSON.parse(object[i].operations[0][1].json)
+                    battle.checkForABattle(fight.user_id, function (error) {
+                        if (error) {
+                            console.log(error)
+                        }
+                    })
+
+                } catch (error) {
+                    console.log(error)
                 }
             }
+
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
                 try {
                     var fight = JSON.parse(object[i].operations[0][1].json)
