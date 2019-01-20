@@ -72,14 +72,12 @@ const player_handler = {
     checkForPlayer : function (player, cb) {
         console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM user WHERE username='" + player + "'";
-            console.log(query)
+            var query = "SELECT * FROM user WHERE username = '" + player + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 if (result[0] != undefined) {
                     if (player = result[0].username) {
                         console.log("User : " + player + " is already recorded");
-                        connection.release()
                         cb(true)
                     }
                 }
