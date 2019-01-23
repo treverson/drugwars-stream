@@ -104,7 +104,7 @@ stream.on("data", function (block) {
                     if (user_id) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
-                            building.AddLevelToPlayerBuilding(player,json.building,json.amount,function(result){
+                            building.AddLevelToPlayerBuildingSteem(player,json.building,json.amount,function(result){
                                 if(result)
                                 console.log(result)
                                 if(result ==="success")
@@ -112,7 +112,7 @@ stream.on("data", function (block) {
                                     var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
                                     amount = (amount/100)*89
                                     amount = amount + ' STEEM'
-                                    await client.broadcast.transfer({
+                                    client.broadcast.transfer({
                                         from: 'drugwars-dealer',
                                         to: 'drugwars',
                                         amount: amount,
