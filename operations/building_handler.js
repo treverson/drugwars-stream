@@ -49,10 +49,6 @@ const building_handler = {
                                 var type = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
-                                console.log(cost)
-                                console.log(player.drugs)
-                                console.log(type)
-
                                 if((type === 'drugs' || type === 'defense' || type === 'main') && cost>player.drugs || (type === 'weapons' && cost>player.weapons))
                                 {
                                     connection.release()
@@ -62,7 +58,6 @@ const building_handler = {
                                     var d = new Date();
                                     if(building.last_update< d)
                                     {
-                                        d.setSeconds(d.getSeconds() + timer);
                                         console.log('next update' + building.last_update)
                                         var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
                                         var query;
@@ -82,7 +77,7 @@ const building_handler = {
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
-                                                var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
+                                                var now = new Date(d.getTime() + (timer*1000)).toISOString().slice(0, 19).replace('T', ' ')
                                                 var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
