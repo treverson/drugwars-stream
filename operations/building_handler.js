@@ -36,7 +36,7 @@ const building_handler = {
                             console.log(error)
                             cb(null)
                         }
-                        var cbuildings = result[0]
+                        var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
                         if(building.level<1)
