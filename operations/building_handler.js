@@ -143,8 +143,6 @@ const building_handler = {
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
-                        console.log(cbuildings)
-
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
                                 timer =  10
@@ -154,7 +152,6 @@ const building_handler = {
                                 var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
-                                
                                 console.log(player)
                                 console.log(building_id)
                                 console.log(amount)
@@ -168,7 +165,6 @@ const building_handler = {
                                     if(building.last_update< d)
                                     {
                                         console.log('next update' + building.last_update)
-                                        var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
                                         var query;
                                         if(ptype === 'weapons')
                                         {
