@@ -39,8 +39,6 @@ const building_handler = {
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
-                        if(!building.level)
-                        building.level=1
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
                                 timer =  15 * (building.level * cbuildings[i].building_coeff)
@@ -79,7 +77,7 @@ const building_handler = {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${building.level+1}, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
