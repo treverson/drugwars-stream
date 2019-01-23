@@ -11,7 +11,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-CreateAttributes= function (id) {
+CreateAttributes = function (id) {
     var query = "";
     for (i = 1; i < 11; i++) {
         query += "(" + id + "," + [i] + "," + getRandomInt(12) + ")"
@@ -21,14 +21,14 @@ CreateAttributes= function (id) {
     return query
 }
 
-createUniqueId=function () {
+createUniqueId = function () {
     var id = new Date().valueOf();
     return id
 }
 
 
 const player_handler = {
-    createNewPlayer : function (player,icon, cb) {
+    createNewPlayer: function (player, icon, cb) {
         //INSERT USER 
         var player_id;
         console.log("User : " + player + " will be recorded");
@@ -46,7 +46,7 @@ const player_handler = {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                             //INSERT USER CHARACTER
-                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards ) VALUES ('"+player_id+"', 1,'"+player+"', 1, 1, 1, 100,'"+icon+"', 0, 1,'"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"',1,0,0)"
+                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards ) VALUES ('" + player_id + "', 1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 0, 1,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',1,0,0)"
                             connection.query(query, function (err, result) {
                                 if (err) console.log(err);
                                 else {
@@ -69,7 +69,7 @@ const player_handler = {
             })
         })
     },
-    checkForPlayer : function (player, cb) {
+    checkForPlayer: function (player, cb) {
         console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE username = '" + player + "'"
@@ -88,7 +88,7 @@ const player_handler = {
             });
         });
     },
-    addXpToCharacter : function (character_id, xp, cb) {
+    addXpToCharacter: function (character_id, xp, cb) {
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
@@ -113,7 +113,20 @@ const player_handler = {
             });
         });
     },
-    addLevelToBuilding : function (character_id, building_id, cb) {
+    addLevelToPlayerBuilding: function (character_id, building_id, cb) {
+        pool.getConnection(function (err, connection) {
+            var query = `UPDATE character_buildings SET building_${building_id}_level=+1 WHERE character_id=${character_id}`
+            connection.query(query, function (err, result) {
+                if (err) throw err;
+                else {
+                    console.log("Upgraded character building for : " + character_id)
+                    connection.release();
+                    cb(true)
+                }
+            })
+        })
+    },
+    checkDrugs: function (character_id, building_id, cb) {
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
@@ -138,32 +151,7 @@ const player_handler = {
             });
         });
     },
-    checkDrugs : function (character_id, building_id, cb) {
-        pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
-            connection.query(query, function (err, result) {
-                if (err) throw err;
-                if (result[0] != undefined) {
-                    console.log(xp + "XP will be add to " + character_id)
-                    var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
-                    connection.query(query, function (err, result) {
-                        if (err) throw err;
-                        else {
-                            console.log(xp + "XP added to character" + character_id)
-                            connection.release();
-                            cb(true)
-                        }
-                    })
-                }
-                else {
-                    console.log("User : " + player + " isnt recorded");
-                    cb(null)
-                }
-            });
-        });
-    },
-    removeDrugs : function (character_id, building_id, cb) {
+    removeDrugs: function (character_id, building_id, cb) {
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {

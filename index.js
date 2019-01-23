@@ -75,6 +75,10 @@ stream.on("data", function (block) {
                 }
                 player.checkForPlayer(json.username, function (player) {
                     if (player) {
+                        player.addLevelToPlayerBuilding(player,json.building,function(error){
+                            if(error)
+                            console.log(error)
+                        })
                         console.log(player + ' id')
                         console.log(json.building + ' voila')
                         console.log(json.username + ' exist bra')
