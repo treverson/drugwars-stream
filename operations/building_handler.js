@@ -17,18 +17,20 @@ const building_handler = {
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
                         {
+                            if(buildings[i] && buildings[i]>0)
                             building.level = buildings[i]
-                        }
-                        else{
+                            else 
                             building.level = 1
                         }
                         if (i === 'building_' + building_id + '_last_update')
                         {
+                            if(buildings[i])
                             building.last_update = buildings[i]
+                            else{
+                                building.last_update = new Date()
+                            }
                         }
-                        else{
-                            building.last_update = new Date()
-                        }
+
                     }
                     var query = "SELECT * FROM buildings"
                     connection.query(query, function (err, result) {
@@ -36,7 +38,6 @@ const building_handler = {
                             console.log(error)
                             cb(null)
                         }
-                        console.log(building)
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
