@@ -143,10 +143,7 @@ const building_handler = {
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
-                        
-                        console.log(building_id)
-                        for (i = 0; cbuildings.length > i; i++) {
-                            console.log(cbuildings[i].building_id)
+                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
                                 timer =  10
                                 var z = building.level * cbuildings[i].building_base_price
@@ -155,9 +152,6 @@ const building_handler = {
                                 var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
-                                console.log(player)
-                                console.log(building_id)
-                                console.log(amount)
                                 if((cost/10000)>amount)
                                 {
                                     connection.release()
@@ -173,12 +167,12 @@ const building_handler = {
                                         {
                                             if(prod_rate)
                                             player.weapon_production_rate = player.weapon_production_rate + prod_rate
-                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +" WHERE character_id="+player.character_id
                                         }
                                         else{
                                             if(prod_rate)
                                             player.drug_production_rate = player.drug_production_rate + prod_rate
-                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+" WHERE character_id="+player.character_id
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
