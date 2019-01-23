@@ -46,7 +46,7 @@ const player_handler = {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                             //INSERT USER CHARACTER
-                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards ) VALUES ('" + player_id + "', 1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 100, 1,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',1,100,0)"
+                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards ) VALUES ('" + player_id + "', 1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0)"
                             connection.query(query, function (err, result) {
                                 if (err) console.log(err);
                                 else {
@@ -140,6 +140,7 @@ const player_handler = {
                 if (err) console.log(err);
                 if (result) {
                     player = result[0]
+                    console.log(player)
                     var now = new Date()
                     var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                     var differenceprod = now.getTime() - player.last_update.getTime()
