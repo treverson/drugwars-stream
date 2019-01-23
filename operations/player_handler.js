@@ -57,8 +57,16 @@ const player_handler = {
                                         if (err) console.log(err);
                                         else {
                                             console.log("User : " + player + " is now ready to play")
-                                            connection.release();
-                                            cb(null)
+                                            //INSERT USER BUILDINGS
+                                            var query = "INSERT INTO character_buildings (character_id) VALUES (" + player_id + ")"
+                                            connection.query(query, function (err, result) {
+                                                if (err) console.log(err);
+                                                else {
+                                                    console.log("User : " + player + " is now ready to play")
+                                                    connection.release();
+                                                    cb(null)
+                                                }
+                                            })
                                         }
                                     })
                                 }
@@ -118,7 +126,7 @@ const player_handler = {
             connection.query(query, function (err, result) {
                 if (err) cb(err);
                 else {
-                    console.log("Upgraded character building :" + building_id +  " for : " + character_id)
+                    console.log("Upgraded character building :" + building_id + " for : " + character_id)
                     connection.release();
                     cb(null)
                 }
@@ -133,10 +141,10 @@ const player_handler = {
                 if (result) {
                     player = result[0]
                     var now = new Date()
-                    var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
-                    var differenceprod =  now.getTime() - player.last_update.getTime()
-                    var drug_balance = player.drugs + Number(parseFloat((differenceprod/1000)*player.drug_production_rate).toFixed(2))
-                    var weapon_balance = player.weapons + Number(parseFloat((differenceprod/1000)*player.weapon_production_rate).toFixed(0))
+                    var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
+                    var differenceprod = now.getTime() - player.last_update.getTime()
+                    var drug_balance = player.drugs + Number(parseFloat((differenceprod / 1000) * player.drug_production_rate).toFixed(2))
+                    var weapon_balance = player.weapons + Number(parseFloat((differenceprod / 1000) * player.weapon_production_rate).toFixed(0))
                     var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  character_id=${character_id}`
                     connection.query(query, function (err, result) {
                         if (err) throw err;
@@ -150,17 +158,17 @@ const player_handler = {
             });
         });
     },
-    updateProductionRate: function (character_id,type,rate, cb) {
+    updateProductionRate: function (character_id, type, rate, cb) {
         pool.getConnection(function (err, connection) {
-                    var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  character_id=${character_id}`
-                    connection.query(query, function (err, result) {
-                        if (err) throw err;
-                        else {
-                            console.log("Updated character " + player + 'production rate')
-                            connection.release();
-                            cb(true)
-                        }
-                    })
+            var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  character_id=${character_id}`
+            connection.query(query, function (err, result) {
+                if (err) throw err;
+                else {
+                    console.log("Updated character " + player + 'production rate')
+                    connection.release();
+                    cb(true)
+                }
+            })
         });
     },
     removeDrugs: function (character_id, building_id, cb) {
