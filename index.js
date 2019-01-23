@@ -79,7 +79,7 @@ stream.on("data", function (block) {
                         building.checkPlayerBuildingLevel(user.user_id,json.building,function(success){
                             if(success)
                             console.log(success)
-                            player.addLevelToPlayerBuilding(user,json.building,function(error){
+                            player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
                                 if(error)
                                 console.log(error)
                             })
@@ -92,7 +92,7 @@ stream.on("data", function (block) {
                         //         console.log(error)
                         //     })
                         // })
-                        console.log(id + ' id')
+                        console.log(user.user_id + ' id')
                         console.log(json.building + ' voila')
                         console.log(json.username + ' exist bra')
                     }
