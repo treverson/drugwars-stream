@@ -47,39 +47,40 @@ const building_handler = {
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].production_type
-                            }
-                        }
-                        if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
-                        {
-                            connection.release()
-                            return cb('User doesnt have enough drugs')
-                        }
-                        else{
-                            var d = new Date();
-                            if(building.last_update< d)
-                            {
-                                d.setSeconds(d.getSeconds() + timer);
-                                console.log('next update' + d)
-                                console.log(type)
-                                if(type === 'drugs')
+                                if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
-                                    player.drugs = player.drugs-cost
-                                    var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
+                                    connection.release()
+                                    return cb('User doesnt have enough drugs')
                                 }
                                 else{
-                                    player.weapons = player.weapons-cost
-                                    var query = "UPDATE `character` SET weapons="+player.weapons+" WHERE character_id="+player.character_id
-                                }                                
-                                connection.query(query, function (err, result) {
-                                    if (err) throw err;
-                                    else {
-                                        console.log("Updated character " + player.name + 'new drug balance : ' + player.drugs + 'new weapon balance : ' + player.weapons)
-                                        connection.release();
-                                        cb(player)
-                                    }
-                                })
-                            } 
+                                    var d = new Date();
+                                    if(building.last_update< d)
+                                    {
+                                        d.setSeconds(d.getSeconds() + timer);
+                                        console.log('next update' + d)
+                                        console.log(type)
+                                        if(type === 'drugs')
+                                        {
+                                            player.drugs = player.drugs-cost
+                                            var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
+                                        }
+                                        else{
+                                            player.weapons = player.weapons-cost
+                                            var query = "UPDATE `character` SET weapons="+player.weapons+" WHERE character_id="+player.character_id
+                                        }                                
+                                        connection.query(query, function (err, result) {
+                                            if (err) throw err;
+                                            else {
+                                                console.log("Updated character " + player.name + 'new drug balance : ' + player.drugs + 'new weapon balance : ' + player.weapons)
+                                                connection.release();
+                                                cb(player)
+                                            }
+                                        })
+                                    } 
+                                }
+                            }
                         }
+                      
                        
                     })
                 }
