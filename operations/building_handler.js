@@ -1,6 +1,6 @@
 
 var dbConnection = require('../lib/dbconn');
-var player = require('./operations/player_handler')
+var player = require('./player_handler')
 
 const building_handler = {
     AddLevelToPlayerBuilding:function (player, building_id, cb) {
