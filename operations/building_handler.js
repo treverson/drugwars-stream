@@ -90,6 +90,9 @@ const building_handler = {
                                                 })
                                             }
                                         })
+                                    }
+                                    else{
+                                        cb('need to wait')
                                     } 
                                 }
                             }
