@@ -76,12 +76,22 @@ stream.on("data", function (block) {
                 }
                 player.checkForPlayer(json.username, function (user) {
                     if (user) {
-                        building.checkPlayerBuildingLevel(user.user_id,json.building,function(success){
+                        building.AddLevelToPlayerBuilding(user.user_id,json.building,function(success){
                             if(success)
                             console.log(success)
-                            // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
-                            //     if(error)
-                            //     console.log(error)
+                            // building.checkForBuildingTime(json.building,level,function(time){
+                            //     if(time)
+                            //     console.log(time)
+    
+    
+                            console.log(user.user_id + ' id')
+                        console.log(json.building + ' voila')
+                        console.log(json.username + ' exist bra')
+                                
+                            //     // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
+                            //     //     if(error)
+                            //     //     console.log(error)
+                            //     // })
                             // })
                         })
 
@@ -92,9 +102,7 @@ stream.on("data", function (block) {
                         //         console.log(error)
                         //     })
                         // })
-                        console.log(user.user_id + ' id')
-                        console.log(json.building + ' voila')
-                        console.log(json.username + ' exist bra')
+
                     }
                 })
             }

@@ -3,6 +3,34 @@ var dbConnection = require('../lib/dbconn');
 
 
 const building_handler = {
+    AddLevelToPlayerBuilding:function (character_id, building_id, cb) {
+        dbConnection.getConnection(function (err, connection) {
+            var query = `SELECT * FROM character_buildings WHERE character_id=${character_id}`
+            connection.query(query, function (err, result) {
+                if (err) {
+                    console.log(error)
+                    cb(null)
+                }
+                else {
+                    var buildings = result
+                    var building ={}
+                    for (var i in buildings) {
+                        if (i = 'building_' + building_id + '_level')
+                        {
+                            building.level = buildings[i]
+                        }
+                        if (i = 'building_' + building_id + '_last_update')
+                        {
+                            building.last_update = buildings[i]
+                        }
+                    }
+                    console.log(building)
+                    cb(true)
+                }
+            })
+        })
+
+    },
     checkForBuildingTime: function (id, level, cb) {
         dbConnection.getConnection(function (err, connection) {
             var query = "SELECT * FROM buildings"
@@ -12,6 +40,8 @@ const building_handler = {
                     cb(null)
                 }
                 var buildings = result
+                if(level<1)
+                level=1
                 for (i = 0; buildings.length > i; i++) {
                     if (buildings[i].building_id === id) {
                         connection.release()
@@ -22,23 +52,7 @@ const building_handler = {
         })
     },
     checkPlayerBuildingLevel: function (character_id, building_id, cb) {
-        dbConnection.getConnection(function (err, connection) {
-            var query = `SELECT * FROM character_buildings WHERE character_id=${character_id}`
-            connection.query(query, function (err, result) {
-                if (err) {
-                    console.log(error)
-                    cb(null)
-                }
-                else {
-                    var buildings = result
-                    for (var i in buildings) {
-                        console.log(i)
-                        if (i = 'building_' + building_id + '_level')
-                            cb(buildings[i])
-                    }
-                }
-            })
-        })
+       
     },
 }
 module.exports = building_handler;
