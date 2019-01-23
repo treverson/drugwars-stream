@@ -37,16 +37,16 @@ const building_handler = {
                             console.log(error)
                             cb(null)
                         }
-                        var buildings = result
+                        var cbuildings = result[0]
                         var timer = 900;
                         var cost = 100000000;
                         if(building.level<1)
                         building.level=1
-                        for (i = 0; buildings.length > i; i++) {
-                            if (buildings[i].building_id === building_id) {
-                                timer =  15 * (building.level * buildings[i].building_coeff)
-                                var z = building.level * buildings[i].building_base_price
-                                cost = (z*(level*buildings[i].building_coeff))
+                        for (i = 0; cbuildings.length > i; i++) {
+                            if (cbuildings[i].building_id === building_id) {
+                                timer =  15 * (building.level * cbuildings[i].building_coeff)
+                                var z = building.level * cbuildings[i].building_base_price
+                                cost = (z*(level*cbuildings[i].building_coeff))
                             }
                         }
                         if(cost>player.drugs)
