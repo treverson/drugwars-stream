@@ -76,7 +76,7 @@ stream.on("data", function (block) {
                 player.checkForPlayer(json.username, function (player) {
                     if (player) {
                         console.log(player + ' id')
-                        console.log(json + ' voila')
+                        console.log(json.building + ' voila')
                         console.log(json.username + ' exist bra')
                     }
                 })
