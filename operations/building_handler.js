@@ -140,6 +140,7 @@ const building_handler = {
                             console.log(error)
                             cb(null)
                         }
+                        console.log(player)
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
@@ -152,7 +153,7 @@ const building_handler = {
                                 var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
-                                if((cost/10000)>parseFloat(amount.split(' ')[0]).toFixed(3))
+                                if((cost/10000)>amount)
                                 {
                                     connection.release()
                                     return cb('User doesnt have enough Steem')
