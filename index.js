@@ -96,7 +96,7 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
                 try {
-                    var json = JSON.parse(object[i].operations[0][1].json)
+                    var json = JSON.parse(object[i].operations[0][1])
                 } catch (error) {
                     console.log(error)
                 }
