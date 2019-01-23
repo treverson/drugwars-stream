@@ -101,7 +101,6 @@ stream.on("data", function (block) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
                             {
-                                console.log(player)
                                 building_id = json.memo.split(':')[1]
                                 console.log(json)
                                 building.AddLevelToPlayerBuildingSteem(player,building_id,json.amount,function(result){
