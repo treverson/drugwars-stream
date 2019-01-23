@@ -104,23 +104,26 @@ stream.on("data", function (block) {
                     if (user_id) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
-                            building_id = json.memo.split(':')[1]
-                            building.AddLevelToPlayerBuildingSteem(player,building_id,json.amount,function(result){
-                                if(result)
-                                console.log(result)
-                                if(result ==="success")
-                                {
-                                    var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
-                                    amount = (amount/100)*89
-                                    amount = amount + ' STEEM'
-                                    client.broadcast.transfer({
-                                        from: 'drugwars-dealer',
-                                        to: 'drugwars',
-                                        amount: amount,
-                                        memo: 'Pool contribution',
-                                    }, process.env.DW_DEALER_KEY)
-                                }
-                            })
+                            {
+                                building_id = json.memo.split(':')[1]
+                                building.AddLevelToPlayerBuildingSteem(player,building_id,json.amount,function(result){
+                                    if(result)
+                                    console.log(result)
+                                    if(result ==="success")
+                                    {
+                                        var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
+                                        amount = (amount/100)*89
+                                        amount = amount + ' STEEM'
+                                        client.broadcast.transfer({
+                                            from: 'drugwars-dealer',
+                                            to: 'drugwars',
+                                            amount: amount,
+                                            memo: 'Pool contribution',
+                                        }, process.env.DW_DEALER_KEY)
+                                    }
+                                })
+                            }
+                           
                         })
                     }
                 })
