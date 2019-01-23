@@ -12,7 +12,7 @@ const building_handler = {
                     cb(null)
                 }
                 else {
-                    var buildings = result
+                    var buildings = result[0]
                     var building ={}
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
