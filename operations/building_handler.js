@@ -53,7 +53,7 @@ const building_handler = {
                                 console.log(player.drugs)
                                 console.log(type)
 
-                                if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
+                                if((type === 'drugs' || type === 'defense' || type === 'main') && cost>player.drugs || (type === 'weapons' && cost>player.weapons))
                                 {
                                     connection.release()
                                     return cb('User doesnt have enough drugs')
