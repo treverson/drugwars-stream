@@ -50,9 +50,7 @@ const building_handler = {
                                 var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
-                                console.log(cost)
-                                console.log(player.drugs)
-                                if(Number(cost)>Number(player.drugs))
+                                if(cost>Numberplayer.drugs)
                                 {
                                     connection.release()
                                     return cb('User doesnt have enough drugs')
