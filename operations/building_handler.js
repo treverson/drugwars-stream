@@ -18,11 +18,11 @@ const building_handler = {
                         console.log(i)
                         if (i = 'building_' + building_id + '_level')
                         {
-                            building.level = buildings[i]
+                            building.level = i
                         }
                         if (i = 'building_' + building_id + '_last_update')
                         {
-                            building.last_update = buildings[i]
+                            building.last_update = i
                         }
                     }
                     console.log(building)
