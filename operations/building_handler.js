@@ -17,6 +17,7 @@ const building_handler = {
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
                         {
+                            console.log(buildings[i] + i)
                             building.level = buildings[i]
                         }
                         if (i === 'building_' + building_id + '_last_update')
@@ -42,6 +43,7 @@ const building_handler = {
                             }
                         }
                         connection.release()
+                        cb(true)
                     })
                 }
             })
