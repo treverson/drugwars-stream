@@ -111,11 +111,11 @@ stream.on("data", function (block) {
                                         var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
                                         amount = (amount/100)*89
                                         amount = parseFloat(amount).toFixed(3)
-                                        const transfer = quantity.concat(' ', 'STEEM');
+                                        const transfer = amount.concat(' ', 'STEEM');
                                         const transf = new Object();
                                         transf.from = 'drugwars-dealer';
                                         transf.to = 'drugwars';
-                                        transf.amount = amount;
+                                        transf.amount = transfer;
                                         transf.memo = 'Pool contribution';
                                         client.broadcast.transfer(transf, process.env.DW_DEALER_KEY).then(
                                             function(result) {
