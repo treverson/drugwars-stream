@@ -63,17 +63,17 @@ const building_handler = {
                                 console.log('next update' + d)
                                 if(type === 'drugs')
                                 {
-                                    var balance = player.drugs-cost
-                                    var query = "UPDATE `character` SET drugs="+balance+" WHERE character_id="+player.character_id
+                                    player.drugs = player.drugs-cost
+                                    var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
                                 }
                                 else{
-                                    var balance = player.weapons-cost
-                                    var query = "UPDATE `character` SET weapons="+balance+" WHERE character_id="+player.character_id
+                                    player.weapons = player.weapons-cost
+                                    var query = "UPDATE `character` SET weapons="+player.weapons+" WHERE character_id="+player.character_id
                                 }                                
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
-                                        console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                                        console.log("Updated character " + player.name + 'new drug balance : ' + player.drugs + 'new weapon balance : ' + player.weapons)
                                         connection.release();
                                         cb(player)
                                     }
