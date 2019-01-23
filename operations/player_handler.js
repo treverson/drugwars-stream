@@ -149,10 +149,10 @@ const player_handler = {
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Player - Updated character " + player.name + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                             player.drugs = drug_balance
                             player.weapons = weapon_balance
                             connection.release();
+                            console.log("Player - Updated character " + player.name + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                             cb(player)
                         }
                     })
