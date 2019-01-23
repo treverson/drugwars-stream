@@ -36,9 +36,9 @@ stream.on("data", function (block) {
         }
         for (i = 0; i < object.length; i++) {
 
-            if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars") {
-                transferForShop(object[i].operations[0][1])
-            }
+            // if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars") {
+            //     transferForShop(object[i].operations[0][1])
+            // }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
                 try {
                     var fight = JSON.parse(object[i].operations[0][1].json)
@@ -120,14 +120,13 @@ stream.on("data", function (block) {
                                         client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
                                             function(result) {
                                                 console.log(
+                                                    'sent:' + transfer,
                                                     'included in block: ' + result.block_num,
-                                                    'expired: ' + result.expired
                                                 );
                                            
                                             },
                                             function(error) {
                                                 console.error(error);
-                                             
                                             }
                                         )
                                     }
