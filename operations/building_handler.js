@@ -30,7 +30,6 @@ const building_handler = {
                             building.last_update = new Date()
                         }
                     }
-                    console.log(building)  
                     var query = "SELECT * FROM buildings"
                     connection.query(query, function (err, result) {
                         if (err) {
@@ -47,7 +46,7 @@ const building_handler = {
                                 timer =  15 * (building.level * cbuildings[i].building_coeff)
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(level*cbuildings[i].building_coeff))
-                                var type = cbuildings[i].productions_type
+                                var type = cbuildings[i].production_type
                             }
                         }
                         if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
@@ -62,7 +61,7 @@ const building_handler = {
                                 d.setSeconds(d.getSeconds() + timer);
                                 console.log('next update' + d)
                                 console.log(type)
-                                if(type = 'drugs')
+                                if(type === 'drugs')
                                 {
                                     player.drugs = player.drugs-cost
                                     var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
