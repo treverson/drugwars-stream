@@ -45,7 +45,7 @@ const building_handler = {
                             if (cbuildings[i].building_id === building_id) {
                                 timer =  15 * (building.level * cbuildings[i].building_coeff)
                                 var z = building.level * cbuildings[i].building_base_price
-                                cost = (z*(level*cbuildings[i].building_coeff))
+                                cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].production_type
                                 if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
