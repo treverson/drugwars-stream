@@ -140,11 +140,11 @@ const player_handler = {
                     var differenceprod =  now.getTime() - player.last_update.getTime()
                     var drug_balance = parseFloat((differenceprod/1000)*player.drug_production_rate).toFixed(2)
                     var weapon_balance = parseFloat((differenceprod/1000)*player.weapon_production_rate).toFixed(0)
-                    var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  character_id=${character_id}`
+                    var query = `UPDATE \`character\` SET drugs=+${drug_balance}, weapons=+${weapon_balance}, last_update='${nowtomysql}' WHERE  character_id=${character_id}`
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Updated character " + player.username + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                            console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                             connection.release();
                             cb(player)
                         }

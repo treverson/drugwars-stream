@@ -5,7 +5,7 @@ var player = require('./player_handler')
 const building_handler = {
     AddLevelToPlayerBuilding:function (player, building_id, cb) {
         dbConnection.getConnection(function (err, connection) {
-            var query = `SELECT * FROM character_buildings WHERE character_id=${player.user_id}`
+            var query = `SELECT * FROM character_buildings WHERE character_id=${player.character_id}`
             connection.query(query, function (err, result) {
                 if (err) {
                     console.log(err)
@@ -47,6 +47,7 @@ const building_handler = {
                                 timer =  15 * (building.level * cbuildings[i].building_coeff)
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(level*cbuildings[i].building_coeff))
+                                var type = cbuildings[i].productions_type
                             }
                         }
                         if(cost>player.drugs)
@@ -54,14 +55,14 @@ const building_handler = {
                             connection.release()
                             cb('User doesnt have enough drugs')
                         }
-                        
-                        if(building.last_update< new Date())
+                        var d = new Date();
+                        if(building.last_update< d)
                         {
-                            var d = new Date();
                             d.setSeconds(d.getSeconds() + timer);
                             console.log('brooo')
                             console.log('next update' + d)
-                            var query = `UPDATE \`character\` SET drugs=-${cost} WHERE  character_id=${player.user_id}`
+                            if(type === 'drugs' || type === 'weapons')
+                            var query = `UPDATE \`character\` SET ${type}=-${cost} WHERE  character_id=${player.character_id}`
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
