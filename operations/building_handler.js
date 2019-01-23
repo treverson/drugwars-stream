@@ -17,12 +17,17 @@ const building_handler = {
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
                         {
-                            console.log(buildings[i] + i)
                             building.level = buildings[i]
+                        }
+                        else{
+                            building.level = 1
                         }
                         if (i === 'building_' + building_id + '_last_update')
                         {
                             building.last_update = buildings[i]
+                        }
+                        else{
+                            building.last_update = new Date()
                         }
                     }
                     console.log(building)  
@@ -33,14 +38,17 @@ const building_handler = {
                             cb(null)
                         }
                         var buildings = result
+                        var timer = 900;
                         if(building.level<1)
                         building.level=1
                         for (i = 0; buildings.length > i; i++) {
                             if (buildings[i].building_id === building_id) {
-                                
-                                console.log(  15 * (building.level * buildings[i].building_coeff))
-                               
+                                timer =  15 * (building.level * buildings[i].building_coeff)
                             }
+                        }
+                        if(building.last_update>now)
+                        {
+                            console.log('brooo')
                         }
                         connection.release()
                         cb(true)
