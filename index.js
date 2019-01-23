@@ -107,6 +107,18 @@ stream.on("data", function (block) {
                             building.AddLevelToPlayerBuilding(player,json.building,json.amount,function(result){
                                 if(result)
                                 console.log(result)
+                                if(result ==="success")
+                                {
+                                    var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
+                                    amount = (amount/100)*89
+                                    amount = amount + ' STEEM'
+                                    await client.broadcast.transfer({
+                                        from: 'drugwars-dealer',
+                                        to: 'drugwars',
+                                        amount: amount,
+                                        memo: 'Pool contribution',
+                                    }, process.env.DW_DEALER_KEY)
+                                }
                             })
                         })
                     }
