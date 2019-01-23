@@ -67,7 +67,7 @@ const building_handler = {
                                     var query = "UPDATE `character` SET drugs="+balance+" WHERE character_id="+player.character_id
                                 }
                                 else{
-                                    var balance = weapons.drugs-cost
+                                    var balance = player.weapons-cost
                                     var query = "UPDATE `character` SET weapons="+balance+" WHERE character_id="+player.character_id
                                 }                                
                                 connection.query(query, function (err, result) {
