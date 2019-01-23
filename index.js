@@ -95,11 +95,7 @@ stream.on("data", function (block) {
                 })
             }
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
-                try {
-                    var json = object[i].operations[0][1]
-                } catch (error) {
-                    console.log(error)
-                }
+                var json = object[i].operations[0][1]
                 player.getPlayerId(json.from, function (user_id) {
                     if (user_id) {
                         player.updateGetPlayer(user_id,function(player){
