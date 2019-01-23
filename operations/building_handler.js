@@ -36,6 +36,7 @@ const building_handler = {
                             console.log(error)
                             cb(null)
                         }
+                        console.log(building)
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
