@@ -73,8 +73,9 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.checkForPlayer(json.username, function (exist) {
-                    if (exist) {
+                player.checkForPlayer(json.username, function (player) {
+                    if (player) {
+                        console.log(player + ' id')
                         console.log(json + ' voila')
                         console.log(json.username + ' exist bra')
                     }
