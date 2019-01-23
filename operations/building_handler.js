@@ -50,28 +50,31 @@ const building_handler = {
                                 var type = cbuildings[i].productions_type
                             }
                         }
-                        if(cost>player.drugs)
+                        if(type === 'drugs' && cost>player.drugs || type === 'weapons' && cost>player.weapons)
                         {
                             connection.release()
-                            cb('User doesnt have enough drugs')
+                            return cb('User doesnt have enough drugs')
                         }
-                        var d = new Date();
-                        if(building.last_update< d)
-                        {
-                            d.setSeconds(d.getSeconds() + timer);
-                            console.log('brooo')
-                            console.log('next update' + d)
-                            if(type === 'drugs' || type === 'weapons')
-                            var query = `UPDATE \`character\` SET ${type}=-${cost} WHERE  character_id=${player.character_id}`
-                            connection.query(query, function (err, result) {
-                                if (err) throw err;
-                                else {
-                                    console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
-                                    connection.release();
-                                    cb(player)
-                                }
-                            })
-                        } 
+                        else{
+                            var d = new Date();
+                            if(building.last_update< d)
+                            {
+                                d.setSeconds(d.getSeconds() + timer);
+                                console.log('brooo')
+                                console.log('next update' + d)
+                                if(type === 'drugs' || type === 'weapons')
+                                var query = `UPDATE \`character\` SET ${type}=-${cost} WHERE  character_id=${player.character_id}`
+                                connection.query(query, function (err, result) {
+                                    if (err) throw err;
+                                    else {
+                                        console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                                        connection.release();
+                                        cb(player)
+                                    }
+                                })
+                            } 
+                        }
+                       
                     })
                 }
             })
