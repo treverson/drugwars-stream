@@ -142,10 +142,11 @@ const player_handler = {
     },
     updatePlayer: function (character_id, cb) {
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
+            var query = "SELECT * FROM character WHERE character_id=" + character_id
             connection.query(query, function (err, result) {
-                if (err) throw err;
-                if (result[0] != undefined) {
+                if (err) console.log(err);
+                if (result) {
+                    console.log(result)
                     player = result[0]
                     var now = new Date()
                     var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
