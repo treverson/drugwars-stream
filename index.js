@@ -110,7 +110,7 @@ stream.on("data", function (block) {
                                     {
                                         var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
                                         amount = (amount/100)*89
-                                        amount = parseFloat(amount).toFixed(3) + ' STEEM'
+                                        amount = parseFloat(amount).toFixed(3)
                                         client.broadcast.transfer({
                                             from: 'drugwars-dealer',
                                             to: 'drugwars',
