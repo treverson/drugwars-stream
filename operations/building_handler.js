@@ -4,7 +4,9 @@
 
 const building_handler = {
     checkForBuildingTime: function (id, level, cb) {
+        dbConnection.getConnection(function (err, connection) {
         var query = "SELECT * FROM buildings"
+        
         connection.query(query, function (err, result) {
             if (err) {
                 console.log(error)
@@ -18,9 +20,10 @@ const building_handler = {
                 }
             }
         })
+    })
     },
     checkPlayerBuildingLevel: function (character_id, building_id, cb) {
-        pool.getConnection(function (err, connection) {
+        dbConnection.getConnection(function (err, connection) {
             var query = `SELECT * FROM character_buildings WHERE character_id=${character_id}`
             connection.query(query, function (err, result) {
                 if (err) {
