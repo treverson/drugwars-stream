@@ -78,18 +78,12 @@ stream.on("data", function (block) {
                     if (user_id) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
-                            building.AddLevelToPlayerBuilding(player,json.building,function(success){
-                                if(success)
-                                console.log(success)
+                            building.AddLevelToPlayerBuilding(player,json.building,function(result){
+                                if(result)
+                                console.log(result)
                                 // building.checkForBuildingTime(json.building,level,function(time){
                                 //     if(time)
-                                //     console.log(time)
-        
-        
-                                console.log(user_id + ' id')
-                            console.log(json.building + ' voila')
-                            console.log(json.username + ' exist bra')
-                                    
+                                //     console.log(time)    
                                 //     // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
                                 //     //     if(error)
                                 //     //     console.log(error)

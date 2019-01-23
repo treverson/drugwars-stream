@@ -49,6 +49,7 @@ const building_handler = {
                                 var type = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((base*(100+building.level))/100))
+                                console.log(cost)
                                 if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
                                     connection.release()
@@ -85,7 +86,7 @@ const building_handler = {
                                                     else {
                                                         console.log("Upgraded character building :" + building_id +  " for : " + player.character_id)
                                                         connection.release();
-                                                        cb(null)
+                                                        cb('success')
                                                     }
                                                 })
                                             }
