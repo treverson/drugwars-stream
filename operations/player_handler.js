@@ -113,15 +113,29 @@ const player_handler = {
             });
         });
     },
-    addLevelToPlayerBuilding: function (character_id, building_id, cb) {
+    checkPlayerBuilding: function (character_id, building_id, cb) {
         pool.getConnection(function (err, connection) {
             var query = `UPDATE character_buildings SET building_${building_id}_level=+1 WHERE character_id=${character_id}`
             connection.query(query, function (err, result) {
-                if (err) throw err;
+                if (err) cb(err);
                 else {
                     console.log("Upgraded character building for : " + character_id)
                     connection.release();
-                    cb(true)
+                    cb(null)
+                }
+            })
+        })
+    },
+    addLevelToPlayerBuilding: function (character_id, building_id, cb) {
+        pool.getConnection(function (err, connection) {
+            var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
+            var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update=${now}  WHERE character_id=${character_id}`
+            connection.query(query, function (err, result) {
+                if (err) cb(err);
+                else {
+                    console.log("Upgraded character building for : " + character_id)
+                    connection.release();
+                    cb(null)
                 }
             })
         })
