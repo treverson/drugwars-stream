@@ -57,23 +57,30 @@ const building_handler = {
                                     if(building.last_update< d)
                                     {
                                         d.setSeconds(d.getSeconds() + timer);
-                                        console.log('next update' + d)
+                                        console.log('next update' + building.last_update)
                                         console.log(type)
-                                        if(type === 'drugs')
+                                        if(type === 'weapons')
                                         {
-                                            player.drugs = player.drugs-cost
-                                            var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
-                                        }
-                                        else{
                                             player.weapons = player.weapons-cost
                                             var query = "UPDATE `character` SET weapons="+player.weapons+" WHERE character_id="+player.character_id
+                                        }
+                                        else{
+                                            player.drugs = player.drugs-cost
+                                            var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
-                                                console.log("Updated character " + player.name + 'new drug balance : ' + player.drugs + 'new weapon balance : ' + player.weapons)
-                                                connection.release();
-                                                cb(player)
+                                                var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update='${now}'  WHERE character_id=${character_id}`
+                                                connection.query(query, function (err, result) {
+                                                    if (err) cb(err);
+                                                    else {
+                                                        console.log("Upgraded character building :" + building_id +  " for : " + character_id)
+                                                        connection.release();
+                                                        cb(null)
+                                                    }
+                                                })
                                             }
                                         })
                                     } 
