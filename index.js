@@ -100,18 +100,17 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                console.log(json)
-                // player.getPlayerId(json.username, function (user_id) {
-                //     if (user_id) {
-                //         player.updateGetPlayer(user_id,function(player){
-                //             if(player)
-                //             building.AddLevelToPlayerBuilding(player,json.building,function(result){
-                //                 if(result)
-                //                 console.log(result)
-                //             })
-                //         })
-                //     }
-                // })
+                player.getPlayerId(json.from, function (user_id) {
+                    if (user_id) {
+                        player.updateGetPlayer(user_id,function(player){
+                            if(player)
+                            building.AddLevelToPlayerBuilding(player,json.building,json.amount,function(result){
+                                if(result)
+                                console.log(result)
+                            })
+                        })
+                    }
+                })
             }
         }
     }
