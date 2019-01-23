@@ -115,7 +115,7 @@ stream.on("data", function (block) {
                                             from: 'drugwars-dealer',
                                             to: 'drugwars',
                                             amount: amount, 
-                                            symbolt:'STEEM', 
+                                            symbol:'STEEM', 
                                             memo: 'Pool contribution',
                                         }, process.env.DW_DEALER_KEY)
                                     }
