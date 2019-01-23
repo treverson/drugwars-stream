@@ -70,14 +70,12 @@ const player_handler = {
         })
     },
     getPlayerId: function (player, cb) {
-        console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE username = '" + player + "'"
             connection.query(query, function (err, result) {
                 if (err) throw console.log(err);
                 if (result[0] != undefined) {
                     if (player = result[0].username) {
-                        console.log("User : " + player + " is already recorded");
                         cb(result[0].user_id)
                     }
                 }
@@ -133,7 +131,6 @@ const player_handler = {
             connection.query(query, function (err, result) {
                 if (err) console.log(err);
                 if (result) {
-                    console.log(result)
                     player = result[0]
                     var now = new Date()
                     var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
