@@ -17,7 +17,7 @@ const building_handler = {
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
                         {
-                            if(buildings[i] && buildings[i]>0)
+                            if(buildings[i]>0)
                             building.level = buildings[i]
                             else 
                             building.level = 1
@@ -48,7 +48,7 @@ const building_handler = {
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
-                                var prod_rate = (building.level*cbuildings[i].production_rate)+(((base*(100+building.level))/100))
+                                var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
                                 console.log(cost)
                                 if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
