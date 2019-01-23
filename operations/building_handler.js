@@ -15,9 +15,10 @@ const building_handler = {
                     var buildings = result
                     var building ={}
                     for (var i in buildings) {
-                        console.log(i)
                         if (i = 'building_' + building_id + '_level')
                         {
+                            console.log(i)
+                            console.log(buildings[i])
                             building.level = i
                         }
                         if (i = 'building_' + building_id + '_last_update')
