@@ -15,6 +15,7 @@ const building_handler = {
                     var buildings = result
                     var building ={}
                     for (var i in buildings) {
+                        console.log(i)
                         if (i = 'building_' + building_id + '_level')
                         {
                             building.level = buildings[i]
