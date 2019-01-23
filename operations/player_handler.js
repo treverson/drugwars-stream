@@ -112,6 +112,31 @@ const player_handler = {
                 }
             });
         });
+    },
+    addLevelToBuilding : function (character_id, xp, cb) {
+        pool.getConnection(function (err, connection) {
+            var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
+            connection.query(query, function (err, result) {
+                if (err) throw err;
+                if (result[0] != undefined) {
+                    console.log(xp + "XP will be add to " + character_id)
+                    var character_new_xp = result[0].xp + xp
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
+                    connection.query(query, function (err, result) {
+                        if (err) throw err;
+                        else {
+                            console.log(xp + "XP added to character" + character_id)
+                            connection.release();
+                            cb(true)
+                        }
+                    })
+                }
+                else {
+                    console.log("User : " + player + " isnt recorded");
+                    cb(null)
+                }
+            });
+        });
     }
 }
 module.exports = player_handler;

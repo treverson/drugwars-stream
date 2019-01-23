@@ -67,6 +67,19 @@ stream.on("data", function (block) {
                     }
                 })
             }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-upgrade") {
+                try {
+                    var json = JSON.parse(object[i].operations[0][1].json)
+                } catch (error) {
+                    console.log(error)
+                }
+                player.checkForPlayer(json.username, function (exist) {
+                    if (exist) {
+                        console.log(json + ' voila')
+                        console.log(json.username + ' exist bra')
+                    }
+                })
+            }
         }
     }
 })
