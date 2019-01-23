@@ -8,7 +8,7 @@ const building_handler = {
             var query = `SELECT * FROM character_buildings WHERE character_id=${player.user_id}`
             connection.query(query, function (err, result) {
                 if (err) {
-                    console.log(error)
+                    console.log(err)
                     cb(null)
                 }
                 else {
@@ -65,7 +65,7 @@ const building_handler = {
                             connection.query(query, function (err, result) {
                                 if (err) throw err;
                                 else {
-                                    console.log("Updated character " + player.username + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                                    console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                                     connection.release();
                                     cb(player)
                                 }
