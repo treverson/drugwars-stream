@@ -74,7 +74,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.getPlayerId(json.username, function (user) {
+                player.getPlayerId(json.username, function (user_id) {
                     if (user_id) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
