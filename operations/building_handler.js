@@ -50,6 +50,9 @@ const building_handler = {
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
                                 console.log(cost)
+                                console.log(player.drugs)
+                                console.log(type)
+
                                 if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
                                     connection.release()
