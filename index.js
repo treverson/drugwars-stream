@@ -111,13 +111,25 @@ stream.on("data", function (block) {
                                         var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
                                         amount = (amount/100)*89
                                         amount = parseFloat(amount).toFixed(3)
-                                        client.broadcast.transfer({
-                                            from: 'drugwars-dealer',
-                                            to: 'drugwars',
-                                            amount: amount, 
-                                            symbol:'STEEM', 
-                                            memo: 'Pool contribution',
-                                        }, process.env.DW_DEALER_KEY)
+                                        const transfer = quantity.concat(' ', 'STEEM');
+                                        const transf = new Object();
+                                        transf.from = 'drugwars-dealer';
+                                        transf.to = 'drugwars';
+                                        transf.amount = amount;
+                                        transf.memo = 'Pool contribution';
+                                        client.broadcast.transfer(transf, process.env.DW_DEALER_KEY).then(
+                                            function(result) {
+                                                console.log(
+                                                    'included in block: ' + result.block_num,
+                                                    'expired: ' + result.expired
+                                                );
+                                           
+                                            },
+                                            function(error) {
+                                                console.error(error);
+                                             
+                                            }
+                                        )
                                     }
                                 })
                             }
