@@ -47,6 +47,8 @@ const building_handler = {
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].production_type
+                                if(cbuildings[i].production_rate > 0)
+                                var prod_rate = (building.level*cbuildings[i].production_rate)+(((base*(100+building.level))/100))
                                 if((type === 'drugs' || type === 'defense' || type === 'main' && cost>player.drugs) || type === 'weapons' && cost>player.weapons)
                                 {
                                     connection.release()
@@ -59,14 +61,19 @@ const building_handler = {
                                         d.setSeconds(d.getSeconds() + timer);
                                         console.log('next update' + building.last_update)
                                         console.log(type)
+                                        var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
                                         if(type === 'weapons')
                                         {
+                                            if(prod_rate)
+                                            player.weapon_production_rate = player.weapon_production_rate + prod_rate
                                             player.weapons = player.weapons-cost
-                                            var query = "UPDATE `character` SET weapons="+player.weapons+" WHERE character_id="+player.character_id
+                                            var query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", weapons="+player.weapons+" WHERE character_id="+player.character_id
                                         }
                                         else{
+                                            if(prod_rate)
+                                            player.drug_production_rate = player.drug_production_rate + prod_rate
                                             player.drugs = player.drugs-cost
-                                            var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
+                                            var query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE character_id="+player.character_id
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
