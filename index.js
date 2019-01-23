@@ -91,13 +91,27 @@ stream.on("data", function (block) {
                                 // })
                             })
                         })
-
-
-
-
-
                     }
                 })
+            }
+            if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
+                try {
+                    var json = JSON.parse(object[i].operations[0][1].json)
+                } catch (error) {
+                    console.log(error)
+                }
+                console.log(json)
+                // player.getPlayerId(json.username, function (user_id) {
+                //     if (user_id) {
+                //         player.updateGetPlayer(user_id,function(player){
+                //             if(player)
+                //             building.AddLevelToPlayerBuilding(player,json.building,function(result){
+                //                 if(result)
+                //                 console.log(result)
+                //             })
+                //         })
+                //     }
+                // })
             }
         }
     }
