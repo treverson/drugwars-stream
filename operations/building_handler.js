@@ -60,7 +60,6 @@ const building_handler = {
                                     {
                                         d.setSeconds(d.getSeconds() + timer);
                                         console.log('next update' + building.last_update)
-                                        console.log(type)
                                         var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
                                         if(type === 'weapons')
                                         {
@@ -79,11 +78,11 @@ const building_handler = {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update='${now}'  WHERE character_id=${character_id}`
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update='${now}'  WHERE character_id=${player.character_id}`
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
-                                                        console.log("Upgraded character building :" + building_id +  " for : " + character_id)
+                                                        console.log("Upgraded character building :" + building_id +  " for : " + player.character_id)
                                                         connection.release();
                                                         cb(null)
                                                     }
