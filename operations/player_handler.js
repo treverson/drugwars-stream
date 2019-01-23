@@ -69,7 +69,7 @@ const player_handler = {
             })
         })
     },
-    checkForPlayer: function (player, cb) {
+    getPlayerId: function (player, cb) {
         console.log("check for player : " + player)
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM user WHERE username = '" + player + "'"
@@ -78,7 +78,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     if (player = result[0].username) {
                         console.log("User : " + player + " is already recorded");
-                        cb(result[0])
+                        cb(result[0].user_id)
                     }
                 }
                 else {
@@ -127,7 +127,7 @@ const player_handler = {
             })
         })
     },
-    updatePlayer: function (character_id, cb) {
+    updateGetPlayer: function (character_id, cb) {
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM `character` WHERE character_id=" + character_id
             connection.query(query, function (err, result) {
@@ -144,9 +144,9 @@ const player_handler = {
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log("Updated character " + player + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                            console.log("Updated character " + player.username + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                             connection.release();
-                            cb(true)
+                            cb(player)
                         }
                     })
                 }

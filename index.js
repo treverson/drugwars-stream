@@ -15,7 +15,7 @@ var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 
 
 transferForShop = function (transaction) {
-    player.checkForPlayer(transaction.from, function (exist) {
+    player.getPlayerId(transaction.from, function (exist) {
         if (exist) {
             shop.StartTransaction(transaction, function (error) {
                 if (error)
@@ -58,7 +58,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.checkForPlayer(json.username, function (exist) {
+                player.getPlayerId(json.username, function (exist) {
                     if (!exist) {
                         player.createNewPlayer(json.username, json.icon, function (error) {
                             if (error) {
@@ -74,34 +74,33 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.checkForPlayer(json.username, function (user) {
-                    if (user) {
-                        building.AddLevelToPlayerBuilding(user.user_id,json.building,function(success){
-                            if(success)
-                            console.log(success)
-                            // building.checkForBuildingTime(json.building,level,function(time){
-                            //     if(time)
-                            //     console.log(time)
-    
-    
-                            console.log(user.user_id + ' id')
-                        console.log(json.building + ' voila')
-                        console.log(json.username + ' exist bra')
-                                
-                            //     // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
-                            //     //     if(error)
-                            //     //     console.log(error)
-                            //     // })
-                            // })
+                player.getPlayerId(json.username, function (user) {
+                    if (user_id) {
+                        player.updateGetPlayer(user_id,function(player){
+                            if(player)
+                            building.AddLevelToPlayerBuilding(player,json.building,function(success){
+                                if(success)
+                                console.log(success)
+                                // building.checkForBuildingTime(json.building,level,function(time){
+                                //     if(time)
+                                //     console.log(time)
+        
+        
+                                console.log(user_id + ' id')
+                            console.log(json.building + ' voila')
+                            console.log(json.username + ' exist bra')
+                                    
+                                //     // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
+                                //     //     if(error)
+                                //     //     console.log(error)
+                                //     // })
+                                // })
+                            })
                         })
 
-                        // player.updatePlayer(user.user_id,function(success){
-                        //     if(success)
-                        //     player.addLevelToPlayerBuilding(user,json.building,function(error){
-                        //         if(error)
-                        //         console.log(error)
-                        //     })
-                        // })
+
+
+
 
                     }
                 })
