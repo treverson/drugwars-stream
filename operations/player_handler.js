@@ -150,6 +150,8 @@ const player_handler = {
                         if (err) throw err;
                         else {
                             console.log("Updated character " + player.name + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                            player.drugs = drug_balance
+                            player.weapons = weapon_balance
                             connection.release();
                             cb(player)
                         }
