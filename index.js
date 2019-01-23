@@ -6,6 +6,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var battle = require('./operations/battle_handler')
 var player = require('./operations/player_handler')
 var shop = require('./operations/shop_handler')
+var building = require('./operations/building_handler')
 var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
@@ -73,15 +74,24 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.checkForPlayer(json.username, function (id) {
-                    if (id) {
-                        player.updatePlayer(id,function(success){
+                player.checkForPlayer(json.username, function (user) {
+                    if (user) {
+                        building.checkPlayerBuildingLevel(user.user_id,json.building,function(success){
                             if(success)
-                            player.addLevelToPlayerBuilding(id,json.building,function(error){
+                            console.log(success)
+                            player.addLevelToPlayerBuilding(user,json.building,function(error){
                                 if(error)
                                 console.log(error)
                             })
                         })
+
+                        // player.updatePlayer(user.user_id,function(success){
+                        //     if(success)
+                        //     player.addLevelToPlayerBuilding(user,json.building,function(error){
+                        //         if(error)
+                        //         console.log(error)
+                        //     })
+                        // })
                         console.log(id + ' id')
                         console.log(json.building + ' voila')
                         console.log(json.username + ' exist bra')

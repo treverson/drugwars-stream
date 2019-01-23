@@ -78,7 +78,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     if (player = result[0].username) {
                         console.log("User : " + player + " is already recorded");
-                        cb(result[0].user_id)
+                        cb(result[0])
                     }
                 }
                 else {
@@ -112,19 +112,6 @@ const player_handler = {
                 }
             });
         });
-    },
-    checkPlayerBuilding: function (character_id, building_id, cb) {
-        pool.getConnection(function (err, connection) {
-            var query = `UPDATE character_buildings SET building_${building_id}_level=+1 WHERE character_id=${character_id}`
-            connection.query(query, function (err, result) {
-                if (err) cb(err);
-                else {
-                    console.log("Upgraded character building for : " + character_id)
-                    connection.release();
-                    cb(null)
-                }
-            })
-        })
     },
     addLevelToPlayerBuilding: function (character_id, building_id, cb) {
         pool.getConnection(function (err, connection) {
@@ -164,6 +151,19 @@ const player_handler = {
                     })
                 }
             });
+        });
+    },
+    updateProductionRate: function (character_id,type,rate, cb) {
+        pool.getConnection(function (err, connection) {
+                    var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  character_id=${character_id}`
+                    connection.query(query, function (err, result) {
+                        if (err) throw err;
+                        else {
+                            console.log("Updated character " + player + 'production rate')
+                            connection.release();
+                            cb(true)
+                        }
+                    })
         });
     },
     removeDrugs: function (character_id, building_id, cb) {
