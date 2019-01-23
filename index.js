@@ -1,4 +1,4 @@
-const { Client, BlockchainMode } = require('dsteem');
+const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
@@ -117,7 +117,7 @@ stream.on("data", function (block) {
                                         transf.to = 'drugwars';
                                         transf.amount = transfer;
                                         transf.memo = 'Pool contribution';
-                                        client.broadcast.transfer(transf, process.env.DW_DEALER_KEY).then(
+                                        client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
                                             function(result) {
                                                 console.log(
                                                     'included in block: ' + result.block_num,
