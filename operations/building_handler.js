@@ -61,24 +61,25 @@ const building_handler = {
                                         d.setSeconds(d.getSeconds() + timer);
                                         console.log('next update' + building.last_update)
                                         var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
+                                        var query;
                                         if(type === 'weapons')
                                         {
                                             if(prod_rate)
                                             player.weapon_production_rate = player.weapon_production_rate + prod_rate
                                             player.weapons = player.weapons-cost
-                                            var query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", weapons="+player.weapons+" WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", weapons="+player.weapons+" WHERE character_id="+player.character_id
                                         }
                                         else{
                                             if(prod_rate)
                                             player.drug_production_rate = player.drug_production_rate + prod_rate
                                             player.drugs = player.drugs-cost
-                                            var query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE character_id="+player.character_id
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update='${now}'  WHERE character_id=${player.character_id}`
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=+1, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
