@@ -143,7 +143,7 @@ const building_handler = {
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
-                        console.log(building_id)
+                        console.log(cbuildings)
 
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
