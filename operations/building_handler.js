@@ -61,7 +61,8 @@ const building_handler = {
                             {
                                 d.setSeconds(d.getSeconds() + timer);
                                 console.log('next update' + d)
-                                if(type === 'drugs')
+                                console.log(type)
+                                if(type = 'drugs')
                                 {
                                     player.drugs = player.drugs-cost
                                     var query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
