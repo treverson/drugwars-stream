@@ -39,7 +39,7 @@ const building_handler = {
                         var cbuildings = result
                         var timer = 900;
                         var cost = 100000000;
-                        if(building.level<1)
+                        if(!building.level)
                         building.level=1
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
