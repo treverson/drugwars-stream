@@ -108,7 +108,7 @@ stream.on("data", function (block) {
                                     console.log(result)
                                     if(result ==="success")
                                     {
-                                        var amount = parseFloat(json.amount.split(' ')[1]).toFixed(3)
+                                        var amount = json.amount.split(' ')[0]
                                         amount = (amount/100)*89
                                         amount = parseFloat(amount).toFixed(3)
                                         const transfer = amount.concat(' ', 'STEEM');
