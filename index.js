@@ -115,7 +115,7 @@ stream.on("data", function (block) {
                                         client.broadcast.transfer({
                                             from: 'drugwars-dealer',
                                             to: 'drugwars',
-                                            amount: amount,
+                                            amount: amount,  
                                             memo: 'Pool contribution',
                                         }, process.env.DW_DEALER_KEY)
                                     }
