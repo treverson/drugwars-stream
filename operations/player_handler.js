@@ -140,27 +140,27 @@ const player_handler = {
             })
         })
     },
-    checkDrugs: function (character_id, building_id, cb) {
+    updatePlayer: function (character_id, cb) {
         pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM character WHERE character_id = '" + character_id + "'"
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 if (result[0] != undefined) {
-                    console.log(xp + "XP will be add to " + character_id)
-                    var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  character_id=" + character_id;
+                    player = result[0]
+                    var now = new Date()
+                    var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
+                    var differenceprod =  now.getTime() - player.last_update.getTime()
+                    var drug_balance = parseFloat((differenceprod/1000)*player.drug_production_rate).toFixed(2)
+                    var weapon_balance = parseFloat((differenceprod/1000)*player.weapon_production_rate).toFixed(0)
+                    var query = `UPDATE character SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  character_id=${character_id}`
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
-                            console.log(xp + "XP added to character" + character_id)
+                            console.log("Updated character " + player + 'new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                             connection.release();
                             cb(true)
                         }
                     })
-                }
-                else {
-                    console.log("User : " + player + " isnt recorded");
-                    cb(null)
                 }
             });
         });
