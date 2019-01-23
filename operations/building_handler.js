@@ -34,7 +34,7 @@ const building_handler = {
                     for (var i in buildings) {
                         console.log(i)
                         if (i = 'building_' + building_id + '_level')
-                            cb(i)
+                            cb(buildings[i])
                     }
                 }
             })
