@@ -145,6 +145,7 @@ const building_handler = {
                         var cost = 100000000;
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
+                                console.log('tttt')
                                 timer =  10
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
