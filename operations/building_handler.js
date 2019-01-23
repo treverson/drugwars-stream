@@ -60,10 +60,9 @@ const building_handler = {
                             if(building.last_update< d)
                             {
                                 d.setSeconds(d.getSeconds() + timer);
-                                console.log('brooo')
                                 console.log('next update' + d)
                                 if(type === 'drugs' || type === 'weapons')
-                                var query = `UPDATE \`character\` SET ${type}=-${cost} WHERE  character_id=${player.character_id}`
+                                var query = "UPDATE `character` SET"+ type +"=-"+cost+" WHERE character_id="+player.character_id
                                 connection.query(query, function (err, result) {
                                     if (err) throw err;
                                     else {
