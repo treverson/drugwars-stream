@@ -46,7 +46,8 @@ const building_handler = {
                                 timer =  15 * (building.level * cbuildings[i].building_coeff)
                                 var z = building.level * cbuildings[i].building_base_price
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
-                                var type = cbuildings[i].production_type
+                                var type = cbuildings[i].cost_type
+                                var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
                                 var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
                                 if((type === 'drugs' || type === 'defense' || type === 'main') && cost>player.drugs || (type === 'weapons' && cost>player.weapons))
@@ -61,12 +62,12 @@ const building_handler = {
                                         console.log('next update' + building.last_update)
                                         var nowtomysql =  new Date().toISOString().slice(0, 19).replace('T', ' ')
                                         var query;
-                                        if(type === 'weapons')
+                                        if(ptype === 'weapons')
                                         {
                                             if(prod_rate)
                                             player.weapon_production_rate = player.weapon_production_rate + prod_rate
-                                            player.weapons = player.weapons-cost
-                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", weapons="+player.weapons+" WHERE character_id="+player.character_id
+                                            player.drugs = player.drugs-cost
+                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", drugs="+player.drugs+" WHERE character_id="+player.character_id
                                         }
                                         else{
                                             if(prod_rate)
