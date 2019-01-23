@@ -35,7 +35,7 @@ const building_handler = {
                         if(building.level<1)
                         building.level=1
                         for (i = 0; buildings.length > i; i++) {
-                            if (buildings[i].building_id === id) {
+                            if (buildings[i].building_id === building_id) {
                                 
                                 console.log(  15 * (building.level * buildings[i].building_coeff))
                                
