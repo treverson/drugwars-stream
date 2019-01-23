@@ -46,9 +46,12 @@ const building_handler = {
                                 timer =  15 * (building.level * buildings[i].building_coeff)
                             }
                         }
-                        if(building.last_update>now)
+                        if(building.last_update> new Date())
                         {
+                            var d = new Date();
+                            d.setSeconds(d.getSeconds() + timer);
                             console.log('brooo')
+                            console.log('next update' + d)
                         }
                         connection.release()
                         cb(true)
