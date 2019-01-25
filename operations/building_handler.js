@@ -60,7 +60,7 @@ const building_handler = {
                                    
                                     else{
                                         old_prod_rate = 0
-                                        prod_rate = ((1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(1)))/100))
+                                        prod_rate = (cbuildings[i].production_rate)
                                     }
                                    
                                 }
@@ -176,7 +176,7 @@ const building_handler = {
                                    
                                     else{
                                         old_prod_rate = 0
-                                        prod_rate = ((1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(1)))/100))
+                                        prod_rate = (cbuildings[i].production_rate)
                                     }
                                    
                                 }
