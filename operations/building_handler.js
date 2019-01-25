@@ -40,9 +40,6 @@ const building_handler = {
                         var cost = 100000000;
                         for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
-                                timer =  15 * ((building.level+1) * cbuildings[i].building_coeff)
-                                var z = (building.level+1) * cbuildings[i].building_base_price
-                                cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].cost_type
                                 var ptype = cbuildings[i].production_type
                                 var prod_rate;
@@ -51,11 +48,17 @@ const building_handler = {
                                 {
                                     if(building.level === 0)
                                     {
+                                        timer =  15 * (1 * cbuildings[i].building_coeff)
+                                        var z = (1) * cbuildings[i].building_base_price
+                                        cost = (z*((1)*cbuildings[i].building_coeff))
                                         old_prod_rate = 0
                                         prod_rate = (cbuildings[i].production_rate)
                                     }
                                    
                                     else{
+                                        timer =  15 * ((building.level+1) * cbuildings[i].building_coeff)
+                                        var z = (building.level+1) * cbuildings[i].building_base_price
+                                        cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                         prod_rate = (((building.level+1))*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+((building.level+1))))/100))
                                         old_prod_rate = ((building.level)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level)))/100))
                                     }
@@ -156,24 +159,27 @@ const building_handler = {
                         var cost = 100000000;
                          for (i = 0; cbuildings.length > i; i++) {
                             if (cbuildings[i].building_id === building_id) {
-                                timer =  10
-                                var z = building.level * cbuildings[i].building_base_price
-                                cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].cost_type
                                 var ptype = cbuildings[i].production_type
                                 var prod_rate;
                                 var old_prod_rate;
                                 if(cbuildings[i].production_rate > 0)
                                 {
-                                    if(building.level>1)
+                                    if(building.level === 0)
                                     {
-                                        prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
-                                        old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
+                                        timer =  15 * (1 * cbuildings[i].building_coeff)
+                                        var z = (1) * cbuildings[i].building_base_price
+                                        cost = (z*((1)*cbuildings[i].building_coeff))
+                                        old_prod_rate = 0
+                                        prod_rate = (cbuildings[i].production_rate)
                                     }
                                    
                                     else{
-                                        old_prod_rate = 0
-                                        prod_rate = (cbuildings[i].production_rate)
+                                        timer =  15 * ((building.level+1) * cbuildings[i].building_coeff)
+                                        var z = (building.level+1) * cbuildings[i].building_base_price
+                                        cost = (z*((building.level+1)*cbuildings[i].building_coeff))
+                                        prod_rate = (((building.level+1))*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+((building.level+1))))/100))
+                                        old_prod_rate = ((building.level)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level)))/100))
                                     }
                                    
                                 }
