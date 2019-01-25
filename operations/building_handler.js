@@ -49,7 +49,10 @@ const building_handler = {
                                 var type = cbuildings[i].cost_type
                                 var ptype = cbuildings[i].production_type
                                 if(cbuildings[i].production_rate > 0)
-                                var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                {
+                                    var old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
+                                    var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                }
                                 if(cost>player.drugs)
                                 {
                                     connection.release()
@@ -65,13 +68,13 @@ const building_handler = {
                                         if(ptype === 'weapons')
                                         {
                                             if(prod_rate)
-                                            player.weapon_production_rate = player.weapon_production_rate + prod_rate
+                                            player.weapon_production_rate = (player.weapon_production_rate - old_prod_rate) + prod_rate
                                             player.drugs = player.drugs-cost
                                             query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", drugs="+player.drugs+" WHERE character_id="+player.character_id
                                         }
                                         else{
                                             if(prod_rate)
-                                            player.drug_production_rate = player.drug_production_rate + prod_rate
+                                            player.drug_production_rate = (player.drug_production_rate - old_prod_rate) + prod_rate
                                             player.drugs = player.drugs-cost
                                             query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE character_id="+player.character_id
                                         }                                
