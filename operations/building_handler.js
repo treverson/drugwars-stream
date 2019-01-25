@@ -54,7 +54,7 @@ const building_handler = {
                                 {
                                     if(building.level>1)
                                     {
-                                        prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                        prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
                                         old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
                                     }
                                    
@@ -170,7 +170,7 @@ const building_handler = {
                                 {
                                     if(building.level>1)
                                     {
-                                        prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                        prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
                                         old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
                                     }
                                    
