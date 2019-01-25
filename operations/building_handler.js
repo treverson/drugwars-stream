@@ -64,6 +64,20 @@ const building_handler = {
                                     }
                                    
                                 }
+                                else{
+                                    if(building.level === 0)
+                                    {
+                                        timer =  15 * (1 * cbuildings[i].building_coeff)
+                                        var z = (1) * cbuildings[i].building_base_price
+                                        cost = (z*((1)*cbuildings[i].building_coeff))
+                                    }
+                                   
+                                    else{
+                                        timer =  15 * ((building.level+1) * cbuildings[i].building_coeff)
+                                        var z = (building.level+1) * cbuildings[i].building_base_price
+                                        cost = (z*((building.level+1)*cbuildings[i].building_coeff))
+                                    }
+                                }
                                 if(cost>player.drugs)
                                 {
                                     connection.release()
@@ -182,6 +196,20 @@ const building_handler = {
                                         old_prod_rate = ((building.level)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level)))/100))
                                     }
                                    
+                                }
+                                else{
+                                    if(building.level === 0)
+                                    {
+                                        timer =  15 * (1 * cbuildings[i].building_coeff)
+                                        var z = (1) * cbuildings[i].building_base_price
+                                        cost = (z*((1)*cbuildings[i].building_coeff))
+                                    }
+                                   
+                                    else{
+                                        timer =  15 * ((building.level+1) * cbuildings[i].building_coeff)
+                                        var z = (building.level+1) * cbuildings[i].building_base_price
+                                        cost = (z*((building.level+1)*cbuildings[i].building_coeff))
+                                    }
                                 }
                                 if((cost/10000)>amount)
                                 {
