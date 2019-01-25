@@ -48,10 +48,21 @@ const building_handler = {
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].cost_type
                                 var ptype = cbuildings[i].production_type
+                                var prod_rate;
+                                var old_prod_rate;
                                 if(cbuildings[i].production_rate > 0)
                                 {
-                                    var old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
-                                    var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                    if(building.level>1)
+                                    {
+                                        prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                        old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
+                                    }
+                                   
+                                    else{
+                                        old_prod_rate = 0
+                                        prod_rate = ((1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(1)))/100))
+                                    }
+                                   
                                 }
                                 if(cost>player.drugs)
                                 {
@@ -153,8 +164,22 @@ const building_handler = {
                                 cost = (z*(building.level*cbuildings[i].building_coeff))
                                 var type = cbuildings[i].cost_type
                                 var ptype = cbuildings[i].production_type
+                                var prod_rate;
+                                var old_prod_rate;
                                 if(cbuildings[i].production_rate > 0)
-                                var prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                {
+                                    if(building.level>1)
+                                    {
+                                        prod_rate = (building.level*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+building.level))/100))
+                                        old_prod_rate = ((building.level-1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(building.level-1)))/100))
+                                    }
+                                   
+                                    else{
+                                        old_prod_rate = 0
+                                        prod_rate = ((1)*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+(1)))/100))
+                                    }
+                                   
+                                }
                                 if((cost/10000)>amount)
                                 {
                                     connection.release()
