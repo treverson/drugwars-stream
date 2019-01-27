@@ -123,7 +123,6 @@ stream.on("data", function (block) {
                                                     'sent:' + transfer,
                                                     'included in block: ' + result.block_num,
                                                 );
-                                           
                                             },
                                             function(error) {
                                                 console.error(error);
