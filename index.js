@@ -82,12 +82,11 @@ stream.on("data", function (block) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
                             {
-                                amount = Number(json.memo.split(':')[1])
+                                heist.addToPool(player,Number(json.amount),function(result){
+                                    if(result)
+                                    console.log(result)
+                                })
                             }
-                            heist.addToPool(player,amount,function(result){
-                                if(result)
-                                console.log(result)
-                            })
                         })
                     }
                 })
