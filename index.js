@@ -60,7 +60,7 @@ stream.on("data", function (block) {
                 }
                 player.getPlayerId(json.username, function (exist) {
                     if (!exist) {
-                        player.createNewPlayer(json.username, json.icon, function (error) {
+                        player.createNewPlayer(json.username, json.icon, json.referrer, function (error) {
                             if (error) {
                                 console.log("couldnt create charachter")
                             }

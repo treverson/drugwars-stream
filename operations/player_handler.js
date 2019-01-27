@@ -28,7 +28,7 @@ createUniqueId = function () {
 
 
 const player_handler = {
-    createNewPlayer: function (player, icon, cb) {
+    createNewPlayer: function (player, icon, referrer, cb) {
         //INSERT USER 
         var player_id;
         console.log("User : " + player + " will be recorded");
@@ -46,29 +46,22 @@ const player_handler = {
                             player_id = result[0].user_id
                             console.log("User : " + player + " will get his character and will have this id now : " + player_id);
                             //INSERT USER CHARACTER
-                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards ) VALUES ('" + player_id + "', 1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0)"
+                            var query = "INSERT INTO `character` (character_id, character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES ('" + player_id + "', 1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "')"
                             connection.query(query, function (err, result) {
                                 if (err) console.log(err);
                                 else {
                                     console.log("User : " + player + " have now starting values and will now get his attributes")
-                                    //INSERT USER ATTRIBUTES
-                                    var query = "INSERT INTO character_attribute (character_id, attribute_id, value) VALUES " + CreateAttributes(player_id);
+                                    //INSERT USER BUILDINGS
+                                    var query = "INSERT INTO character_buildings (character_id) VALUES (" + player_id + ")"
                                     connection.query(query, function (err, result) {
                                         if (err) console.log(err);
                                         else {
                                             console.log("User : " + player + " is now ready to play")
-                                            //INSERT USER BUILDINGS
-                                            var query = "INSERT INTO character_buildings (character_id) VALUES (" + player_id + ")"
-                                            connection.query(query, function (err, result) {
-                                                if (err) console.log(err);
-                                                else {
-                                                    console.log("User : " + player + " is now ready to play")
-                                                    connection.release();
-                                                    cb(null)
-                                                }
-                                            })
+                                            connection.release();
+                                            cb(null)
                                         }
                                     })
+
                                 }
                             })
                         }
