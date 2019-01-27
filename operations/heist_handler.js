@@ -10,7 +10,7 @@ const heist_handler = {
             connection.query(query, function (err, result) {
                 if (err) cb(err);
                 else {
-                    console.log("Upgraded heist invest :" + building_id + " for : " + player.character_id)
+                    console.log("Upgraded heist invest : for : " + player.character_id)
                     connection.release();
                     cb('success')
                 }
