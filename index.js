@@ -7,6 +7,7 @@ var battle = require('./operations/battle_handler')
 var player = require('./operations/player_handler')
 var shop = require('./operations/shop_handler')
 var building = require('./operations/building_handler')
+var heist = require('./operations/heist_handler')
 var client = new Client('https://api.steemit.com')
 
 app.listen(port, () => console.log(`Listening on ${port}`));
@@ -63,6 +64,27 @@ stream.on("data", function (block) {
                         player.updateGetPlayer(user_id,function(player){
                             if(player)
                             building.AddLevelToPlayerBuilding(player,json.building,function(result){
+                                if(result)
+                                console.log(result)
+                            })
+                        })
+                    }
+                })
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-heist") {
+                try {
+                    var json = JSON.parse(object[i].operations[0][1].json)
+                } catch (error) {
+                    console.log(error)
+                }
+                player.getPlayerId(json.username, function (user_id) {
+                    if (user_id) {
+                        player.updateGetPlayer(user_id,function(player){
+                            if(player)
+                            {
+                                amount = Number(json.memo.split(' ')[1].split(':'))
+                            }
+                            heist.addToPool(player,amount,function(result){
                                 if(result)
                                 console.log(result)
                             })
