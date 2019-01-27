@@ -6,7 +6,7 @@
     "author": "hightouch",
     "dependencies": {
         "dsteem": "^0.8.7",
-        "event-stream": "^3.3.4",
+        "event-stream": "3.3.4",
         "express": "^4.16.2",
         "mysql": "^2.16.0",
         "steem": "^0.7.2",
