@@ -13,18 +13,6 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 
-
-transferForShop = function (transaction) {
-    player.getPlayerId(transaction.from, function (exist) {
-        if (exist) {
-            shop.StartTransaction(transaction, function (error) {
-                if (error)
-                    console.log(error)
-            })
-        }
-    })
-}
-
 stream.on("data", function (block) {
     if (block != null) {
         try {
@@ -35,10 +23,6 @@ stream.on("data", function (block) {
             console.log(error)
         }
         for (i = 0; i < object.length; i++) {
-
-            // if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars") {
-            //     transferForShop(object[i].operations[0][1])
-            // }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-fight") {
                 try {
                     var fight = JSON.parse(object[i].operations[0][1].json)
@@ -81,14 +65,6 @@ stream.on("data", function (block) {
                             building.AddLevelToPlayerBuilding(player,json.building,function(result){
                                 if(result)
                                 console.log(result)
-                                // building.checkForBuildingTime(json.building,level,function(time){
-                                //     if(time)
-                                //     console.log(time)    
-                                //     // player.addLevelToPlayerBuilding(user.user_id,json.building,function(error){
-                                //     //     if(error)
-                                //     //     console.log(error)
-                                //     // })
-                                // })
                             })
                         })
                     }
@@ -103,33 +79,36 @@ stream.on("data", function (block) {
                             {
                                 building_id = Number(json.memo.split(':')[1])
                                 console.log(json)
-                                building.AddLevelToPlayerBuildingSteem(player,building_id,json.amount,function(result){
-                                    if(result)
-                                    console.log(result)
-                                    if(result ==="success")
-                                    {
-                                        var amount = json.amount.split(' ')[0]
-                                        amount = (amount/100)*89
-                                        amount = parseFloat(amount).toFixed(3)
-                                        const transfer = amount.concat(' ', 'STEEM');
-                                        const transf = new Object();
-                                        transf.from = 'drugwars-dealer';
-                                        transf.to = 'drugwars';
-                                        transf.amount = transfer;
-                                        transf.memo = 'Pool contribution';
-                                        client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
-                                            function(result) {
-                                                console.log(
-                                                    'sent:' + transfer,
-                                                    'included in block: ' + result.block_num,
-                                                );
-                                            },
-                                            function(error) {
-                                                console.error(error);
-                                            }
-                                        )
-                                    }
-                                })
+                                if(json.memo.split(':')[0]==="upgrade")
+                                {
+                                    building.AddLevelToPlayerBuildingSteem(player,building_id,json.amount,function(result){
+                                        if(result)
+                                        console.log(result)
+                                        if(result ==="success")
+                                        {
+                                            var amount = json.amount.split(' ')[0]
+                                            amount = (amount/100)*89
+                                            amount = parseFloat(amount).toFixed(3)
+                                            const transfer = amount.concat(' ', 'STEEM');
+                                            const transf = new Object();
+                                            transf.from = 'drugwars-dealer';
+                                            transf.to = 'drugwars';
+                                            transf.amount = transfer;
+                                            transf.memo = 'Pool contribution';
+                                            client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
+                                                function(result) {
+                                                    console.log(
+                                                        'sent:' + transfer,
+                                                        'included in block: ' + result.block_num,
+                                                    );
+                                                },
+                                                function(error) {
+                                                    console.error(error);
+                                                }
+                                            )
+                                        }
+                                    })
+                                }
                             }
                            
                         })
