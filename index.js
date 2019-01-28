@@ -43,7 +43,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.getPlayerId(json.username, function (exist) {
+                player.checkPlayer(json.username, function (exist) {
                     if (!exist) {
                         player.createNewPlayer(json.username, json.icon, json.referrer, function (error) {
                             if (error) {
