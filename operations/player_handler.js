@@ -77,7 +77,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     console.log(xp + "XP will be add to " + name)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name=" + name;
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name+ "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
@@ -106,7 +106,7 @@ const player_handler = {
                     var differenceprod = now.getTime() - player.last_update.getTime()
                     var drug_balance = player.drugs + Number(parseFloat((differenceprod / 1000) * player.drug_production_rate).toFixed(2))
                     var weapon_balance = player.weapons + Number(parseFloat((differenceprod / 1000) * player.weapon_production_rate).toFixed(0))
-                    var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  name=${name}`
+                    var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  name='${name}'`
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
@@ -123,7 +123,7 @@ const player_handler = {
     },
     updateProductionRate: function (name, type, rate, cb) {
         pool.getConnection(function (err, connection) {
-            var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name=${name}`
+            var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name='${name}'`
             connection.query(query, function (err, result) {
                 if (err) throw err;
                 else {
@@ -142,7 +142,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     console.log(xp + "XP will be add to " + name)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name=" + name;
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name+ "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
