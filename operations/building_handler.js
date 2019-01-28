@@ -49,7 +49,7 @@ const building_handler = {
                                     if(building.level === 0)
                                     {
                                      
-                                        timer = (cbuildings[i].building_coeff * 25000) * ((building.level+1^2))/buildings.building_1_level
+                                        timer = (cbuildings[i].building_coeff * 25000) * ((1^2))/buildings.building_1_level
                                         var z = (1) * cbuildings[i].building_base_price
                                         cost = (z*((1)*cbuildings[i].building_coeff))
                                         old_prod_rate = 0
@@ -57,7 +57,7 @@ const building_handler = {
                                     }
                                    
                                     else{
-                                        timer = (cbuildings[i].building_coeff * 25000) * ((building.level+1^2))/buildings.building_1_level
+                                        timer = (cbuildings[i].building_coeff * 25000) * ((building.level^2))/buildings.building_1_level
                                         var z = (building.level+1) * cbuildings[i].building_base_price
                                         cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                         prod_rate = (((building.level+1))*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+((building.level+1))))/100))
@@ -68,13 +68,13 @@ const building_handler = {
                                 else{
                                     if(building.level === 0)
                                     {
-                                        timer =    (cbuildings[i].building_coeff * 25000) * ((building.level+1^2))/buildings.building_1_level
+                                        timer =    (cbuildings[i].building_coeff * 25000) * ((1^2))/buildings.building_1_level
                                         var z = (1) * cbuildings[i].building_base_price
                                         cost = (z*((1)*cbuildings[i].building_coeff))
                                     }
                                    
                                     else{
-                                        timer =     (cbuildings[i].building_coeff * 25000) * ((building.level+1^2))/buildings.building_1_level
+                                        timer =     (cbuildings[i].building_coeff * 25000) * ((building.level^2))/buildings.building_1_level
                                         var z = (building.level+1) * cbuildings[i].building_base_price
                                         cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                     }
