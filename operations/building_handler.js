@@ -108,7 +108,7 @@ const building_handler = {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date(d.getTime() + (timer*1000)).toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE name='${player.character_id}'`
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update=${now}  WHERE name='${player.character_id}'`
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
