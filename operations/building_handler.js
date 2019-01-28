@@ -5,7 +5,7 @@ var player = require('./player_handler')
 const building_handler = {
     AddLevelToPlayerBuilding:function (player, building_id, cb) {
         dbConnection.getConnection(function (err, connection) {
-            var query = `SELECT * FROM character_buildings WHERE name=${player.name}`
+            var query = `SELECT * FROM character_buildings WHERE name='${player.name}'`
             connection.query(query, function (err, result) {
                 if (err) {
                     console.log(err)
@@ -96,23 +96,23 @@ const building_handler = {
                                             if(prod_rate)
                                             player.weapon_production_rate = (player.weapon_production_rate - old_prod_rate) + prod_rate
                                             player.drugs = player.drugs-cost
-                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", drugs="+player.drugs+" WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +", drugs="+player.drugs+" WHERE name='"+player.name+"'"
                                         }
                                         else{
                                             if(prod_rate)
                                             player.drug_production_rate = (player.drug_production_rate - old_prod_rate) + prod_rate
                                             player.drugs = player.drugs-cost
-                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+", drugs="+player.drugs+"  WHERE name='"+player.name+"'"
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date(d.getTime() + (timer*1000)).toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE name='${player.character_id}'`
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
-                                                        console.log("Upgraded character building :" + building_id +  " for : " + player.character_id)
+                                                        console.log("Upgraded character building :" + building_id +  " for : " + player.name)
                                                         connection.release();
                                                         cb('success')
                                                     }
