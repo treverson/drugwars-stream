@@ -5,7 +5,7 @@ var player = require('./player_handler')
 const building_handler = {
     AddLevelToPlayerBuilding:function (player, building_id, cb) {
         dbConnection.getConnection(function (err, connection) {
-            var query = `SELECT * FROM character_buildings WHERE character_id=${player.character_id}`
+            var query = `SELECT * FROM character_buildings WHERE name=${player.name}`
             connection.query(query, function (err, result) {
                 if (err) {
                     console.log(err)
