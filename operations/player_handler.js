@@ -54,7 +54,7 @@ const player_handler = {
                 else {
                     console.log("User : " + player + " have now starting values and will now get his attributes")
                     //INSERT USER BUILDINGS
-                    var query = "INSERT INTO character_buildings (name) VALUES (" + player_id + ")"
+                    var query = "INSERT INTO character_buildings (name) VALUES (" + player + ")"
                     connection.query(query, function (err, result) {
                         if (err) console.log(err);
                         else {
