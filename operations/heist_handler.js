@@ -5,13 +5,13 @@ const heist_handler = {
     addToPool: function (player, amount, cb) {
         dbConnection.getConnection(function (err, connection) {
             var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-            var query = `INSERT INTO heist_pool (user_id, saved_drugs, date) VALUES (${player.character_id}, ${amount},'${now}')
+            var query = `INSERT INTO heist_pool (user_id,name, saved_drugs, date) VALUES (${player.character_id},'${player.name}', ${amount},'${now}')
             ON DUPLICATE KEY UPDATE saved_drugs= saved_drugs +${amount}, date='${now}'`
             connection.query(query, function (err, result) {
                 if (err) cb(err);
                 else {
                     player.drugs = player.drugs-amount
-                    query = "UPDATE `character` SET drugs="+player.drugs+" WHERE character_id="+player.character_id
+                    query = "UPDATE `character` SET drugs="+player.drugs+" WHERE name='"+player.name +"'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {

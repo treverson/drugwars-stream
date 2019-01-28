@@ -96,7 +96,7 @@ const player_handler = {
     },
     updateGetPlayer: function (name, cb) {
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM `character` WHERE name =" + name
+            var query = "SELECT * FROM `character` WHERE name ='" + name +"'"
             connection.query(query, function (err, result) {
                 if (err) console.log(err);
                 if (result) {
