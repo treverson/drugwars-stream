@@ -227,18 +227,18 @@ const building_handler = {
                                         {
                                             if(prod_rate)
                                             player.weapon_production_rate = player.weapon_production_rate + prod_rate
-                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +" WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET weapon_production_rate="+player.weapon_production_rate +" WHERE name='"+player.name+"'"
                                         }
                                         else{
                                             if(prod_rate)
                                             player.drug_production_rate = player.drug_production_rate + prod_rate
-                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+" WHERE character_id="+player.character_id
+                                            query = "UPDATE `character` SET drug_production_rate="+player.drug_production_rate+" WHERE name='"+player.name+"'"
                                         }                                
                                         connection.query(query, function (err, result) {
                                             if (err) throw err;
                                             else {
                                                 var now = new Date(d.getTime() + (timer*1000)).toISOString().slice(0, 19).replace('T', ' ')
-                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE character_id=`+player.character_id
+                                                var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level+1)}, building_${building_id}_last_update='${now}'  WHERE name='${player.name}'`
                                                 connection.query(query, function (err, result) {
                                                     if (err) cb(err);
                                                     else {
