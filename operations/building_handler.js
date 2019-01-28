@@ -56,7 +56,7 @@ const building_handler = {
                                     }
                                    
                                     else{
-                                        timer =  (15 - (building.level/100)) * ((building.level+1) * cbuildings[i].building_coeff)
+                                        timer =  (15 - (building.level/100)) * ((building.level) * cbuildings[i].building_coeff)
                                         var z = (building.level+1) * cbuildings[i].building_base_price
                                         cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                         prod_rate = (((building.level+1))*cbuildings[i].production_rate)+(((cbuildings[i].production_rate*(100+((building.level+1))))/100))
@@ -73,7 +73,7 @@ const building_handler = {
                                     }
                                    
                                     else{
-                                        timer =  (15 - (building.level/100)) * ((building.level+1) * cbuildings[i].building_coeff)
+                                        timer =  (15 - (building.level/100)) * ((building.level) * cbuildings[i].building_coeff)
                                         var z = (building.level+1) * cbuildings[i].building_base_price
                                         cost = (z*((building.level+1)*cbuildings[i].building_coeff))
                                     }
