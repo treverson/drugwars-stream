@@ -65,7 +65,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.updateGetPlayer(json.username, function (character) {
+                player.updateCharacter(json.username, function (character) {
                     if (character)
                         building.AddLevelToPlayerBuilding(character, json.building, function (result) {
                             if (result)
@@ -83,7 +83,7 @@ stream.on("data", function (block) {
                     console.log(error)
                 }
 
-                player.updateGetPlayer(json.username, function (character) {
+                player.updateCharacter(json.username, function (character) {
                     if (character) {
                         heist.addToPool(character, Number(json.amount), function (result) {
                             if (result)
@@ -96,7 +96,7 @@ stream.on("data", function (block) {
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
                 var json = object[i].operations[0][1]
 
-                player.updateGetPlayer(json.from, function (player) {
+                player.updateCharacter(json.from, function (player) {
                     if (player) {
                         building_id = Number(json.memo.split(':')[1])
                         console.log(json)

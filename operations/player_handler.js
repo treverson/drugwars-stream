@@ -40,7 +40,7 @@ const player_handler = {
             }
         })
     },
-    updateGetPlayer: function (name, cb) {
+    updateCharacter: function (name, cb) {
         var query = "SELECT * FROM `character` WHERE name ='" + name + "'"
         db.query(query, function (err, result) {
             if (err) console.log(err);
