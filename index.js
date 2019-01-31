@@ -108,7 +108,8 @@ stream.on("data", function (block) {
                                             console.log(result)
                                     })
                                 } else {
-                                    pool.refund(op, function (result) {
+                                    var reason = "couldnt not upgrade building"
+                                    pool.refund(op,reason, function (result) {
                                         if (result)
                                             console.log(result)
                                     })
@@ -116,11 +117,18 @@ stream.on("data", function (block) {
                             })
                         }
                         else {
-                            pool.refund(op, function (result) {
+                            var reason = "feature not enabled"
+                            pool.refund(op,reason, function (result) {
                                 if (result)
                                     console.log(result)
                             })
                         }
+                    } else {
+                        var reason = "character doesnt exist"
+                        pool.refund(op, reason,function (result) {
+                            if (result)
+                                console.log(result)
+                        })
                     }
 
                 })

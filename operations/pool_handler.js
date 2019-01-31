@@ -28,7 +28,7 @@ const pool_handler = {
             }
         )
     },
-    refund:function(op,cb){
+    refund:function(op,reason,cb){
         var amount = op.amount.split(' ')[0]
         amount = parseFloat(amount).toFixed(3)
         const transfer = amount.concat(' ', 'STEEM');
@@ -36,7 +36,7 @@ const pool_handler = {
         transf.from = 'drugwars-dealer';
         transf.to = op.from;
         transf.amount = transfer;
-        transf.memo = 'DrugWars Refund';
+        transf.memo = 'DrugWars Refund : ' + reason;
         client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
             function (result) {
                 console.log(
