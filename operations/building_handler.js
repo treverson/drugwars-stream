@@ -44,7 +44,7 @@ const building_handler = {
                     return cb('not enough drugs')
                 }
                 if (current_building.production_rate > 0) {
-                    var production_rate = calculateProductionRate(building_level, current_building)
+                    var production_rate = building_handler.calculateProductionRate(building_level, current_building)
                     console.log(production_rate)
                     current_building.production_rate
                     var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
