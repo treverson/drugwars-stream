@@ -3,7 +3,7 @@ var db = require('../lib/db');
 var player = require('./player_handler')
 
 const building_handler = {
-    AddLevelToPlayerBuilding:function (player, building_id, cb) {
+    AddLevelToBuilding:function (player, building_id, amount, cb) {
             var query = `SELECT * FROM character_buildings WHERE name='${player.name}'`
             db.query(query, function (err, result) {
                 if (err) {
