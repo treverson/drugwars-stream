@@ -53,13 +53,13 @@ const building_handler = {
                     character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
                     character.drugs = character.drugs - cost
                     query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
-                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building.level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
+                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
                 }
                 else {
                     character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
                     character.drugs = character.drugs - cost
                     query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building.level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
+                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
                 }
                 db.query(query, function (err, result) {
                     if (err) cb(err);
