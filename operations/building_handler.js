@@ -32,9 +32,9 @@ const building_handler = {
                 if (building_last_update > now) {
                     cb('need to wait')
                 }
-                console.log('hq level ' + hq_level)
-                console.log('building level ' + building_level)
-                console.log('building last update ' + building_last_update)
+                // console.log('hq level ' + hq_level)
+                // console.log('building level ' + building_level)
+                // console.log('building last update ' + building_last_update)
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
@@ -44,13 +44,13 @@ const building_handler = {
                     return cb('not enough drugs')
                 }
                 if (current_building.production_rate > 0) {
-                    var prod_rate = current_building.production_rate
-                    var prod_type = current_building.production_type
+                    var production_rate = calculateProductionRate(building_level, current_building)
+                    console.log(production_rate)
+                    current_building.production_rate
+                    var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
+                    SELECT * FROM buildings";
                 }
 
-
-
-                console.log('next update' + building.last_update)
                 var query;
                 if (ptype === 'weapon') {
                     if (prod_rate)
@@ -93,6 +93,8 @@ const building_handler = {
     calculateCost: function (building_level, current_building) {
         return (current_building.building_base_price * (building_level * current_building.building_coeff))
     },
-
+    calculateProductionRate: function (building_level, current_building) {
+        return (current_building.production_rate * (building_level * current_building.building_coeff))
+    },
 }
 module.exports = building_handler;
