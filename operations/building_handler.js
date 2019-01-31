@@ -13,6 +13,7 @@ const building_handler = {
             }
             else {
                 var current_building = buildings.filter(function (item) { return item.building_id === building_id; });
+                var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
                 var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
                 if (character_buildings[0]['building_' + building_id + '_last_update'])
