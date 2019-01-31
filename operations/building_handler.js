@@ -34,12 +34,12 @@ const building_handler = {
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
-                console.log(utils.costToSteem(cost))
+                console.log(utils.costToSteem(cost,function(result){return result}))
                 //CHECK DRUGS COST BALANCE
                 if (cost > character.drugs && amount === null) {
                     return cb('not enough drugs')
                 }
-                else if (amount< utils.costToSteem(cost))
+                else if (amount< utils.costToSteem(cost,function(result){return result}))
                 {
                     return cb('not enough steem')
                 }
