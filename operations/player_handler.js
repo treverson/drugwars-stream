@@ -43,7 +43,10 @@ const player_handler = {
     getUpdateCharacter: function (name, cb) {
         var query = "SELECT * FROM `character` WHERE name ='" + name + "'"
         db.query(query, function (err, result) {
-            if (err) console.log(err);
+            if (err || result[0]){
+                console.log(err);
+                cb(null)
+            } 
             if (result) {
                 player = result[0]
                 console.log(player)

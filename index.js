@@ -52,8 +52,8 @@ stream.on("data", function (block) {
                             if (error) {
                                 console.log("couldnt create charachter")
                             }
-                                else{
-                                    socket.emit('refresh', op.username)
+                            else {
+                                socket.emit('refresh', op.username)
                             }
                         })
                     }
@@ -69,9 +69,9 @@ stream.on("data", function (block) {
                     if (character)
                         building.updateBuilding(character, op.building, null, function (result) {
                             if (result === "success")
-                                player.addXp(op.username,1,function(result){
-                                    if(result)
-                                    socket.emit('refresh', op.username)
+                                player.addXp(op.username, 1, function (result) {
+                                    if (result)
+                                        socket.emit('refresh', op.username)
                                 })
                         })
                 })
@@ -87,7 +87,7 @@ stream.on("data", function (block) {
                         heist.addToPool(character, Number(op.amount), function (result) {
                             if (result)
                                 console.log(result)
-                                socket.emit('refresh', op.username)
+                            socket.emit('refresh', op.username)
                         })
                     }
                 })
@@ -100,15 +100,25 @@ stream.on("data", function (block) {
                         console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
                             building.updateBuilding(player, building_id, op.amount, function (result) {
-                                if (result)
+                                if (result === "success") {
                                     console.log(result)
                                     socket.emit('refresh', op.from)
-                                if (result === "success") {
-                                    pool.send(op,function(result){
-                                        if(result)
-                                        console.log(result)
+                                    pool.send(op, function (result) {
+                                        if (result)
+                                            console.log(result)
+                                    })
+                                } else {
+                                    pool.refund(op, function (result) {
+                                        if (result)
+                                            console.log(result)
                                     })
                                 }
+                            })
+                        }
+                        else {
+                            pool.refund(op, function (result) {
+                                if (result)
+                                    console.log(result)
                             })
                         }
                     }

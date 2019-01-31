@@ -27,6 +27,29 @@ const pool_handler = {
                 cb(null)
             }
         )
+    },
+    refund:function(op,cb){
+        var amount = op.amount.split(' ')[0]
+        amount = parseFloat(amount).toFixed(3)
+        const transfer = amount.concat(' ', 'STEEM');
+        const transf = new Object();
+        transf.from = 'drugwars-dealer';
+        transf.to = op.from;
+        transf.amount = transfer;
+        transf.memo = 'DrugWars Refund';
+        client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
+            function (result) {
+                console.log(
+                    'sent:' + transfer,
+                    'included in block: ' + result.block_num,
+                );
+                cb(true)
+            },
+            function (error) {
+                console.error(error);
+                cb(null)
+            }
+        )
     }
 }
 module.exports = pool_handler;
