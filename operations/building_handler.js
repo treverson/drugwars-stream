@@ -18,11 +18,17 @@ const building_handler = {
                 var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
                 var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
+
+                //CHECK HEADQUARTER LEVEL
+                if (hq_level < building_level) {
+                    cb('hq level to low')
+                }
                 if (character_buildings[0]['building_' + building_id + '_last_update'])
                     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
                 else {
                     building_last_update = now
                 }
+                //CHECK LAST UPDATE
                 if (building_last_update > now) {
                     cb('need to wait')
                 }
@@ -33,8 +39,9 @@ const building_handler = {
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
                 console.log(cost)
+                //CHECK DRUGS COST BALANCE
                 if (cost > character.drugs) {
-                    return cb('User doesnt have enough drugs')
+                    return cb('not enough drugs')
                 }
                 if (current_building.production_rate > 0) {
                     var prod_rate = current_building.production_rate
