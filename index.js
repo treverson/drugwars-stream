@@ -112,7 +112,7 @@ stream.on("data", function (block) {
                                             console.log(result)
                                     })
                                 } else {
-                                    var reason = "couldnt not upgrade building" + result
+                                    var reason = "couldnt not upgrade building " + result
                                     pool.refund(op,reason, function (result) {
                                         if (result)
                                             console.log(result)
