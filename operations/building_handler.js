@@ -12,6 +12,8 @@ const building_handler = {
                 cb(null)
             }
             else {
+                var now = new Date();
+                now = new Date(now.toISOString())
                 var current_building = buildings.filter(function (item) { return item.building_id === building_id; });
                 var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
@@ -19,9 +21,10 @@ const building_handler = {
                 if (character_buildings[0]['building_' + building_id + '_last_update'])
                     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
                 else {
-                    var now = new Date();
-                    now = new Date(now.toISOString())
                     building_last_update = now
+                }
+                if (building_last_update > now) {
+                    cb('need to wait')
                 }
                 console.log('hq level ' + hq_level)
                 console.log('building level ' + building_level)
@@ -30,13 +33,11 @@ const building_handler = {
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
                 console.log(cost)
+
                 if (current_building.production_rate > 0) {
-                    var prod_rate = production_rate
+                    var prod_rate = current_building.production_rate
                     var prod_type = current_building.production_type
                 }
-
-
-
 
                 if (cost > player.drugs) {
                     return cb('User doesnt have enough drugs')
