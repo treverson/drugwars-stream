@@ -3,17 +3,18 @@ var db = require('../lib/db');
 var player = require('./player_handler')
 
 const building_handler = {
-    AddLevelToBuilding:function (player, building_id, amount, cb) {
-            var query = `SELECT * FROM character_buildings WHERE name='${player.name}'`
-            db.query(query, function (err, result) {
+    AddLevelToBuilding:function (character, building_id, amount, cb) {
+            var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
+            SELECT * FROM buildings";
+            db.query(query, [character.name], function (err, [character_buildings,buildings]) {
                 if (err) {
                     console.log(err)
                     cb(null)
                 }
                 else {
-                    var buildings = result[0]
-                    console.log('hq level ' + result[0]['building_1_level'])
-                    console.log('bra' + result[0]['building_'+building_id+'_level'])
+                    console.log('baba' + character_buildings)
+                    console.log('hq level ' + character_buildings[0]['building_1_level'])
+                    console.log('bra' + character_buildings[0]['building_'+building_id+'_level'])
                     var building ={}
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
