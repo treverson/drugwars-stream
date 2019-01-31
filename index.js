@@ -67,7 +67,7 @@ stream.on("data", function (block) {
                 }
                 player.getUpdateCharacter(op.username, function (character) {
                     if (character)
-                        building.AddLevelToBuilding(character, op.building, null, function (result) {
+                        building.updateBuilding(character, op.building, null, function (result) {
                             if (result === "success")
                                 player.addXp(op.username,1,function(result){
                                     if(result)
@@ -99,7 +99,7 @@ stream.on("data", function (block) {
                         building_id = Number(op.memo.split(':')[1])
                         console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
-                            building.AddLevelToBuilding(player, building_id, op.amount, function (result) {
+                            building.updateBuilding(player, building_id, op.amount, function (result) {
                                 if (result)
                                     console.log(result)
                                     socket.emit('refresh', op.from)

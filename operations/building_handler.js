@@ -3,7 +3,7 @@ var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
 const building_handler = {
-    AddLevelToBuilding: function (character, building_id, amount, cb) {
+    updateBuilding: function (character, building_id, amount, cb) {
         var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
             SELECT * FROM buildings";
         db.query(query, [character.name], function (err, [character_buildings, buildings]) {
@@ -43,7 +43,7 @@ const building_handler = {
                     cost = 0
                 }
                 else
-                building_handler.updateBuilding(character,now,building_level,building_id,timer,production_rate,cost,function(result){
+                building_handler.confirmBuildingUpdate(character,now,building_level,building_id,timer,current_building,cost,function(result){
                     if(result)
                     console.log(result)
                 })
@@ -59,7 +59,7 @@ const building_handler = {
     calculateProductionRate: function (building_level, current_building) {
         return (current_building.production_rate * (building_level * current_building.building_coeff))
     },
-    updateBuilding:function(character,now,building_level,building_id,timer,production_rate,cost,cb){
+    confirmBuildingUpdate:function(character,now,building_level,building_id,timer,current_building,cost,cb){
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         if (current_building.production_rate > 0) {
