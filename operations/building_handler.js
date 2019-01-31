@@ -34,13 +34,12 @@ const building_handler = {
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
-                console.log(utils.costToSteem(cost,function(result){return result}))
+                console.log(utils.costToSteem(cost))
                 //CHECK DRUGS COST BALANCE
                 if (cost > character.drugs && amount === null) {
                     return cb('not enough drugs')
                 }
-                else if (amount< utils.costToSteem(cost,function(result){return result}))
-                {
+                else if (amount < utils.costToSteem(cost)) {
                     return cb('not enough steem')
                 }
                 var query;
@@ -61,14 +60,13 @@ const building_handler = {
                         UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
                     }
                 }
-                else{
+                else {
                     character.drugs = character.drugs - cost
                     query = "UPDATE `character` SET drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
                     UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
-                }              
+                }
                 db.query(query, function (err, result) {
-                    if (err) 
-                    {
+                    if (err) {
                         console.log(result)
                         cb(err);
                     }
