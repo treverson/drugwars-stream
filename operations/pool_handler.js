@@ -1,3 +1,5 @@
+const { Client, BlockchainMode, PrivateKey } = require('dsteem');
+var client = new Client('https://api.steemit.com')
 
 var db = require('../lib/db');
 

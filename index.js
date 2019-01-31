@@ -1,14 +1,13 @@
-const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var battle = require('./operations/battle_handler')
 var player = require('./operations/player_handler')
 var shop = require('./operations/shop_handler')
 var building = require('./operations/building_handler')
 var heist = require('./operations/heist_handler')
 var pool = require('./operations/pool_handler')
+const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 var client = new Client('https://api.steemit.com')
 
 const io = require('socket.io-client');
