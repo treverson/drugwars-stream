@@ -1,7 +1,7 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const utils = {
-    costToSteem: function (int) {
+    costToSteem: function (int,cb) {
         var xtr = new XMLHttpRequest();
         xtr.open('GET', 'https://api.coinmarketcap.com/v1/ticker/steem/', true);
         xtr.send();
@@ -16,12 +16,11 @@ const utils = {
 
                         }
                         var price=(int/10000)*ticker[0].price_usd
-                        console.log(price)
-                        return(price)
+                        cb(price)
                     }
                 } else {
                     console.log("Error: API not responding!");
-                    return(null)
+                    cb(null)
                 }
             }
         }

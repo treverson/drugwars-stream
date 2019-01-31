@@ -34,19 +34,27 @@ const building_handler = {
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
-                console.log(utils.costToSteem(cost))
                 //CHECK DRUGS COST BALANCE
                 if (cost > character.drugs && amount === null) {
                     return cb('not enough drugs')
                 }
-                else if (amount && amount < utils.costToSteem(cost)) {
-                    cost = 0
+                if (cost < character.drugs && amount === null) {
+                    building_handler.confirmBuildingUpdate(character,now,building_level,building_id,timer,current_building,cost,function(result){
+                        if(result)
+                        console.log(result)
+                    })
                 }
-                else
-                building_handler.confirmBuildingUpdate(character,now,building_level,building_id,timer,current_building,cost,function(result){
-                    if(result)
-                    console.log(result)
-                })
+                if (amount != null){
+                    utils.costToSteem(cost,function(result){
+                        if(result)
+                        console.log(result)
+                        building_handler.confirmBuildingUpdate(character,now,building_level,building_id,timer,current_building,cost,function(result){
+                            if(result)
+                            console.log(result)
+                        })
+                    })
+                }
+
             }
         })
     },
