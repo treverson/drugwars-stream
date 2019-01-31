@@ -10,6 +10,9 @@ var building = require('./operations/building_handler')
 var heist = require('./operations/heist_handler')
 var client = new Client('https://api.steemit.com')
 
+const io = require('socket.io-client');
+var socket = new io.connect('https://drugwarsws.herokuapp.com/');
+
 app.listen(port, () => console.log(`Listening on ${port}`));
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
@@ -48,6 +51,10 @@ stream.on("data", function (block) {
                         player.createNewPlayer(json.username, json.icon, json.referrer, function (error) {
                             if (error) {
                                 console.log("couldnt create charachter")
+                            }
+                                else{
+                                    console.log('refreshiiing')
+                                    socket.emit('refresh', json.username)
                             }
                         })
                     }
