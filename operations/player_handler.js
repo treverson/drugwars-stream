@@ -1,7 +1,7 @@
 var db = require('../lib/db');
 
 const player_handler = {
-    checkPlayer: function (username, cb) {
+    checkIfExist: function (username, cb) {
         let query = "SELECT * FROM `character` WHERE name = ?";
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0])
@@ -12,7 +12,7 @@ const player_handler = {
             else cb(true)
         });
     },
-    createNewPlayer: function (player, icon, referrer, cb) {
+    createNew: function (player, icon, referrer, cb) {
         let query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "'); \n\
                      INSERT INTO character_buildings (name) VALUES ('" + player + "')"
         db.query(query, function (err, result) {
