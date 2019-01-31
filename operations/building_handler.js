@@ -21,7 +21,7 @@ const building_handler = {
                 if (hq_level < building_level) {
                     cb('hq level to low')
                 }
-                if (character_buildings[0]['building_' + building_id + '_last_update'])
+                if (character_buildings[0]['building_' + building_id + '_last_update'] !=null)
                     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
                 else {
                     building_last_update = now
