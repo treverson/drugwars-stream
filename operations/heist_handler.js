@@ -1,10 +1,11 @@
 
 var db = require('../lib/db');
+var player = require('./player_handler')
 
 const heist_handler = {
-    addToPool: function (player, amount, cb) {
+    addToPool: function (character, amount, cb) {
         var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-        var query = `INSERT INTO heist_pool (user_id,name, saved_drugs, date) VALUES (${player.character_id},'${player.name}', ${amount},'${now}')
+        var query = `INSERT INTO heist_pool (user_id,name, saved_drugs, date) VALUES (${character.character_id},'${character.name}', ${amount},'${now}')
         ON DUPLICATE KEY UPDATE saved_drugs= saved_drugs +${amount}, date='${now}'`
         db.query(query, function (err, result) {
             if (err)
@@ -12,14 +13,9 @@ const heist_handler = {
                 return cb(null);
             }
             else {
-                player.drugs = player.drugs-amount
-                query = "UPDATE `character` SET drugs="+player.drugs+" WHERE name='"+player.name +"'"
-                db.query(query, function (err, result) {
-                    if (err) throw err;
-                    else {
-                        console.log("Upgraded heist invest : for : " + player.character_id)
-                        cb('success')
-                    }
+                player.removeDrugs(amount,function(succes){
+                    if(success)
+                    cb(true)
                 })
             }
         });

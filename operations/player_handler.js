@@ -77,27 +77,18 @@ const player_handler = {
             }
         })
     },
-    removeDrugs: function (name, building_id, cb) {
-        var query = "SELECT * FROM `character` WHERE name = '" + name + "'"
+    removeDrugs: function (name, amount, cb) {
+        var query = "UPDATE `character` SET drugs=-"+amount+" WHERE name='"+name +"'"
         db.query(query, function (err, result) {
-            if (err) throw err;
-            if (result[0] != undefined) {
-                console.log(xp + "XP will be add to " + name)
-                var character_new_xp = result[0].xp + xp
-                var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name + "'"
-                db.query(query, function (err, result) {
-                    if (err) throw err;
-                    else {
-                        console.log(xp + "XP added to character" + name)
-                        cb(true)
-                    }
-                })
-            }
-            else {
-                console.log("User : " + player + " isnt recorded");
+            if (err) {
+                console.log(error)
                 cb(null)
             }
-        });
+            else {
+                console.log("Upgraded balance : for : " + player.character_id)
+                cb(true)
+            }
+        })
     }
 }
 module.exports = player_handler;
