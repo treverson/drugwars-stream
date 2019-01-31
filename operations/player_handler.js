@@ -28,10 +28,10 @@ const player_handler = {
     },
     addXp: function (name, xp, cb) {
         console.log(name)
-        var query = "UPDATE character SET xp= xp+" + xp + " WHERE  name='" + name + "'"
+        var query = "UPDATE `character` SET xp= xp+" + xp + " WHERE name='" + name + "'"
         db.query(query, function (err, result) {
-            if (err || !result || !result[0]) {
-                console.log('coudlnt add xp for ' + player)
+            if (err) {
+                console.log('coudlnt add xp for ' + name)
                 return cb(true);
             }
             else {
