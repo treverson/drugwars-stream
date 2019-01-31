@@ -12,7 +12,8 @@ const building_handler = {
                 }
                 else {
                     var buildings = result[0]
-                    console.log(result[0]['building_1_level'])
+                    console.log('hq level ' + result[0]['building_1_level'])
+                    console.log('bra' + result[0]['building_'+building_id+'_level'])
                     var building ={}
                     for (var i in buildings) {
                         if (i === 'building_' + building_id + '_level')
