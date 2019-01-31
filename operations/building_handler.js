@@ -38,7 +38,7 @@ const building_handler = {
                     if (cost < character.drugs && amount === null) {
                         building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                             if (result)
-                                console.log(result)
+                            cb(result)
                         })
                     }
                     if (amount != null) {
@@ -51,7 +51,7 @@ const building_handler = {
                                     timer = 10000
                                     building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                                         if (result)
-                                            console.log(result)
+                                            cb(result)
                                     })
                                 }
                                     else cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
