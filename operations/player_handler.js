@@ -9,7 +9,6 @@ const player_handler = {
                 console.log(username + ' doesnt exist')
                 return cb(null);
             }
-
             else cb(true)
         });
     },
