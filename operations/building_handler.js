@@ -42,6 +42,7 @@ const building_handler = {
                         })
                     }
                     if (amount != null) {
+                        amount = amount.split(' ')[0]
                         utils.costToSteem(cost, function (result) {
                             if (result)
                                 if (result > amount - (amount * 5 / 100))
