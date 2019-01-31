@@ -7,7 +7,7 @@ const heist_handler = {
         var query = `INSERT INTO heist_pool (user_id,name, saved_drugs, date) VALUES (${player.character_id},'${player.name}', ${amount},'${now}')
         ON DUPLICATE KEY UPDATE saved_drugs= saved_drugs +${amount}, date='${now}'`
         db.query(query, function (err, result) {
-            if (err || !result || !result[0])
+            if (err)
             {
                 return cb(null);
             }

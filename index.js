@@ -66,7 +66,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.updateCharacter(op.username, function (character) {
+                player.getCharacter(op.username, function (character) {
                     if (character)
                         building.AddLevelToBuilding(character, op.building, null, function (result) {
                             if (result)
@@ -83,8 +83,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-
-                player.updateCharacter(op.username, function (character) {
+                player.getCharacter(op.username, function (character) {
                     if (character) {
                         heist.addToPool(character, Number(op.amount), function (result) {
                             if (result)
@@ -96,12 +95,12 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
                 var op = object[i].operations[0][1]
-                player.updateCharacter(op.from, function (player) {
+                player.getCharacter(op.from, function (player) {
                     if (player) {
                         building_id = Number(op.memo.split(':')[1])
                         console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
-                            building.AddLevelToPlayerBuildingSteem(player, building_id, op.amount, function (result) {
+                            building.AddLevelToBuilding(player, building_id, op.amount, function (result) {
                                 if (result)
                                     console.log(result)
                                     socket.emit('refresh', op.from)
@@ -109,7 +108,6 @@ stream.on("data", function (block) {
                                     pool.send(op,function(result){
                                         if(result)
                                         console.log(result)
-                                        
                                     })
                                 }
                             })
