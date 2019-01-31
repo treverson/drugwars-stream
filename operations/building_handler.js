@@ -18,7 +18,6 @@ const building_handler = {
                 var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
                 var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
-
                 //CHECK HEADQUARTER LEVEL
                 if (hq_level < building_level) {
                     cb('hq level to low')
@@ -44,44 +43,32 @@ const building_handler = {
                     return cb('not enough drugs')
                 }
                 if (current_building.production_rate > 0) {
+                    var old_rate = building_handler.calculateProductionRate(building_level - 1, current_building)
                     var production_rate = building_handler.calculateProductionRate(building_level, current_building)
-                    console.log(production_rate)
-                    current_building.production_rate
-                    var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
-                    SELECT * FROM buildings";
+                    console.log(old_rate, production_rate)
                 }
-
                 var query;
-                if (ptype === 'weapon') {
-                    if (prod_rate)
-                        character.weapon_production_rate = (character.weapon_production_rate - old_prod_rate) + prod_rate
+                var now = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
+                if (current_building.production_type === 'weapon') {
+                    character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
                     character.drugs = character.drugs - cost
-                    query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'"
+                    query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
+                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building.level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
                 }
                 else {
-                    if (prod_rate)
-                        character.drug_production_rate = (character.drug_production_rate - old_prod_rate) + prod_rate
+                    character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
                     character.drugs = character.drugs - cost
-                    query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'"
+                    query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
+                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building.level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
                 }
                 db.query(query, function (err, result) {
-                    if (err) throw err;
+                    if (err) cb(err);
+
                     else {
-                        var now = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-                        var query = `UPDATE character_buildings SET building_${building_id}_level=${Number(building.level + 1)}, building_${building_id}_last_update='${now}'  WHERE name='${character.name}'`
-                        db.query(query, function (err, result) {
-                            if (err) cb(err);
-                            else {
-                                console.log("Upgraded character building :" + building_id + " for : " + character.name)
-                                cb('success')
-                            }
-                        })
+                        console.log("Upgraded character building :" + building_id + " for : " + character.name)
+                        cb('success')
                     }
                 })
-
-
-
-
             }
         })
     },
