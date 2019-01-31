@@ -26,7 +26,7 @@ const player_handler = {
 
         });
     },
-    addXpToCharacter: function (name, xp, cb) {
+    addXp: function (name, xp, cb) {
         var query = "UPDATE character SET xp= xp+" + xp + " WHERE  name='" + name + "'"
         db.query(query, function (err, result) {
             if (err || !result || !result[0]) {
