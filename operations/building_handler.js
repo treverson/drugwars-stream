@@ -27,7 +27,7 @@ const building_handler = {
                 console.log('building last update ' + building_last_update)
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
-                var cost = building_handler.calculateCost(hq_level, building_level, current_building)
+                var cost = building_handler.calculateCost(building_level, current_building)
                 console.log(cost)
                 if (current_building.production_rate > 0) {
                     var prod_rate = production_rate
@@ -83,11 +83,12 @@ const building_handler = {
         })
     },
     calculateTime: function (hq_level, building_level, current_building) {
-        return (current_building.building_coeff * 400) * ((building_level) ^ 2 / hq_level)
+        console.log(current_building)
+        return (current_building.building_coeff * 400) * (building_level ^ 2 / hq_level)
 
     },
-    calculateCost: function (hq_level, building_level, current_building) {
-        return (current_building.building_base_price * ((building_level) * current_building.building_coeff))
+    calculateCost: function (building_level, current_building) {
+        return (current_building.building_base_price * (building_level * current_building.building_coeff))
     },
 
 }
