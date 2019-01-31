@@ -1,58 +1,27 @@
-var mysql = require('mysql');
-var pool = mysql.createPool({
-    connectionLimit: 5,
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB
-});
-var maxpic = 5;
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
-CreateAttributes = function (id) {
-    var query = "";
-    for (i = 1; i < 11; i++) {
-        query += "(" + id + "," + [i] + "," + getRandomInt(12) + ")"
-        query = query.replace(')(', '),(')
-    }
-    query = query.replace(')(', '),(')
-    return query
-}
-
-createUniqueId = function () {
-    var id = new Date().valueOf();
-    return id
-}
-
+var db = require('../lib/db');
 
 const player_handler = {
-    checkPlayer: function (player, cb) {
-        pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM `character` WHERE name = '" + player + "'"
-            connection.query(query, function (err, result) {
-                if (err) throw console.log(err);
-                if (result[0] != undefined) {
-                        cb(result[0].user_id)
-                }
-                else {
-                    console.log("User : " + player + " isnt recorded");
-                    cb(null)
-                }
-            });
+    checkPlayer: function (username, cb) {
+        let query = "SELECT * FROM `character` WHERE name = ?";
+        db.query(query, [username], function (err, result) {
+            if (err || !result || !result[0])
+            {
+                console.log(username + ' doesnt exist')
+                return cb(null);
+            }
+
+            else cb(true)
         });
     },
     createNewPlayer: function (player, icon, referrer, cb) {
         //INSERT USER 
         pool.getConnection(function (err, connection) {
-            console.log("User : " + player + " will get his character and will have this id now : ");
+            console.log("User : " + player + " will get his character");
             //INSERT USER CHARACTER
             var query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "')"
             connection.query(query, function (err, result) {
                 if (err) console.log(err);
                 else {
-                    console.log("User : " + player + " have now starting values and will now get his attributes")
                     //INSERT USER BUILDINGS
                     var query = "INSERT INTO character_buildings (name) VALUES ('" + player + "')"
                     connection.query(query, function (err, result) {
@@ -77,7 +46,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     console.log(xp + "XP will be add to " + name)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name+ "'"
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
@@ -96,7 +65,7 @@ const player_handler = {
     },
     updateGetPlayer: function (name, cb) {
         pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM `character` WHERE name ='" + name +"'"
+            var query = "SELECT * FROM `character` WHERE name ='" + name + "'"
             connection.query(query, function (err, result) {
                 if (err) console.log(err);
                 if (result) {
@@ -142,7 +111,7 @@ const player_handler = {
                 if (result[0] != undefined) {
                     console.log(xp + "XP will be add to " + name)
                     var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name+ "'"
+                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name + "'"
                     connection.query(query, function (err, result) {
                         if (err) throw err;
                         else {
