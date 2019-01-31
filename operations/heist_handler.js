@@ -14,11 +14,10 @@ const heist_handler = {
             else {
                 player.drugs = player.drugs-amount
                 query = "UPDATE `character` SET drugs="+player.drugs+" WHERE name='"+player.name +"'"
-                connection.query(query, function (err, result) {
+                db.query(query, function (err, result) {
                     if (err) throw err;
                     else {
                         console.log("Upgraded heist invest : for : " + player.character_id)
-                        connection.release();
                         cb('success')
                     }
                 })
