@@ -11,7 +11,7 @@ const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 var client = new Client('https://api.steemit.com')
 
 const io = require('socket.io-client');
-var socket = new io.connect('https://drugwarsws.herokuapp.com/');
+var socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
 app.listen(port, () => console.log(`Listening on ${port}`));
 
