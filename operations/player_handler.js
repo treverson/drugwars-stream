@@ -52,9 +52,8 @@ const player_handler = {
         });
     },
     updateGetPlayer: function (name, cb) {
-        pool.getConnection(function (err, connection) {
             var query = "SELECT * FROM `character` WHERE name ='" + name + "'"
-            connection.query(query, function (err, result) {
+            db.query(query, function (err, result) {
                 if (err) console.log(err);
                 if (result) {
                     player = result[0]
@@ -64,7 +63,7 @@ const player_handler = {
                     var drug_balance = player.drugs + Number(parseFloat((differenceprod / 1000) * player.drug_production_rate).toFixed(2))
                     var weapon_balance = player.weapons + Number(parseFloat((differenceprod / 1000) * player.weapon_production_rate).toFixed(0))
                     var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  name='${name}'`
-                    connection.query(query, function (err, result) {
+                    db.query(query, function (err, result) {
                         if (err) throw err;
                         else {
                             player.drugs = drug_balance
@@ -76,7 +75,6 @@ const player_handler = {
                     })
                 }
             });
-        });
     },
     updateProductionRate: function (name, type, rate, cb) {
         var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name='${name}'`
