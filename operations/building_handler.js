@@ -27,8 +27,6 @@ const building_handler = {
                     building_last_update = now
                 }
                 //CHECK LAST UPDATE
-                var now = new Date();
-                console.log(building_last_update,now)
                 if (building_last_update <= now) {
                     var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                     console.log(timer)
