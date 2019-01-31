@@ -65,13 +65,14 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-
                 player.updateGetPlayer(json.username, function (player) {
                     if (player)
                         building.AddLevelToPlayerBuilding(player, json.building, function (result) {
                             if (result)
-                                console.log(result)
-                                socket.emit('refresh', json.username)
+                                player.addXpToCharacter(json.username,1,function(result){
+                                    if(result)
+                                    socket.emit('refresh', json.username)
+                                })
                         })
                 })
             }
