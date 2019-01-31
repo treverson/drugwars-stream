@@ -21,7 +21,7 @@ const building_handler = {
                 if (hq_level < building_level) {
                     cb('hq level to low')
                 }
-                if (character_buildings[0]['building_' + building_id + '_last_update'] !=null)
+                if (character_buildings[0]['building_' + building_id + '_last_update'] != null)
                     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
                 else {
                     building_last_update = now
@@ -44,11 +44,12 @@ const building_handler = {
                     if (amount != null) {
                         utils.costToSteem(cost, function (result) {
                             if (result)
-                                console.log(result)
-                            building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
-                                if (result)
-                                    console.log(result)
-                            })
+                                if (result > amount - (amount * 5 / 100))
+                                    building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                                        if (result)
+                                            console.log(result)
+                                    })
+                                    else cb('you must send more steem the difference was :' + (result - amount) )
                         })
                     }
                 }
