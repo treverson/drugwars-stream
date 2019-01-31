@@ -16,6 +16,7 @@ const utils = {
 
                         }
                         var price=(int/10000)*ticker[0].price_usd
+                        console.log(price)
                         cb(price)
                     }
                 } else {

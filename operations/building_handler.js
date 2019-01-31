@@ -82,7 +82,6 @@ const building_handler = {
     },
     calculateTime: function (hq_level, building_level, current_building) {
         return (current_building.building_coeff * 400) * (building_level ^ 2 / hq_level)
-
     },
     calculateCost: function (building_level, current_building) {
         return (current_building.building_base_price * (building_level * current_building.building_coeff))
