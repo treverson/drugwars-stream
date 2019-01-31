@@ -15,7 +15,8 @@ const utils = {
                         catch (e) {
 
                         }
-                        cb((int/10000)*ticker[0].price_usd)
+                        var price=(int/10000)*ticker[0].price_usd
+                        cb(price)
                     }
                 } else {
                     console.log("Error: API not responding!");

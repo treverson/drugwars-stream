@@ -46,6 +46,7 @@ const player_handler = {
             if (err) console.log(err);
             if (result) {
                 player = result[0]
+                console.log(player)
                 var now = new Date()
                 var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                 var differenceprod = now.getTime() - player.last_update.getTime()
