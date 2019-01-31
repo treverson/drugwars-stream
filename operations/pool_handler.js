@@ -40,7 +40,7 @@ const pool_handler = {
         client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
             function (result) {
                 console.log(
-                    'refund :' + transfer,
+                    'refund for ' + reason + transfer,
                     'included in block: ' + result.block_num,
                 );
                 cb(true)

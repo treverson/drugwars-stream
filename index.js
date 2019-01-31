@@ -101,7 +101,7 @@ stream.on("data", function (block) {
                 player.getUpdateCharacter(op.from, function (player) {
                     if (player) {
                         building_id = Number(op.memo.split(':')[1])
-                        console.log(op)
+                        //console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
                             building.updateBuilding(player, building_id, op.amount, function (result) {
                                 if (result === "success") {
@@ -112,7 +112,7 @@ stream.on("data", function (block) {
                                             console.log(result)
                                     })
                                 } else {
-                                    var reason = "couldnt not upgrade building"
+                                    var reason = "couldnt not upgrade building" + result
                                     pool.refund(op,reason, function (result) {
                                         if (result)
                                             console.log(result)
