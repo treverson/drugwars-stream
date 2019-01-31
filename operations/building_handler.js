@@ -24,7 +24,6 @@ const building_handler = {
                     console.log('hq level ' + hq_level)
                     console.log('building level ' + building_level)
                     console.log('building last update ' + building_last_update)
-                    console.log(buildings)
                     var timer = building_handler.calculateTime(hq_level,building_id,building_level,buildings)
                     console.log(timer)
                     var cost  = building_handler.calculateCost()
@@ -118,7 +117,7 @@ const building_handler = {
         })
     },
     calculateTime:function(hq_level,building_id,building_level,buildings){
-        var current_building = buildings[0].filter(function(item) { return item.building_id === building_id; });
+        var current_building = buildings.filter(function(item) { return item.building_id === building_id; });
         console.log(current_building)
         return (buildings[building_id].building_coeff * 400) * ((building_level)^2/hq_level)
 
