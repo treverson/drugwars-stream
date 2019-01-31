@@ -4,8 +4,7 @@ const player_handler = {
     checkIfExist: function (username, cb) {
         let query = "SELECT * FROM `character` WHERE name = ?";
         db.query(query, [username], function (err, result) {
-            if (err || !result || !result[0])
-            {
+            if (err || !result || !result[0]) {
                 console.log(username + ' doesnt exist')
                 return cb(null);
             }
@@ -16,13 +15,11 @@ const player_handler = {
         let query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "'); \n\
                      INSERT INTO character_buildings (name) VALUES ('" + player + "')"
         db.query(query, function (err, result) {
-            if (err || !result || !result[0])
-            {
+            if (err || !result || !result[0]) {
                 console.log('coudlnt create a character for username ' + player)
                 return cb(true);
             }
-            else
-            {
+            else {
                 console.log("User : " + player + " is now ready to play")
                 cb(null)
             }
@@ -82,41 +79,39 @@ const player_handler = {
         });
     },
     updateProductionRate: function (name, type, rate, cb) {
-        pool.getConnection(function (err, connection) {
-            var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name='${name}'`
-            connection.query(query, function (err, result) {
-                if (err) throw err;
-                else {
-                    console.log("Updated character " + player + 'production rate')
-                    connection.release();
-                    cb(true)
-                }
-            })
-        });
+        var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name='${name}'`
+        db.query(query, function (err, result) {
+            if (err) {
+                console.log(error)
+                cb(null)
+            }
+            else {
+                console.log("Updated character " + player + 'production rate')
+                cb(true)
+            }
+        })
     },
     removeDrugs: function (name, building_id, cb) {
-        pool.getConnection(function (err, connection) {
-            var query = "SELECT * FROM `character` WHERE name = '" + name + "'"
-            connection.query(query, function (err, result) {
-                if (err) throw err;
-                if (result[0] != undefined) {
-                    console.log(xp + "XP will be add to " + name)
-                    var character_new_xp = result[0].xp + xp
-                    var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name + "'"
-                    connection.query(query, function (err, result) {
-                        if (err) throw err;
-                        else {
-                            console.log(xp + "XP added to character" + name)
-                            connection.release();
-                            cb(true)
-                        }
-                    })
-                }
-                else {
-                    console.log("User : " + player + " isnt recorded");
-                    cb(null)
-                }
-            });
+        var query = "SELECT * FROM `character` WHERE name = '" + name + "'"
+        db.query(query, function (err, result) {
+            if (err) throw err;
+            if (result[0] != undefined) {
+                console.log(xp + "XP will be add to " + name)
+                var character_new_xp = result[0].xp + xp
+                var query = "UPDATE character SET xp=" + character_new_xp + " WHERE  name='" + name + "'"
+                connection.query(query, function (err, result) {
+                    if (err) throw err;
+                    else {
+                        console.log(xp + "XP added to character" + name)
+                        connection.release();
+                        cb(true)
+                    }
+                })
+            }
+            else {
+                console.log("User : " + player + " isnt recorded");
+                cb(null)
+            }
         });
     }
 }
