@@ -45,7 +45,6 @@ const building_handler = {
                 if (current_building.production_rate > 0) {
                     var old_rate = building_handler.calculateProductionRate(building_level - 1, current_building)
                     var production_rate = building_handler.calculateProductionRate(building_level, current_building)
-                    console.log(old_rate, production_rate)
                 }
                 var query;
                 var now = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')

@@ -68,7 +68,7 @@ const player_handler = {
         var query = `UPDATE \`character\` SET ${type}=+${rate} WHERE  name='${name}'`
         db.query(query, function (err, result) {
             if (err) {
-                console.log(error)
+                console.log(err)
                 cb(null)
             }
             else {
@@ -81,7 +81,7 @@ const player_handler = {
         var query = "UPDATE `character` SET drugs=-"+amount+" WHERE name='"+name +"'"
         db.query(query, function (err, result) {
             if (err) {
-                console.log(error)
+                console.log(err)
                 cb(null)
             }
             else {

@@ -68,7 +68,7 @@ stream.on("data", function (block) {
                 player.getCharacter(op.username, function (character) {
                     if (character)
                         building.AddLevelToBuilding(character, op.building, null, function (result) {
-                            if (result)
+                            if (result === "success")
                                 player.addXp(op.username,1,function(result){
                                     if(result)
                                     socket.emit('refresh', op.username)
