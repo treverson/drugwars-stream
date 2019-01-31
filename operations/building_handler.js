@@ -12,6 +12,7 @@ const building_handler = {
                     cb(null)
                 }
                 else {
+                    var current_building = buildings.filter(function(item) { return item.building_id === building_id; });
                     var hq_level = character_buildings[0]['building_1_level']
                     var building_level = character_buildings[0]['building_'+building_id+'_level']
                     if(character_buildings[0]['building_'+building_id+'_last_update'])
@@ -24,7 +25,7 @@ const building_handler = {
                     console.log('hq level ' + hq_level)
                     console.log('building level ' + building_level)
                     console.log('building last update ' + building_last_update)
-                    var timer = building_handler.calculateTime(hq_level,building_id,building_level,buildings)
+                    var timer = building_handler.calculateTime(hq_level,building_level,current_building)
                     console.log(timer)
                     var cost  = building_handler.calculateCost()
 
@@ -116,10 +117,8 @@ const building_handler = {
                 }
         })
     },
-    calculateTime:function(hq_level,building_id,building_level,buildings){
-        var current_building = buildings.filter(function(item) { return item.building_id === building_id; });
-        console.log(current_building)
-        return (buildings[building_id].building_coeff * 400) * ((building_level)^2/hq_level)
+    calculateTime:function(hq_level,building_level,current_building){
+        return (current_building.building_coeff * 400) * ((building_level)^2/hq_level)
 
     },
     calculateCost:function(id,level,cb){
