@@ -18,7 +18,7 @@ const pool_handler = {
             function (result) {
                 console.log(
                     'sent:' + transfer,
-                    'included in block: ' + result.block_num,
+                    'to pool included in block: ' + result.block_num,
                 );
                 cb(true)
             },
@@ -40,7 +40,7 @@ const pool_handler = {
         client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
             function (result) {
                 console.log(
-                    'sent:' + transfer,
+                    'refund :' + transfer,
                     'included in block: ' + result.block_num,
                 );
                 cb(true)
