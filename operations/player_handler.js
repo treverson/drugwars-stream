@@ -13,29 +13,21 @@ const player_handler = {
         });
     },
     createNewPlayer: function (player, icon, referrer, cb) {
-        //INSERT USER 
-        pool.getConnection(function (err, connection) {
-            console.log("User : " + player + " will get his character");
-            //INSERT USER CHARACTER
-            var query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "')"
-            connection.query(query, function (err, result) {
-                if (err) console.log(err);
-                else {
-                    //INSERT USER BUILDINGS
-                    var query = "INSERT INTO character_buildings (name) VALUES ('" + player + "')"
-                    connection.query(query, function (err, result) {
-                        if (err) console.log(err);
-                        else {
-                            console.log("User : " + player + " is now ready to play")
-                            connection.release();
-                            cb(null)
-                        }
-                    })
+        let query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "'); \n\
+                     INSERT INTO character_buildings (name) VALUES ('" + player + "')"
+        db.query(query, function (err, result) {
+            if (err || !result || !result[0])
+            {
+                console.log('coudlnt create a character for username ' + player)
+                return cb(true);
+            }
+            else
+            {
+                console.log("User : " + player + " is now ready to play")
+                cb(null)
+            }
 
-                }
-            })
-
-        })
+        });
     },
     addXpToCharacter: function (name, xp, cb) {
         pool.getConnection(function (err, connection) {
