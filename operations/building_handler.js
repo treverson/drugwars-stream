@@ -13,7 +13,6 @@ const building_handler = {
             }
             else {
                 var now = new Date();
-                now = new Date(now.toISOString())
                 var current_building = buildings.filter(function (item) { return item.building_id === building_id; });
                 var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
