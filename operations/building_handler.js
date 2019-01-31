@@ -52,7 +52,7 @@ const building_handler = {
 
                 console.log('next update' + building.last_update)
                 var query;
-                if (ptype === 'weapons') {
+                if (ptype === 'weapon') {
                     if (prod_rate)
                         character.weapon_production_rate = (character.weapon_production_rate - old_prod_rate) + prod_rate
                     character.drugs = character.drugs - cost
