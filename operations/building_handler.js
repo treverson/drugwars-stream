@@ -32,10 +32,10 @@ const building_handler = {
                     console.log(timer)
                     var cost = building_handler.calculateCost(building_level, current_building)
                     //CHECK DRUGS COST BALANCE
-                    if (cost > character.drugs && amount === null) {
+                    if (cost > character.drugs && !amount) {
                         return cb('not enough drugs')
                     }
-                    if (cost < character.drugs && amount === null) {
+                    if (cost < character.drugs && !amount) {
                         building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                             if (result)
                             cb(result)
@@ -48,7 +48,7 @@ const building_handler = {
                                 if (result < (amount - (amount * 5 / 100)))
                                 {
                                     cost = 0
-                                    timer = 10000
+                                    timer = 1
                                     building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                                         if (result)
                                             cb(result)
