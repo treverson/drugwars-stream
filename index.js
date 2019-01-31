@@ -72,6 +72,7 @@ stream.on("data", function (block) {
                         building.AddLevelToPlayerBuilding(player, json.building, function (result) {
                             if (result)
                                 console.log(result)
+                                socket.emit('refresh', json.username)
                         })
                 })
             }
@@ -87,6 +88,7 @@ stream.on("data", function (block) {
                         heist.addToPool(player, Number(json.amount), function (result) {
                             if (result)
                                 console.log(result)
+                                socket.emit('refresh', json.username)
                         })
                     }
                 })
@@ -102,6 +104,7 @@ stream.on("data", function (block) {
                             building.AddLevelToPlayerBuildingSteem(player, building_id, json.amount, function (result) {
                                 if (result)
                                     console.log(result)
+                                    socket.emit('refresh', json.from)
                                 if (result === "success") {
                                     var amount = json.amount.split(' ')[0]
                                     amount = (amount / 100) * 89
@@ -123,6 +126,7 @@ stream.on("data", function (block) {
                                             console.error(error);
                                         }
                                     )
+                                    
                                 }
                             })
                         }
