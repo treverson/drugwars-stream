@@ -127,6 +127,12 @@ const building_handler = {
                 }
         })
     },
+    calculateTime:function(id,level,cb){
+
+    },
+    calculateCost:function(id,level,cb){
+
+    },
     AddLevelToPlayerBuildingSteem:function (player, building_id, amount, cb) {
         // dbConnection.getConnection(function (err, connection) {
         //     var query = `SELECT * FROM character_buildings WHERE name=${player.name}`
