@@ -45,12 +45,12 @@ const building_handler = {
                         amount = amount.split(' ')[0]
                         utils.costToSteem(cost, function (result) {
                             if (result)
-                                if (result > amount - (amount * 5 / 100))
+                                if (result < (amount - (amount * 5 / 100)))
                                     building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                                         if (result)
                                             console.log(result)
                                     })
-                                    else cb('you must send more steem the difference was :' + (result - amount) )
+                                    else cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
                         })
                     }
                 }
