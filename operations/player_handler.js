@@ -43,13 +43,12 @@ const player_handler = {
     getUpdateCharacter: function (name, cb) {
         var query = "SELECT * FROM `character` WHERE name ='" + name + "'"
         db.query(query, function (err, result) {
-            if (err || !result[0]){
+            if (err || !result || !result[0] || result[0] === null){
                 console.log(err);
                 cb(null)
             } 
-            if (result) {
+            else{
                 player = result[0]
-                console.log(player)
                 var now = new Date()
                 var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                 var differenceprod = now.getTime() - player.last_update.getTime()
