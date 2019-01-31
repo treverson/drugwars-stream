@@ -1,7 +1,7 @@
 
 var db = require('../lib/db');
 var player = require('./player_handler')
-
+var utils = require('../utils/utils')
 const building_handler = {
     AddLevelToBuilding: function (character, building_id, amount, cb) {
         var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
@@ -31,38 +31,47 @@ const building_handler = {
                 if (building_last_update > now) {
                     cb('need to wait')
                 }
-                // console.log('hq level ' + hq_level)
-                // console.log('building level ' + building_level)
-                // console.log('building last update ' + building_last_update)
                 var timer = building_handler.calculateTime(hq_level, building_level, current_building)
                 console.log(timer)
                 var cost = building_handler.calculateCost(building_level, current_building)
-                console.log(cost)
+                console.log(utils.costToSteem(cost))
                 //CHECK DRUGS COST BALANCE
-                if (cost > character.drugs) {
+                if (cost > character.drugs && amount === null) {
                     return cb('not enough drugs')
                 }
+                else if (amount< utils.costToSteem(cost))
+                {
+                    return cb('not enough steem')
+                }
+                var query;
+                var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
                 if (current_building.production_rate > 0) {
                     var old_rate = building_handler.calculateProductionRate(building_level - 1, current_building)
                     var production_rate = building_handler.calculateProductionRate(building_level, current_building)
+                    if (current_building.production_type === 'weapon') {
+                        character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
+                        character.drugs = character.drugs - cost
+                        query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
+                        UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+                    }
+                    else {
+                        character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
+                        character.drugs = character.drugs - cost
+                        query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
+                        UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+                    }
                 }
-                var query;
-                var now = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-                if (current_building.production_type === 'weapon') {
-                    character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
+                else{
                     character.drugs = character.drugs - cost
-                    query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
-                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
-                }
-                else {
-                    character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
-                    character.drugs = character.drugs - cost
-                    query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + now + "'  WHERE name='" + character.name + "'";
-                }
+                    query = "UPDATE `character` SET drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
+                    UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+                }              
                 db.query(query, function (err, result) {
-                    if (err) cb(err);
-
+                    if (err) 
+                    {
+                        console.log(result)
+                        cb(err);
+                    }
                     else {
                         console.log("Upgraded character building :" + building_id + " for : " + character.name)
                         cb('success')
@@ -72,7 +81,6 @@ const building_handler = {
         })
     },
     calculateTime: function (hq_level, building_level, current_building) {
-        console.log(current_building)
         return (current_building.building_coeff * 400) * (building_level ^ 2 / hq_level)
 
     },

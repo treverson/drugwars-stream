@@ -65,7 +65,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.getCharacter(op.username, function (character) {
+                player.getUpdateCharacter(op.username, function (character) {
                     if (character)
                         building.AddLevelToBuilding(character, op.building, null, function (result) {
                             if (result === "success")
@@ -82,7 +82,7 @@ stream.on("data", function (block) {
                 } catch (error) {
                     console.log(error)
                 }
-                player.getCharacter(op.username, function (character) {
+                player.getUpdateCharacter(op.username, function (character) {
                     if (character) {
                         heist.addToPool(character, Number(op.amount), function (result) {
                             if (result)
@@ -94,7 +94,7 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
                 var op = object[i].operations[0][1]
-                player.getCharacter(op.from, function (player) {
+                player.getUpdateCharacter(op.from, function (player) {
                     if (player) {
                         building_id = Number(op.memo.split(':')[1])
                         console.log(op)
