@@ -83,9 +83,9 @@ stream.on("data", function (block) {
                     console.log(error)
                 }
 
-                player.updateGetPlayer(json.username, function (player) {
-                    if (player) {
-                        heist.addToPool(player, Number(json.amount), function (result) {
+                player.updateGetPlayer(json.username, function (character) {
+                    if (character) {
+                        heist.addToPool(character, Number(json.amount), function (result) {
                             if (result)
                                 console.log(result)
                                 socket.emit('refresh', json.username)
