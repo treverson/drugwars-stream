@@ -5,6 +5,7 @@ var battle = require('./operations/battle_handler')
 var player = require('./operations/player_handler')
 var shop = require('./operations/shop_handler')
 var building = require('./operations/building_handler')
+var unit = require('./operations/unit_handler')
 var heist = require('./operations/heist_handler')
 var pool = require('./operations/pool_handler')
 const { Client, BlockchainMode, PrivateKey } = require('dsteem');
@@ -78,6 +79,28 @@ stream.on("data", function (block) {
                             else console.log(result)
  
                         })
+                })
+            }
+            if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-unit") {
+                try {
+                    var op = JSON.parse(object[i].operations[0][1].json)
+                } catch (error) {
+                    console.log(error)
+                }
+                player.getUpdateCharacter(op.username, function (character) {
+                    if (character)
+                    console.log(op)
+                        // unit.tryAddUnit(character, op.building, null, function (result) {
+                        //     if (result === "success")
+                        //     {
+                        //         player.addXp(op.username, 5, function (result) {
+                        //             if (result)
+                        //                 socket.emit('refresh', op.username)
+                        //         })
+                        //     }
+                        //     else console.log(result)
+ 
+                        // })
                 })
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-heist") {
