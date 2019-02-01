@@ -75,7 +75,7 @@ const player_handler = {
                                       character.drugs = drug_balance
                                       character.weapons = weapon_balance
                                       console.log("character - Updated character " + character.name + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
-                                      cb(player)
+                                      cb(character)
                                   }
                               })
                           }
