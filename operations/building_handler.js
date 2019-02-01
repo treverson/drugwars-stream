@@ -18,8 +18,8 @@ const building_handler = {
                 var hq_level = character_buildings[0]['building_1_level']
                 var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
                 //CHECK HEADQUARTER LEVEL
-                if (hq_level < building_level) {
-                    cb('hq level to low')
+                if (hq_level < building_level && building_id !=1) {
+                    return cb('hq level to low')
                 }
                 if (character_buildings[0]['building_' + building_id + '_last_update'] != null)
                     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
@@ -38,7 +38,7 @@ const building_handler = {
                     if (cost < character.drugs && !amount) {
                         building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                             if (result)
-                            cb(result)
+                            return cb(result)
                         })
                     }
                     if (amount != null) {
@@ -51,15 +51,15 @@ const building_handler = {
                                     timer = 1
                                     building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
                                         if (result)
-                                            cb(result)
+                                        return cb(result)
                                     })
                                 }
-                                    else cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
+                                    else return cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
                         })
                     }
                 }
                 else {
-                    cb('need to wait')
+                    return cb('need to wait')
                 }
 
 
