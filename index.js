@@ -98,12 +98,12 @@ stream.on("data", function (block) {
             }
             if (object[i].operations[0][0] === "transfer" && object[i].operations[0][1].to === "drugwars-dealer") {
                 var op = object[i].operations[0][1]
-                player.getUpdateCharacter(op.from, function (player) {
-                    if (player) {
+                player.getUpdateCharacter(op.from, function (character) {
+                    if (character) {
                         building_id = Number(op.memo.split(':')[1])
                         //console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
-                            building.updateBuilding(player, building_id, op.amount, function (result) {
+                            building.updateBuilding(character, building_id, op.amount, function (result) {
                                 if (result === "success") {
                                     player.addXp(op.from, 5, function (result) {
                                         if (result)
