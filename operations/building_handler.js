@@ -42,9 +42,10 @@ const building_handler = {
                         })
                     }
                     if (amount != null) {
-                        amount = amount.split(' ')[0]
+                        amount = parseFloat(amount.split(' ')[0]).toFixed(3)
                         utils.costToSteem(cost, function (result) {
                             if (result)
+                            console.log('converted ' + result)
                                 if (result < (amount - ((amount / 100)*5)))
                                 {
                                     cost = 0
