@@ -46,6 +46,7 @@ const building_handler = {
                         utils.costToSteem(cost, function (result) {
                             if (result)
                             console.log('converted ' + result)
+                            console.log('am ' + amount)
                                 if (result < (amount - ((amount / 100)*5)))
                                 {
                                     cost = 0
