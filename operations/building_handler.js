@@ -45,7 +45,7 @@ const building_handler = {
                         amount = amount.split(' ')[0]
                         utils.costToSteem(cost, function (result) {
                             if (result)
-                                if (result < (amount - (amount * 5 / 100)))
+                                if (result < (amount - ((amount / 100)*5)))
                                 {
                                     cost = 0
                                     timer = 1
