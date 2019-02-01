@@ -56,19 +56,17 @@ const player_handler = {
                               console.log(err);
                               cb(null);
                           } else {
-                              console.log(result)
-                              const buildings = result.buildings
-                              const heist = result.heist
+                              const buildings = result[0]
                               var now = new Date()
                               var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                               var differenceprod = now.getTime() - character.last_update.getTime()
                               var drug_balance = character.drugs + Number(parseFloat((differenceprod / 1000) * character.drug_production_rate).toFixed(2))
                               var weapon_balance = character.weapons + Number(parseFloat((differenceprod / 1000) * character.weapon_production_rate).toFixed(0))
-                              console.log(buildings.building_4_level)
                               if(buildings.building_4_level > 0)
                               {
                                 drug_balance = drug_balance + (drug_balance*(buildings.building_4_level/200))
                                 weapon_balance = weapon_balance + (weapon_balance*(buildings.building_4_level/200))
+                                console.log('applied bonus %' + (buildings.building_4_level/200))
                               }
                               var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  name='${name}'`
                               db.query(query, function (err, result) {
