@@ -70,7 +70,7 @@ stream.on("data", function (block) {
                         building.updateBuilding(character, op.building, null, function (result) {
                             if (result === "success")
                             {
-                                player.addXp(op.username, 1, function (result) {
+                                player.addXp(op.username, 5, function (result) {
                                     if (result)
                                         socket.emit('refresh', op.username)
                                 })
@@ -105,6 +105,10 @@ stream.on("data", function (block) {
                         if (op.memo.split(':')[0] === "upgrade") {
                             building.updateBuilding(player, building_id, op.amount, function (result) {
                                 if (result === "success") {
+                                    player.addXp(op.from, 5, function (result) {
+                                        if (result)
+                                            socket.emit('refresh', op.username)
+                                    })
                                     console.log(result)
                                     socket.emit('refresh', op.from)
                                     pool.send(op, function (result) {
