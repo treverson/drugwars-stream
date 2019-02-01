@@ -15,7 +15,7 @@ const utils = {
                         catch (e) {
 
                         }
-                        var price=parseFloat((int/10000)/ticker[0].price_usd).toFixed(3)
+                        var price=parseFloat((int/100000)/ticker[0].price_usd).toFixed(3)
                         cb(price)
                     }
                 } else {
