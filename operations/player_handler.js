@@ -56,7 +56,9 @@ const player_handler = {
                               console.log(err);
                               cb(null);
                           } else {
-                              const [[buildings], [heist]] = result;
+                              console.log(result)
+                              const buildings = result.buildings
+                              const heist = result.heist
                               var now = new Date()
                               var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                               var differenceprod = now.getTime() - character.last_update.getTime()
