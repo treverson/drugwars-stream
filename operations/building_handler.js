@@ -45,9 +45,7 @@ const building_handler = {
                         amount = parseFloat(amount.split(' ')[0]).toFixed(3)
                         utils.costToSteem(cost, function (result) {
                             if (result)
-                            console.log('converted ' + result)
-                            console.log('am ' + amount)
-                                if (result <= amount || result <= (amount - ((amount / 100)*5)))
+                                if (result <= amount || result - ((result / 100)*5) <= amount )
                                 {
                                     cost = 0
                                     timer = 1
