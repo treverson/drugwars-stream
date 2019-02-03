@@ -19,10 +19,7 @@ const unit_handler = {
             }
             else {
                 var now = new Date();
-                console.log(unit_id, unit_amount)
-                console.log(units.filter(function (item) { return item.id = unit_id; })[0])
-                var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
-                console.log(current_unit)
+                var current_unit = units.filter(function (item) { return item.id = unit_id; })[0];
                 var training_facility_level = character_buildings[0]['building_3_level']
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
@@ -32,6 +29,7 @@ const unit_handler = {
                 else {
                     var unit_last_update = now
                 }
+                console.log(unit_last_update)
                 //CHECK LAST UPDATE
                 if (unit_last_update <= now) {
                     var timer = unit_handler.calculateTime(training_facility_level, unit_amount, current_unit)
