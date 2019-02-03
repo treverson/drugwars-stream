@@ -21,10 +21,16 @@ const building_handler = {
                 var now = new Date();
                 var character_buildings = JSON.parse(JSON.stringify(character_buildings))
                 var building_placeholder = buildings.filter(function (item) { return item.id === building_id; })[0]
-                var current_building = character_buildings.filter(function (item) { return item.name === building_id; })
-                var hq_level = character_buildings.filter(function (item) { return item.name === "headquarters"; });
 
-                console.log(building_placeholder,current_building,hq_level)
+                var hq_level = character_buildings.filter(function (item) { return item.name === "headquarters"; });
+                var crack = character_buildings.filter(function (item) { return item.name === "crackhouse"; });
+                if(character_buildings.filter(function (item) { return item.name === building_id; }))
+                var current_building = character_buildings.filter(function (item) { return item.name === building_id; })
+                else{
+                    current_building = "brraa"
+                }
+
+                console.log(building_placeholder,current_building,hq_level,crack)
                 var building_level = building_placeholder.level + 1
                 //CHECK HEADQUARTER LEVEL
                 if (hq_level < building_placeholder.level && building_id != "headquarters") {
