@@ -24,7 +24,7 @@ const building_handler = {
                 var headquarters = character_buildings.filter(function (item) { return item.name === "headquarters"})[0]
                 //CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
                 var character_buildings = JSON.parse(JSON.stringify(character_buildings))
-                if(character_buildings.filter(function (item) { return item.name === building_name; }))
+                if(character_buildings.filter(function (item) { return item.name === building_name; })[0])
                 {
                     var building = character_buildings.filter(function (item) { return item.name === building_name})
                     var next_update = building[0].next_update
