@@ -30,7 +30,7 @@ const building_handler = {
                     current_building = "brraa"
                 }
 
-                console.log(building_placeholder,current_building,hq_level,crack)
+                console.log(building_placeholder,current_building,hq_level,crack[0].name)
                 var building_level = building_placeholder.level + 1
                 //CHECK HEADQUARTER LEVEL
                 if (hq_level < building_placeholder.level && building_id != "headquarters") {
