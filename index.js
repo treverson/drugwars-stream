@@ -89,7 +89,15 @@ stream.on("data", function (block) {
                 }
                 player.getUpdateCharacter(op.username, function (character) {
                     if (character)
-                    console.log(op)
+                    {
+                        if(!op.unit || !op.unit_amount || op.unit_amount<1)
+                        {
+                            var reason = "cant buy 0 unit"
+                            pool.refund(op,reason, function (result) {
+                                if (result)
+                                    console.log(result)
+                            })
+                        }
                         unit.tryAddUnit(character, op.unit, op.unit_amount, null, function (result) {
                             if (result === "success")
                             {
@@ -101,6 +109,7 @@ stream.on("data", function (block) {
                             else console.log(result)
  
                         })
+                    }
                 })
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-heist") {
@@ -150,6 +159,15 @@ stream.on("data", function (block) {
                         else if (op.memo.split(':')[0] === "unit") {
                             op.unit = Number(op.memo.split(',')[0].split(':')[1])
                             op.unit_amount = Number(op.memo.split(',')[1].split(':')[1])
+                            if(!op.unit || !op.unit_amount || op.unit_amount<1)
+                            {
+                                var reason = "cant buy 0 unit"
+                                pool.refund(op,reason, function (result) {
+                                    if (result)
+                                        console.log(result)
+                                })
+                            }
+                            else
                             unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, function (result) {
                                 if (result === "success") {
                                     player.addXp(op.from, 5, function (result) {
