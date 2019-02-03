@@ -20,7 +20,7 @@ const unit_handler = {
             else {
                 var now = new Date();
                 console.log(unit_id, unit_amount)
-                console.log(units.filter(function (item) { return item.id === unit_id; }))
+                console.log(units.filter(function (item) { return item.id = unit_id; })[0])
                 var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
                 console.log(current_unit)
                 var training_facility_level = character_buildings[0]['building_3_level']
@@ -30,7 +30,7 @@ const unit_handler = {
                 if (character_units['unit_' + unit_id + '_last_update'] != null)
                     var unit_last_update = character_units['unit_' + unit_id + '_last_update']
                 else {
-                    unit_last_update = now
+                    var unit_last_update = now
                 }
                 //CHECK LAST UPDATE
                 if (unit_last_update <= now) {
