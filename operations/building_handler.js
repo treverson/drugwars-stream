@@ -84,11 +84,14 @@ const building_handler = {
         return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
     confirmBuildingUpdate: function (user, now, building_level, building_id, timer, building_placeholder, cost, cb) {
+        console.log(user, now, building_level, building_id, timer, building_placeholder, cost)
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
+        //IF PRODUCE WEAPON OR DRUGS
         if (building_placeholder.production_rate > 0) {
             var old_rate = building_handler.calculateProductionRate(building_level - 1, building_placeholder)
             var production_rate = building_handler.calculateProductionRate(building_level, building_placeholder)
+             //IF PRODUCE WEAPON
             if (building_placeholder.production_type === 'weapon') {
                 user.weapon_production_rate = (user.weapon_production_rate - old_rate) + production_rate
                 user.drugs = user.drugs - cost
@@ -104,6 +107,7 @@ const building_handler = {
                 ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
             }
         }
+        //IF DOESNT PRODUCE ANYTHING
         else {
             user.drugs = user.drugs - cost
             query = `UPDATE users SET drugs=${user.drugs} WHERE username='${user.username}'; \n\
