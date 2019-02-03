@@ -147,6 +147,30 @@ stream.on("data", function (block) {
                                 }
                             })
                         }
+                        else if (op.memo.split(':')[0] === "unit") {
+                            op.unit = op.memo.split(':')[1]
+                            op.unit_amount = op.memo.split(':')[4]
+                            unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, function (result) {
+                                if (result === "success") {
+                                    player.addXp(op.from, 5, function (result) {
+                                        if (result)
+                                            socket.emit('refresh', op.username)
+                                    })
+                                    console.log(result)
+                                    socket.emit('refresh', op.from)
+                                    pool.send(op, function (result) {
+                                        if (result)
+                                            console.log(result)
+                                    })
+                                } else {
+                                    var reason = "couldnt not upgrade building " + result
+                                    pool.refund(op,reason, function (result) {
+                                        if (result)
+                                            console.log(result)
+                                    })
+                                }
+                            })
+                        }
                         else {
                             var reason = "feature not enabled"
                             pool.refund(op,reason, function (result) {
