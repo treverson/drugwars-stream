@@ -27,7 +27,7 @@ const building_handler = {
                     char_buildings.push(character_buildings[0][i])
                 }
                 var current_building = current_building[0]
-                var hq_level = char_buildings.filter(function (item) { return item.id === "headquarters"; });
+                var hq_level = char_buildings.filter(function (item) { return item.name === "headquarters"; });
 
                 console.log(hq_level)
                 var building_level = character_buildings['building_' + building_id + '_level'] + 1
