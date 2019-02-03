@@ -26,46 +26,47 @@ const unit_handler = {
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
                 }
-                if (character_buildings[0]['building_' + building_id + '_last_update'] != null)
-                    var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
+                if (character_units[0]['building_' + unit_id + '_last_update'] != null)
+                    var unit_last_update = character_units[0]['unit_' + unit_id + '_last_update']
                 else {
-                    building_last_update = now
+                    unit_last_update = now
                 }
-                // //CHECK LAST UPDATE
-                // if (building_last_update <= now) {
-                //     var timer = unit_handler.calculateTime(hq_level, building_level, current_building)
-                //     console.log(timer)
-                //     var cost = unit_handler.calculateCost(building_level, current_building)
-                //     //CHECK DRUGS COST BALANCE
-                //     if (cost > character.drugs && !amount) {
-                //         return cb('not enough drugs')
-                //     }
-                //     if (cost < character.drugs && !amount) {
-                //         unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
-                //             if (result)
-                //             return cb(result)
-                //         })
-                //     }
-                //     if (amount != null) {
-                //         amount = parseFloat(amount.split(' ')[0]).toFixed(3)
-                //         utils.costToSteem(cost, function (result) {
-                //             if (result)
-                //                 if (result <= amount || result - ((result / 100)*5) <= amount )
-                //                 {
-                //                     cost = 0
-                //                     timer = 1
-                //                     unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
-                //                         if (result)
-                //                         return cb(result)
-                //                     })
-                //                 }
-                //                     else return cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
-                //         })
-                //     }
-                // }
-                // else {
-                //     return cb('need to wait')
-                // }
+                //CHECK LAST UPDATE
+                if (unit_last_update <= now) {
+                    console.log('brabra')
+                    var timer = unit_handler.calculateTime(hq_level, building_level, current_building)
+                    console.log(timer)
+                    var cost = unit_handler.calculateCost(building_level, current_building)
+                    //CHECK DRUGS COST BALANCE
+                    if (cost > character.drugs && !amount) {
+                        return cb('not enough drugs')
+                    }
+                    if (cost < character.drugs && !amount) {
+                        unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                            if (result)
+                            return cb(result)
+                        })
+                    }
+                    if (amount != null) {
+                        amount = parseFloat(amount.split(' ')[0]).toFixed(3)
+                        utils.costToSteem(cost, function (result) {
+                            if (result)
+                                if (result <= amount || result - ((result / 100)*5) <= amount )
+                                {
+                                    cost = 0
+                                    timer = 1
+                                    unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                                        if (result)
+                                        return cb(result)
+                                    })
+                                }
+                                    else return cb('you must send more STEEM the difference was :' + parseFloat(result - amount).toFixed(3) + ' STEEM' )
+                        })
+                    }
+                }
+                else {
+                    return cb('need to wait')
+                }
 
 
             }
