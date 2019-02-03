@@ -8,7 +8,7 @@ const units = []
 for (i = 0; i < gamebase.units[0].length; i++) {
     units.push(gamebase.units[0][i])
 }
-
+console.log(units)
 const unit_handler = {
     tryAddUnit: function (character, unit_id, unit_amount, amount, cb) {
         var query = "SELECT * FROM character_units WHERE name = ?; \n\
@@ -19,7 +19,7 @@ const unit_handler = {
                 cb(null)
             }
             else {
-                console.log(units)
+            
                 console.log(character_units, character_buildings)
                 //return cb('need to wait')
                 // var now = new Date();
