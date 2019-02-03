@@ -72,7 +72,7 @@ const player_handler = {
                                 weapon_balance = weapon_balance + (weapon_balance*(buildings.building_4_level*(0.005)))
                                 console.log('applied bonus %' + (buildings.building_4_level*(0.005)))
                               }
-                              var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  username='${username}'`
+                              var query = `UPDATE users SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  username='${username}'`
                               db.query(query, function (err, result) {
                                   if (err) throw err;
                                   else {
@@ -96,8 +96,8 @@ const player_handler = {
             if (err || !result || !result[0])
                 return cb(null);
             const character = result[0];
-            query = "SELECT * FROM character_buildings WHERE username = ?; \n\
-          SELECT * FROM heist_pool WHERE username = ?";
+            query = "SELECT * FROM buildings WHERE username = ?; \n\
+          SELECT * FROM heist WHERE username = ?";
             db.query(
                 query,
                 [character.username, character.username],
