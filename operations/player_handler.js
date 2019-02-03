@@ -13,10 +13,10 @@ const player_handler = {
     },
     createNew: function (player, icon, referrer, cb) {
         var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-        let query = `INSERT INTO users (username, xp, picture, drugs, drug_production_rate, weapons, weapon_production_rate, last_update, referrer ) VALUES ('${player}', 1,${icon}, 1000, 0.10,1000,0.10,'${now}','${referrer}'); \n\
-                     INSERT INTO buildings (username,name,next_update,level) VALUES ('${player}','headquarters','${now}',1); \n\
-                     INSERT INTO buildings (username,name,next_update,level) VALUES ('${player}','crackhouse','${now}',1); \n\
-                     INSERT INTO buildings (username,name,next_update,level) VALUES ('${player}','ammunition','${now}',1); \n\
+        let query = `INSERT INTO users (username, drugs_balance, drug_production_rate, weapons_balance, weapon_production_rate, last_update, xp, picture, referrer ) VALUES ('${player}', 1000, 0.10, 1000, 0.10,'${now}', 1, ${icon},'${referrer}'); \n\
+                     INSERT INTO users_buildings (username,name,next_update,level) VALUES ('${player}','headquarters','${now}',1); \n\
+                     INSERT INTO users_buildings (username,name,next_update,level) VALUES ('${player}','crackhouse','${now}',1); \n\
+                     INSERT INTO users_buildings (username,name,next_update,level) VALUES ('${player}','ammunition','${now}',1); \n\
                      `
         db.query(query, function (err, result) {
             if (err || !result || !result[0]) {
@@ -52,9 +52,9 @@ const player_handler = {
                 cb(null)
             }
             else {
-                const character = result[0]
-                query = "SELECT * FROM buildings WHERE username = ?";
-                  db.query(query,[character.username],
+                const user = result[0]
+                query = "SELECT * FROM users_buildings WHERE username = ?";
+                  db.query(query,[user.username],
                       function (err, result) {
                           if (err) {
                               console.log(err);
@@ -63,23 +63,23 @@ const player_handler = {
                               const buildings = result[0]
                               var now = new Date()
                               var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
-                              var differenceprod = now.getTime() - character.last_update.getTime()
-                              var drug_balance = character.drugs + Number(parseFloat((differenceprod / 1000) * character.drug_production_rate).toFixed(2))
-                              var weapon_balance = character.weapons + Number(parseFloat((differenceprod / 1000) * character.weapon_production_rate).toFixed(0))
+                              var differenceprod = now.getTime() - user.last_update.getTime()
+                              var drugs_balance = user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2))
+                              var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0))
                               if(buildings.building_4_level > 0)
                               {
-                                drug_balance = drug_balance + (drug_balance*(buildings.building_4_level*(0.005)))
-                                weapon_balance = weapon_balance + (weapon_balance*(buildings.building_4_level*(0.005)))
+                                drugs_balance = drugs_balance + (drugs_balance*(buildings.building_4_level*(0.005)))
+                                weapons_balance = weapons_balance + (weapons_balance*(buildings.building_4_level*(0.005)))
                                 console.log('applied bonus %' + (buildings.building_4_level*(0.005)))
                               }
-                              var query = `UPDATE users SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  username='${username}'`
+                              var query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`
                               db.query(query, function (err, result) {
                                   if (err) throw err;
                                   else {
-                                      character.drugs = drug_balance
-                                      character.weapons = weapon_balance
-                                      console.log("character - Updated character " + character.username + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
-                                      cb(character)
+                                      user.drugs = drugs_balance
+                                      user.weapons = weapons_balance
+                                      console.log("user - Updated user " + user.username + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapons_balance)
+                                      cb(user)
                                   }
                               })
                           }
