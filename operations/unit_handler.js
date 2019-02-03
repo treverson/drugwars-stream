@@ -42,11 +42,10 @@ const unit_handler = {
                         return cb('not enough weapons')
                     }
                     if (cost < character.weapons && !amount) {
-                        // unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
-                        //     if (result)
-                        //     return cb(result)
-                        // })
-                        console.log('gonna buy')
+                        unit_handler.confirmAddUnit(character, now, unit_id, unit_amount, timer, cost, function (result) {
+                            if (result)
+                            return cb(result)
+                        })
                     }
                     if (amount != null) {
                         amount = parseFloat(amount.split(' ')[0]).toFixed(3)
@@ -56,7 +55,7 @@ const unit_handler = {
                                 {
                                     cost = 0
                                     timer = 1
-                                    unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                                    unit_handler.confirmAddUnit(character, now, unit_id, unit_amount, timer, cost, function (result) {
                                         if (result)
                                         return cb(result)
                                     })
@@ -79,37 +78,19 @@ const unit_handler = {
     calculateCost: function (unit_amount, current_unit) {
         return (current_unit.base_price * unit_amount)
     },
-    confirmAddUnit: function (character, now, building_level, building_id, timer, current_building, cost, cb) {
+    confirmAddUnit: function (character, now, unit_id, unit_amount, timer, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-        if (current_building.production_rate > 0) {
-            var old_rate = unit_handler.calculateProductionRate(building_level - 1, current_building)
-            var production_rate = unit_handler.calculateProductionRate(building_level, current_building)
-            if (current_building.production_type === 'weapon') {
-                character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
-                character.drugs = character.drugs - cost
-                query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
-                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
-            }
-            else {
-                character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
-                character.drugs = character.drugs - cost
-                query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
-            }
-        }
-        else {
-            character.drugs = character.drugs - cost
-            query = "UPDATE `character` SET drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-            UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
-        }
+            character.weapons = character.weapons - cost
+            query = "UPDATE `character` SET weapons=" + character.weapons + "  WHERE name='" + character.name + "'; \n\
+            UPDATE character_units SET unit_"+ unit_id + "=+" + unit_amount + ", unit_" + unit_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
         db.query(query, function (err, result) {
             if (err) {
                 console.log(result)
                 cb(err);
             }
             else {
-                console.log("Upgraded character building :" + building_id + " for : " + character.name)
+                console.log("Addd "+ unit_amount +" units :" + unit_id + " for : " + character.name)
                 cb('success')
             }
         })
