@@ -1,0 +1,823 @@
+{
+    "buildings": [
+        {
+            "id": 1,
+            "disabled":false,
+            "type": "main",
+            "score": 6,
+            "image": "office",
+            "name": "Headquarters",
+            "desc": "The headquarters coordinates the development and construction speed of your empire. The higher the level of the office, the quicker the other buildings are developed.",
+            "requirement": [],
+            "base_price":25,
+            "coeff":4
+        },
+        {
+            "id": 3,
+            "disabled":false,
+            "type": "main",
+            "score": 31,
+            "image": "training",
+            "name": "Training Facility",
+            "desc": "Here you can build units to attack your opponents. The time in which each unit will be completed will depend on the type the unit and the level of the facility.",
+            "requirement": [
+                "Office Lvl. 8"
+            ],
+            "base_price":250,
+            "coeff":1.5
+        },
+        {
+            "id": 4,
+            "disabled":false,
+            "type": "main",
+            "score": 78,
+            "image": "operationcenter",
+            "name": "Operation Center",
+            "desc": "This building increases the efficiency of your empire and permits you to get a bonus on all your of income.",
+            "feature": "+0.005% INCOME PER LEVEL",
+            "requirement": [
+                "Office Lvl. 8"
+            ],
+            "base_price":300,
+            "coeff":3
+        },
+        {
+            "id": 5,
+            "disabled":false,
+            "type": "main",
+            "score": 100,
+            "image": "pantheon",
+            "name": "Pantheon",
+            "desc": "The Pantheon does not have any particular function, and shows a sign of wealth, striking jealousy in your opponents.",
+            "requirement": [
+                "Office Lvl. 8"
+            ],
+            "base_price":100,
+            "coeff":1
+        },
+        {
+            "id": 2,
+            "disabled":true,
+            "type": "main",
+            "score": 15,
+            "image": "search",
+            "name": "Research Center",
+            "desc": "The Research Center allows the training of your units in new techniques, giving them more expertise in combat. As with the HQ, higher is the level, faster the skills are developed.",
+            "requirement": [
+                "Office Lvl. 3"
+            ],
+            "base_price":200,
+            "coeff":2
+        },
+
+        {
+            "id": 11,
+            "disabled":false,
+            "type": "drugs",
+            "score": 5,
+            "image": "crackhouse",
+            "name": "Crack House",
+            "desc": "A crack house where your drug dealers produce <span style='color:yellow'>DRUGS</span>... slowly but surely",
+            "requirement": [
+                "Office Lvl. 3"
+            ],
+            "produce_drugs": true,
+            "produce_rate": 0.2,
+            "base_price":200,
+            "coeff":1,
+            "upgrades": [
+                {
+                    "name": "Watcher",
+                    "bonus": "+0.1 base prod"
+                },
+                {
+                    "name": "Watcher",
+                    "bonus": "+25% base prod"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "disabled":false,
+            "type": "drugs",
+            "score": 15,
+            "image": "hydrofarm",
+            "name": "Hydroponic Farm",
+            "desc": "A good solution for producing more <span style='color:yellow'>DRUGS</span> without soil is to use the Hydroculture. ",
+            "requirement": [
+                "Office Lvl. 4"
+            ],
+            "produce_drugs": true,
+            "produce_rate": 0.5,
+            "base_price":800,
+            "coeff":2,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "disabled":false,
+            "type": "drugs",
+            "score": 50,
+            "image": "methlab",
+            "name": "Meth Lab",
+            "desc": "This building contain drug experts which produce <span style='color:yellow'>DRUGS</span> with a comfortable speed.",
+            "requirement": [
+                "Office Lvl. 4"
+            ],
+            "produce_drugs": true,
+            "produce_rate": 1,
+            "base_price":3600,
+            "coeff":3.5,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "disabled":false,
+            "type": "drugs",
+            "score": 75,
+            "image": "cocina",
+            "name": "Cocina",
+            "desc": "We call it 'LaCocina' or 'LaCuisine', it produce more <span style='color:yellow'>DRUGS</span> with a better speed.",
+            "requirement": [
+                "Office Lvl. 5"
+            ],
+            "produce_drugs": true,
+            "produce_rate":2,
+            "base_price":7500,
+            "coeff":7,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "disabled":false,
+            "type": "drugs",
+            "score": 100,
+            "image": "pharmalab",
+            "name": "Pharmaceutical Lab",
+            "desc": "Here you go if you want to produce <span style='color:yellow'>DRUGS</span> massively to take over the DrugWars.",
+            "requirement": [
+                "Office Lvl. 6"
+            ],
+            "produce_drugs": true,
+            "produce_rate": 3,
+            "base_price":15000,
+            "coeff":10,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "disabled":false,
+            "type": "drugs",
+            "score": 50,
+            "image": "drugstorage",
+            "name": "Drug Storage",
+            "desc": "This building help you to stock more <span style='color:yellow'>DRUGS</span> and keep them safe from ennemies. Base 10% + 1% for each level",
+            "requirement": [
+                "Office Lvl. 6"
+            ],
+            "base_price":200,
+            "coeff":2
+        },
+        {
+            "id": 21,
+            "disabled":false,
+            "type": "weapons",
+            "score": 5,
+            "image": "ammunition",
+            "name": "Ammunition Factory",
+            "desc": "This is your first building to produce <span style='color:yellow'>WEAPONS</span>.",
+            "requirement": [
+                "Office Lvl. 4"
+            ],
+            "produce_weapons": true,
+            "produce_rate": 0.1,
+            "base_price":200,
+            "coeff":1,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "disabled":false,
+            "type": "weapons",
+            "score": 15,
+            "image": "weapon",
+            "name": "Weapon Factory",
+            "desc": "Want to produce more <span style='color:yellow'>WEAPONS</span>? The solution may be the weapon factory",
+            "requirement": [
+                "Office Lvl. 4"
+            ],
+            "produce_weapons": true,
+            "produce_rate": 0.2,
+            "base_price":800,
+            "coeff":2,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 23,
+            "disabled":false,
+            "type": "weapons",
+            "score":50,
+            "image": "smuggle",
+            "name": "Smuggle",
+            "desc": "Smuggling can be worth and it produce more <span style='color:yellow'>WEAPONS</span>.",
+            "requirement": [
+                "Office Lvl. 5"
+            ],
+            "produce_weapons": true,
+            "produce_rate":0.5,
+            "base_price":3600,
+            "coeff":3.5,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 24,
+            "disabled":false,
+            "type": "weapons",
+            "score": 75,
+            "image": "blackmarket",
+            "name": "Black Market",
+            "desc": "The black market is the good place to trade weapons, it produce <span style='color:yellow'>WEAPONS</span>.",
+            "requirement": [
+                "Office Lvl. 5"
+            ],
+            "produce_weapons": true,
+            "produce_rate": 0.8,
+            "base_price":7500,
+            "coeff":7,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 25,
+            "disabled":false,
+            "type": "weapons",
+            "score": 100,
+            "image": "metalprint",
+            "name": "3D Metal printing",
+            "desc": "This is the ultimate way to produce <span style='color:yellow'>WEAPONS</span> fastly.",
+            "requirement": [
+                "Office Lvl. 8"
+            ],
+            "produce_weapons": true,
+            "produce_rate": 1,
+            "base_price":15000,
+            "coeff":10,
+            "upgrades": [
+                {
+                    "name": "Fertilizer"
+                },
+                {
+                    "name": "Converting to Hashish"
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "disabled":false,
+            "type": "weapons",
+            "score": 5,
+            "image": "weapon_storage",
+            "name": "Weapon Storage",
+            "desc": "This building help you to stock more <span style='color:yellow'>WEAPONS</span>  and keep them safe from ennemies. Base 10% + 1% for each level",
+            "requirement": ["Office Lvl. 3"],
+            "base_price":200,
+            "coeff":2
+        },
+        {
+            "id": 30,
+            "disabled":false,
+            "type": "defense",
+            "score": 50,
+            "image": "cameras",
+            "name": "Cameras",
+            "desc": "More you have cameras and more you can spy on your neighboor to caught any suspect move.",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":1,
+            "defense":15
+        },
+        {
+            "id": 31,
+            "disabled":false,
+            "type": "defense",
+            "score": 75,
+            "image": "dogs",
+            "name": "Dogs",
+            "desc": "They will scare your opponents!",
+            "requirement": [
+                "Office Lvl. 9",
+                "Search Center Lvl. 1"
+            ],
+            "base_price":1000,
+            "coeff":2,
+            "defense":30
+        },
+        {
+            "id": 32,
+            "disabled":false,
+            "type": "defense",
+            "score": 100,
+            "image": "defensetroop",
+            "name": "Defense Troops",
+            "desc": "A good defense which consist to have strong defenders.",
+            "requirement": [
+                "Office Lvl. 9",
+                "Search Center Lvl. 1"
+            ],
+            "base_price":1500,
+            "coeff":3,
+            "defense":60
+        },
+        {
+            "id": 33,
+            "disabled":false,
+            "type": "defense",
+            "score": 150,
+            "image": "defensesystem",
+            "name": "Security System",
+            "desc": "This is a sophisticated system to defend yourself",
+            "requirement": [
+                "Office Lvl. 9",
+                "Search Center Lvl. 1"
+            ],
+            "base_price":3000,
+            "coeff":5,
+            "defense":120
+        },
+        {
+            "id": 34,
+            "disabled":false,
+            "type": "defense",
+            "score": 98,
+            "image": "mines",
+            "name": "Hidden Mines",
+            "desc": "Put some mines around your base and suprise your opponents!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":5000,
+            "coeff":10,
+            "defense":250
+        },
+        {
+            "id": 40,
+            "disabled":false,
+            "type": "training",
+            "score": 15,
+            "image": "routing",
+            "name": "Routing",
+            "desc": "This increase the speed of your units!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":1
+        },
+        {
+            "id": 41,
+            "disabled":false,
+            "type": "training",
+            "score": 46,
+            "image": "coordination",
+            "name": "Coordination",
+            "desc": "By working together your units tend to keep their role as core!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":2
+        },
+        {
+            "id": 42,
+            "disabled":false,
+            "type": "training",
+            "score": 53,
+            "image": "closecombat",
+            "name": "Close Combat",
+            "desc": "Improve the efficience of your Melee units!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":3
+        },
+        {
+            "id": 43,
+            "disabled":false,
+            "type": "training",
+            "score": 75,
+            "image": "firearms",
+            "name": "Firearms Training",
+            "desc": "Improve the efficience of your Short Range units!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":4
+        },
+        {
+            "id": 44,
+            "disabled":false,
+            "type": "training",
+            "score": 15,
+            "image": "information",
+            "name": "Information Procurement",
+            "desc": "Improve the efficience of your attacks and give your more options!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":5
+        },
+        {
+            "id": 45,
+            "disabled":false,
+            "type": "training",
+            "score": 96,
+            "image": "sniping",
+            "name": "Sniper Trains",
+            "desc": "Improve the efficience of your Long Range units!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":6
+        },
+        {
+            "id": 46,
+            "disabled":false,
+            "type": "training",
+            "score": 148,
+            "image": "bomb",
+            "name": "Bomb Construction",
+            "desc": "Improve the attack of your Bombers!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":7
+        },
+        {
+            "id": 47,
+            "disabled":false,
+            "type": "training",
+            "score": 196,
+            "image": "psychological",
+            "name": "Psychological Training",
+            "desc": "Improve the defense of all your Mercenaries!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":8
+        },
+        {
+            "id": 48,
+            "disabled":false,
+            "type": "training",
+            "score": 263,
+            "image": "chemical",
+            "name": "Chemical Training",
+            "desc": "Improve the efficience of your Chemical Troups!",
+            "requirement": [
+                "Office Lvl. 10",
+                "Search Center Lvl. 5"
+            ],
+            "base_price":500,
+            "coeff":10
+        }
+    ],
+    "units": [
+        {
+            "id":1,
+            "type":"Melee",
+            "disabled":false,
+            "score": 6,
+            "image":"bouncer",
+            "name": "Super Bouncer",
+            "desc": "He's not smart but will follow you untill he dies.",
+            "attack":6,
+            "defense":8,
+            "speed":2000,
+            "price": 500
+        },
+        {
+            "id":2,
+            "type":"Melee",
+            "disabled":false,
+            "score": 4,
+            "image":"knifer",
+            "name": "Knifer",
+            "desc": "He does not look dangerous... at the first sight.",
+            "attack":10,
+            "defense":4,
+            "speed":2000,
+            "price": 1000
+        },
+        {
+            "id":3,
+            "type":"Short Range",
+            "disabled":false,
+            "score": 21,
+            "image":"gunman",
+            "name": "Gunman",
+            "desc": "He's armed and ready to shot.",
+            "attack":30,
+            "defense":10,
+            "speed":2400,
+            "price": 2000
+        },
+        {
+            "id":4,
+            "type":"Melee",
+            "disabled":false,
+            "score": 48,
+            "image":"bomber",
+            "name": "Bomber",
+            "desc": "We call him 'Bomber' because he allways have a small bomb on him'",
+            "attack":50,
+            "defense":1,
+            "speed":1800,
+            "price": 4000
+        },
+        {
+            "id":5,
+            "type":"Long Range",
+            "disabled":true,
+            "score": 83,
+            "image":"sniper",
+            "name": "Sniper",
+            "desc": "The Sniper has a low cost and provide a long range.",
+            "attack":80,
+            "defense":10,
+            "speed":2000,
+            "price": 7000
+        },
+        {
+            "id":6,
+            "type":"Short Range",
+            "disabled":true,
+            "score": 121,
+            "image":"hitman",
+            "name": "Hitman",
+            "desc": "It's name isnt enought? He just do the job!",
+            "attack":60,
+            "defense":20,
+            "speed":3000,
+            "price": 5000
+        },
+        {
+            "id":7,
+            "type":"Melee",
+            "disabled":true,
+            "score": 185,
+            "image":"ninja",
+            "name": "Ninja",
+            "desc": "Particularly speed, and powerfull",
+            "attack":75,
+            "defense":25,
+            "speed":6500,
+            "price": 8000
+        },
+        {
+            "id":8,
+            "type":"Melee",
+            "disabled":true,
+            "score": 236,
+            "image":"chemicaltroup",
+            "name": "Chemical Troup",
+            "desc": "Chemical troups are slower than bombers, but also more efficient",
+            "attack":100,
+            "defense":20,
+            "speed":2500,
+            "price": 10000
+        },
+        {
+            "id":9,
+            "type":"Short Range",
+            "disabled":true,
+            "score": 287,
+            "image":"commander",
+            "name": "Commander",
+            "desc": "When Commanders attack, nobody stay stoic.",
+            "attack":120,
+            "defense":150,
+            "speed":4000,
+            "price": 15000
+        },
+        {
+            "id":10,
+            "type":"Melee",
+            "disabled":true,
+            "score": 203,
+            "image":"bigmama",
+            "name": "Big Mama",
+            "desc": "Big Mama has a Big defense",
+            "attack":150,
+            "defense":200,
+            "speed":1,
+            "price": 1500
+        },
+        {
+            "id":11,
+            "type":"Long Range",
+            "disabled":true,
+            "score": 5,
+            "image":"bazooka",
+            "name": "Bazooka Guy",
+            "desc": "He own a bazooka! Be carefull with him",
+            "attack":250,
+            "defense":25,
+            "speed":1,
+            "price": 5000
+        },
+        {
+            "id":12,
+            "type":"Short Range",
+            "disabled":true,
+            "score": 5,
+            "image":"blackwidow",
+            "name": "BlackWidow",
+            "desc": "Slower than the ninja but more powerfull",
+            "attack":150,
+            "defense":250,
+            "speed":1,
+            "price": 8000
+        },
+        {
+            "id":13,
+            "type":"Long Range",
+            "disabled":true,
+            "score": 5,
+            "image":"mercenary",
+            "name": "Mercenary",
+            "desc": "The ultimate fighter",
+            "attack":400,
+            "defense":300,
+            "speed":5000,
+            "price": 10000
+        },
+        {
+            "id":14,
+            "type":"Support",
+            "disabled":true,
+            "score": 5,
+            "image":"tactical",
+            "name": "Tactical Expert",
+            "desc": "This unit provide some boost to all your units",
+            "attack":0,
+            "defense":1000,
+            "speed":7000,
+            "price": 30000
+        }
+    ],
+    "characters": [
+        {
+            "name": "Jacob",
+            "index": 0,
+            "story":"Jacob is a sweet man from London who can only speak when facing north. He always wears a blue shirt. His biggest fear is getting bitten by an alligator. He must use his talent for campaigning to heal the people around him before he can work on his own problems."
+        },
+        {
+            "name": "Tony",
+            "index": 1,
+            "story":"Tony is a 39-year-old personal trainer who enjoys watching television, meditation and playing card games. He is inspiring and giving, but can also be very cowardly and a bit untrustworthy. He is Puerto Rican who defines himself as bisexual. He finished school and then left academia. He has a severe phobia of bridges"
+        },
+        {
+            "name": "Alison",
+            "index": 3,
+            "story":"Alison is a 45-year-old sales assistant at office supplies store who enjoys meditation, attending museums and theatre. She is bright and exciting, but can also be very cowardly and a bit selfish. She is a Solomon Islander Christian who defines herself as straight. She finished school and then left academia. She is obsessed with Frozen."
+        },
+        {
+            "name": "Nagami",
+            "index": 2,
+            "story":"A mystical Ninja from nowhere is obsessed with films. Physically, he is built like a flagpole. He always carries a calculator. He is particularly interested in learning new words in French."
+        },
+        {
+            "name": "Katia",
+            "index": 4,
+            "story":"A 26-year-old swimming instructor is traumatised by the loss of her partner when she was six. Physically, she is built like a space hopper. She strongly dislikes her neighbour. She is hiding a terrible secret concerning a hippo."
+        },
+        {
+            "name": "Reuter",
+            "index": 5,
+            "story":"A 58-year-old father is traumatised by the loss of his mother when he was four. He usually wears a grey dress. He always carries a green cape. He is striving to redeem himself after pushing a homeless person off a cliff."
+        },
+        {
+            "name": "Brad",
+            "index": 6,
+            "story":"Brad Malkovich is a 22-year-old junior manager who enjoys vandalising bus stops, escapology and repressing minorities. He is stable and bright, but can also be very sneaky and a bit standoffish. He is an American Christian who defines himself as gay. He finished school and then left academia."
+        },
+        {
+            "name": "André",
+            "index": 7,
+            "story":"André is a chatty French student who is addicted to cooking & selfies. People often compare him to a chatty horse. His biggest fear is losing his sight. He must use his talent for dating to heal the people around him before he can work on his own problems."
+        },
+        {
+            "name": "Fred",
+            "index": 8,
+            "story":"Fred Barker is a 21-year-old sous chef who enjoys Star Wars, social card games, ferret racing and drone photography. He is loveable and entertaining, but can also be very boring and a bit unkind. He is British who defines himself as gay. He finished school and then left academia."
+        },
+        {
+            "name": "Glenda",
+            "index": 9,
+            "story":"Glenda is a reckless nurse who finds it hard to stay out of trouble. She looks surprisingly calm. She strongly dislikes her daughter. On Thursdays, she likes to kill bad guys."
+        },
+        {
+            "name": "Reece",
+            "index": 10,
+            "story":"A 56-year-old engineer is angry about politics. He has a nose like a beak. He strongly dislikes his daughter. His purpose in life is to become a senior monarch."
+        },
+        {
+            "name": "David",
+            "index": 11,
+            "story":"David Bond is a 45-year-old personal trainer who enjoys escapology, watching television and bowling. He is friendly and exciting, but can also be very dull and a bit evil. He is American who defines himself as straight. He started studying sports science at college but never finished the course."
+        },
+        {
+            "name": "Paula",
+            "index": 12,
+            "story":"An unlucky woman from Norway is obsessed with zombies. She usually wears a shoulder-parrot. Her biggest fear is getting bitten by a tiger. She is striving to redeem herself after saying a rude word on local radio."
+        },
+        {
+            "name": "Ned",
+            "index": 13,
+            "story":"Ned is a passionate builder who is addicted to Melbourne. He has eyes like little planets. His biggest fear is being killed by a lion. His purpose in life is to find a soulmate."
+        },
+        {
+            "name": "Petra",
+            "index": 14,
+            "story":"Petra is a shy werewolf who finds it hard to get out of bed in the mornings. She looks young for her age. Her biggest fear is turning to the dark side. She must use her talent for poetry to heal the people around her before she can work on her own problems."
+        },
+        {
+            "name": "Bowzo",
+            "index": 15,
+            "story":"An invisible clown from another galaxy, he is obsessed with computers and hentai. Physically, he is built like a clown. His biggest fear is his friends discovering that he can't make any joke or prank. On Fridays, he likes to go to the zoo."
+        }
+    ]
+}

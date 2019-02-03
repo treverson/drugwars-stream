@@ -90,17 +90,17 @@ stream.on("data", function (block) {
                 player.getUpdateCharacter(op.username, function (character) {
                     if (character)
                     console.log(op)
-                        // unit.tryAddUnit(character, op.building, null, function (result) {
-                        //     if (result === "success")
-                        //     {
-                        //         player.addXp(op.username, 5, function (result) {
-                        //             if (result)
-                        //                 socket.emit('refresh', op.username)
-                        //         })
-                        //     }
-                        //     else console.log(result)
+                        unit.tryAddUnit(character, op.unit, op.unit_amount, null, function (result) {
+                            if (result === "success")
+                            {
+                                player.addXp(op.username, 5, function (result) {
+                                    if (result)
+                                        socket.emit('refresh', op.username)
+                                })
+                            }
+                            else console.log(result)
  
-                        // })
+                        })
                 })
             }
             if (object[i].operations[0][0] === "custom_json" && object[i].operations[0][1].id === "dw-heist") {
