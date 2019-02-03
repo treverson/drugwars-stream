@@ -20,6 +20,11 @@ const building_handler = {
             else {
                 var char_buildings = []
                 var now = new Date();
+                for (var i of character_buildings) 
+                {
+                    console.log(i)
+                }
+
                 console.log('test' + char_buildings)
                 console.log('test2' + char_buildings[0])
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
@@ -103,20 +108,20 @@ const building_handler = {
             if (current_building.production_type === 'weapon') {
                 character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
                 character.drugs = character.drugs - cost
-                query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character.name + "'; \n\
-                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+                query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character + "'; \n\
+                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character + "'";
             }
             else {
                 character.drug_production_rate = (character.drug_production_rate - old_rate) + production_rate
                 character.drugs = character.drugs - cost
-                query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+                query = "UPDATE `character` SET drug_production_rate=" + character.drug_production_rate + ", drugs=" + character.drugs + "  WHERE name='" + character + "'; \n\
+                UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character + "'";
             }
         }
         else {
             character.drugs = character.drugs - cost
-            query = "UPDATE `character` SET drugs=" + character.drugs + "  WHERE name='" + character.name + "'; \n\
-            UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character.name + "'";
+            query = "UPDATE `character` SET drugs=" + character.drugs + "  WHERE name='" + character + "'; \n\
+            UPDATE character_buildings SET building_"+ building_id + "_level=" + building_level + ", building_" + building_id + "_last_update='" + next_update_time + "'  WHERE name='" + character + "'";
         }
         db.query(query, function (err, result) {
             if (err) {
@@ -124,7 +129,7 @@ const building_handler = {
                 cb(err);
             }
             else {
-                console.log("Upgraded character building :" + building_id + " for : " + character.name)
+                console.log("Upgraded character building :" + building_id + " for : " + character)
                 cb('success')
             }
         })
