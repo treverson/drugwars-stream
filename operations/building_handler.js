@@ -21,7 +21,7 @@ const building_handler = {
                 var now = new Date();
                 var character_buildings = JSON.parse(JSON.stringify(character_buildings))
                 var building_placeholder = buildings.filter(function (item) { return item.id === building_id; })[0]
-                var current_building = character_buildings.filter(function (item) { return item.id === building_id; })[0]
+                var current_building = character_buildings.filter(function (item) { return item.name === building_id; })
                 var hq_level = character_buildings.filter(function (item) { return item.name === "headquarters"; });
 
                 console.log(building_placeholder,current_building,hq_level)
