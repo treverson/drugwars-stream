@@ -20,10 +20,12 @@ const building_handler = {
             else {
                 var char_buildings = []
                 var now = new Date();
+                console.log('test' + char_buildings)
+                console.log('test2' + char_buildings[0])
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
                 for(i=0;i<character_buildings.length;i++)
                 {
-                    char_buildings.push(character_buildings[i][0])
+                    char_buildings.push(character_buildings[0][i])
                 }
                 console.log(char_buildings)
                 var current_building = current_building[0]
