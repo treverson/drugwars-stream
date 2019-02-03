@@ -27,7 +27,7 @@ const building_handler = {
                 if(character_buildings.filter(function (item) { return item.name === building_name; })[0])
                 {
                     var building = character_buildings.filter(function (item) { return item.name === building_name})
-                    var next_update = building[0].next_update
+                    var next_update = new Date(Date.parse(building[0].next_update))
                     var building_level = building[0].level
                 }
                 else{
