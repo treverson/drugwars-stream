@@ -20,8 +20,7 @@ const unit_handler = {
             }
             else {
                 var now = new Date();
-                var current_unit = units.filter(function (item) { return item.id === unit_id; });
-                // var current_building = current_building[0]
+                var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
                 console.log(current_unit)
                 var training_facility_level = character_buildings[0]['building_3_level']
                 if (training_facility_level < 1) {
@@ -40,7 +39,7 @@ const unit_handler = {
                     console.log(cost)
                     //CHECK DRUGS COST BALANCE
                     if (cost > character.weapons && !amount) {
-                        return cb('not enough drugs')
+                        return cb('not enough weapons')
                     }
                     if (cost < character.weapons && !amount) {
                         // unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
