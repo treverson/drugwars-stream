@@ -18,9 +18,14 @@ const building_handler = {
                 cb(null)
             }
             else {
+                var char_buildings = []
                 var now = new Date();
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
-                console.log(character_buildings[0])
+                for(i=0;i<character_buildings.length;i++)
+                {
+                    char_buildings.push(character_buildings[i])
+                }
+                console.log(char_buildings)
                 var current_building = current_building[0]
                 var hq_level = character_buildings.filter(function (item) { return item.id === "headquarters"; });
 
