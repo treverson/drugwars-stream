@@ -20,6 +20,7 @@ const building_handler = {
             else {
                 var char_buildings = []
                 var now = new Date();
+                var character_buildings = JSON.stringify(character_buildings)
                 for (var i of character_buildings) 
                 {
                     console.log(i[0])
