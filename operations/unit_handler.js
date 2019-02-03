@@ -2,46 +2,32 @@
 var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
+var gamebase = require('../utils/utils')
 const units = []
-var fs = require('fs');
-fs.readFile('../gamebase.json', 'utf8', function(err, result) {
-    console.log(result);
-    if (result == 'success') {
-        var units = file.units
-        for (i = 0; i < units.length; i++) {
-            Units.push(units[i])
-        }
-    }
-});
 
-// $.get('../gamebase.json', function(file, result) {
-//     if (result == 'success') {
-//         var units = file.units
-//         for (i = 0; i < units.length; i++) {
-//             Units.push(units[i])
-//         }
-// }})
-
+var units = gamebase.units
+for (i = 0; i < units.length; i++) {
+    units.push(units[i])
+}
 
 const unit_handler = {
     tryAddUnit: function (character, unit_id, unit_amount, amount, cb) {
         var query = "SELECT * FROM character_units WHERE name = ?; \n\
-            SELECT * FROM units ;\n\
             SELECT * FROM character_buildings WHERE name = ? ;\n\ ";
-        db.query(query, [character.name], function (err, [character_units, units, character_buildings]) {
+        db.query(query, [character.name], function (err, [character_units, character_buildings]) {
             if (err) {
                 console.log(err)
                 cb(null)
             }
             else {
                 console.log(units)
-                console.log(character_units, units,character_buildings)
+                console.log(character_units, character_buildings)
                 //return cb('need to wait')
                 // var now = new Date();
                 var current_unit = buildings.filter(function (item) { return item.unit_id === unit_id; });
                 // var current_building = current_building[0]
                 var training_facility_level = character_buildings[0]['building_3_level']
-                if (training_facility_level < building_level && building_id !=1) {
+                if (training_facility_level < building_level && building_id != 1) {
                     return cb('hq level to low')
                 }
                 return cb('need to wait')
