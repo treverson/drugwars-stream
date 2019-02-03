@@ -33,19 +33,20 @@ const unit_handler = {
                 }
                 //CHECK LAST UPDATE
                 if (unit_last_update <= now) {
-                    console.log('brabra')
-                    var timer = unit_handler.calculateTime(hq_level, building_level, current_building)
+                    var timer = unit_handler.calculateTime(training_facility_level,unit_amount, current_unit)
                     console.log(timer)
-                    var cost = unit_handler.calculateCost(building_level, current_building)
+                    var cost = unit_handler.calculateCost(unit_amount, current_unit)
+                    console.log(cost)
                     //CHECK DRUGS COST BALANCE
-                    if (cost > character.drugs && !amount) {
+                    if (cost > character.weapons && !amount) {
                         return cb('not enough drugs')
                     }
-                    if (cost < character.drugs && !amount) {
-                        unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
-                            if (result)
-                            return cb(result)
-                        })
+                    if (cost < character.weapons && !amount) {
+                        // unit_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                        //     if (result)
+                        //     return cb(result)
+                        // })
+                        console.log('gonna buy')
                     }
                     if (amount != null) {
                         amount = parseFloat(amount.split(' ')[0]).toFixed(3)
@@ -71,6 +72,12 @@ const unit_handler = {
 
             }
         })
+    },
+    calculateTime: function (training_facility_level,unit_amount, current_unit) {
+        return (current_unit.coeff * 100) * (unit_amount ^ 2 / training_facility_level)
+    },
+    calculateCost: function (unit_amount, current_unit) {
+        return (current_unit.base_price * unit_amount)
     },
     confirmAddUnit: function (character, now, building_level, building_id, timer, current_building, cost, cb) {
         var query;

@@ -566,7 +566,8 @@
             "attack":6,
             "defense":8,
             "speed":2000,
-            "price": 500
+            "base_price": 500,
+            "coeff":1
         },
         {
             "id":2,
@@ -579,7 +580,8 @@
             "attack":10,
             "defense":4,
             "speed":2000,
-            "price": 1000
+            "base_price": 100,
+            "coeff":10
         },
         {
             "id":3,
@@ -592,7 +594,8 @@
             "attack":30,
             "defense":10,
             "speed":2400,
-            "price": 2000
+            "base_price": 200,
+            "coeff":10
         },
         {
             "id":4,
@@ -605,7 +608,8 @@
             "attack":50,
             "defense":1,
             "speed":1800,
-            "price": 4000
+            "base_price": 400,
+            "coeff":10
         },
         {
             "id":5,
@@ -618,7 +622,8 @@
             "attack":80,
             "defense":10,
             "speed":2000,
-            "price": 7000
+            "base_price": 700,
+            "coeff":10
         },
         {
             "id":6,
@@ -631,7 +636,8 @@
             "attack":60,
             "defense":20,
             "speed":3000,
-            "price": 5000
+            "base_price": 500,
+            "coeff":10
         },
         {
             "id":7,
@@ -644,7 +650,8 @@
             "attack":75,
             "defense":25,
             "speed":6500,
-            "price": 8000
+            "base_price": 800,
+            "coeff":10
         },
         {
             "id":8,
@@ -657,7 +664,8 @@
             "attack":100,
             "defense":20,
             "speed":2500,
-            "price": 10000
+            "base_price": 100,
+            "coeff":100
         },
         {
             "id":9,
@@ -670,7 +678,8 @@
             "attack":120,
             "defense":150,
             "speed":4000,
-            "price": 15000
+            "base_price": 150,
+            "coeff":100
         },
         {
             "id":10,
@@ -683,7 +692,8 @@
             "attack":150,
             "defense":200,
             "speed":1,
-            "price": 1500
+            "base_price": 150,
+            "coeff":10
         },
         {
             "id":11,
@@ -696,7 +706,8 @@
             "attack":250,
             "defense":25,
             "speed":1,
-            "price": 5000
+            "base_price": 500,
+            "coeff":10
         },
         {
             "id":12,
@@ -709,7 +720,8 @@
             "attack":150,
             "defense":250,
             "speed":1,
-            "price": 8000
+            "base_price": 800,
+            "coeff":10
         },
         {
             "id":13,
@@ -722,7 +734,8 @@
             "attack":400,
             "defense":300,
             "speed":5000,
-            "price": 10000
+            "base_price": 100,
+            "coeff":100
         },
         {
             "id":14,
@@ -735,7 +748,90 @@
             "attack":0,
             "defense":1000,
             "speed":7000,
-            "price": 30000
+            "base_price": 300,
+            "coeff":100
+        }
+    ],
+    "characters": [
+        {
+            "name": "Jacob",
+            "index": 0,
+            "story":"Jacob is a sweet man from London who can only speak when facing north. He always wears a blue shirt. His biggest fear is getting bitten by an alligator. He must use his talent for campaigning to heal the people around him before he can work on his own problems."
+        },
+        {
+            "name": "Tony",
+            "index": 1,
+            "story":"Tony is a 39-year-old personal trainer who enjoys watching television, meditation and playing card games. He is inspiring and giving, but can also be very cowardly and a bit untrustworthy. He is Puerto Rican who defines himself as bisexual. He finished school and then left academia. He has a severe phobia of bridges"
+        },
+        {
+            "name": "Alison",
+            "index": 3,
+            "story":"Alison is a 45-year-old sales assistant at office supplies store who enjoys meditation, attending museums and theatre. She is bright and exciting, but can also be very cowardly and a bit selfish. She is a Solomon Islander Christian who defines herself as straight. She finished school and then left academia. She is obsessed with Frozen."
+        },
+        {
+            "name": "Nagami",
+            "index": 2,
+            "story":"A mystical Ninja from nowhere is obsessed with films. Physically, he is built like a flagpole. He always carries a calculator. He is particularly interested in learning new words in French."
+        },
+        {
+            "name": "Katia",
+            "index": 4,
+            "story":"A 26-year-old swimming instructor is traumatised by the loss of her partner when she was six. Physically, she is built like a space hopper. She strongly dislikes her neighbour. She is hiding a terrible secret concerning a hippo."
+        },
+        {
+            "name": "Reuter",
+            "index": 5,
+            "story":"A 58-year-old father is traumatised by the loss of his mother when he was four. He usually wears a grey dress. He always carries a green cape. He is striving to redeem himself after pushing a homeless person off a cliff."
+        },
+        {
+            "name": "Brad",
+            "index": 6,
+            "story":"Brad Malkovich is a 22-year-old junior manager who enjoys vandalising bus stops, escapology and repressing minorities. He is stable and bright, but can also be very sneaky and a bit standoffish. He is an American Christian who defines himself as gay. He finished school and then left academia."
+        },
+        {
+            "name": "André",
+            "index": 7,
+            "story":"André is a chatty French student who is addicted to cooking & selfies. People often compare him to a chatty horse. His biggest fear is losing his sight. He must use his talent for dating to heal the people around him before he can work on his own problems."
+        },
+        {
+            "name": "Fred",
+            "index": 8,
+            "story":"Fred Barker is a 21-year-old sous chef who enjoys Star Wars, social card games, ferret racing and drone photography. He is loveable and entertaining, but can also be very boring and a bit unkind. He is British who defines himself as gay. He finished school and then left academia."
+        },
+        {
+            "name": "Glenda",
+            "index": 9,
+            "story":"Glenda is a reckless nurse who finds it hard to stay out of trouble. She looks surprisingly calm. She strongly dislikes her daughter. On Thursdays, she likes to kill bad guys."
+        },
+        {
+            "name": "Reece",
+            "index": 10,
+            "story":"A 56-year-old engineer is angry about politics. He has a nose like a beak. He strongly dislikes his daughter. His purpose in life is to become a senior monarch."
+        },
+        {
+            "name": "David",
+            "index": 11,
+            "story":"David Bond is a 45-year-old personal trainer who enjoys escapology, watching television and bowling. He is friendly and exciting, but can also be very dull and a bit evil. He is American who defines himself as straight. He started studying sports science at college but never finished the course."
+        },
+        {
+            "name": "Paula",
+            "index": 12,
+            "story":"An unlucky woman from Norway is obsessed with zombies. She usually wears a shoulder-parrot. Her biggest fear is getting bitten by a tiger. She is striving to redeem herself after saying a rude word on local radio."
+        },
+        {
+            "name": "Ned",
+            "index": 13,
+            "story":"Ned is a passionate builder who is addicted to Melbourne. He has eyes like little planets. His biggest fear is being killed by a lion. His purpose in life is to find a soulmate."
+        },
+        {
+            "name": "Petra",
+            "index": 14,
+            "story":"Petra is a shy werewolf who finds it hard to get out of bed in the mornings. She looks young for her age. Her biggest fear is turning to the dark side. She must use her talent for poetry to heal the people around her before she can work on her own problems."
+        },
+        {
+            "name": "Bowzo",
+            "index": 15,
+            "story":"An invisible clown from another galaxy, he is obsessed with computers and hentai. Physically, he is built like a clown. His biggest fear is his friends discovering that he can't make any joke or prank. On Fridays, he likes to go to the zoo."
         }
     ]
 }
