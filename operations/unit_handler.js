@@ -83,7 +83,7 @@ const unit_handler = {
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
             character.weapons = character.weapons - cost
             query = "UPDATE `character` SET weapons=" + character.weapons + "  WHERE name='" + character.name + "'; \n\
-            INSERT INTO character_units (name, unit_"+ unit_id + ", unit_" + unit_id + "_last_update) VALUES ("+ character.name +","+unit_amount+","+now+"') \n\
+            INSERT INTO character_units (name, unit_"+ unit_id + ", unit_" + unit_id + "_last_update) VALUES ("+ character.name +","+unit_amount+","+now+") \n\
             ON DUPLICATE KEY UPDATE unit_"+ unit_id + "=+" + unit_amount + ", unit_" + unit_id + "_last_update='${now}'"
         db.query(query, function (err, result) {
             if (err) {
