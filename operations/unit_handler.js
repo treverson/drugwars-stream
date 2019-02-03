@@ -12,7 +12,7 @@ for (i = 0; i < gamebase.units.length; i++) {
 const unit_handler = {
     tryAddUnit: function (character, unit_id, unit_amount, amount, cb) {
         var query = "SELECT * FROM character_units WHERE name = ?; \n\
-            SELECT * FROM character_buildings WHERE name = ? ;\n\ ";
+            SELECT * FROM character_buildings WHERE name = ?";
         db.query(query, [character.name,character.name], function (err, [character_units, character_buildings]) {
             if (err) {
                 console.log(err)
@@ -26,8 +26,8 @@ const unit_handler = {
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
                 }
-                if (character_units[0]['unit_' + unit_id + '_last_update'] != null)
-                    var unit_last_update = character_units[0]['unit_' + unit_id + '_last_update']
+                if (character_units['unit_' + unit_id + '_last_update'] != null)
+                    var unit_last_update = character_units['unit_' + unit_id + '_last_update']
                 else {
                     unit_last_update = now
                 }
