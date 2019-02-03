@@ -2,18 +2,24 @@
 var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
+var gamebase = require('../gamebase.json')
+
+var buildings = []
+for (i = 0; i < gamebase.buildings.length; i++) {
+    buildings.push(gamebase.buildings[i])
+}
+
 const building_handler = {
     updateBuilding: function (character, building_id, amount, cb) {
-        var query = "SELECT * FROM character_buildings WHERE name = ?; \n\
-            SELECT * FROM buildings";
-        db.query(query, [character.name], function (err, [character_buildings, buildings]) {
+        var query = "SELECT * FROM character_buildings WHERE name = ?"
+        db.query(query, [character.name], function (err, [character_buildings]) {
             if (err) {
                 console.log(err)
                 cb(null)
             }
             else {
                 var now = new Date();
-                var current_building = buildings.filter(function (item) { return item.building_id === building_id; });
+                var current_building = buildings.filter(function (item) { return item.id === building_id; });
                 var current_building = current_building[0]
                 var hq_level = character_buildings[0]['building_1_level']
                 var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
@@ -67,16 +73,16 @@ const building_handler = {
         })
     },
     calculateTime: function (hq_level, building_level, current_building) {
-        return (current_building.building_coeff * 400) * (building_level ^ 2 / hq_level)
+        return (current_building.coeff * 400) * (building_level ^ 2 / hq_level)
     },
     calculateCost: function (building_level, current_building) {
-        return (current_building.building_base_price * (building_level * current_building.building_coeff))
+        return (current_building.base_price * (building_level * current_building.coeff))
     },
     calculateProductionRate: function (building_level, current_building) {
-        return (current_building.production_rate * (building_level * current_building.building_coeff))
+        return (current_building.production_rate * (building_level * current_building.coeff))
     },
     calculateAttack: function (building_level, current_building) {
-        return (current_building.production_rate * (building_level * current_building.building_coeff))
+        return (current_building.production_rate * (building_level * current_building.coeff))
     },
     confirmBuildingUpdate: function (character, now, building_level, building_id, timer, current_building, cost, cb) {
         var query;

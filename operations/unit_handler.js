@@ -19,10 +19,6 @@ const unit_handler = {
                 cb(null)
             }
             else {
-                //console.log(units)
-                //console.log(character_units, character_buildings)
-                //return cb('need to wait')
-                // var now = new Date();
                 var current_unit = units.filter(function (item) { return item.id === unit_id; });
                 // var current_building = current_building[0]
                 console.log(current_unit)
@@ -30,15 +26,11 @@ const unit_handler = {
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
                 }
-                return cb('need to wait')
-                // var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1
-                // //CHECK HEADQUARTER LEVEL
-
-                // if (character_buildings[0]['building_' + building_id + '_last_update'] != null)
-                //     var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
-                // else {
-                //     building_last_update = now
-                // }
+                if (character_buildings[0]['building_' + building_id + '_last_update'] != null)
+                    var building_last_update = character_buildings[0]['building_' + building_id + '_last_update']
+                else {
+                    building_last_update = now
+                }
                 // //CHECK LAST UPDATE
                 // if (building_last_update <= now) {
                 //     var timer = unit_handler.calculateTime(hq_level, building_level, current_building)
