@@ -82,7 +82,7 @@
                 "Office Lvl. 3"
             ],
             "production_type": "drug",
-            "produce_rate": 0.2,
+            "production_rate": 0.2,
             "base_price":200,
             "coeff":1,
             "upgrades": [
@@ -108,7 +108,7 @@
                 "Office Lvl. 4"
             ],
             "production_type": "drug",
-            "produce_rate": 0.5,
+            "production_rate": 0.5,
             "base_price":800,
             "coeff":2,
             "upgrades": [
@@ -132,7 +132,7 @@
                 "Office Lvl. 4"
             ],
             "production_type": "drug",
-            "produce_rate": 1,
+            "production_rate": 1,
             "base_price":3600,
             "coeff":3.5,
             "upgrades": [
@@ -156,7 +156,7 @@
                 "Office Lvl. 5"
             ],
             "production_type": "drug",
-            "produce_rate":2,
+            "production_rate":2,
             "base_price":7500,
             "coeff":7,
             "upgrades": [
@@ -180,7 +180,7 @@
                 "Office Lvl. 6"
             ],
             "production_type": "drug",
-            "produce_rate": 3,
+            "production_rate": 3,
             "base_price":15000,
             "coeff":10,
             "upgrades": [
@@ -218,7 +218,7 @@
                 "Office Lvl. 4"
             ],
             "production_type": "weapon",
-            "produce_rate": 0.1,
+            "production_rate": 0.1,
             "base_price":200,
             "coeff":1,
             "upgrades": [
@@ -242,7 +242,7 @@
                 "Office Lvl. 4"
             ],
             "production_type": "weapon",
-            "produce_rate": 0.2,
+            "production_rate": 0.2,
             "base_price":800,
             "coeff":2,
             "upgrades": [
@@ -266,7 +266,7 @@
                 "Office Lvl. 5"
             ],
             "production_type": "weapon",
-            "produce_rate":0.5,
+            "production_rate":0.5,
             "base_price":3600,
             "coeff":3.5,
             "upgrades": [
@@ -290,7 +290,7 @@
                 "Office Lvl. 5"
             ],
             "production_type": "weapon",
-            "produce_rate": 0.8,
+            "production_rate": 0.8,
             "base_price":7500,
             "coeff":7,
             "upgrades": [
@@ -314,7 +314,7 @@
                 "Office Lvl. 8"
             ],
             "production_type": "weapon",
-            "produce_rate": 1,
+            "production_rate": 1,
             "base_price":15000,
             "coeff":10,
             "upgrades": [
