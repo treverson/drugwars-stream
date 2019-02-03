@@ -86,7 +86,6 @@ const building_handler = {
         return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
     confirmBuildingUpdate: function (user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
-        console.log(user, now, building_level, building_name, timer, building_placeholder, cost)
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         //IF PRODUCE WEAPON OR DRUGS
