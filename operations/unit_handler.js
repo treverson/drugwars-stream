@@ -21,6 +21,7 @@ const unit_handler = {
             else {
                 var now = new Date();
                 console.log(unit_id,unit_amount)
+                console.log(units.filter(function (item) { return item.id === unit_id; }))
                 var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
                 console.log(current_unit)
                 var training_facility_level = character_buildings[0]['building_3_level']
