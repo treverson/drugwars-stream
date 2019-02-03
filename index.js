@@ -119,7 +119,7 @@ stream.on("data", function (block) {
                 var op = object[i].operations[0][1]
                 player.getUpdateCharacter(op.from, function (character) {
                     if (character) {
-                        building_id = Number(op.memo.split(':')[1])
+                        building_id = op.memo.split(':')[1]
                         //console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
                             building.updateBuilding(character, building_id, op.amount, function (result) {
@@ -144,7 +144,7 @@ stream.on("data", function (block) {
                             })
                         }
                         else if (op.memo.split(':')[0] === "unit") {
-                            op.unit = Number(op.memo.split(',')[0].split(':')[1])
+                            op.unit = op.memo.split(',')[0].split(':')[1]
                             op.unit_amount = Number(op.memo.split(',')[1].split(':')[1])
                             if(!op.unit || !op.unit_amount || op.unit_amount<1)
                             {
