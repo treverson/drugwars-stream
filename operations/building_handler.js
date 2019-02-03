@@ -39,6 +39,7 @@ const building_handler = {
                 if (headquarters.level < building_level && building_name != headquarters.name) {
                     return cb('hq level to low')
                 }
+                console.log(next_update)
                 //CHECK LAST UPDATE
                 if (next_update <= now) {
                     var timer = building_handler.calculateTime(headquarters.level, building_level, building_placeholder)
@@ -121,7 +122,7 @@ const building_handler = {
                 cb(err);
             }
             else {
-                console.log("Upgraded character building :" + building_name + " for : " + user.username)
+                console.log("Upgraded character building : " + building_name + " for : " + user.username)
                 cb('success')
             }
         })
