@@ -148,8 +148,8 @@ stream.on("data", function (block) {
                             })
                         }
                         else if (op.memo.split(':')[0] === "unit") {
-                            op.unit = parseFloat(op.memo.split(',')[0].split(':')[1]).toFixed(0)
-                            op.unit_amount = parseFloat(op.memo.split(',')[1].split(':')[1]).toFixed(0)
+                            op.unit = Number(op.memo.split(',')[0].split(':')[1])
+                            op.unit_amount = Number(op.memo.split(',')[1].split(':')[1])
                             unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, function (result) {
                                 if (result === "success") {
                                     player.addXp(op.from, 5, function (result) {

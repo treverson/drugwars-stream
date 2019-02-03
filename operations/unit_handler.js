@@ -19,7 +19,7 @@ const unit_handler = {
             }
             else {
                 var now = new Date();
-                var current_unit = units.filter(function (item) { return item.id = unit_id; })[0];
+                var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
                 var training_facility_level = character_buildings[0]['building_3_level']
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
