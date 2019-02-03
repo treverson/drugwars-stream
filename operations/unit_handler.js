@@ -23,8 +23,9 @@ const unit_handler = {
                 console.log(character_units, character_buildings)
                 //return cb('need to wait')
                 // var now = new Date();
-                var current_unit = buildings.filter(function (item) { return item.unit_id === unit_id; });
+                var current_unit = units.filter(function (item) { return item.unit_id === unit_id; });
                 // var current_building = current_building[0]
+                console.log(current_unit)
                 var training_facility_level = character_buildings[0]['building_3_level']
                 if (training_facility_level < building_level && building_id != 1) {
                     return cb('hq level to low')
