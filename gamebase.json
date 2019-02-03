@@ -1,7 +1,7 @@
 {
     "buildings": [
         {
-            "id": 1,
+            "id": "headquarters",
             "disabled":false,
             "type": "main",
             "score": 6,
@@ -13,7 +13,7 @@
             "coeff":4
         },
         {
-            "id": 3,
+            "id": "training_facility",
             "disabled":false,
             "type": "main",
             "score": 31,
@@ -27,7 +27,7 @@
             "coeff":1.5
         },
         {
-            "id": 4,
+            "id": "operation_center",
             "disabled":false,
             "type": "main",
             "score": 78,
@@ -42,7 +42,7 @@
             "coeff":3
         },
         {
-            "id": 5,
+            "id": "pantheon",
             "disabled":false,
             "type": "main",
             "score": 100,
@@ -56,7 +56,7 @@
             "coeff":1
         },
         {
-            "id": 2,
+            "id": "research_center",
             "disabled":true,
             "type": "main",
             "score": 15,
@@ -81,7 +81,7 @@
             "requirement": [
                 "Office Lvl. 3"
             ],
-            "production_type": "drugs",
+            "production_type": "drug",
             "produce_rate": 0.2,
             "base_price":200,
             "coeff":1,
@@ -97,7 +97,7 @@
             ]
         },
         {
-            "id": 12,
+            "id": "hydrofarm",
             "disabled":false,
             "type": "drugs",
             "score": 15,
@@ -107,7 +107,7 @@
             "requirement": [
                 "Office Lvl. 4"
             ],
-            "production_type": "drugs",
+            "production_type": "drug",
             "produce_rate": 0.5,
             "base_price":800,
             "coeff":2,
@@ -121,7 +121,7 @@
             ]
         },
         {
-            "id": 13,
+            "id": "meth_lab",
             "disabled":false,
             "type": "drugs",
             "score": 50,
@@ -131,7 +131,7 @@
             "requirement": [
                 "Office Lvl. 4"
             ],
-            "production_type": "drugs",
+            "production_type": "drug",
             "produce_rate": 1,
             "base_price":3600,
             "coeff":3.5,
@@ -145,7 +145,7 @@
             ]
         },
         {
-            "id": 14,
+            "id": "cocina",
             "disabled":false,
             "type": "drugs",
             "score": 75,
@@ -155,7 +155,7 @@
             "requirement": [
                 "Office Lvl. 5"
             ],
-            "production_type": "drugs",
+            "production_type": "drug",
             "produce_rate":2,
             "base_price":7500,
             "coeff":7,
@@ -169,7 +169,7 @@
             ]
         },
         {
-            "id": 15,
+            "id": "pharma_lab",
             "disabled":false,
             "type": "drugs",
             "score": 100,
@@ -179,7 +179,7 @@
             "requirement": [
                 "Office Lvl. 6"
             ],
-            "production_type": "drugs",
+            "production_type": "drug",
             "produce_rate": 3,
             "base_price":15000,
             "coeff":10,
@@ -193,7 +193,7 @@
             ]
         },
         {
-            "id": 10,
+            "id": "drug_storage",
             "disabled":false,
             "type": "drugs",
             "score": 50,
@@ -207,7 +207,7 @@
             "coeff":2
         },
         {
-            "id": 21,
+            "id": "ammunition",
             "disabled":false,
             "type": "weapons",
             "score": 5,
@@ -231,7 +231,7 @@
             ]
         },
         {
-            "id": 22,
+            "id": "weapon_factory",
             "disabled":false,
             "type": "weapons",
             "score": 15,
@@ -255,7 +255,7 @@
             ]
         },
         {
-            "id": 23,
+            "id": "smuggle",
             "disabled":false,
             "type": "weapons",
             "score":50,
@@ -279,7 +279,7 @@
             ]
         },
         {
-            "id": 24,
+            "id": "blackmarket",
             "disabled":false,
             "type": "weapons",
             "score": 75,
@@ -303,7 +303,7 @@
             ]
         },
         {
-            "id": 25,
+            "id": "metalprint",
             "disabled":false,
             "type": "weapons",
             "score": 100,
@@ -327,7 +327,7 @@
             ]
         },
         {
-            "id": 20,
+            "id": "weapon_storage",
             "disabled":false,
             "type": "weapons",
             "score": 5,
@@ -339,7 +339,7 @@
             "coeff":2
         },
         {
-            "id": 30,
+            "id": "camera",
             "disabled":false,
             "type": "defense",
             "score": 50,
@@ -355,7 +355,7 @@
             "defense":15
         },
         {
-            "id": 31,
+            "id": "dogs",
             "disabled":false,
             "type": "defense",
             "score": 75,
@@ -371,7 +371,7 @@
             "defense":30
         },
         {
-            "id": 32,
+            "id": "defense_troop",
             "disabled":false,
             "type": "defense",
             "score": 100,
@@ -387,7 +387,7 @@
             "defense":60
         },
         {
-            "id": 33,
+            "id": "defense_system",
             "disabled":false,
             "type": "defense",
             "score": 150,
@@ -403,7 +403,7 @@
             "defense":120
         },
         {
-            "id": 34,
+            "id": "hidden_mines",
             "disabled":false,
             "type": "defense",
             "score": 98,
@@ -419,7 +419,7 @@
             "defense":250
         },
         {
-            "id": 40,
+            "id": "routing",
             "disabled":false,
             "type": "training",
             "score": 15,
@@ -434,7 +434,7 @@
             "coeff":1
         },
         {
-            "id": 41,
+            "id": "coordination",
             "disabled":false,
             "type": "training",
             "score": 46,
@@ -449,7 +449,7 @@
             "coeff":2
         },
         {
-            "id": 42,
+            "id": "closecombat",
             "disabled":false,
             "type": "training",
             "score": 53,
@@ -464,7 +464,7 @@
             "coeff":3
         },
         {
-            "id": 43,
+            "id": "firearms",
             "disabled":false,
             "type": "training",
             "score": 75,
@@ -479,7 +479,7 @@
             "coeff":4
         },
         {
-            "id": 44,
+            "id": "information",
             "disabled":false,
             "type": "training",
             "score": 15,
@@ -494,7 +494,7 @@
             "coeff":5
         },
         {
-            "id": 45,
+            "id": "sniping",
             "disabled":false,
             "type": "training",
             "score": 96,
@@ -509,7 +509,7 @@
             "coeff":6
         },
         {
-            "id": 46,
+            "id": "bomb",
             "disabled":false,
             "type": "training",
             "score": 148,
@@ -524,7 +524,7 @@
             "coeff":7
         },
         {
-            "id": 47,
+            "id": "psychological",
             "disabled":false,
             "type": "training",
             "score": 196,
@@ -539,7 +539,7 @@
             "coeff":8
         },
         {
-            "id": 48,
+            "id": "chemical",
             "disabled":false,
             "type": "training",
             "score": 263,
@@ -556,7 +556,7 @@
     ],
     "units": [
         {
-            "id":1,
+            "id":"bouncer",
             "type":"Melee",
             "disabled":false,
             "score": 6,
@@ -570,7 +570,7 @@
             "coeff":1
         },
         {
-            "id":2,
+            "id":"knifer",
             "type":"Melee",
             "disabled":false,
             "score": 4,
@@ -584,7 +584,7 @@
             "coeff":10
         },
         {
-            "id":3,
+            "id":"gunman",
             "type":"Short Range",
             "disabled":false,
             "score": 21,
@@ -598,7 +598,7 @@
             "coeff":10
         },
         {
-            "id":4,
+            "id":"bomber",
             "type":"Melee",
             "disabled":false,
             "score": 48,
@@ -612,7 +612,7 @@
             "coeff":10
         },
         {
-            "id":5,
+            "id":"sniper",
             "type":"Long Range",
             "disabled":true,
             "score": 83,
@@ -626,7 +626,7 @@
             "coeff":10
         },
         {
-            "id":6,
+            "id":"hitman",
             "type":"Short Range",
             "disabled":true,
             "score": 121,
@@ -640,7 +640,7 @@
             "coeff":10
         },
         {
-            "id":7,
+            "id":"ninja",
             "type":"Melee",
             "disabled":true,
             "score": 185,
@@ -654,7 +654,7 @@
             "coeff":10
         },
         {
-            "id":8,
+            "id":"chemical_troup",
             "type":"Melee",
             "disabled":true,
             "score": 236,
@@ -668,7 +668,7 @@
             "coeff":100
         },
         {
-            "id":9,
+            "id":"commander",
             "type":"Short Range",
             "disabled":true,
             "score": 287,
@@ -682,7 +682,7 @@
             "coeff":100
         },
         {
-            "id":10,
+            "id":"big_mama",
             "type":"Melee",
             "disabled":true,
             "score": 203,
@@ -696,7 +696,7 @@
             "coeff":10
         },
         {
-            "id":11,
+            "id":"bazooka",
             "type":"Long Range",
             "disabled":true,
             "score": 5,
@@ -710,7 +710,7 @@
             "coeff":10
         },
         {
-            "id":12,
+            "id":"blackwidow",
             "type":"Short Range",
             "disabled":true,
             "score": 5,
@@ -724,7 +724,7 @@
             "coeff":10
         },
         {
-            "id":13,
+            "id":"mercenary",
             "type":"Long Range",
             "disabled":true,
             "score": 5,
@@ -738,7 +738,7 @@
             "coeff":100
         },
         {
-            "id":14,
+            "id":"tactical",
             "type":"Support",
             "disabled":true,
             "score": 5,
@@ -750,88 +750,6 @@
             "speed":7000,
             "base_price": 300,
             "coeff":100
-        }
-    ],
-    "characters": [
-        {
-            "name": "Jacob",
-            "index": 0,
-            "story":"Jacob is a sweet man from London who can only speak when facing north. He always wears a blue shirt. His biggest fear is getting bitten by an alligator. He must use his talent for campaigning to heal the people around him before he can work on his own problems."
-        },
-        {
-            "name": "Tony",
-            "index": 1,
-            "story":"Tony is a 39-year-old personal trainer who enjoys watching television, meditation and playing card games. He is inspiring and giving, but can also be very cowardly and a bit untrustworthy. He is Puerto Rican who defines himself as bisexual. He finished school and then left academia. He has a severe phobia of bridges"
-        },
-        {
-            "name": "Alison",
-            "index": 3,
-            "story":"Alison is a 45-year-old sales assistant at office supplies store who enjoys meditation, attending museums and theatre. She is bright and exciting, but can also be very cowardly and a bit selfish. She is a Solomon Islander Christian who defines herself as straight. She finished school and then left academia. She is obsessed with Frozen."
-        },
-        {
-            "name": "Nagami",
-            "index": 2,
-            "story":"A mystical Ninja from nowhere is obsessed with films. Physically, he is built like a flagpole. He always carries a calculator. He is particularly interested in learning new words in French."
-        },
-        {
-            "name": "Katia",
-            "index": 4,
-            "story":"A 26-year-old swimming instructor is traumatised by the loss of her partner when she was six. Physically, she is built like a space hopper. She strongly dislikes her neighbour. She is hiding a terrible secret concerning a hippo."
-        },
-        {
-            "name": "Reuter",
-            "index": 5,
-            "story":"A 58-year-old father is traumatised by the loss of his mother when he was four. He usually wears a grey dress. He always carries a green cape. He is striving to redeem himself after pushing a homeless person off a cliff."
-        },
-        {
-            "name": "Brad",
-            "index": 6,
-            "story":"Brad Malkovich is a 22-year-old junior manager who enjoys vandalising bus stops, escapology and repressing minorities. He is stable and bright, but can also be very sneaky and a bit standoffish. He is an American Christian who defines himself as gay. He finished school and then left academia."
-        },
-        {
-            "name": "André",
-            "index": 7,
-            "story":"André is a chatty French student who is addicted to cooking & selfies. People often compare him to a chatty horse. His biggest fear is losing his sight. He must use his talent for dating to heal the people around him before he can work on his own problems."
-        },
-        {
-            "name": "Fred",
-            "index": 8,
-            "story":"Fred Barker is a 21-year-old sous chef who enjoys Star Wars, social card games, ferret racing and drone photography. He is loveable and entertaining, but can also be very boring and a bit unkind. He is British who defines himself as gay. He finished school and then left academia."
-        },
-        {
-            "name": "Glenda",
-            "index": 9,
-            "story":"Glenda is a reckless nurse who finds it hard to stay out of trouble. She looks surprisingly calm. She strongly dislikes her daughter. On Thursdays, she likes to kill bad guys."
-        },
-        {
-            "name": "Reece",
-            "index": 10,
-            "story":"A 56-year-old engineer is angry about politics. He has a nose like a beak. He strongly dislikes his daughter. His purpose in life is to become a senior monarch."
-        },
-        {
-            "name": "David",
-            "index": 11,
-            "story":"David Bond is a 45-year-old personal trainer who enjoys escapology, watching television and bowling. He is friendly and exciting, but can also be very dull and a bit evil. He is American who defines himself as straight. He started studying sports science at college but never finished the course."
-        },
-        {
-            "name": "Paula",
-            "index": 12,
-            "story":"An unlucky woman from Norway is obsessed with zombies. She usually wears a shoulder-parrot. Her biggest fear is getting bitten by a tiger. She is striving to redeem herself after saying a rude word on local radio."
-        },
-        {
-            "name": "Ned",
-            "index": 13,
-            "story":"Ned is a passionate builder who is addicted to Melbourne. He has eyes like little planets. His biggest fear is being killed by a lion. His purpose in life is to find a soulmate."
-        },
-        {
-            "name": "Petra",
-            "index": 14,
-            "story":"Petra is a shy werewolf who finds it hard to get out of bed in the mornings. She looks young for her age. Her biggest fear is turning to the dark side. She must use her talent for poetry to heal the people around her before she can work on her own problems."
-        },
-        {
-            "name": "Bowzo",
-            "index": 15,
-            "story":"An invisible clown from another galaxy, he is obsessed with computers and hentai. Physically, he is built like a clown. His biggest fear is his friends discovering that he can't make any joke or prank. On Fridays, he likes to go to the zoo."
         }
     ]
 }

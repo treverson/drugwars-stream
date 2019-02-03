@@ -54,7 +54,7 @@ const player_handler = {
             else {
                 const character = result[0]
                 query = "SELECT * FROM buildings WHERE username = ?";
-                  db.query(query,[character.name],
+                  db.query(query,[character.username],
                       function (err, result) {
                           if (err) {
                               console.log(err);
@@ -78,7 +78,7 @@ const player_handler = {
                                   else {
                                       character.drugs = drug_balance
                                       character.weapons = weapon_balance
-                                      console.log("character - Updated character " + character.name + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
+                                      console.log("character - Updated character " + character.username + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapon_balance)
                                       cb(character)
                                   }
                               })
@@ -100,7 +100,7 @@ const player_handler = {
           SELECT * FROM heist_pool WHERE username = ?";
             db.query(
                 query,
-                [character.name, character.name],
+                [character.username, character.username],
                 function (err, result) {
                     if (err) {
                         console.log(err);
@@ -113,8 +113,8 @@ const player_handler = {
             );
         });
     },
-    updateProductionRate: function (name, type, rate, cb) {
-        var query = `UPDATE users SET ${type}=+${rate} WHERE  username='${name}'`
+    updateProductionRate: function (username, type, rate, cb) {
+        var query = `UPDATE users SET ${type}=+${rate} WHERE  username='${username}'`
         db.query(query, function (err, result) {
             if (err) {
                 console.log(err)
@@ -126,8 +126,8 @@ const player_handler = {
             }
         })
     },
-    removeDrugs: function (name, amount, cb) {
-        var query = "UPDATE users SET drugs=-" + amount + " WHERE username='" + name + "'"
+    removeDrugs: function (username, amount, cb) {
+        var query = "UPDATE users SET drugs=-" + amount + " WHERE username='" + username + "'"
         db.query(query, function (err, result) {
             if (err) {
                 console.log(err)
