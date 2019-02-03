@@ -83,7 +83,7 @@ const building_handler = {
     calculateCost: function (building_level, building_placeholder) {
         return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
-    confirmBuildingUpdate: function (character, now, building_level, building_id, timer, building_placeholder, cost, cb) {
+    confirmBuildingUpdate: function (user, now, building_level, building_id, timer, building_placeholder, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         if (building_placeholder.production_rate > 0) {
@@ -112,7 +112,7 @@ const building_handler = {
         }
         db.query(query, function (err, result) {
             if (err) {
-                console.log(result)
+                console.log(err)
                 cb(err);
             }
             else {
