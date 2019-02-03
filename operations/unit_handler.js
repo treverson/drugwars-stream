@@ -32,6 +32,7 @@ const unit_handler = {
                 //CHECK LAST UPDATE
                 if (unit_last_update <= now) {
                     var timer = unit_handler.calculateTime(training_facility_level, unit_amount, current_unit)
+                    console.log(current_unit.name)
                     console.log(timer)
                     var cost = unit_handler.calculateCost(unit_amount, current_unit)
                     console.log(cost)
