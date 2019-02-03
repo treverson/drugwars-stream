@@ -12,7 +12,7 @@ for (i = 0; i < gamebase.buildings.length; i++) {
 const building_handler = {
     updateBuilding: function (character, building_id, amount, cb) {
         var query = "SELECT * FROM buildings WHERE username = ?"
-        db.query(query, [character.username], function (err, [character_buildings]) {
+        db.query(query, [character.username], function (err, character_buildings) {
             if (err) {
                 console.log(err)
                 cb(null)
@@ -22,6 +22,7 @@ const building_handler = {
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
 
                 var current_building = current_building[0]
+                var hq_level = character_buildings.filter(function (item) { return item.id === "headquarters"; }).level;
                 console.log(character_buildings)
                 console.log(hq_level)
                 var building_level = character_buildings['building_' + building_id + '_level'] + 1
