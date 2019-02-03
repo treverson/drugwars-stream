@@ -148,7 +148,7 @@ stream.on("data", function (block) {
                             })
                         }
                         else if (op.memo.split(':')[0] === "unit") {
-                            op.unit = op.memo.split(':')[1]
+                            op.unit = op.memo.split(',')[0].split(':')[1]
                             op.unit_amount = op.memo.split(',')[1].split(':')[1]
                             unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, function (result) {
                                 if (result === "success") {
