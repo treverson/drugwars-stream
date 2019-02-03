@@ -10,7 +10,7 @@ for (i = 0; i < gamebase.buildings.length; i++) {
 }
 
 const building_handler = {
-    updateBuilding: function (user, building_id, amount, cb) {
+    updateBuilding: function (user, building_name, amount, cb) {
         var query = "SELECT * FROM buildings WHERE username = ?"
         db.query(query, [user.username], function (err, character_buildings) {
             if (err) {
@@ -18,24 +18,26 @@ const building_handler = {
                 cb(null)
             }
             else {
+                //CHOOSE THE PLACEHOLDER
+                var building_placeholder = buildings.filter(function (item) { return item.id === building_name; })[0]
                 var now = new Date();
-                var character_buildings = JSON.parse(JSON.stringify(character_buildings))
-                var building_placeholder = buildings.filter(function (item) { return item.id === building_id; })[0]
                 var headquarters = character_buildings.filter(function (item) { return item.name === "headquarters"})[0]
-                if(character_buildings.filter(function (item) { return item.name === building_id; }))
-                var building = character_buildings.filter(function (item) { return item.name === building_id})
+                //CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
+                var character_buildings = JSON.parse(JSON.stringify(character_buildings))
+                if(character_buildings.filter(function (item) { return item.name === building_name; }))
+                {
+                    var building = character_buildings.filter(function (item) { return item.name === building_name})[0]
+                    var next_update = building.next_update
+                    var building_level = building.level
+                }
                 else{
-                    var building_level = building[0].level
+                    var building_level = 0
+                    var next_update = now
                 }
                 building_level+=1
                 //CHECK HEADQUARTER LEVEL
-                if (headquarters.level < building_level && building_id != headquarters.name) {
+                if (headquarters.level < building_level && building_name != headquarters.name) {
                     return cb('hq level to low')
-                }
-                if (building_level.next_update != null)
-                    var next_update = building_level.next_update
-                else {
-                    var next_update = now
                 }
                 //CHECK LAST UPDATE
                 if (next_update <= now) {
@@ -47,7 +49,7 @@ const building_handler = {
                         return cb('not enough drugs')
                     }
                     if (cost < user.drugs && !amount) {
-                        building_handler.confirmBuildingUpdate(user, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
+                        building_handler.confirmBuildingUpdate(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
                             if (result)
                             return cb(result)
                         })
@@ -60,7 +62,7 @@ const building_handler = {
                                 {
                                     cost = 0
                                     timer = 1
-                                    building_handler.confirmBuildingUpdate(user, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
+                                    building_handler.confirmBuildingUpdate(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
                                         if (result)
                                         return cb(result)
                                     })
@@ -83,8 +85,8 @@ const building_handler = {
     calculateCost: function (building_level, building_placeholder) {
         return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
-    confirmBuildingUpdate: function (user, now, building_level, building_id, timer, building_placeholder, cost, cb) {
-        console.log(user, now, building_level, building_id, timer, building_placeholder, cost)
+    confirmBuildingUpdate: function (user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
+        console.log(user, now, building_level, building_name, timer, building_placeholder, cost)
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         //IF PRODUCE WEAPON OR DRUGS
@@ -120,7 +122,7 @@ const building_handler = {
                 cb(err);
             }
             else {
-                console.log("Upgraded character building :" + building_id + " for : " + user.username)
+                console.log("Upgraded character building :" + building_name + " for : " + user.username)
                 cb('success')
             }
         })
