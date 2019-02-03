@@ -11,8 +11,8 @@ for (i = 0; i < gamebase.buildings.length; i++) {
 
 const building_handler = {
     updateBuilding: function (character, building_id, amount, cb) {
-        var query = "SELECT * FROM character_buildings WHERE name = ?"
-        db.query(query, [character.name], function (err, [character_buildings]) {
+        var query = "SELECT * FROM buildings WHERE username = ?"
+        db.query(query, [character.username], function (err, [character_buildings]) {
             if (err) {
                 console.log(err)
                 cb(null)
