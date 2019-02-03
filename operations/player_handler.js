@@ -96,7 +96,7 @@ const player_handler = {
             if (err || !result || !result[0])
                 return cb(null);
             const character = result[0];
-            query = "SELECT * FROM buildings WHERE username = ?; \n\
+            query = "SELECT * FROM users_buildings WHERE username = ?; \n\
           SELECT * FROM heist WHERE username = ?";
             db.query(
                 query,
@@ -112,32 +112,6 @@ const player_handler = {
                 }
             );
         });
-    },
-    updateProductionRate: function (username, type, rate, cb) {
-        var query = `UPDATE users SET ${type}=+${rate} WHERE  username='${username}'`
-        db.query(query, function (err, result) {
-            if (err) {
-                console.log(err)
-                cb(null)
-            }
-            else {
-                console.log("Updated character " + player + 'production rate')
-                cb(true)
-            }
-        })
-    },
-    removeDrugs: function (username, amount, cb) {
-        var query = "UPDATE users SET drugs=-" + amount + " WHERE username='" + username + "'"
-        db.query(query, function (err, result) {
-            if (err) {
-                console.log(err)
-                cb(null)
-            }
-            else {
-                console.log("Upgraded balance : for : " + player.character_id)
-                cb(true)
-            }
-        })
     }
 }
 module.exports = player_handler;
