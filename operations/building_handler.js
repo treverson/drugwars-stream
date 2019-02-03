@@ -87,6 +87,9 @@ const building_handler = {
     calculateCost: function (building_level, building_placeholder) {
         return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
+    calculateProductionRate: function (building_level, building_placeholder) {
+        return (building_placeholder.production_rate * (building_level * building_placeholder.coeff))
+    },
     confirmBuildingUpdate: function (user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
