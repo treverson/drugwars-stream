@@ -3,13 +3,24 @@ var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
 const units = []
-$.get('../gamebase.json', function(file, result) {
+var fs = require('fs');
+fs.readFile('../gamebase.json', 'utf8', function(err, result) {
+    console.log(result);
     if (result == 'success') {
         var units = file.units
         for (i = 0; i < units.length; i++) {
             Units.push(units[i])
         }
-}})
+    }
+});
+
+// $.get('../gamebase.json', function(file, result) {
+//     if (result == 'success') {
+//         var units = file.units
+//         for (i = 0; i < units.length; i++) {
+//             Units.push(units[i])
+//         }
+// }})
 
 
 const unit_handler = {
