@@ -24,6 +24,7 @@ const unit_handler = {
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
                 }
+                console.log(character_units['unit_' + unit_id + '_last_update'])
                 if (character_units['unit_' + unit_id + '_last_update'] != null)
                     var unit_last_update = character_units['unit_' + unit_id + '_last_update']
                 else {
