@@ -23,7 +23,7 @@ const building_handler = {
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
                 for(i=0;i<character_buildings.length;i++)
                 {
-                    char_buildings.push(character_buildings[i])
+                    char_buildings.push(character_buildings[i][0])
                 }
                 console.log(char_buildings)
                 var current_building = current_building[0]
