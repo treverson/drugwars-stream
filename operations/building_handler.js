@@ -26,9 +26,9 @@ const building_handler = {
                 var character_buildings = JSON.parse(JSON.stringify(character_buildings))
                 if(character_buildings.filter(function (item) { return item.name === building_name; }))
                 {
-                    var building = character_buildings.filter(function (item) { return item.name === building_name})[0]
-                    var next_update = building.next_update
-                    var building_level = building.level
+                    var building = character_buildings.filter(function (item) { return item.name === building_name})
+                    var next_update = building[0].next_update
+                    var building_level = building[0].level
                 }
                 else{
                     var building_level = 0
