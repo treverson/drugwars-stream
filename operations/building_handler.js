@@ -98,14 +98,14 @@ const building_handler = {
                 user.weapon_production_rate = (user.weapon_production_rate - old_rate) + production_rate
                 user.drugs = user.drugs - cost
                 query = `UPDATE users SET weapon_production_rate=${user.weapon_production_rate}, drugs=${user.drugs} WHERE username='${user.username}';
-                INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.name}', ${building_level},'${next_update_time}') 
+                INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
                 ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
             }
             else {
                 user.drug_production_rate = (user.drug_production_rate - old_rate) + production_rate
                 user.drugs = user.drugs - cost
                 query = `UPDATE users SET drug_production_rate=${user.drug_production_rate}, drugs=${user.drugs} WHERE username='${user.username}';
-                INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.name}', ${building_level},'${next_update_time}') 
+                INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
                 ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
             }
         }
@@ -113,7 +113,7 @@ const building_handler = {
         else {
             user.drugs = user.drugs - cost
             query = `UPDATE users SET drugs=${user.drugs} WHERE username='${user.username}';
-            INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.name}', ${building_level},'${next_update_time}')
+            INSERT INTO buildings (username , name, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
             ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
         }
         db.query(query, function (err, result) {
