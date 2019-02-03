@@ -19,6 +19,7 @@ const unit_handler = {
                 cb(null)
             }
             else {
+                var now = new Date();
                 var current_unit = units.filter(function (item) { return item.id === unit_id; });
                 // var current_building = current_building[0]
                 console.log(current_unit)
