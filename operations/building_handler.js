@@ -43,7 +43,7 @@ const building_handler = {
                 if (next_update <= now) {
                     var timer = building_handler.calculateTime(headquarters.level, building_level, building_placeholder)
                     console.log(timer)
-                    var cost = building_handler.calculateCost(building_level.level, building_placeholder)
+                    var cost = building_handler.calculateCost(building_level, building_placeholder)
                     //CHECK DRUGS COST BALANCE
                     if (cost > user.drugs && !amount) {
                         return cb('not enough drugs')
