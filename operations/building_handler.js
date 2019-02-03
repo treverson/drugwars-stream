@@ -20,10 +20,10 @@ const building_handler = {
             else {
                 var now = new Date();
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
-
+                console.log(character_buildings[0])
                 var current_building = current_building[0]
-                var hq_level = character_buildings.filter(function (item) { return item.id === "headquarters"; }).level;
-                console.log(character_buildings)
+                var hq_level = character_buildings.filter(function (item) { return item.id === "headquarters"; });
+
                 console.log(hq_level)
                 var building_level = character_buildings['building_' + building_id + '_level'] + 1
                 //CHECK HEADQUARTER LEVEL
