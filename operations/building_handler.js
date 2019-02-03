@@ -23,9 +23,9 @@ const building_handler = {
                 var building_placeholder = buildings.filter(function (item) { return item.id === building_id; })[0]
                 var headquarters = character_buildings.filter(function (item) { return item.name === "headquarters"})[0]
                 if(character_buildings.filter(function (item) { return item.name === building_id; }))
-                var building_level = character_buildings.filter(function (item) { return item.name === building_id})[0].level
+                var building = character_buildings.filter(function (item) { return item.name === building_id})
                 else{
-                    var building_level = 0
+                    var building_level = building[0].level
                 }
                 building_level+=1
                 //CHECK HEADQUARTER LEVEL
