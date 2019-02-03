@@ -19,6 +19,7 @@ const building_handler = {
             }
             else {
                 //CHOOSE THE PLACEHOLDER
+                console.log(building_name)
                 var building_placeholder = buildings.filter(function (item) { return item.id === building_name; })[0]
                 var now = new Date();
                 var headquarters = character_buildings.filter(function (item) { return item.name === "headquarters"})[0]
