@@ -84,7 +84,7 @@ const unit_handler = {
         character.weapons = character.weapons - cost
         query = "UPDATE `character` SET weapons=" + character.weapons + "  WHERE name='" + character.name + "'; \n\
             INSERT INTO character_units (name, unit_"+ unit_id + ", unit_" + unit_id + "_last_update) VALUES ('" + character.name + "'," + unit_amount + ",'" + next_update_time + "') \n\
-            ON DUPLICATE KEY UPDATE unit_"+ unit_id + "=+" + unit_amount + ", unit_" + unit_id + "_last_update='" + next_update_time + "'"
+            ON DUPLICATE KEY UPDATE unit_"+ unit_id + "=unit_"+ unit_id+"+"+ unit_amount + ", unit_" + unit_id + "_last_update='" + next_update_time + "'"
         db.query(query, function (err, result) {
             if (err) {
                 console.log(result)
