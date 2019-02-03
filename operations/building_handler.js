@@ -22,7 +22,7 @@ const building_handler = {
                 var now = new Date();
                 for (var i of character_buildings) 
                 {
-                    console.log(i)
+                    console.log(i[0])
                 }
 
                 console.log('test' + char_buildings)
