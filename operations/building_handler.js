@@ -47,7 +47,7 @@ const building_handler = {
                         return cb('not enough drugs')
                     }
                     if (cost < user.drugs && !amount) {
-                        building_handler.confirmBuildingUpdate(user.username, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
+                        building_handler.confirmBuildingUpdate(user, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
                             if (result)
                             return cb(result)
                         })
@@ -60,7 +60,7 @@ const building_handler = {
                                 {
                                     cost = 0
                                     timer = 1
-                                    building_handler.confirmBuildingUpdate(user.username, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
+                                    building_handler.confirmBuildingUpdate(user, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
                                         if (result)
                                         return cb(result)
                                     })
