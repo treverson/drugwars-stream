@@ -26,7 +26,7 @@ const building_handler = {
                     console.log(i[0])
                 }
 
-                console.log('test' + char_buildings)
+                console.log('test' + character_buildings)
                 console.log('test2' + char_buildings[0])
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
                 for(i=0;i<character_buildings.length;i++)
