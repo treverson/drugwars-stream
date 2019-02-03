@@ -2,7 +2,7 @@ var db = require('../lib/db');
 
 const player_handler = {
     checkIfExist: function (username, cb) {
-        let query = "SELECT * FROM `character` WHERE name = ?";
+        let query = "SELECT * FROM users WHERE name = ?";
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0]) {
                 console.log(username + ' doesnt exist')
@@ -12,8 +12,12 @@ const player_handler = {
         });
     },
     createNew: function (player, icon, referrer, cb) {
-        let query = "INSERT INTO `character` (character_type_id, name, alive, level, xp, money, picture, drugs, weapon_production_rate, last_update, drug_production_rate, weapons,rewards, referrer ) VALUES (1,'" + player + "', 1, 1, 1, 100,'" + icon + "', 1000, 0.10,'" + new Date().toISOString().slice(0, 19).replace('T', ' ') + "',0.10,1000,0,'" + referrer + "'); \n\
-                     INSERT INTO character_buildings (name) VALUES ('" + player + "')"
+        var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
+        let query = `INSERT INTO users (name, xp, picture, drugs, drug_production_rate, weapons, weapon_production_rate, last_update, referrer ) VALUES ('${player}', 1,${icon}, 1000, 0.10,1000,0.10,'${now}','${referrer}'); \n\
+                     INSERT INTO buildings (name,building_name,building_next_update,building_level) VALUES ('${player}','headquarters','${now}',1); \n\
+                     INSERT INTO buildings (name,building_name,building_next_update,building_level) VALUES ('${player}','crackhouse','${now}',1); \n\
+                     INSERT INTO buildings (name,building_name,building_next_update,building_level) VALUES ('${player}','ammunition','${now}',1); \n\
+                     `
         db.query(query, function (err, result) {
             if (err || !result || !result[0]) {
                 console.log('coudlnt create a character for username ' + player)
@@ -28,7 +32,7 @@ const player_handler = {
     },
     addXp: function (name, xp, cb) {
         console.log(name)
-        var query = "UPDATE `character` SET xp= xp+" + xp + " WHERE name='" + name + "'"
+        var query = "UPDATE users SET xp= xp+" + xp + " WHERE name='" + name + "'"
         db.query(query, function (err, result) {
             if (err) {
                 console.log('coudlnt add xp for ' + name)
@@ -41,7 +45,7 @@ const player_handler = {
         })
     },
     getUpdateCharacter: function (username, cb) {
-        let query = "SELECT * FROM `character` WHERE name = ?";
+        let query = "SELECT * FROM users WHERE name = ?";
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0] || result[0] === null) {
                 console.log(err);
@@ -87,7 +91,7 @@ const player_handler = {
         });
     },
     getCharacter: function (username, cb) {
-        let query = "SELECT * FROM `character` WHERE name = ?";
+        let query = "SELECT * FROM users WHERE name = ?";
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0])
                 return cb(null);
@@ -123,7 +127,7 @@ const player_handler = {
         })
     },
     removeDrugs: function (name, amount, cb) {
-        var query = "UPDATE `character` SET drugs=-" + amount + " WHERE name='" + name + "'"
+        var query = "UPDATE users SET drugs=-" + amount + " WHERE name='" + name + "'"
         db.query(query, function (err, result) {
             if (err) {
                 console.log(err)
