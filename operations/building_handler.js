@@ -18,39 +18,34 @@ const building_handler = {
                 cb(null)
             }
             else {
-                var char_buildings = []
                 var now = new Date();
                 var character_buildings = JSON.parse(JSON.stringify(character_buildings))
-                var current_building = buildings.filter(function (item) { return item.id === building_id; });
-                for(i=0;i<character_buildings.length;i++)
-                {
-                    char_buildings.push(character_buildings[0][i])
-                }
-                var current_building = current_building[0]
-                var hq_level = char_buildings.filter(function (item) { return item.name === "headquarters"; });
+                var building_placeholder = buildings.filter(function (item) { return item.id === building_id; })[0]
+                var current_building = character_buildings.filter(function (item) { return item.id === building_id; })[0]
+                var hq_level = character_buildings.filter(function (item) { return item.name === "headquarters"; });
 
-                console.log(hq_level)
-                var building_level = character_buildings['building_' + building_id + '_level'] + 1
+                console.log(building_placeholder,current_building,hq_level)
+                var building_level = building_placeholder.level + 1
                 //CHECK HEADQUARTER LEVEL
-                if (hq_level < building_level && building_id !=1) {
+                if (hq_level < building_placeholder.level && building_id != "headquarters") {
                     return cb('hq level to low')
                 }
-                if (character_buildings['building_' + building_id + '_last_update'] != null)
-                    var building_last_update = character_buildings['building_' + building_id + '_last_update']
+                if (building_placeholder.next_update != null)
+                    var next_update = building_placeholder.next_update
                 else {
-                    building_last_update = now
+                    next_update = now
                 }
                 //CHECK LAST UPDATE
-                if (building_last_update <= now) {
-                    var timer = building_handler.calculateTime(hq_level, building_level, current_building)
+                if (next_update <= now) {
+                    var timer = building_handler.calculateTime(hq_level, building_level, building_placeholder)
                     console.log(timer)
-                    var cost = building_handler.calculateCost(building_level, current_building)
+                    var cost = building_handler.calculateCost(building_level, building_placeholder)
                     //CHECK DRUGS COST BALANCE
                     if (cost > character.drugs && !amount) {
                         return cb('not enough drugs')
                     }
                     if (cost < character.drugs && !amount) {
-                        building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                        building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
                             if (result)
                             return cb(result)
                         })
@@ -63,7 +58,7 @@ const building_handler = {
                                 {
                                     cost = 0
                                     timer = 1
-                                    building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, current_building, cost, function (result) {
+                                    building_handler.confirmBuildingUpdate(character, now, building_level, building_id, timer, building_placeholder, cost, function (result) {
                                         if (result)
                                         return cb(result)
                                     })
@@ -80,25 +75,25 @@ const building_handler = {
             }
         })
     },
-    calculateTime: function (hq_level, building_level, current_building) {
-        return (current_building.coeff * 400) * (building_level ^ 2 / hq_level)
+    calculateTime: function (hq_level, building_level, building_placeholder) {
+        return (building_placeholder.coeff * 400) * (building_level ^ 2 / hq_level)
     },
-    calculateCost: function (building_level, current_building) {
-        return (current_building.base_price * (building_level * current_building.coeff))
+    calculateCost: function (building_level, building_placeholder) {
+        return (building_placeholder.base_price * (building_level * building_placeholder.coeff))
     },
-    calculateProductionRate: function (building_level, current_building) {
-        return (current_building.production_rate * (building_level * current_building.coeff))
+    calculateProductionRate: function (building_level, building_placeholder) {
+        return (building_placeholder.production_rate * (building_level * building_placeholder.coeff))
     },
-    calculateAttack: function (building_level, current_building) {
-        return (current_building.production_rate * (building_level * current_building.coeff))
+    calculateAttack: function (building_level, building_placeholder) {
+        return (building_placeholder.production_rate * (building_level * building_placeholder.coeff))
     },
-    confirmBuildingUpdate: function (character, now, building_level, building_id, timer, current_building, cost, cb) {
+    confirmBuildingUpdate: function (character, now, building_level, building_id, timer, building_placeholder, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-        if (current_building.production_rate > 0) {
-            var old_rate = building_handler.calculateProductionRate(building_level - 1, current_building)
-            var production_rate = building_handler.calculateProductionRate(building_level, current_building)
-            if (current_building.production_type === 'weapon') {
+        if (building_placeholder.production_rate > 0) {
+            var old_rate = building_handler.calculateProductionRate(building_level - 1, building_placeholder)
+            var production_rate = building_handler.calculateProductionRate(building_level, building_placeholder)
+            if (building_placeholder.production_type === 'weapon') {
                 character.weapon_production_rate = (character.weapon_production_rate - old_rate) + production_rate
                 character.drugs = character.drugs - cost
                 query = "UPDATE `character` SET weapon_production_rate=" + character.weapon_production_rate + ", drugs=" + character.drugs + " WHERE name='" + character + "'; \n\
