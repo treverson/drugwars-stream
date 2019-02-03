@@ -4,7 +4,7 @@ var player = require('./player_handler')
 var utils = require('../utils/utils')
 var gamebase = require('../gamebase.json')
 
-const units = []
+var units = []
 for (i = 0; i < gamebase.units.length; i++) {
     units.push(gamebase.units[i])
 }
@@ -19,16 +19,16 @@ const unit_handler = {
                 cb(null)
             }
             else {
-                console.log(units)
-                console.log(character_units, character_buildings)
+                //console.log(units)
+                //console.log(character_units, character_buildings)
                 //return cb('need to wait')
                 // var now = new Date();
-                var current_unit = units.filter(function (item) { return item.unit_id === unit_id; });
+                var current_unit = units.filter(function (item) { return item.id === unit_id; });
                 // var current_building = current_building[0]
                 console.log(current_unit)
                 var training_facility_level = character_buildings[0]['building_3_level']
-                if (training_facility_level < building_level && building_id != 1) {
-                    return cb('hq level to low')
+                if (training_facility_level < 1) {
+                    return cb('training facility to low')
                 }
                 return cb('need to wait')
                 // var building_level = character_buildings[0]['building_' + building_id + '_level'] + 1

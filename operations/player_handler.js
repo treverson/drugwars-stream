@@ -64,9 +64,9 @@ const player_handler = {
                               var weapon_balance = character.weapons + Number(parseFloat((differenceprod / 1000) * character.weapon_production_rate).toFixed(0))
                               if(buildings.building_4_level > 0)
                               {
-                                drug_balance = drug_balance + (drug_balance*(buildings.building_4_level/2000))
-                                weapon_balance = weapon_balance + (weapon_balance*(buildings.building_4_level/2000))
-                                console.log('applied bonus %' + (buildings.building_4_level/2000))
+                                drug_balance = drug_balance + (drug_balance*(buildings.building_4_level*(100/2000)))
+                                weapon_balance = weapon_balance + (weapon_balance*(buildings.building_4_level*(100/2000)))
+                                console.log('applied bonus %' + (buildings.building_4_level*(100/2000)))
                               }
                               var query = `UPDATE \`character\` SET drugs=${drug_balance}, weapons=${weapon_balance}, last_update='${nowtomysql}' WHERE  name='${username}'`
                               db.query(query, function (err, result) {
