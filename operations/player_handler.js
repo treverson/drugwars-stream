@@ -78,7 +78,7 @@ const player_handler = {
                                   else {
                                       user.drugs = drugs_balance
                                       user.weapons = weapons_balance
-                                      console.log("user - Updated user " + user.username + ' new drug balance : ' + drug_balance + 'new weapon balance : ' + weapons_balance)
+                                      console.log("user - Updated user " + user.username + ' new drug balance : ' + drugs_balance + 'new weapon balance : ' + weapons_balance)
                                       cb(user)
                                   }
                               })

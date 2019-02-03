@@ -29,7 +29,7 @@ const building_handler = {
                 {
                     var building = character_buildings.filter(function (item) { return item.building === building_name})
                     var next_update = new Date(Date.parse(building[0].next_update))
-                    var building_level = building[0].level
+                    var building_level = building[0].lvl
                 }
                 else{
                     var building_level = 0
@@ -37,7 +37,7 @@ const building_handler = {
                 }
                 building_level+=1
                 //CHECK HEADQUARTER LEVEL
-                if (headquarters.level < building_level && building_name != headquarters.building) {
+                if (headquarters.lvl < building_level && building_name != 'headquarters') {
                     return cb('hq level to low')
                 }
                 console.log(next_update)
@@ -102,23 +102,23 @@ const building_handler = {
                 user.weapon_production_rate = (user.weapon_production_rate - old_rate) + production_rate
                 user.drugs_balance = user.drugs_balance - cost
                 query = `UPDATE users SET weapon_production_rate=${user.weapon_production_rate}, drugs=${user.drugs_balance} WHERE username='${user.username}';
-                INSERT INTO users_buildings (username , building, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
-                ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
+                INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
+                ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
             }
             else {
                 user.drug_production_rate = (user.drug_production_rate - old_rate) + production_rate
                 user.drugs_balance = user.drugs_balance - cost
                 query = `UPDATE users SET drug_production_rate=${user.drug_production_rate}, drugs=${user.drugs_balance} WHERE username='${user.username}';
-                INSERT INTO users_buildings (username , building, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
-                ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
+                INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
+                ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
             }
         }
         //IF DOESNT PRODUCE ANYTHING
         else {
             user.drugs_balance = user.drugs_balance - cost
             query = `UPDATE users SET drugs=${user.drugs_balance} WHERE username='${user.username}';
-            INSERT INTO users_buildings (username , building, level, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
-            ON DUPLICATE KEY UPDATE level=${building_level}, next_update='${next_update_time}'`
+            INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
+            ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
         }
         db.query(query, function (err, result) {
             if (err) {
