@@ -13,7 +13,7 @@ const unit_handler = {
     tryAddUnit: function (character, unit_id, unit_amount, amount, cb) {
         var query = "SELECT * FROM character_units WHERE name = ?; \n\
             SELECT * FROM character_buildings WHERE name = ? ;\n\ ";
-        db.query(query, [character.name], function (err, [character_units, character_buildings]) {
+        db.query(query, [character.name,character.name], function (err, [character_units, character_buildings]) {
             if (err) {
                 console.log(err)
                 cb(null)
