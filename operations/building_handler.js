@@ -18,7 +18,7 @@ const building_handler = {
                 cb(null)
             }
             else {
-                console.log(character_buildings)
+                console.log(character_buildings['building_1_level'])
                 var now = new Date();
                 var current_building = buildings.filter(function (item) { return item.id === building_id; });
                 var current_building = current_building[0]
