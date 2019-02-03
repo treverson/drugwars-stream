@@ -149,7 +149,7 @@ stream.on("data", function (block) {
                         }
                         else if (op.memo.split(':')[0] === "unit") {
                             op.unit = op.memo.split(':')[1]
-                            op.unit_amount = op.memo.split(':')[4]
+                            op.unit_amount = op.memo.split(',')[1].split(':')[1]
                             unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, function (result) {
                                 if (result === "success") {
                                     player.addXp(op.from, 5, function (result) {
@@ -172,14 +172,14 @@ stream.on("data", function (block) {
                             })
                         }
                         else {
-                            var reason = "feature not enabled"
+                            var reason = "feature not enabled "
                             pool.refund(op,reason, function (result) {
                                 if (result)
                                     console.log(result)
                             })
                         }
                     } else {
-                        var reason = "character doesnt exist"
+                        var reason = "character doesnt exist "
                         pool.refund(op, reason,function (result) {
                             if (result)
                                 console.log(result)
