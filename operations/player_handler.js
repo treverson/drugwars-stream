@@ -13,7 +13,7 @@ const player_handler = {
     },
     createNew: function (player, icon, referrer, cb) {
         var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
-        let query = `INSERT INTO users (username, drugs_balance, drug_production_rate, weapons_balance, weapon_production_rate, last_update, xp, picture, referrer ) VALUES ('${player}', 1000, 0.10, 1000, 0.10,'${now}', 1, ${icon},'${referrer}'); \n\
+        let query = `INSERT INTO users (username, drugs_balance, drug_production_rate, weapons_balance, weapon_production_rate, last_update, xp, picture, referrer ) VALUES ('${player}', 1000, 0.20, 1000, 0.20,'${now}', 1, ${icon},'${referrer}'); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','headquarters','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','crackhouse','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','ammunition','${now}',1); \n\
