@@ -24,14 +24,11 @@ const unit_handler = {
                 if (training_facility_level < 1) {
                     return cb('training facility to low')
                 }
-                console.log(character_units[0]['unit_' + unit_id + '_last_update'])
-                console.log(character_units['unit_' + unit_id + '_last_update'])
-                if (character_units['unit_' + unit_id + '_last_update'] != null)
-                    var unit_last_update = character_units['unit_' + unit_id + '_last_update']
+                if (character_units[0]['unit_' + unit_id + '_last_update'] != null)
+                    var unit_last_update = character_units[0]['unit_' + unit_id + '_last_update']
                 else {
                     var unit_last_update = now
                 }
-                console.log(unit_last_update)
                 //CHECK LAST UPDATE
                 if (unit_last_update <= now) {
                     var timer = unit_handler.calculateTime(training_facility_level, unit_amount, current_unit)
