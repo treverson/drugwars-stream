@@ -3,13 +3,13 @@ var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
 var gamebase = require('../gamebase.json')
+var units = []
+for (i = 0; i < gamebase.units.length; i++) {
+    units.push(gamebase.units[i])
+}
 
 const unit_handler = {
     tryAddUnit: function (user, unit_name, unit_amount, amount, cb) {
-        var units = []
-        for (i = 0; i < gamebase.units.length; i++) {
-            units.push(gamebase.units[i])
-        }
         var query = "SELECT * FROM users_units WHERE username = ?; \n\
             SELECT * FROM users_buildings WHERE username = ?";
         db.query(query, [user.username, user.username], function (err, [character_units, character_buildings]) {
@@ -85,8 +85,7 @@ const unit_handler = {
     AddUnits: function (user, now, unit_name, unit_amount, timer, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-        user.weapons = user.weapons - cost
-        query = `UPDATE users SET weapons_balance=${user.weapons} WHERE username='${user.username}'; \n\
+        query = `UPDATE users SET weapons_balance=weapons_balance-${cost} WHERE username='${user.username}'; \n\
             INSERT INTO users_units (name, unit, amount, next_update) VALUES ('${user.username}','${unit_name}',${unit_amount},'${next_update_time}') \n\
             ON DUPLICATE KEY UPDATE amount=amount+${unit_amount}, next_update='${next_update_time}'`
         db.query(query, function (err, result) {

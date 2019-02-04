@@ -96,27 +96,24 @@ const building_handler = {
         //IF PRODUCE WEAPON OR DRUGS
         if (building_placeholder.production_rate > 0) {
             var old_rate = building_handler.calculateProductionRate(building_level - 1, building_placeholder)
-            var production_rate = building_handler.calculateProductionRate(building_level, building_placeholder)
+            var new_production_rate = building_handler.calculateProductionRate(building_level, building_placeholder)
              //IF PRODUCE WEAPON
             if (building_placeholder.production_type === 'weapon') {
-                user.weapon_production_rate = (user.weapon_production_rate - old_rate) + production_rate
-                user.drugs_balance = user.drugs_balance - cost
-                query = `UPDATE users SET weapon_production_rate=${user.weapon_production_rate}, drugs_balance=${user.drugs_balance} WHERE username='${user.username}';
+                user.weapon_production_rate = (user.weapon_production_rate - old_rate) + new_production_rate
+                query = `UPDATE users SET weapon_production_rate=${user.weapon_production_rate}, drugs_balance=drugs_balance-${cost} WHERE username='${user.username}';
                 INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
                 ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
             }
             else {
-                user.drug_production_rate = (user.drug_production_rate - old_rate) + production_rate
-                user.drugs_balance = user.drugs_balance - cost
-                query = `UPDATE users SET drug_production_rate=${user.drug_production_rate}, drugs_balance=${user.drugs_balance} WHERE username='${user.username}';
+                user.drug_production_rate = (user.drug_production_rate - old_rate) + new_production_rate
+                query = `UPDATE users SET drug_production_rate=${user.drug_production_rate}, drugs_balance=drugs_balance-${cost} WHERE username='${user.username}';
                 INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
                 ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
             }
         }
         //IF DOESNT PRODUCE ANYTHING
         else {
-            user.drugs_balance = user.drugs_balance - cost
-            query = `UPDATE users SET drugs_balance=${user.drugs_balance} WHERE username='${user.username}';
+            query = `UPDATE users SET drugs_balance=drugs_balance-${cost} WHERE username='${user.username}';
             INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
             ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`
         }
