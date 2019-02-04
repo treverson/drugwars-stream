@@ -66,7 +66,7 @@ const battle_handler = {
         return
     },
     checkAttacks:function(block_num){
-       var attack = attackblocks.find( item => item.target_block = block_num);
+       var attack = attackblocks.find( item => item.target_block === block_num);
        if(attack)
        {
            console.log(attack)
