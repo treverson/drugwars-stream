@@ -24,7 +24,7 @@ const bc_operation = {
                             player.checkArmy(op.username, op.army, function (result) {
                                 if (result === 'success') {
                                     console.log('enough units')
-                                    battle.startAttack(op.username, op.army, op.defender, function (error) {
+                                    battle.startAttack(op.username, op.army, op.defender,tx.block_num, function (error) {
                                         if (error) {
                                             console.log("couldnt start attack")
                                         }
