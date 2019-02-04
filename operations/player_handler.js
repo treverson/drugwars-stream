@@ -122,7 +122,7 @@ const player_handler = {
                 cb(null)
             }
             else {
-                console.log("Upgraded balance : for : " + player.character_id)
+                console.log("Upgraded balance : for : " + username)
                 cb(true)
             }
         })
