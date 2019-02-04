@@ -66,7 +66,6 @@ const player_handler = {
                               var differenceprod = now.getTime() - user.last_update.getTime()
                               var drugs_balance = user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2))
                               var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0))
-                              console.log(buildings)
                               if(buildings.filter(function (item) { return item.building === "operation_center"})[0])
                               {
                                 var operation_center = buildings.filter(function (item) { return item.building === "operation_center"})[0]
