@@ -1,3 +1,5 @@
+var db = require('../lib/db');
+
 const battle_handler = {
     startAttack: function (username, army, defender, block_num,cb) {
         var now = new Date();
