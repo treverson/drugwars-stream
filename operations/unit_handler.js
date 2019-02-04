@@ -86,7 +86,7 @@ const unit_handler = {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         query = `UPDATE users SET weapons_balance=weapons_balance-${cost} WHERE username='${user.username}'; \n\
-            INSERT INTO users_units (name, unit, amount, next_update) VALUES ('${user.username}','${unit_name}',${unit_amount},'${next_update_time}') \n\
+            INSERT INTO users_units (username, unit, amount, next_update) VALUES ('${user.username}','${unit_name}',${unit_amount},'${next_update_time}') \n\
             ON DUPLICATE KEY UPDATE amount=amount+${unit_amount}, next_update='${next_update_time}'`
         db.query(query, function (err, result) {
             if (err) {
