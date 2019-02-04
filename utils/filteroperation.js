@@ -8,6 +8,7 @@ var pool = require('../operations/pool_handler')
 const io = require('socket.io-client');
 var socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
+
 const bc_operation = {
     filter: function (tx) {
         if (tx.operations[0][0] === "custom_json" && tx.operations[0][1].id === "dw-attack") {
@@ -24,7 +25,7 @@ const bc_operation = {
                             player.checkArmy(op.username, op.army, function (result) {
                                 if (result === 'success') {
                                     console.log('enough units')
-                                    battle.startAttack(op.username, op.army, op.defender,tx.block_num, function (error) {
+                                    battle.startAttack(op.username, op.army, op.defender, tx.block_num, tx.id, function (error) {
                                         if (error) {
                                             console.log("couldnt start attack")
                                         }

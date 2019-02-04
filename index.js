@@ -10,6 +10,8 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 
+battle.loadAttacks()
+
 stream.on("data", function (block) {
     if (block != null) {
         try {
@@ -20,6 +22,7 @@ stream.on("data", function (block) {
             console.log(error)
         }
         for (i = 0; i < object.length; i++) {
+            battle.checkAttacks(object[i].block_num)
             bc_operation.filter(object[i])
         }
     }
