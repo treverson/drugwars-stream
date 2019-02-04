@@ -51,10 +51,12 @@ const battle_handler = {
     },
     checkAttacks:function(block_num){
        // console.log(block_num)
-        console.log(attackblocks)
+       if(attackblocks.filter(function (item) { return item.target_block === block_num; }))
+       resolveAttack(attackblocks.filter(function (item) { return item.target_block === block_num; }))
+       console.log(attackblocks)
     },
-    resolveAttack:function(){
-
+    resolveAttack:function(attack){
+        console.log('revolsing battle' + attack.key)
     }
 }
 
