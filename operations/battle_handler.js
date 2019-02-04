@@ -18,7 +18,7 @@ const battle_handler = {
         query = query.join()
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0]) {
-                return cb(console.log(username + ' doesnt have units'));
+                return cb(console.log(username + ' doesnt have units' + err));
             }
             console.log('created battle and moved units from users_units > to battles_units')
 
