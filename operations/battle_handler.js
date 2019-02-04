@@ -9,7 +9,7 @@ const battle_handler = {
     startAttack: function (username, army, defender, block_num, key, cb) {
         var now = new Date();
         var query = []
-        var timer = (1 * 400) * 1 ^ 2 / 1
+        var timer = (1 * 100) * 1 ^ 2 / 1
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         var target_block = block_num + (timer/3)
         query.push(`INSERT INTO battles (username, defender, next_update, battle_key, target_block) 
