@@ -17,7 +17,7 @@ const battle_handler = {
         }
         query = query.join(';')
         db.query(query, [username], function (err, result) {
-            if (err || !result || !result[0]) {
+            if (err) {
                 console.log(err)
                 return cb(null);
             }
