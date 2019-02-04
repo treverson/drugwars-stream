@@ -38,7 +38,7 @@ const battle_handler = {
             else {
                 for(i=0;i<result.length;i++)
                 {
-                    var attack = {key:result[i].key,target_block:result[i].target_block}
+                    var attack = {key:result[i].battle_key,target_block:result[i].target_block}
                     attackblocks.push(attack)
                 }
             }
