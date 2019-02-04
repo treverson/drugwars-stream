@@ -1,5 +1,6 @@
 const battle_handler = {
     startAttack: function (username, army, defender, block_num,cb) {
+        var now = new Date();
         var query = []
         var timer = (1 * 400) * 1 ^ 2 / 1
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
