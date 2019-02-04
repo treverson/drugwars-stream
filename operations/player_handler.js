@@ -126,6 +126,27 @@ const player_handler = {
                 cb(true)
             }
         })
+    },
+    checkArmy: function (username, army, cb) {
+        let query = "SELECT * FROM users_units WHERE username = ?";
+        db.query(query, [username], function (err, result) {
+            if (err || !result || !result[0]) {
+                console.log(username + ' doesnt exist')
+                return cb(null);
+            }
+            console.log(result)
+            for(i=0;i<army.length;i++)
+            {    
+                console.log('1bra ' + result[0].filter(function (item) { return item.unit === army[i].unit}))
+                console.log(result.filter(function (item) { return item.unit === army[i].unit}))
+                if(result.filter(function (item) { return item.unit === army[i].unit})[0])
+                {
+                    console.log(result.filter(function (item) { return item.building === "operation_center"})[0])
+                }
+            }
+
+            cb(true)
+        })
     }
 }
 module.exports = player_handler;
