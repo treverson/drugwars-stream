@@ -67,7 +67,8 @@ const battle_handler = {
        var attack = attackblocks.find( item => item.target_block = block_num);
        if(attack)
        {
-        resolveAttack(attackblocks.filter(function (item) { return item.target_block = block_num }))
+           console.log(attack)
+        resolveAttack(attack)
        }
     }
 }
