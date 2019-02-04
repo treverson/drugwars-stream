@@ -137,15 +137,13 @@ const player_handler = {
             console.log(result)
             for(i=0;i<army.length;i++)
             {    
-                console.log('1bra ' + result.filter(function (item) { return item.unit === army[i].unit}))
-                console.log(result.filter(function (item) { return item.unit === army[i].unit}))
-                if(result.filter(function (item) { return item.unit === army[i].unit})[0])
+                if(result.filter(function (item) { return item.unit === army[i].unit}))
                 {
-                    console.log(result.filter(function (item) { return item.building === "operation_center"})[0])
+                    if(result.filter(function (item) { return item.unit === army[i].unit}).amount < army[i].amount)
+                    cb(console.log('no units' + army[i].unit))
                 }
             }
-
-            cb(true)
+            cb('success')
         })
     }
 }
