@@ -18,6 +18,7 @@ const battle_handler = {
         query = query.join(';')
         db.query(query, [username], function (err, result) {
             if (err || !result || !result[0]) {
+                console.log(err)
                 return cb(null);
             }
             var attack ={}
@@ -49,7 +50,7 @@ const battle_handler = {
         attackblocks.push(attack)
     },
     checkAttacks:function(block_num){
-        console.log(block_num)
+       // console.log(block_num)
         console.log(attackblocks)
     },
     resolveAttack:function(){
