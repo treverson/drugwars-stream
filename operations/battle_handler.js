@@ -61,6 +61,7 @@ const battle_handler = {
     addAttack:function(key,target_block){
         var attack = {key:key,target_block:target_block}
         attackblocks.push(attack)
+        return
     },
     checkAttacks:function(block_num){
        // console.log(block_num)
