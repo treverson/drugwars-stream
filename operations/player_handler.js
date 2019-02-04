@@ -60,7 +60,7 @@ const player_handler = {
                               console.log(err);
                               cb(null);
                           } else {
-                              const buildings = result[0]
+                              const buildings = JSON.parse(JSON.stringify(result))
                               var now = new Date()
                               var nowtomysql = new Date().toISOString().slice(0, 19).replace('T', ' ')
                               var differenceprod = now.getTime() - user.last_update.getTime()
