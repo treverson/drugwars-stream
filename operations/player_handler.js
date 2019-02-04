@@ -140,8 +140,6 @@ const player_handler = {
                 {
                     if(result.filter(function (item) { return item.unit === army[i].unit}).amount < parseFloat(army[i].amount).toFixed(0))
                     cb(console.log('no units' + army[i].unit))
-                    if(result.filter(function (item) { return item.unit === army[i].unit}).amount === null)
-                    cb(console.log('no units' + army[i].unit))
                 }
             }
             cb('success')

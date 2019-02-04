@@ -6,6 +6,8 @@ function resolveAttack(attack){
             return ele != attack;
         });
     }
+
+ 
 }
 
 
@@ -46,7 +48,6 @@ const battle_handler = {
         db.query(query, function (err, result) {
             if (err || !result || !result[0]) {
                 console.log('no attack to load')
-                return
             }
             else {
                 for(i=0;i<result.length;i++)
@@ -54,14 +55,12 @@ const battle_handler = {
                     var attack = {key:result[i].battle_key,target_block:result[i].target_block}
                     attackblocks.push(attack)
                 }
-            return
             }
         });
     },
     addAttack:function(key,target_block){
         var attack = {key:key,target_block:target_block}
         attackblocks.push(attack)
-        return
     },
     checkAttacks:function(block_num){
         for(i=0;i<attackblocks.length;i++)
