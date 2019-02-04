@@ -115,7 +115,7 @@ const player_handler = {
         });
     },
     removeDrugs: function (username, amount, cb) {
-        var query = "UPDATE users SET drugs_balance=-" + amount + " WHERE username='" + username + "'"
+        var query = "UPDATE users SET drugs_balance=drugs_balance-" + amount + " WHERE username='" + username + "'"
         db.query(query, function (err, result) {
             if (err) {
                 console.log(err)
