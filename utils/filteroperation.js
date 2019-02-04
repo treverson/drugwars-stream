@@ -25,7 +25,7 @@ const bc_operation = {
                             player.checkArmy(op.username, op.army, function (result) {
                                 if (result === 'success') {
                                     console.log('enough units')
-                                    battle.startAttack(op.username, op.army, op.defender, tx.block_num, tx.id, function (error) {
+                                    battle.startAttack(op.username, op.army, op.defender, tx.block_num, tx.id, function (attack) {
                                         if (attack) {
                                             battle.addAttack(attack.key,attack.target_block)
                                             socket.emit('refresh', op.username)
