@@ -13,7 +13,7 @@ const heist_handler = {
                 return cb(null);
             }
             else {
-                player.removeDrugs(user.username,amount ,function(succes){
+                player.removeDrugs(user.username,amount ,function(success){
                     if(success)
                     cb(true)
                 })
