@@ -134,7 +134,6 @@ const player_handler = {
                 console.log(username + ' doesnt have units')
                 return cb(null);
             }
-            console.log(result)
             for(i=0;i<army.length;i++)
             {    
                 if(result.filter(function (item) { return item.unit === army[i].unit}))
