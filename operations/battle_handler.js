@@ -54,9 +54,9 @@ const battle_handler = {
                     var attack = {key:result[i].battle_key,target_block:result[i].target_block}
                     attackblocks.push(attack)
                 }
+            return
             }
         });
-        console.log(attackblocks)
     },
     addAttack:function(key,target_block){
         var attack = {key:key,target_block:target_block}
@@ -65,7 +65,7 @@ const battle_handler = {
     },
     checkAttacks:function(block_num){
        var attack = attackblocks.find( item => item.target_block = block_num);
-       if(attack != undefined)
+       if(attack)
        {
         resolveAttack(attackblocks.filter(function (item) { return item.target_block = block_num }))
        }
