@@ -1,4 +1,4 @@
-var battle = require('../operations/battle_handler')
+// var battle = require('../operations/battle_handler')
 var player = require('../operations/player_handler')
 var shop = require('../operations/shop_handler')
 var building = require('../operations/building_handler')

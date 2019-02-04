@@ -1,5 +1,5 @@
 {
-    "name": "ongame_transactions",
+    "name": "drugwars_transactions",
     "scripts": {
         "start": "node ./index.js"
     },
