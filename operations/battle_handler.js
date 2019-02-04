@@ -1,8 +1,12 @@
 function resolveAttack(attack){
-    console.log('revolsing battle' + attack)
-    attackblocks = attackblocks.filter(function(ele){
-        return ele != attack;
-    });
+    if(attack)
+    {
+        console.log('revolsing battle' + attack.key)
+        attackblocks = attackblocks.filter(function(ele){
+            return ele != attack;
+        });
+    }
+
  
 }
 
