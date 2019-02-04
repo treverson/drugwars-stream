@@ -26,12 +26,13 @@ const bc_operation = {
                                 if (result === 'success') {
                                     console.log('enough units')
                                     battle.startAttack(op.username, op.army, op.defender, tx.block_num, tx.id, function (error) {
-                                        if (error) {
-                                            console.log("couldnt start attack")
-                                        }
-                                        else {
+                                        if (attack) {
+                                            battle.addAttack(attack.key,attack.target_block)
                                             socket.emit('refresh', op.username)
                                             socket.emit('receiving_attack', op.defender)
+                                        }
+                                        else {
+                                            console.log("couldnt start attack")
                                         }
                                     })
                                 }

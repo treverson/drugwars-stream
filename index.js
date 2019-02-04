@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
 var bc_operation = require('./utils/filteroperation')
-
+var battle = require('../operations/battle_handler')
 const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 var client = new Client('https://api.steemit.com')
 

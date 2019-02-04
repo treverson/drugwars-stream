@@ -20,8 +20,11 @@ const battle_handler = {
             if (err || !result || !result[0]) {
                 return cb(null);
             }
+            var attack ={}
+            attack.key = key
+            attack.target_block = target_block
             console.log('created battle and moved units from users_units > to battles_units')
-            cb(key,target_block)
+            cb(attack)
         })  
     },
     loadAttacks:function(){
