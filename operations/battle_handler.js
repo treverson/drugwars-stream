@@ -64,11 +64,10 @@ const battle_handler = {
         return
     },
     checkAttacks:function(block_num){
-       // console.log(block_num)
-       var attack = attackblocks.find( item => item.target_block === block_num);
+       var attack = attackblocks.find( item => item.target_block = block_num);
        if(attack != undefined)
        {
-        resolveAttack(attackblocks.filter(function (item) { return item.target_block === block_num }))
+        resolveAttack(attackblocks.filter(function (item) { return item.target_block = block_num }))
        }
     }
 }
