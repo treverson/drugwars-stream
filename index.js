@@ -107,11 +107,15 @@ stream.on("data", function (block) {
                 }
                 player.getUpdateCharacter(op.username, function (character) {
                     if (character) {
+                        if(character.drugs_balance >= op.amount)
                         heist.addToPool(character, Number(op.amount), function (result) {
                             if (result)
                                 console.log(result)
                             socket.emit('refresh', op.username)
                         })
+                        else{
+                            console.log('not enough drugs to deposit to heist')
+                        }
                     }
                 })
             }
