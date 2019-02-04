@@ -5,7 +5,7 @@ var utils = require('../utils/utils')
 var gamebase = require('../gamebase.json')
 
 const unit_handler = {
-    tryAddUnit: function (character, unit_name, unit_amount, amount, cb) {
+    tryAddUnit: function (user, unit_name, unit_amount, amount, cb) {
         var units = []
         for (i = 0; i < gamebase.units.length; i++) {
             units.push(gamebase.units[i])
