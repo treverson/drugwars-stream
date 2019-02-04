@@ -12,7 +12,7 @@
             "defense": 8,
             "speed": 2000,
             "base_price": 500,
-            "coeff": 1
+            "coeff": 0.5
         },
         {
             "id": "knifer",
@@ -26,7 +26,7 @@
             "defense": 4,
             "speed": 2000,
             "base_price": 100,
-            "coeff": 10
+            "coeff": 0.8
         },
         {
             "id": "gunman",
@@ -40,7 +40,7 @@
             "defense": 10,
             "speed": 2400,
             "base_price": 200,
-            "coeff": 10
+            "coeff": 1
         },
         {
             "id": "bomber",
@@ -54,7 +54,7 @@
             "defense": 1,
             "speed": 1800,
             "base_price": 400,
-            "coeff": 10
+            "coeff": 1.2
         },
         {
             "id": "sniper",
