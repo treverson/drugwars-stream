@@ -1,5 +1,5 @@
 function resolveAttack(attack){
-    if(attack)
+    if(attack != undefined && attack != null)
     {
         console.log('revolsing battle' + attack.key)
         attackblocks = attackblocks.filter(function(ele){
