@@ -11,14 +11,12 @@ var socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
 const bc_operation = {
     filter: function (tx) {
-        console.log(tx)
         if (tx.operations[0][0] === "custom_json" && tx.operations[0][1].id === "dw-attack") {
             try {
                 var op = JSON.parse(tx.operations[0][1].json)
             } catch (error) {
                 console.log(error)
             }
-            console.log(tx.block_num)
             player.checkIfExist(op.username, function (exist) {
                 if (exist && op.defender) {
                     player.checkIfExist(op.defender, function (exist) {
