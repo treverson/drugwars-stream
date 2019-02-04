@@ -60,7 +60,7 @@ const battle_handler = {
     },
     checkAttacks:function(block_num){
        // console.log(block_num)
-       if(attackblocks.filter(function (item) { return item.target_block === block_num; }))
+       if(attackblocks.filter(function (item) { return item.target_block === block_num; }) != undefined)
        {
         resolveAttack(attackblocks.filter(function (item) { return item.target_block === block_num; }))
        }
