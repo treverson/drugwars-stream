@@ -2,10 +2,10 @@
 var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
-var gamebase = require('../gamebase.json')
+var gamedata = require('../gamedata/units.json')
 var units = []
-for (i = 0; i < gamebase.units.length; i++) {
-    units.push(gamebase.units[i])
+for (i = 0; i < gamedata.units.length; i++) {
+    units.push(gamedata.units[i])
 }
 
 const unit_handler = {

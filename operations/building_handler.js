@@ -2,11 +2,11 @@
 var db = require('../lib/db');
 var player = require('./player_handler')
 var utils = require('../utils/utils')
-var gamebase = require('../gamebase.json')
+var gamedata = require('../gamedata/buildings.json')
 
 var buildings = []
-for (i = 0; i < gamebase.buildings.length; i++) {
-    buildings.push(gamebase.buildings[i])
+for (i = 0; i < gamedata.buildings.length; i++) {
+    buildings.push(gamedata.buildings[i])
 }
 
 const building_handler = {

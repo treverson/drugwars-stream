@@ -2,19 +2,20 @@
     "buildings": [
         {
             "id": "headquarters",
-            "disabled":false,
+            "disabled": false,
             "type": "main",
             "score": 6,
             "image": "office",
             "name": "Headquarters",
             "desc": "The headquarters coordinates the development and construction speed of your empire. The higher the level of the office, the quicker the other buildings are developed.",
             "requirement": [],
-            "base_price":25,
-            "coeff":4
+            "base_price": 25,
+            "coeff": 4,
+            "defense": 0
         },
         {
             "id": "training_facility",
-            "disabled":false,
+            "disabled": false,
             "type": "main",
             "score": 31,
             "image": "training",
@@ -23,12 +24,13 @@
             "requirement": [
                 "Office Lvl. 8"
             ],
-            "base_price":250,
-            "coeff":1.5
+            "base_price": 250,
+            "coeff": 1.5,
+            "defense": 0
         },
         {
             "id": "operation_center",
-            "disabled":false,
+            "disabled": false,
             "type": "main",
             "score": 78,
             "image": "operationcenter",
@@ -38,12 +40,13 @@
             "requirement": [
                 "Office Lvl. 8"
             ],
-            "base_price":300,
-            "coeff":3
+            "base_price": 300,
+            "coeff": 3,
+            "defense": 0
         },
         {
             "id": "pantheon",
-            "disabled":false,
+            "disabled": false,
             "type": "main",
             "score": 100,
             "image": "pantheon",
@@ -52,12 +55,13 @@
             "requirement": [
                 "Office Lvl. 8"
             ],
-            "base_price":100,
-            "coeff":1
+            "base_price": 100,
+            "coeff": 1,
+            "defense": 0
         },
         {
             "id": "research_center",
-            "disabled":true,
+            "disabled": true,
             "type": "main",
             "score": 15,
             "image": "search",
@@ -66,13 +70,13 @@
             "requirement": [
                 "Office Lvl. 3"
             ],
-            "base_price":200,
-            "coeff":2
+            "base_price": 200,
+            "coeff": 2,
+            "defense": 0
         },
-
         {
             "id": "crackhouse",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 5,
             "image": "crackhouse",
@@ -83,8 +87,9 @@
             ],
             "production_type": "drug",
             "production_rate": 0.2,
-            "base_price":200,
-            "coeff":1,
+            "base_price": 200,
+            "coeff": 1,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Watcher",
@@ -98,7 +103,7 @@
         },
         {
             "id": "hydrofarm",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 15,
             "image": "hydrofarm",
@@ -109,8 +114,9 @@
             ],
             "production_type": "drug",
             "production_rate": 0.5,
-            "base_price":800,
-            "coeff":2,
+            "base_price": 800,
+            "coeff": 2,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -122,7 +128,7 @@
         },
         {
             "id": "meth_lab",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 50,
             "image": "methlab",
@@ -133,8 +139,9 @@
             ],
             "production_type": "drug",
             "production_rate": 1,
-            "base_price":3600,
-            "coeff":3.5,
+            "base_price": 3600,
+            "coeff": 3.5,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -146,7 +153,7 @@
         },
         {
             "id": "cocina",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 75,
             "image": "cocina",
@@ -156,9 +163,10 @@
                 "Office Lvl. 5"
             ],
             "production_type": "drug",
-            "production_rate":2,
-            "base_price":7500,
-            "coeff":7,
+            "production_rate": 2,
+            "base_price": 7500,
+            "coeff": 7,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -170,7 +178,7 @@
         },
         {
             "id": "pharma_lab",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 100,
             "image": "pharmalab",
@@ -181,8 +189,9 @@
             ],
             "production_type": "drug",
             "production_rate": 3,
-            "base_price":15000,
-            "coeff":10,
+            "base_price": 15000,
+            "coeff": 10,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -194,7 +203,7 @@
         },
         {
             "id": "drug_storage",
-            "disabled":false,
+            "disabled": false,
             "type": "drugs",
             "score": 50,
             "image": "drugstorage",
@@ -203,12 +212,13 @@
             "requirement": [
                 "Office Lvl. 6"
             ],
-            "base_price":200,
-            "coeff":2
+            "base_price": 200,
+            "coeff": 2,
+            "defense": 0
         },
         {
             "id": "ammunition",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
             "score": 5,
             "image": "ammunition",
@@ -219,8 +229,9 @@
             ],
             "production_type": "weapon",
             "production_rate": 0.1,
-            "base_price":200,
-            "coeff":1,
+            "base_price": 200,
+            "coeff": 1,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -232,7 +243,7 @@
         },
         {
             "id": "weapon_factory",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
             "score": 15,
             "image": "weapon",
@@ -243,8 +254,9 @@
             ],
             "production_type": "weapon",
             "production_rate": 0.2,
-            "base_price":800,
-            "coeff":2,
+            "base_price": 800,
+            "coeff": 2,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -256,9 +268,9 @@
         },
         {
             "id": "smuggle",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
-            "score":50,
+            "score": 50,
             "image": "smuggle",
             "name": "Smuggle",
             "desc": "Smuggling can be worth and it produce more <span style='color:yellow'>WEAPONS</span>.",
@@ -266,9 +278,10 @@
                 "Office Lvl. 5"
             ],
             "production_type": "weapon",
-            "production_rate":0.5,
-            "base_price":3600,
-            "coeff":3.5,
+            "production_rate": 0.5,
+            "base_price": 3600,
+            "coeff": 3.5,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -280,7 +293,7 @@
         },
         {
             "id": "blackmarket",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
             "score": 75,
             "image": "blackmarket",
@@ -291,8 +304,9 @@
             ],
             "production_type": "weapon",
             "production_rate": 0.8,
-            "base_price":7500,
-            "coeff":7,
+            "base_price": 7500,
+            "coeff": 7,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -304,7 +318,7 @@
         },
         {
             "id": "metalprint",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
             "score": 100,
             "image": "metalprint",
@@ -315,8 +329,9 @@
             ],
             "production_type": "weapon",
             "production_rate": 1,
-            "base_price":15000,
-            "coeff":10,
+            "base_price": 15000,
+            "coeff": 10,
+            "defense": 0,
             "upgrades": [
                 {
                     "name": "Fertilizer"
@@ -328,19 +343,22 @@
         },
         {
             "id": "weapon_storage",
-            "disabled":false,
+            "disabled": false,
             "type": "weapons",
             "score": 5,
             "image": "weapon_storage",
             "name": "Weapon Storage",
             "desc": "This building help you to stock more <span style='color:yellow'>WEAPONS</span>  and keep them safe from ennemies. Base 10% + 1% for each level",
-            "requirement": ["Office Lvl. 3"],
-            "base_price":200,
-            "coeff":2
+            "requirement": [
+                "Office Lvl. 3"
+            ],
+            "base_price": 200,
+            "coeff": 2,
+            "defense": 0
         },
         {
             "id": "camera",
-            "disabled":false,
+            "disabled": false,
             "type": "defense",
             "score": 50,
             "image": "cameras",
@@ -350,13 +368,13 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":1,
-            "defense":15
+            "base_price": 500,
+            "coeff": 1,
+            "defense": 15
         },
         {
             "id": "dogs",
-            "disabled":false,
+            "disabled": false,
             "type": "defense",
             "score": 75,
             "image": "dogs",
@@ -366,13 +384,13 @@
                 "Office Lvl. 9",
                 "Search Center Lvl. 1"
             ],
-            "base_price":1000,
-            "coeff":2,
-            "defense":30
+            "base_price": 1000,
+            "coeff": 2,
+            "defense": 30
         },
         {
             "id": "defense_troop",
-            "disabled":false,
+            "disabled": false,
             "type": "defense",
             "score": 100,
             "image": "defensetroop",
@@ -382,13 +400,13 @@
                 "Office Lvl. 9",
                 "Search Center Lvl. 1"
             ],
-            "base_price":1500,
-            "coeff":3,
-            "defense":60
+            "base_price": 1500,
+            "coeff": 3,
+            "defense": 60
         },
         {
             "id": "defense_system",
-            "disabled":false,
+            "disabled": false,
             "type": "defense",
             "score": 150,
             "image": "defensesystem",
@@ -398,13 +416,13 @@
                 "Office Lvl. 9",
                 "Search Center Lvl. 1"
             ],
-            "base_price":3000,
-            "coeff":5,
-            "defense":120
+            "base_price": 3000,
+            "coeff": 5,
+            "defense": 120
         },
         {
             "id": "hidden_mines",
-            "disabled":false,
+            "disabled": false,
             "type": "defense",
             "score": 98,
             "image": "mines",
@@ -414,13 +432,13 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":5000,
-            "coeff":10,
-            "defense":250
+            "base_price": 5000,
+            "coeff": 10,
+            "defense": 250
         },
         {
             "id": "routing",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 15,
             "image": "routing",
@@ -430,12 +448,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":1
+            "base_price": 500,
+            "coeff": 1
         },
         {
             "id": "coordination",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 46,
             "image": "coordination",
@@ -445,12 +463,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":2
+            "base_price": 500,
+            "coeff": 2
         },
         {
             "id": "closecombat",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 53,
             "image": "closecombat",
@@ -460,12 +478,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":3
+            "base_price": 500,
+            "coeff": 3
         },
         {
             "id": "firearms",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 75,
             "image": "firearms",
@@ -475,12 +493,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":4
+            "base_price": 500,
+            "coeff": 4
         },
         {
             "id": "information",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 15,
             "image": "information",
@@ -490,12 +508,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":5
+            "base_price": 500,
+            "coeff": 5
         },
         {
             "id": "sniping",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 96,
             "image": "sniping",
@@ -505,12 +523,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":6
+            "base_price": 500,
+            "coeff": 6
         },
         {
             "id": "bomb",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 148,
             "image": "bomb",
@@ -520,12 +538,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":7
+            "base_price": 500,
+            "coeff": 7
         },
         {
             "id": "psychological",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 196,
             "image": "psychological",
@@ -535,12 +553,12 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":8
+            "base_price": 500,
+            "coeff": 8
         },
         {
             "id": "chemical",
-            "disabled":false,
+            "disabled": false,
             "type": "training",
             "score": 263,
             "image": "chemical",
@@ -550,206 +568,8 @@
                 "Office Lvl. 10",
                 "Search Center Lvl. 5"
             ],
-            "base_price":500,
-            "coeff":10
-        }
-    ],
-    "units": [
-        {
-            "id":"bouncer",
-            "type":"Melee",
-            "disabled":false,
-            "score": 6,
-            "image":"bouncer",
-            "name": "Super Bouncer",
-            "desc": "He's not smart but will follow you untill he dies.",
-            "attack":6,
-            "defense":8,
-            "speed":2000,
             "base_price": 500,
-            "coeff":1
-        },
-        {
-            "id":"knifer",
-            "type":"Melee",
-            "disabled":false,
-            "score": 4,
-            "image":"knifer",
-            "name": "Knifer",
-            "desc": "He does not look dangerous... at the first sight.",
-            "attack":10,
-            "defense":4,
-            "speed":2000,
-            "base_price": 100,
-            "coeff":10
-        },
-        {
-            "id":"gunman",
-            "type":"Short Range",
-            "disabled":false,
-            "score": 21,
-            "image":"gunman",
-            "name": "Gunman",
-            "desc": "He's armed and ready to shot.",
-            "attack":30,
-            "defense":10,
-            "speed":2400,
-            "base_price": 200,
-            "coeff":10
-        },
-        {
-            "id":"bomber",
-            "type":"Melee",
-            "disabled":false,
-            "score": 48,
-            "image":"bomber",
-            "name": "Bomber",
-            "desc": "We call him 'Bomber' because he allways have a small bomb on him'",
-            "attack":50,
-            "defense":1,
-            "speed":1800,
-            "base_price": 400,
-            "coeff":10
-        },
-        {
-            "id":"sniper",
-            "type":"Long Range",
-            "disabled":true,
-            "score": 83,
-            "image":"sniper",
-            "name": "Sniper",
-            "desc": "The Sniper has a low cost and provide a long range.",
-            "attack":80,
-            "defense":10,
-            "speed":2000,
-            "base_price": 700,
-            "coeff":10
-        },
-        {
-            "id":"hitman",
-            "type":"Short Range",
-            "disabled":true,
-            "score": 121,
-            "image":"hitman",
-            "name": "Hitman",
-            "desc": "It's name isnt enought? He just do the job!",
-            "attack":60,
-            "defense":20,
-            "speed":3000,
-            "base_price": 500,
-            "coeff":10
-        },
-        {
-            "id":"ninja",
-            "type":"Melee",
-            "disabled":true,
-            "score": 185,
-            "image":"ninja",
-            "name": "Ninja",
-            "desc": "Particularly speed, and powerfull",
-            "attack":75,
-            "defense":25,
-            "speed":6500,
-            "base_price": 800,
-            "coeff":10
-        },
-        {
-            "id":"chemical_troup",
-            "type":"Melee",
-            "disabled":true,
-            "score": 236,
-            "image":"chemicaltroup",
-            "name": "Chemical Troup",
-            "desc": "Chemical troups are slower than bombers, but also more efficient",
-            "attack":100,
-            "defense":20,
-            "speed":2500,
-            "base_price": 100,
-            "coeff":100
-        },
-        {
-            "id":"commander",
-            "type":"Short Range",
-            "disabled":true,
-            "score": 287,
-            "image":"commander",
-            "name": "Commander",
-            "desc": "When Commanders attack, nobody stay stoic.",
-            "attack":120,
-            "defense":150,
-            "speed":4000,
-            "base_price": 150,
-            "coeff":100
-        },
-        {
-            "id":"big_mama",
-            "type":"Melee",
-            "disabled":true,
-            "score": 203,
-            "image":"bigmama",
-            "name": "Big Mama",
-            "desc": "Big Mama has a Big defense",
-            "attack":150,
-            "defense":200,
-            "speed":1,
-            "base_price": 150,
-            "coeff":10
-        },
-        {
-            "id":"bazooka",
-            "type":"Long Range",
-            "disabled":true,
-            "score": 5,
-            "image":"bazooka",
-            "name": "Bazooka Guy",
-            "desc": "He own a bazooka! Be carefull with him",
-            "attack":250,
-            "defense":25,
-            "speed":1,
-            "base_price": 500,
-            "coeff":10
-        },
-        {
-            "id":"blackwidow",
-            "type":"Short Range",
-            "disabled":true,
-            "score": 5,
-            "image":"blackwidow",
-            "name": "BlackWidow",
-            "desc": "Slower than the ninja but more powerfull",
-            "attack":150,
-            "defense":250,
-            "speed":1,
-            "base_price": 800,
-            "coeff":10
-        },
-        {
-            "id":"mercenary",
-            "type":"Long Range",
-            "disabled":true,
-            "score": 5,
-            "image":"mercenary",
-            "name": "Mercenary",
-            "desc": "The ultimate fighter",
-            "attack":400,
-            "defense":300,
-            "speed":5000,
-            "base_price": 100,
-            "coeff":100
-        },
-        {
-            "id":"tactical",
-            "type":"Support",
-            "disabled":true,
-            "score": 5,
-            "image":"tactical",
-            "name": "Tactical Expert",
-            "desc": "This unit provide some boost to all your units",
-            "attack":0,
-            "defense":1000,
-            "speed":7000,
-            "base_price": 300,
-            "coeff":100
+            "coeff": 10
         }
     ]
 }
