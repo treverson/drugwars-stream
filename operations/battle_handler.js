@@ -1,3 +1,8 @@
+function resolveAttack(attack){
+    console.log('revolsing battle' + attack.key)
+}
+
+
 var db = require('../lib/db');
 var attackblocks = []
 const battle_handler = {
@@ -54,9 +59,6 @@ const battle_handler = {
        if(attackblocks.filter(function (item) { return item.target_block === block_num; }))
        resolveAttack(attackblocks.filter(function (item) { return item.target_block === block_num; }))
        console.log(attackblocks)
-    },
-    resolveAttack:function(attack){
-        console.log('revolsing battle' + attack.key)
     }
 }
 
