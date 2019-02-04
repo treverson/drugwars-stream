@@ -66,11 +66,12 @@ const player_handler = {
                               var differenceprod = now.getTime() - user.last_update.getTime()
                               var drugs_balance = user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2))
                               var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0))
-                              if(buildings.building_4_level > 0)
+                              if(buildings.filter(function (item) { return item.building === "operation_center"})[0])
                               {
-                                drugs_balance = drugs_balance + (drugs_balance*(buildings.building_4_level*(0.005)))
-                                weapons_balance = weapons_balance + (weapons_balance*(buildings.building_4_level*(0.005)))
-                                console.log('applied bonus %' + (buildings.building_4_level*(0.005)))
+                                var operation_center = buildings.filter(function (item) { return item.building === "operation_center"})[0]
+                                drugs_balance = drugs_balance + (drugs_balance*(operation_center.lvl*(0.005)))
+                                weapons_balance = weapons_balance + (weapons_balance*(operation_center.lvl*(0.005)))
+                                console.log('applied bonus %' + (operation_center.lvl*(0.005)))
                               }
                               var query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`
                               db.query(query, function (err, result) {
@@ -112,6 +113,19 @@ const player_handler = {
                 }
             );
         });
+    },
+    removeDrugs: function (username, amount, cb) {
+        var query = "UPDATE users SET drugs_balance=-" + amount + " WHERE username='" + username + "'"
+        db.query(query, function (err, result) {
+            if (err) {
+                console.log(err)
+                cb(null)
+            }
+            else {
+                console.log("Upgraded balance : for : " + player.character_id)
+                cb(true)
+            }
+        })
     }
 }
 module.exports = player_handler;
