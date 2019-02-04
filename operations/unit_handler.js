@@ -76,7 +76,7 @@ const unit_handler = {
             }
         })
     },
-    calculateTime: function (training_facility, unit_amount, current_unit) {
+    calculateTime: function (training_facility, unit_amount, unit_placeholder) {
         return (unit_placeholder.coeff * 100) * (unit_amount ^ 2 / training_facility.lvl)
     },
     calculateCost: function (unit_amount, unit_placeholder) {
