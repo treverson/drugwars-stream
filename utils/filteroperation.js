@@ -1,10 +1,10 @@
-var battle = require('./operations/battle_handler')
-var player = require('./operations/player_handler')
-var shop = require('./operations/shop_handler')
-var building = require('./operations/building_handler')
-var unit = require('./operations/unit_handler')
-var heist = require('./operations/heist_handler')
-var pool = require('./operations/pool_handler')
+var battle = require('../operations/battle_handler')
+var player = require('../operations/player_handler')
+var shop = require('../operations/shop_handler')
+var building = require('../operations/building_handler')
+var unit = require('../operations/unit_handler')
+var heist = require('../operations/heist_handler')
+var pool = require('../operations/pool_handler')
 const io = require('socket.io-client');
 var socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
