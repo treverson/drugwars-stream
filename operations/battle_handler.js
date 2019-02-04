@@ -30,6 +30,4 @@ const battle_handler = {
     }
 }
 
-
-
 module.exports = battle_handler;
