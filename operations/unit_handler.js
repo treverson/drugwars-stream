@@ -5,43 +5,49 @@ var utils = require('../utils/utils')
 var gamebase = require('../gamebase.json')
 
 const unit_handler = {
-    tryAddUnit: function (character, unit_id, unit_amount, amount, cb) {
+    tryAddUnit: function (character, unit_name, unit_amount, amount, cb) {
         var units = []
         for (i = 0; i < gamebase.units.length; i++) {
             units.push(gamebase.units[i])
         }
-        var query = "SELECT * FROM character_units WHERE name = ?; \n\
-            SELECT * FROM character_buildings WHERE name = ?";
-        db.query(query, [character.name, character.name], function (err, [character_units, character_buildings]) {
+        var query = "SELECT * FROM users_units WHERE username = ?; \n\
+            SELECT * FROM users_buildings WHERE username = ?";
+        db.query(query, [user.username, user.username], function (err, [character_units, character_buildings]) {
             if (err) {
                 console.log(err)
                 cb(null)
             }
             else {
+                //CHOOSE THE PLACEHOLDER
+                console.log(unit_name)
+                var unit_placeholder = units.filter(function (item) { return item.id === unit_name; })[0]
                 var now = new Date();
-                var current_unit = units.filter(function (item) { return item.id === unit_id; })[0];
-                var training_facility_level = character_buildings[0]['building_3_level']
-                if (training_facility_level < 1) {
+                //CHECK FOR TRAINING FACILITY
+                var training_facility = character_buildings.filter(function (item) { return item.building === "training_facility"})[0]
+                if(!training_facility && !training_facility.lvl < 1)
+                {
                     return cb('training facility to low')
                 }
-                if (character_units[0] && character_units[0]['unit_' + unit_id + '_last_update'] != null)
-                    var unit_last_update = character_units[0]['unit_' + unit_id + '_last_update']
-                else {
-                    var unit_last_update = now
+                if(character_units.filter(function (item) { return item.unit === unit_name; })[0])
+                {
+                    var unit = character_units.filter(function (item) { return item.unit === unit_name})
+                    var next_update = new Date(Date.parse(unit[0].next_update))
+                }
+                else{
+                    var next_update = now
                 }
                 //CHECK LAST UPDATE
-                if (unit_last_update <= now) {
-                    var timer = unit_handler.calculateTime(training_facility_level, unit_amount, current_unit)
-                    console.log(current_unit.name)
+                if (next_update <= now) {
+                    var timer = unit_handler.calculateTime(training_facility, unit_amount, unit_placeholder)
                     console.log(timer)
-                    var cost = unit_handler.calculateCost(unit_amount, current_unit)
+                    var cost = unit_handler.calculateCost(unit_amount, unit_placeholder)
                     console.log(cost)
-                    //CHECK DRUGS COST BALANCE
-                    if (cost > character.weapons && !amount) {
+                    //CHECK WEAPONS COST BALANCE
+                    if (cost > user.weapons_balance && !amount) {
                         return cb('not enough weapons')
                     }
-                    if (cost < character.weapons && !amount) {
-                        unit_handler.confirmAddUnit(character, now, unit_id, unit_amount, timer, cost, function (result) {
+                    if (cost < user.weapons_balance && !amount) {
+                        unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, cost, function (result) {
                             if (result)
                                 return cb(result)
                         })
@@ -53,7 +59,7 @@ const unit_handler = {
                                 if (result <= amount || result - ((result / 100) * 5) <= amount) {
                                     cost = 0
                                     timer = 1
-                                    unit_handler.confirmAddUnit(character, now, unit_id, unit_amount, timer, cost, function (result) {
+                                    unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, cost, function (result) {
                                         if (result)
                                             return cb(result)
                                     })
@@ -70,26 +76,26 @@ const unit_handler = {
             }
         })
     },
-    calculateTime: function (training_facility_level, unit_amount, current_unit) {
-        return (current_unit.coeff * 100) * (unit_amount ^ 2 / training_facility_level)
+    calculateTime: function (training_facility, unit_amount, current_unit) {
+        return (unit_placeholder.coeff * 100) * (unit_amount ^ 2 / training_facility.lvl)
     },
-    calculateCost: function (unit_amount, current_unit) {
-        return (current_unit.base_price * unit_amount)
+    calculateCost: function (unit_amount, unit_placeholder) {
+        return (unit_placeholder.base_price * unit_amount)
     },
-    confirmAddUnit: function (character, now, unit_id, unit_amount, timer, cost, cb) {
+    AddUnits: function (user, now, unit_name, unit_amount, timer, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-        character.weapons = character.weapons - cost
-        query = "UPDATE `character` SET weapons=" + character.weapons + "  WHERE name='" + character.name + "'; \n\
-            INSERT INTO character_units (name, unit_"+ unit_id + ", unit_" + unit_id + "_last_update) VALUES ('" + character.name + "'," + unit_amount + ",'" + next_update_time + "') \n\
-            ON DUPLICATE KEY UPDATE unit_"+ unit_id + "=unit_"+ unit_id+"+"+ unit_amount + ", unit_" + unit_id + "_last_update='" + next_update_time + "'"
+        user.weapons = user.weapons - cost
+        query = `UPDATE users SET weapons_balance=${user.weapons} WHERE username='${user.username}'; \n\
+            INSERT INTO users_units (name, unit, amount, next_update) VALUES ('${user.username}','${unit_name}',${unit_amount},'${next_update_time}') \n\
+            ON DUPLICATE KEY UPDATE amount=amount+${unit_amount}, next_update='${next_update_time}'`
         db.query(query, function (err, result) {
             if (err) {
                 console.log(result)
                 cb(err);
             }
             else {
-                console.log("Addd " + unit_amount + " units :" + unit_id + " for : " + character.name)
+                console.log("Addd " + unit_amount + " units :" + unit_name + " for : " + user.username)
                 cb('success')
             }
         })

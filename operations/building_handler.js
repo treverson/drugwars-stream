@@ -10,7 +10,7 @@ for (i = 0; i < gamebase.buildings.length; i++) {
 }
 
 const building_handler = {
-    updateBuilding: function (user, building_name, amount, cb) {
+    tryUpdateBuilding: function (user, building_name, amount, cb) {
         var query = "SELECT * FROM users_buildings WHERE username = ?"
         db.query(query, [user.username], function (err, character_buildings) {
             if (err) {
@@ -47,11 +47,11 @@ const building_handler = {
                     console.log(timer)
                     var cost = building_handler.calculateCost(building_level, building_placeholder)
                     //CHECK DRUGS COST BALANCE
-                    if (cost > user.drugs && !amount) {
+                    if (cost > user.drugs_balance && !amount) {
                         return cb('not enough drugs')
                     }
-                    if (cost < user.drugs && !amount) {
-                        building_handler.confirmBuildingUpdate(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
+                    if (cost < user.drugs_balance && !amount) {
+                        building_handler.upgradeBuilding(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
                             if (result)
                             return cb(result)
                         })
@@ -64,7 +64,7 @@ const building_handler = {
                                 {
                                     cost = 0
                                     timer = 1
-                                    building_handler.confirmBuildingUpdate(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
+                                    building_handler.upgradeBuilding(user, now, building_level, building_name, timer, building_placeholder, cost, function (result) {
                                         if (result)
                                         return cb(result)
                                     })
@@ -90,7 +90,7 @@ const building_handler = {
     calculateProductionRate: function (building_level, building_placeholder) {
         return (building_placeholder.production_rate * (building_level * building_placeholder.coeff))
     },
-    confirmBuildingUpdate: function (user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
+    upgradeBuilding: function (user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
         var query;
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
         //IF PRODUCE WEAPON OR DRUGS

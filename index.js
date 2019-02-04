@@ -55,7 +55,7 @@ stream.on("data", function (block) {
                 }
                 player.getUpdateCharacter(op.username, function (character) {
                     if (character)
-                        building.updateBuilding(character, op.building, null, function (result) {
+                        building.tryUpdateBuilding(character, op.building, null, function (result) {
                             if (result === "success")
                             {
                                 player.addXp(op.username, 5, function (result) {
@@ -126,7 +126,7 @@ stream.on("data", function (block) {
                         building_id = op.memo.split(':')[1]
                         //console.log(op)
                         if (op.memo.split(':')[0] === "upgrade") {
-                            building.updateBuilding(character, building_id, op.amount, function (result) {
+                            building.tryUpdateBuilding(character, building_id, op.amount, function (result) {
                                 if (result === "success") {
                                     player.addXp(op.from, 5, function (result) {
                                         if (result)
