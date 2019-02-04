@@ -11,7 +11,7 @@ const battle_handler = {
                     VALUES ('${username}','${defender}','${next_update_time}',${block_num},${target_block});`)
         for(i=0;i<army.length;i++)
         {
-            query.push(`UPDATE users_units SET amount=amount-${army[i].amount} WHERE unit='${army[i].unit}';`)
+            query.push(`UPDATE users_units SET amount=amount-${army[i].amount} WHERE unit='${army[i].unit}' AND username='${username}';`)
             query.push(`INSERT INTO battles_units (username, unit, amount, battle_key) 
                         VALUES ('${username}','${army[i].unit}',${army[i].amount},${block_num});`)
         }
