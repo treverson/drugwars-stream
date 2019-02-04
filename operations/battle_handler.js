@@ -6,8 +6,6 @@ function resolveAttack(attack){
             return ele != attack;
         });
     }
-
- 
 }
 
 

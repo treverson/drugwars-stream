@@ -20,7 +20,7 @@ const bc_operation = {
             player.checkIfExist(op.username, function (exist) {
                 if (exist && op.defender) {
                     player.checkIfExist(op.defender, function (exist) {
-                        if (exist && op.army.length>0)
+                        if (exist)
                             player.checkArmy(op.username, op.army, function (result) {
                                 if (result === 'success') {
                                     console.log('enough units')
