@@ -20,7 +20,7 @@ const battle_handler = {
         var timer = (1 * 100) * 1 ^ 2 / 1
 
         var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
-        var target_block = block_num + (timer/3)
+        var target_block = block_num + (timer*3)
         console.log('block num : ' + block_num +'target num : ' + target_block)
         query.push(`INSERT INTO battles (username, defender, next_update, battle_key, target_block) 
                     VALUES ('${username}','${defender}','${next_update_time}','${key}',${target_block})`)
@@ -36,7 +36,6 @@ const battle_handler = {
                 console.log(err)
                 return cb(null);
             }
-            console.log(result)
             var attack ={}
             attack.key = key
             attack.target_block = target_block
