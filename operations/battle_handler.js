@@ -56,6 +56,7 @@ const battle_handler = {
                     var attack = {key:result[i].battle_key,target_block:result[i].target_block}
                     attackblocks.push(attack)
                 }
+                console.log(attackblocks)
             }
         });
     },
@@ -64,14 +65,14 @@ const battle_handler = {
         attackblocks.push(attack)    
     },
     checkAttacks:function(block_num){
-        // for(i=0;i<attackblocks.length;i++)
-        // {
-        //     if(attackblocks[i].target_block === block_num)
-        //     {
-        //         console.log('this block bro')
-        //         resolveAttack(attackblocks[i])
-        //     }
-        // }
+        for(i=0;i<attackblocks.length;i++)
+        {
+            if(attackblocks[i].target_block === block_num)
+            {
+                console.log('this block is number ' + block_num)
+                resolveAttack(attackblocks[i])
+            }
+        }
     }
 }
 
