@@ -65,6 +65,7 @@ const battle_handler = {
         attackblocks.push(attack)    
     },
     checkAttacks:function(block_num){
+        console.log(blocknum)
         for(i=0;i<attackblocks.length;i++)
         {
             if(attackblocks[i].target_block === block_num)
