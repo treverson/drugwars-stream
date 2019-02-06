@@ -1,6 +1,8 @@
 const db = require('../helpers/db');
 var round = require('./battles/round_handler')
 var second_round = require('./battles/second_round_handler')
+const io = require('socket.io-client');
+const socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
 const battle_handler = {
     launchBattle: function (battle_key) {
