@@ -1,0 +1,10 @@
+{
+  "weapon_quality_prefix": {
+    "normal": ["Hyena''s","Frog''s","Tin ","Bronze","Soldier''s","Useless","Weak"],
+    "magic": ["Spider''s","Snake''s","Iron","Steel","Silver","Deadly","Heavy"],
+    "rare": ["Raven''s","Serpent''s","Gold","Master''s","Knight''s","Vicious","Brutal"],
+    "legendary": ["Drake''s","Platinum","Mithril","Champion''s","Savage","Massive","Holy"],
+    "epic": ["Dragon''s","Weird","Strange","King''s","Merciless","Angel''s","Godly"]
+  },
+  "armor_quality_prefix": {}
+}
