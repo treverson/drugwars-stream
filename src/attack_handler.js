@@ -13,14 +13,14 @@ const attack_handler = {
   startAttack: function (username, army, defender, block_num, key, cb) {
       var now = new Date();
       var query = []
-      var timer = (1 * 3) * 1 ^ 2 / 1
+      var timer = (1 * 6) * 1 ^ 2 / 1
       var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
       var start_block = block_num
-      var target_block = block_num + (timer*7)
-      var end_block = block_num + ((timer*7)*2)
+      var target_block = block_num + (timer*3)
+      var end_block = block_num + ((timer*3)*2)
       console.log('block num : ' + block_num +'target num : ' + target_block)
-      query.push(`TRUNCATE TABLE battles`)
-      query.push(`TRUNCATE TABLE battles_units`) 
+    //   query.push(`TRUNCATE TABLE battles`)
+    //   query.push(`TRUNCATE TABLE battles_units`) 
 
       query.push(`INSERT INTO battles (username, defender, next_update, battle_key, target_block,start_block,end_block) 
                   VALUES ('${username}','${defender}','${next_update_time}','${key}',${target_block},${start_block},${end_block})`)
