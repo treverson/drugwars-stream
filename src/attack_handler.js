@@ -4,10 +4,8 @@ const attackblocks = [];
 const battle = require('./battle_handler');
 
 function resolveAttack(attack) {
-  if (attack) {
     console.log(`revolsing battle ${attack.battle_key}`);
     battle.launchBattle(attack.battle_key);
-  }
 }
 
 
@@ -53,7 +51,7 @@ const attack_handler = {
               return
           }
           else {
-              if(result.length>0)
+              console.log(result)
               for(i=0;i<result.length;i++)
               {
                   if(result[i].target_block && result[i].target_block<latest_block)
@@ -77,8 +75,8 @@ const attack_handler = {
       {
           var attack = attackblocks.filter(function (item) { return item.target_block === object.block_num})
           console.log(attack)
-          console.log('resolving fights with target block ' + attack.target_block)
-          resolveAttack(attack)
+          console.log('resolving fights with target block ' + attack[0].target_block)
+          resolveAttack(attack[0])
       }
   }
 }

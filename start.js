@@ -15,6 +15,7 @@ const stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 client.blockchain
   .getCurrentBlockNum()
   .then(res => {
+    console.log(res)
     attack.loadAttacks(res);
   })
   .catch(err => {
@@ -32,7 +33,15 @@ stream
         console.log(error);
       }
       for (i = 0; i < object.length; i++) {
-        attack.checkAttacks(object[i]);
+
+        var bloc 
+        if(bloc!=object[i].block_num)
+        {
+          console.log(object[i].block_num)
+          bloc = object[i].block_num
+          attack.checkAttacks(object[i]);
+        }
+
         bc_operation.filter(object[i]);
       }
     }
