@@ -73,8 +73,8 @@ const player_handler = {
               const operation_center = buildings.filter(
                 item => item.building === 'operation_center',
               )[0];
-              drugs_balance += drugs_balance * (operation_center.lvl * 0.005);
-              weapons_balance += weapons_balance * (operation_center.lvl * 0.005);
+              drugs_balance = drugs_balance * (operation_center.lvl * 0.005);
+              weapons_balance = weapons_balance * (operation_center.lvl * 0.005);
               console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
             const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
