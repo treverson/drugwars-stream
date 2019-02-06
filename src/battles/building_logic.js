@@ -7,7 +7,6 @@ for (i = 0; i < data.length; i++) {
 
 const building_logic = {
     removeProductionBuilding: function (user_buildings) {
-
         var result = []
         if (user_buildings.length > 0) {
             for (i in user_buildings) {

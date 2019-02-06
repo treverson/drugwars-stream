@@ -20,7 +20,8 @@ const round_handler = {
                 if (round_attackers && round_defenders) {
                     for (at = 0; at < bl; at++) {
                         if (round_attackers && round_defenders) {
-                            round_defenders.defense = Number(Math.round(round_defenders.defense - round_attackers.damage))
+                            round_defenders.pv = round_defenders.defense
+                            round_defenders.defense = round_defenders.defense - round_attackers.damage
                             round_attackers.pv = round_attackers.pv - round_defenders.damage
                             round_attackers.amount = Math.round(round_attackers.pv / round_attackers.defense)
                             for (u in attacker.units) {
@@ -45,12 +46,8 @@ const round_handler = {
                                 return el != null;
                             });
                             //console.log(defender.buildings)
-                            thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, amount: round_attackers.amount }
-                            thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, defense: round_defenders.defense }
                             bl = defender.buildings.length
                         }
-                        rc.push(thisround)
-
                     }
                     if (attacker.units && attacker.units.length > 0 && defender.buildings.length > 1)
                         console.log('there is still defense buildings : battle continue')
@@ -61,6 +58,9 @@ const round_handler = {
                         console.log('no more buildings')
                         current_round = 15
                     }
+                    thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount }
+                    thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense }
+                    rc.push(thisround)
                 }
 
             }

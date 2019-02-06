@@ -45,8 +45,8 @@ const second_round_handler = {
                             })
                         }
                         //console.log(defender.buildings)
-                        thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, amount: round_attackers.amount }
-                        thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, defense: round_defenders.defense }
+                        thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount }
+                        thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }
                         // defender.buildings = returnNewBuildings(defender.buildings, round_defenders)
                         // attacker.units = returnNewArmy(attacker.units, round_attackers)
                         rc.push(thisround)

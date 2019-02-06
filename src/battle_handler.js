@@ -44,6 +44,8 @@ const battle_handler = {
                         if (attacker_res && defender_res)
                         {
                             second_round.continueBattle(attacker_res, defender_res,frc ,function(user_attacker,user_defender,rc){
+                                var final_result = {attacker:attacker_res,defender:defender_res}
+                                rc.push(final_result)
                                 var rc = JSON.stringify(rc)
                                 const now = new Date()
                                 .toISOString()
