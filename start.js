@@ -21,23 +21,23 @@ client.blockchain
     console.log(err);
   });
 
-// stream
-//   .on('data', block => {
-//     if (block != null) {
-//       try {
-//         var object = JSON.stringify(block.transactions);
-//         object.replace('\\', '');
-//         object = JSON.parse(object);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//       for (i = 0; i < object.length; i++) {
-//         attack.checkAttacks(object[i]);
-//         bc_operation.filter(object[i]);
-//       }
-//     }
-//   })
-//   .on('end', () => {
-//     // done
-//     console.log('END');
-//   });
+stream
+  .on('data', block => {
+    if (block != null) {
+      try {
+        var object = JSON.stringify(block.transactions);
+        object.replace('\\', '');
+        object = JSON.parse(object);
+      } catch (error) {
+        console.log(error);
+      }
+      for (i = 0; i < object.length; i++) {
+        attack.checkAttacks(object[i]);
+        bc_operation.filter(object[i]);
+      }
+    }
+  })
+  .on('end', () => {
+    // done
+    console.log('END');
+  });
