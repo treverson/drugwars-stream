@@ -1,32 +1,17 @@
-const data = require('../gamedata/units.json')
-const defdata = require('../gamedata/defunits.json')
-const unit_logic = {
-    cleanDefArmy: function (user_units) {
-        const result = []
-        if (user_units.length > 0) {
-            for (i in user_units) {
-                if (defdata.filter(function (item) { return item.id === user_units[i].unit })) {
-                    const unit = defdata.filter(function (item) { return item.id === user_units[i].unit })[0]
-                    const new_unit = unit
-                    if (user_units[i].amount > 0) {
-                        new_unit.amount = user_units[i].amount
-                        new_unit.pv = user_units[i].amount * new_unit.defense
-                        new_unit.damage = user_units[i].amount * new_unit.attack
-                        result.push(new_unit)
-                    }
-                }
-
-            }
-        }
-        return result
-    },
+var data = require('../gamedata/defunits.json')
+var def_unit_logic = {
     cleanArmy: function (user_units) {
-        const result = []
+        var units = []
+        for (i = 0; i < data.length; i++) {
+            units.push(data[i])
+        }
+        var result = []
+        var placeholder = units
         if (user_units.length > 0) {
             for (i in user_units) {
-                if (data.filter(function (item) { return item.id === user_units[i].unit })) {
-                    const unit = data.filter(function (item) { return item.id === user_units[i].unit })[0]
-                    const new_unit = unit
+                if (placeholder.filter(function (item) { return item.id === user_units[i].unit })) {
+                    var unit = placeholder.filter(function (item) { return item.id === user_units[i].unit })[0]
+                    var new_unit = unit
                     if (user_units[i].amount > 0) {
                         new_unit.amount = user_units[i].amount
                         new_unit.pv = user_units[i].amount * new_unit.defense
@@ -69,4 +54,4 @@ const unit_logic = {
         }
     }
 }
-module.exports = unit_logic;
+module.exports = def_unit_logic;
