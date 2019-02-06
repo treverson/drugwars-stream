@@ -48,6 +48,9 @@ const second_round_handler = {
                         rc.push(thisround)
                     }
             }
+            aunits = aunits.filter(function (el) {
+                return el != null;
+            })
             for (u in aunits) {
                 if (aunits[u] && aunits[u].id === round_attackers.id)
                     if (round_attackers.amount < 1) {
@@ -60,6 +63,9 @@ const second_round_handler = {
                     return el != null;
                 })
             }
+            cunits = cunits.filter(function (el) {
+                return el != null;
+            })
             for (u in cunits) {
                 if (cunits[u] && cunits[u].id === round_defenders.id)
                     if (round_defenders.amount < 1) {
