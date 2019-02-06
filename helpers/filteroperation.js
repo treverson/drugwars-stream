@@ -33,8 +33,9 @@ const bc_operation = {
                     result => {
                       if (result) {
                         attack.addAttack(result.key, result.target_block);
-                        socket.emit('refresh', op.username);
-                        socket.emit('receiving_attack', op.defender);
+                        socket.emit('refresh', op.username,op.defender);
+                        socket.emit('attack', op.username,op.defender);
+                        socket.emit('receiving_attack', op.defender, op.username);
                       } else {
                         console.log('couldnt start attack');
                       }
