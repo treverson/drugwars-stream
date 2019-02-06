@@ -51,35 +51,10 @@ const second_round_handler = {
             aunits = aunits.filter(function (el) {
                 return el != null;
             })
-            for (u in aunits) {
-                if (aunits[u] && aunits[u].id === round_attackers.id)
-                    if (round_attackers.amount < 1) {
-                        delete aunits[u]
-                    }
-                    else {
-                        aunits[u].amount = round_attackers.amount
-                    }
-                aunits = aunits.filter(function (el) {
-                    return el != null;
-                })
-            }
             cunits = cunits.filter(function (el) {
                 return el != null;
             })
-            console.log(cunits)
-            for (u in cunits) {
-                console.log(cunits[u].id)
-                if (cunits[u] && cunits[u].id === round_defenders.id)
-                    if (round_defenders.amount < 1) {
-                        delete cunits[u]
-                    }
-                    else {
-                        cunits[u].amount = round_attackers.amount
-                    }
-                cunits = cunits.filter(function (el) {
-                    return el != null;
-                })
-            }
+            
             cb(aunits, cunits,rc)
     }
 }
