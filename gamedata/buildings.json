@@ -8,10 +8,11 @@
             "image": "office",
             "name": "Headquarters",
             "desc": "The headquarters coordinates the development and construction speed of your empire. The higher the level of the office, the quicker the other buildings are developed.",
-            "requirement": [],
             "base_price": 25,
             "coeff": 4,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "training_facility",
@@ -21,12 +22,11 @@
             "image": "training",
             "name": "Training Facility",
             "desc": "Here you can build units to attack your opponents. The time in which each unit will be completed will depend on the type the unit and the level of the facility.",
-            "requirement": [
-                "Office Lvl. 8"
-            ],
             "base_price": 250,
             "coeff": 1.5,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "operation_center",
@@ -37,12 +37,11 @@
             "name": "Operation Center",
             "desc": "This building increases the efficiency of your empire and permits you to get a bonus on all your of income.",
             "feature": "+0.005% INCOME PER LEVEL",
-            "requirement": [
-                "Office Lvl. 8"
-            ],
             "base_price": 300,
             "coeff": 3,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "pantheon",
@@ -52,12 +51,11 @@
             "image": "pantheon",
             "name": "Pantheon",
             "desc": "The Pantheon does not have any particular function, and shows a sign of wealth, striking jealousy in your opponents.",
-            "requirement": [
-                "Office Lvl. 8"
-            ],
             "base_price": 100,
             "coeff": 1,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "research_center",
@@ -67,12 +65,11 @@
             "image": "search",
             "name": "Research Center",
             "desc": "The Research Center allows the training of your units in new techniques, giving them more expertise in combat. As with the HQ, higher is the level, faster the skills are developed.",
-            "requirement": [
-                "Office Lvl. 3"
-            ],
             "base_price": 200,
             "coeff": 2,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "crackhouse",
@@ -82,24 +79,13 @@
             "image": "crackhouse",
             "name": "Crack House",
             "desc": "A crack house where your drug dealers produce <span style='color:yellow'>DRUGS</span>... slowly but surely",
-            "requirement": [
-                "Office Lvl. 3"
-            ],
             "production_type": "drug",
             "production_rate": 0.2,
             "base_price": 200,
             "coeff": 1,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Watcher",
-                    "bonus": "+0.1 base prod"
-                },
-                {
-                    "name": "Watcher",
-                    "bonus": "+25% base prod"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "hydrofarm",
@@ -109,22 +95,13 @@
             "image": "hydrofarm",
             "name": "Hydroponic Farm",
             "desc": "A good solution for producing more <span style='color:yellow'>DRUGS</span> without soil is to use the Hydroculture. ",
-            "requirement": [
-                "Office Lvl. 4"
-            ],
             "production_type": "drug",
             "production_rate": 0.5,
             "base_price": 800,
             "coeff": 2,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "meth_lab",
@@ -134,22 +111,13 @@
             "image": "methlab",
             "name": "Meth Lab",
             "desc": "This building contain drug experts which produce <span style='color:yellow'>DRUGS</span> with a comfortable speed.",
-            "requirement": [
-                "Office Lvl. 4"
-            ],
             "production_type": "drug",
             "production_rate": 1,
             "base_price": 3600,
             "coeff": 3.5,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "cocina",
@@ -159,22 +127,13 @@
             "image": "cocina",
             "name": "Cocina",
             "desc": "We call it 'LaCocina' or 'LaCuisine', it produce more <span style='color:yellow'>DRUGS</span> with a better speed.",
-            "requirement": [
-                "Office Lvl. 5"
-            ],
             "production_type": "drug",
             "production_rate": 2,
             "base_price": 7500,
             "coeff": 7,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "pharma_lab",
@@ -184,22 +143,13 @@
             "image": "pharmalab",
             "name": "Pharmaceutical Lab",
             "desc": "Here you go if you want to produce <span style='color:yellow'>DRUGS</span> massively to take over the DrugWars.",
-            "requirement": [
-                "Office Lvl. 6"
-            ],
             "production_type": "drug",
             "production_rate": 3,
             "base_price": 15000,
             "coeff": 10,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "drug_storage",
@@ -209,12 +159,11 @@
             "image": "drugstorage",
             "name": "Drug Storage",
             "desc": "This building help you to stock more <span style='color:yellow'>DRUGS</span> and keep them safe from ennemies. Base 10% + 1% for each level",
-            "requirement": [
-                "Office Lvl. 6"
-            ],
             "base_price": 200,
             "coeff": 2,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "ammunition",
@@ -224,22 +173,13 @@
             "image": "ammunition",
             "name": "Ammunition Factory",
             "desc": "This is your first building to produce <span style='color:yellow'>WEAPONS</span>.",
-            "requirement": [
-                "Office Lvl. 4"
-            ],
             "production_type": "weapon",
             "production_rate": 0.1,
             "base_price": 200,
             "coeff": 1,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "weapon_factory",
@@ -249,22 +189,13 @@
             "image": "weapon",
             "name": "Weapon Factory",
             "desc": "Want to produce more <span style='color:yellow'>WEAPONS</span>? The solution may be the weapon factory",
-            "requirement": [
-                "Office Lvl. 4"
-            ],
             "production_type": "weapon",
             "production_rate": 0.2,
             "base_price": 800,
             "coeff": 2,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "smuggle",
@@ -274,22 +205,13 @@
             "image": "smuggle",
             "name": "Smuggle",
             "desc": "Smuggling can be worth and it produce more <span style='color:yellow'>WEAPONS</span>.",
-            "requirement": [
-                "Office Lvl. 5"
-            ],
             "production_type": "weapon",
             "production_rate": 0.5,
             "base_price": 3600,
             "coeff": 3.5,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "blackmarket",
@@ -299,22 +221,13 @@
             "image": "blackmarket",
             "name": "Black Market",
             "desc": "The black market is the good place to trade weapons, it produce <span style='color:yellow'>WEAPONS</span>.",
-            "requirement": [
-                "Office Lvl. 5"
-            ],
             "production_type": "weapon",
             "production_rate": 0.8,
             "base_price": 7500,
             "coeff": 7,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "metalprint",
@@ -324,22 +237,13 @@
             "image": "metalprint",
             "name": "3D Metal printing",
             "desc": "This is the ultimate way to produce <span style='color:yellow'>WEAPONS</span> fastly.",
-            "requirement": [
-                "Office Lvl. 8"
-            ],
             "production_type": "weapon",
             "production_rate": 1,
             "base_price": 15000,
             "coeff": 10,
+            "attack":0,
             "defense": 0,
-            "upgrades": [
-                {
-                    "name": "Fertilizer"
-                },
-                {
-                    "name": "Converting to Hashish"
-                }
-            ]
+            "priority":10
         },
         {
             "id": "weapon_storage",
@@ -349,12 +253,11 @@
             "image": "weapon_storage",
             "name": "Weapon Storage",
             "desc": "This building help you to stock more <span style='color:yellow'>WEAPONS</span>  and keep them safe from ennemies. Base 10% + 1% for each level",
-            "requirement": [
-                "Office Lvl. 3"
-            ],
             "base_price": 200,
             "coeff": 2,
-            "defense": 0
+            "attack":0,
+            "defense": 0,
+            "priority":10
         },
         {
             "id": "camera",
@@ -364,13 +267,11 @@
             "image": "cameras",
             "name": "Cameras",
             "desc": "More you have cameras and more you can spy on your neighboor to caught any suspect move.",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
             "base_price": 500,
             "coeff": 1,
-            "defense": 15
+            "attack":0,
+            "defense": 15,
+            "priority":1
         },
         {
             "id": "dogs",
@@ -380,13 +281,11 @@
             "image": "dogs",
             "name": "Dogs",
             "desc": "They will scare your opponents!",
-            "requirement": [
-                "Office Lvl. 9",
-                "Search Center Lvl. 1"
-            ],
             "base_price": 1000,
             "coeff": 2,
-            "defense": 30
+            "attack":15,
+            "defense": 30,
+            "priority":2
         },
         {
             "id": "defense_troop",
@@ -396,13 +295,11 @@
             "image": "defensetroop",
             "name": "Defense Troops",
             "desc": "A good defense which consist to have strong defenders.",
-            "requirement": [
-                "Office Lvl. 9",
-                "Search Center Lvl. 1"
-            ],
             "base_price": 1500,
             "coeff": 3,
-            "defense": 60
+            "attack":30,
+            "defense": 60,
+            "priority":3
         },
         {
             "id": "defense_system",
@@ -412,13 +309,11 @@
             "image": "defensesystem",
             "name": "Security System",
             "desc": "This is a sophisticated system to defend yourself",
-            "requirement": [
-                "Office Lvl. 9",
-                "Search Center Lvl. 1"
-            ],
             "base_price": 3000,
             "coeff": 5,
-            "defense": 120
+            "attack":45,
+            "defense": 120,
+            "priority":3
         },
         {
             "id": "hidden_mines",
@@ -428,148 +323,11 @@
             "image": "mines",
             "name": "Hidden Mines",
             "desc": "Put some mines around your base and suprise your opponents!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
             "base_price": 5000,
             "coeff": 10,
-            "defense": 250
-        },
-        {
-            "id": "routing",
-            "disabled": false,
-            "type": "training",
-            "score": 15,
-            "image": "routing",
-            "name": "Routing",
-            "desc": "This increase the speed of your units!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 1
-        },
-        {
-            "id": "coordination",
-            "disabled": false,
-            "type": "training",
-            "score": 46,
-            "image": "coordination",
-            "name": "Coordination",
-            "desc": "By working together your units tend to keep their role as core!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 2
-        },
-        {
-            "id": "closecombat",
-            "disabled": false,
-            "type": "training",
-            "score": 53,
-            "image": "closecombat",
-            "name": "Close Combat",
-            "desc": "Improve the efficience of your Melee units!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 3
-        },
-        {
-            "id": "firearms",
-            "disabled": false,
-            "type": "training",
-            "score": 75,
-            "image": "firearms",
-            "name": "Firearms Training",
-            "desc": "Improve the efficience of your Short Range units!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 4
-        },
-        {
-            "id": "information",
-            "disabled": false,
-            "type": "training",
-            "score": 15,
-            "image": "information",
-            "name": "Information Procurement",
-            "desc": "Improve the efficience of your attacks and give your more options!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 5
-        },
-        {
-            "id": "sniping",
-            "disabled": false,
-            "type": "training",
-            "score": 96,
-            "image": "sniping",
-            "name": "Sniper Trains",
-            "desc": "Improve the efficience of your Long Range units!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 6
-        },
-        {
-            "id": "bomb",
-            "disabled": false,
-            "type": "training",
-            "score": 148,
-            "image": "bomb",
-            "name": "Bomb Construction",
-            "desc": "Improve the attack of your Bombers!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 7
-        },
-        {
-            "id": "psychological",
-            "disabled": false,
-            "type": "training",
-            "score": 196,
-            "image": "psychological",
-            "name": "Psychological Training",
-            "desc": "Improve the defense of all your Mercenaries!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 8
-        },
-        {
-            "id": "chemical",
-            "disabled": false,
-            "type": "training",
-            "score": 263,
-            "image": "chemical",
-            "name": "Chemical Training",
-            "desc": "Improve the efficience of your Chemical Troups!",
-            "requirement": [
-                "Office Lvl. 10",
-                "Search Center Lvl. 5"
-            ],
-            "base_price": 500,
-            "coeff": 10
+            "attack":38,
+            "defense": 250,
+            "priority":1
         }
     ]
 }

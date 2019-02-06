@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
 var bc_operation = require('./utils/filteroperation')
-var battle = require('./operations/battle_handler')
+var attack = require('./operations/attack_handler')
 const { Client, BlockchainMode, PrivateKey } = require('dsteem');
 var client = new Client('https://api.steemit.com')
 
@@ -10,7 +10,11 @@ app.listen(port, () => console.log(`Listening on ${port}`));
 
 var stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest })
 
-battle.loadAttacks()
+client.blockchain.getCurrentBlockNum().then(res => {
+    attack.loadAttacks(res)
+}).catch(err => {
+    console.log(err);
+})
 
 stream.on("data", function (block) {
     if (block != null) {
@@ -22,7 +26,7 @@ stream.on("data", function (block) {
             console.log(error)
         }
         for (i = 0; i < object.length; i++) {
-            battle.checkAttacks(object[i].block_num)
+            attack.checkAttacks(object[i])
             bc_operation.filter(object[i])
         }
     }

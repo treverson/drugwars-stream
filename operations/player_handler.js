@@ -100,8 +100,7 @@ const player_handler = {
             query = "SELECT * FROM users_buildings WHERE username = ?; \n\
           SELECT * FROM heist WHERE username = ?";
             db.query(
-                query,
-                [character.username, character.username],
+                query, [character.username, character.username],
                 function (err, result) {
                     if (err) {
                         console.log(err);

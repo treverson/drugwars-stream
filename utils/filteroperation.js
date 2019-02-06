@@ -1,4 +1,4 @@
-var battle = require('../operations/battle_handler')
+var attack = require('../operations/attack_handler')
 var player = require('../operations/player_handler')
 var shop = require('../operations/shop_handler')
 var building = require('../operations/building_handler')
@@ -24,9 +24,9 @@ const bc_operation = {
                             player.checkArmy(op.username, op.army, function (result) {
                                 if (result === 'success') {
                                     console.log('enough units')
-                                    battle.startAttack(op.username, op.army, op.defender, tx.block_num, tx.transaction_id, function (attack) {
-                                        if (attack) {
-                                            battle.addAttack(attack.key,attack.target_block)
+                                    attack.startAttack(op.username, op.army, op.defender, tx.block_num, tx.transaction_id, function (result) {
+                                        if (result) {
+                                            attack.addAttack(result.key,result.target_block)
                                             socket.emit('refresh', op.username)
                                             socket.emit('receiving_attack', op.defender)
                                         }
