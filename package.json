@@ -1,7 +1,6 @@
 {
   "name": "drugwars-stream",
   "version": "0.1.0",
-  "description": "Steem on-chain apps registry",
   "homepage": "https://drugwars.io",
   "engines": {
     "node": "8.11.3"
@@ -30,12 +29,5 @@
     "eslint-plugin-prettier": "^2.6.2",
     "jest": "^23.5.0",
     "prettier": "^1.14.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/steemscript/registry.git"
-  },
-  "bugs": {
-    "url": "https://github.com/steemscript/registry/issues"
   }
 }
