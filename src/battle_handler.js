@@ -71,7 +71,6 @@ const battle_handler = {
                                         var reward = defender_account[0].drugs_balance / 2
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
                                     }
-                                   console.log(defender_account[0])
                                     query = query.join(';')
                                     db.query(query, (err, result) => {
                                         if (err || !result || !result[0]) {
@@ -96,13 +95,13 @@ const battle_handler = {
                                     let query = []
                                     for(i=0;i<user_defender.length;i++)
                                     {
-                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
-                                        username = '${user_defender.username}'`)
+                                        query.push(`UPDATE users_units SET amount=amount-${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
+                                        username = '${defender.username}'`)
                                     }
                                     query = query.join(';')
                                     db.query(query, (err, result) => {
                                         if (err || !result || !result[0]) {
-                                          console.log(`error for updating attacker units ${err}`);
+                                          console.log(`error for updating defenders units ${err}`);
                                         }
                                         console.log(`Updated attackers unit play`);
                                       });
