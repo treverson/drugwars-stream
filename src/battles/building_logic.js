@@ -1,13 +1,13 @@
 const data = require('../gamedata/buildings.json')
+var buildings = []
+for (i = 0; i < data.length; i++) {
+    buildings.push(data[i])
 
+}
 
 const building_logic = {
     removeProductionBuilding: function (user_buildings) {
-        var buildings = []
-        for (i = 0; i < data.buildings.length; i++) {
-            buildings.push(data.buildings[i])
 
-        }
         var result = []
         if (user_buildings.length > 0) {
             for (i in user_buildings) {
@@ -25,11 +25,6 @@ const building_logic = {
         return result
     },
     chooseNextDefenders: function (user_buildings) {
-        var buildings = []
-        for (i = 0; i < data.buildings.length; i++) {
-            buildings.push(data.buildings[i])
-
-        }
         user_buildings = user_buildings.filter(function (el) {
             return el != null;
         });

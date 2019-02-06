@@ -1,18 +1,17 @@
 const data = require('../gamedata/units.json')
+var units = []
+for (i = 0; i < data.length; i++) {
+    units.push(data[i])
+}
 const unit_logic = {
     cleanArmy: function (user_units) {
-        var units = []
-        for (i = 0; i < data.units.length; i++) {
-            units.push(data.units[i])
-
-        }
         this.result = []
         var placeholder = units
         if (user_units.length > 0) {
             for (i in user_units) {
                 if (placeholder.filter(function (item) { return item.id === user_units[i].unit })) {
                     var unit = placeholder.filter(function (item) { return item.id === user_units[i].unit })[0]
-                    if (user_units[i].amount > 0) {
+                    if (user_units[i].amount != undefined && user_units[i].amount > 0) {
                         unit.amount = user_units[i].amount
                         unit.pv = user_units[i].amount * unit.defense
                         unit.damage = user_units[i].amount * unit.attack
@@ -26,11 +25,6 @@ const unit_logic = {
     },
     chooseNextAttackersByPriority: function (old_army) {
         if (old_army && old_army.length > 0) {
-            var units = []
-            for (i = 0; i < data.units.length; i++) {
-                units.push(data.units[i])
-
-            }
             var placeholder = units
             var fresh_army = []
             old_army = old_army.filter(function (el) {
