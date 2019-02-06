@@ -16,8 +16,8 @@ const attack_handler = {
       var timer = (1 * 3) * 1 ^ 2 / 1
       var next_update_time = new Date(now.getTime() + (timer * 1000)).toISOString().slice(0, 19).replace('T', ' ')
       var start_block = block_num
-      var target_block = block_num + (timer*3)
-      var end_block = block_num + ((timer*3)*2)
+      var target_block = block_num + (timer*7)
+      var end_block = block_num + ((timer*7)*2)
       console.log('block num : ' + block_num +'target num : ' + target_block)
       query.push(`TRUNCATE TABLE battles`)
       query.push(`TRUNCATE TABLE battles_units`) 
