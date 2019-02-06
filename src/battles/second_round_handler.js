@@ -66,7 +66,9 @@ const second_round_handler = {
             cunits = cunits.filter(function (el) {
                 return el != null;
             })
+            console.log(cunits)
             for (u in cunits) {
+                console.log(cunits[u].id)
                 if (cunits[u] && cunits[u].id === round_defenders.id)
                     if (round_defenders.amount < 1) {
                         delete cunits[u]
