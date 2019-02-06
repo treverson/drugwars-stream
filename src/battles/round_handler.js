@@ -8,6 +8,7 @@ const round_handler = {
         var round = 15;
         attacker.units = unit_logic.cleanArmy(attacker.units)
         defender.buildings = building_logic.removeProductionBuilding(defender.buildings)
+        var rc = []
         for (current_round = 1; current_round < round; current_round++) {
             var bl = defender.buildings.length
             if (defender.buildings && defender.buildings.length > 0) {
@@ -22,8 +23,6 @@ const round_handler = {
                             round_defenders.defense = Number(Math.round(round_defenders.defense - round_attackers.damage))
                             round_attackers.pv = round_attackers.pv - round_defenders.damage
                             round_attackers.amount = Math.round(round_attackers.pv / round_attackers.defense)
-                            console.log(round_attackers.amount, round_attackers.id)
-                            console.log(round_defenders.id, round_defenders.pv)
                             for (u in attacker.units) {
                                 if (attacker.units[u] && attacker.units[u].id === round_attackers.id)
                                     if (round_attackers.amount < 1) {
@@ -32,45 +31,44 @@ const round_handler = {
                                     else {
                                         attacker.units[u].amount = round_attackers.amount
                                     }
-                                attacker.units = attacker.units.filter(function (el) {
-                                    return el != null;
-                                })
                             }
+                            attacker.units = attacker.units.filter(function (el) {
+                                return el != null;
+                            })
                             if (round_defenders.defense < 1) {
                                 for (def in defender.buildings) {
                                     if (defender.buildings[def].id === round_defenders.id)
                                         delete defender.buildings[def]
                                 }
-                                defender.buildings = defender.buildings.filter(function (el) {
-                                    return el != null;
-                                });
                             }
+                            defender.buildings = defender.buildings.filter(function (el) {
+                                return el != null;
+                            });
                             //console.log(defender.buildings)
                             thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, amount: round_attackers.amount }
                             thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, defense: round_defenders.defense }
-                            // defender.buildings = returnNewBuildings(defender.buildings, round_defenders)
-                            // attacker.units = returnNewArmy(attacker.units, round_attackers)
                             bl = defender.buildings.length
                         }
-
+                        rc.push(thisround)
 
                     }
                     if (attacker.units && attacker.units.length > 0 && defender.buildings.length > 1)
-                        console.log('battle continue')
+                        console.log('there is still defense buildings : battle continue')
                     else if (attacker.units.length < 1) {
-                        cb(false)
+                        current_round = 15
                     }
-                    else console.log('bra')
+                    else if (defender.buildings.length < 1) {
+                        console.log('no more buildings')
+                        current_round = 15
+                    }
                 }
 
             }
             else {
-                console.log('no defense buildings')
                 current_round = 15
-                cb(attacker, defender)
             }
         }
-
+        return cb(attacker, defender,rc)
     }
 }
 module.exports = round_handler;
