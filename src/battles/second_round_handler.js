@@ -48,6 +48,30 @@ const second_round_handler = {
                         rc.push(thisround)
                     }
             }
+            for (u in aunits) {
+                if (aunits[u] && aunits[u].id === round_attackers.id)
+                    if (round_attackers.amount < 1) {
+                        delete aunits[u]
+                    }
+                    else {
+                        aunits[u].amount = round_attackers.amount
+                    }
+                aunits = aunits.filter(function (el) {
+                    return el != null;
+                })
+            }
+            for (u in cunits) {
+                if (cunits[u] && cunits[u].id === round_defenders.id)
+                    if (round_defenders.amount < 1) {
+                        delete cunits[u]
+                    }
+                    else {
+                        cunits[u].amount = round_attackers.amount
+                    }
+                cunits = cunits.filter(function (el) {
+                    return el != null;
+                })
+            }
             cb(aunits, cunits,rc)
     }
 }
