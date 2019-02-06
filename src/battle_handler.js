@@ -80,9 +80,14 @@ const battle_handler = {
                                       });
                                 }
                                 else{
-                                    let query = `DELETE FROM battles_units WHERE username = ? ;
-                                    DELETE FROM battles WHERE username = ? AND battle_key= ? ;`
-                                    db.query(query, [attacker.username,attacker.username,battle_key], function (err, result) {
+                                    let query = []
+                                    query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
+                                    query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+                                    VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
+                                    query.push(`DELETE FROM battles_units WHERE username = '${attacker.username}'   
+                                    DELETE FROM battles WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
+                                    query = query.join(';')
+                                    db.query(query, function (err, result) {
                                     if(err)
                                     console.log(err)
                                     else
