@@ -123,6 +123,8 @@ const battle_handler = {
                                 }
                                 console.log(user_attacker && user_defender)
                                 // return cb(true)
+                                socket.emit('attackresult', attacker.username,JSON.parse(rc));
+                                socket.emit('attackresult', defender.username,JSON.parse(rc));
                             })
                         }
                     })
