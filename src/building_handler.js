@@ -1,7 +1,21 @@
 const db = require('../helpers/db');
 const player = require('./player_handler');
 const utils = require('../helpers/utils');
-const buildings = require('./gamedata/buildings.json');
+const {promisify} = require('util')
+const fs = require('fs')
+const readFileAsync = promisify(fs.readFile)
+var buildings = []
+    readFileAsync(`${__dirname}/../gamedata/buildings.json`, {encoding: 'utf8'})
+    .then(contents => {
+      const obj = JSON.parse(contents)
+      for(i in obj)
+      {
+        buildings.push(obj[i])
+      }
+    })
+    .catch(error => {
+        console.log(error)
+    })
 
 const building_handler = {
   tryUpdateBuilding(user, building_name, amount, cb) {
