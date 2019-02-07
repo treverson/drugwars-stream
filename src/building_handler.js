@@ -41,9 +41,8 @@ const building_handler = {
         }
         building_level += 1;
         // CHECK HEADQUARTER LEVEL
-        const headquarters = character_buildings.filter(
-          item => item.building === 'headquarters'
-        )[0]
+        var headquarters = character_buildings.filter(item => item.building === 'headquarters' )
+        headquarters.lvl = headquarters[0].lvl
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
