@@ -49,7 +49,7 @@ const second_round_handler = {
                         rc.push(thisround)
                     }
                     else{
-                        if(!unit_logic.chooseNextAttackersByPriority(aunits) && unit_logic_def.chooseNextAttackersByPriority(cunits))
+                        if(!unit_logic.chooseNextAttackersByPriority(aunits) && unit_logic.chooseNextAttackersByPriority(cunits))
                         {
                             console.log('defender win')
 
