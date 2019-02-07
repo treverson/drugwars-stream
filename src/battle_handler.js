@@ -72,7 +72,7 @@ const battle_handler = {
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
                                     }
                                 }
-                                query.push(`DELETE FROM users_units WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
+                                query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
                                 if(user_defender.length>0)
                                 {
                                     for(i=0;i<user_defender.length;i++)
