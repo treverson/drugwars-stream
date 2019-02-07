@@ -12,7 +12,7 @@ const building_handler = {
         cb(null);
       } else {
         // CHOOSE THE PLACEHOLDER
-        console.log(building_name);
+
         const building_placeholder = buildings.filter(item => item.id === building_name)[0];
         const now = new Date();
         const headquarters = character_buildings.filter(
@@ -33,7 +33,6 @@ const building_handler = {
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
-        console.log(next_update);
         // CHECK LAST UPDATE
         if (next_update <= now) {
           let timer = building_handler.calculateTime(
@@ -41,7 +40,10 @@ const building_handler = {
             building_level,
             building_placeholder,
           );
-          console.log(timer);
+          console.log(building_name);
+          console.log('timer : '+timer);
+          console.log('cost : '+timer);
+
           let cost = building_handler.calculateCost(building_level, building_placeholder);
           // CHECK DRUGS COST BALANCE
           if (cost > user.drugs_balance && !amount) {
