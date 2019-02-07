@@ -30,7 +30,7 @@ const building_handler = {
         const building_placeholder = buildings.filter(item => item.id === building_name)[0];
         const now = new Date();
         // CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
-        var character_buildings = JSON.parse(JSON.stringify(character_buildings));
+        const character_buildings = JSON.parse(JSON.stringify(character_buildings));
         if (character_buildings.filter(item => item.building === building_name)[0]) {
           const building = character_buildings.filter(item => item.building === building_name);
           var next_update = new Date(Date.parse(building[0].next_update));
@@ -42,7 +42,8 @@ const building_handler = {
         building_level += 1;
         // CHECK HEADQUARTER LEVEL
         var headquarters = character_buildings.filter(item => item.building === 'headquarters' )
-        headquarters.lvl = headquarters[0].lvl
+        console.log(headquarters)
+        headquarters.lvl = headquarters.lvl
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
