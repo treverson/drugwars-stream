@@ -41,16 +41,9 @@ const building_handler = {
         }
         building_level += 1;
         // CHECK HEADQUARTER LEVEL
-        console.log(character_buildings)
-        console.log(character_buildings.filter(
-          item => item.building === 'headquarters'
-        )[0])
-        console.log(character_buildings.filter(
-          item => item.building === 'headquarters'
-        ))
         const headquarters = character_buildings.filter(
           item => item.building === 'headquarters'
-        )[0];
+        )[0]
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
@@ -118,6 +111,7 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
+    console.log(hq_level)
     return building_placeholder.coeff * 400 * (building_level ^ (2 / hq_level));
   },
   calculateCost(building_level, building_placeholder) {
