@@ -15,8 +15,8 @@ var round_handler = {
                 //ATTACKER HIT BUILDINGS
                 var thisround = {}
 
-                const round_attackers = unit_logic.chooseNextAttackersByPriority(attacker.units)
-                const round_defenders = building_logic.chooseNextDefenders(defender.buildings)
+                var round_attackers = unit_logic.chooseNextAttackersByPriority(attacker.units)
+                var round_defenders = building_logic.chooseNextDefenders(defender.buildings)
                 thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount ,type:'building'},
                 defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.defense, type:'building'}}
                 if (round_attackers && round_defenders) {
@@ -67,6 +67,7 @@ var round_handler = {
 
             }
             else {
+                thisround.army = {attacker_units:attacker.units}
                 current_round = 15
             }
         }
