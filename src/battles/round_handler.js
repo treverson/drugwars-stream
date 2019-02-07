@@ -67,7 +67,7 @@ var round_handler = {
 
             }
             else {
-                thisround.army = {attacker_units:attacker.units}
+                rc.push({attacker_units:attacker.units})
                 current_round = 15
             }
         }
