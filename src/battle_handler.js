@@ -48,7 +48,7 @@ const battle_handler = {
                             second_round.continueBattle(attacker_res, defender_res,frc ,function(user_attacker,user_defender,rc){
                                 var final_result = {attacker:attacker_res,defender:defender_res}
                                 rc.push(final_result)
-                                var rc = JSON.stringify(rc)
+                                var rc = rc
                                 const now = new Date()
                                 .toISOString()
                                 .slice(0, 19)
@@ -56,7 +56,7 @@ const battle_handler = {
                                 let query = []
                                 query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
                                 query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
+                                VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`)
 
                                 if(user_attacker.length>0)
                                 {
@@ -70,6 +70,7 @@ const battle_handler = {
                                     {
                                         var reward = defender_account[0].drugs_balance / 2
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
+                                        rc.push({reward:reward})
                                     }
                                 }
                                 query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`)
