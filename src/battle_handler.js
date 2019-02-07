@@ -95,12 +95,13 @@ const battle_handler = {
                                 else
                                 console.log(result)
                                 })
+
                                 console.log(user_attacker && user_defender)
                                 // return cb(true)
                                 socket.emit('refresh', attacker.username);
                                 socket.emit('refresh', defender.username);
-                                socket.emit('attackresult', attacker.username,JSON.parse(rc));
-                                socket.emit('attackresult', defender.username,JSON.parse(rc));
+                                socket.emit('attackresult', attacker.username,rc);
+                                socket.emit('attackresult', defender.username,rc);
                             })
                         }
                     })
