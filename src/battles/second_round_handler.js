@@ -10,6 +10,9 @@ const second_round_handler = {
             var round_attackers = unit_logic.chooseNextAttackersByPriority(aunits)
             var round_defenders = unit_logic.chooseNextAttackersByPriority(cunits)
             if (round_attackers && round_defenders) {
+                        thisround.start = { attacker :{attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount}, 
+                            defender : { defender: round_defenders.id, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }  
+                            }
                         round_attackers.pv = round_attackers.pv - round_defenders.damage
                         round_attackers.amount = Math.round(round_attackers.pv / round_attackers.defense)
                         round_defenders.pv = round_defenders.pv - round_attackers.damage
@@ -39,11 +42,9 @@ const second_round_handler = {
                                 return el != null;
                             })
                         }
-                        //console.log(defender.buildings)
-                        thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount }
-                        thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }
-                        // defender.buildings = returnNewBuildings(defender.buildings, round_defenders)
-                        // attacker.units = returnNewArmy(attacker.units, round_attackers)
+                        thisround.end = { attacker :{attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount}, 
+                        defender : { defender: round_defenders.id, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }  
+                        }
                         rc.push(thisround)
                     }
                     else{

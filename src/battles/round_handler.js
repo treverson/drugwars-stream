@@ -20,6 +20,8 @@ var round_handler = {
                 if (round_attackers && round_defenders) {
                     for (at = 0; at < bl; at++) {
                         if (round_attackers && round_defenders) {
+                            thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
+                            defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense}}
                             round_defenders.pv = round_defenders.defense
                             round_defenders.defense = round_defenders.defense - round_attackers.damage
                             round_attackers.pv = round_attackers.pv - round_defenders.damage
@@ -58,8 +60,8 @@ var round_handler = {
                         console.log('no more buildings')
                         current_round = 15
                     }
-                    thisround.attacker = { attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount }
-                    thisround.defender = { defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense }
+                    thisround.end = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
+                    defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense}}
                     rc.push(thisround)
                 }
 

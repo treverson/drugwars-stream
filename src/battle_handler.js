@@ -100,7 +100,6 @@ const battle_handler = {
                                 if(err)
                                 console.log(err)
                                 else
-                                console.log('removed all base units for ' + defender.username)
                                 console.log(result)
                                 })
                                 console.log(user_attacker && user_defender)
