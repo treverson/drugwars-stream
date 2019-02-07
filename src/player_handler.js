@@ -84,8 +84,8 @@ const player_handler = {
             db.query(query, (err, result) => {
               if (err) throw err;
               else {
-                user.drugs = drugs_balance;
-                user.weapons = weapons_balance;
+                user.drugs_balance = drugs_balance;
+                user.weapons_balance = weapons_balance;
                 console.log(
                   `user - Updated user ${
                     user.username

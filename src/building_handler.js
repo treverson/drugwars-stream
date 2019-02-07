@@ -26,11 +26,10 @@ const building_handler = {
         cb(null);
       } else {
         // CHOOSE THE PLACEHOLDER
-
         var building_placeholder = buildings.filter(item => item.id === building_name)[0];
-        var now = new Date();
-        // CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
         var character_buildings = JSON.parse(JSON.stringify(character_buildings));
+        var now = new Date();
+        // CHECK FOR EXISTANT BUILDING AND GET NEXT LEVEL/UPDATE
         if (character_buildings.filter(item => item.building === building_name)[0]) {
           var building = character_buildings.filter(item => item.building === building_name);
           var next_update = new Date(Date.parse(building[0].next_update));
@@ -40,12 +39,12 @@ const building_handler = {
           var next_update = now;
         }
         building_level += 1;
-        // CHECK HEADQUARTER LEVEL
+        // ADD HEADQUARTER & CHECK LEVEL
         var headquarters = character_buildings.filter(item => item.building === 'headquarters' )[0]
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
-        // CHECK LAST UPDATE
+        // CHECK LAST UPDATE FOR THIS BUILDING
         if (next_update <= now) {
           let timer = building_handler.calculateTime(
             headquarters.lvl,
@@ -109,7 +108,6 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
-    console.log(hq_level)
     return building_placeholder.coeff * 400 * (building_level ^ (2 / hq_level));
   },
   calculateCost(building_level, building_placeholder) {
