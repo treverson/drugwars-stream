@@ -10,6 +10,7 @@ const second_round_handler = {
             var round_attackers = unit_logic.chooseNextAttackersByPriority(aunits)
             var round_defenders = unit_logic.chooseNextAttackersByPriority(cunits)
             if (round_attackers && round_defenders) {
+                var thisround = {}
                         thisround.start = { attacker :{attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount}, 
                             defender : { defender: round_defenders.id, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }  
                             }
@@ -17,7 +18,7 @@ const second_round_handler = {
                         round_attackers.amount = Math.round(round_attackers.pv / round_attackers.defense)
                         round_defenders.pv = round_defenders.pv - round_attackers.damage
                         round_defenders.amount = Math.round(round_defenders.pv / round_defenders.defense)
-                        var thisround = {}
+
                         for (u in aunits) {
                             if (aunits[u] && aunits[u].id === round_attackers.id)
                                 if (round_attackers.amount < 1 || aunits[u].amount <1) {
