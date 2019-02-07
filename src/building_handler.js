@@ -55,10 +55,10 @@ const building_handler = {
           console.log(building_name);
           console.log('timer : '+timer);
           console.log('cost : '+timer);
-
+          console.log(user)
           let cost = building_handler.calculateCost(building_level, building_placeholder);
           // CHECK DRUGS COST BALANCE
-          if (cost > user.drugs_balance && !amount) {
+          if (cost > user.drugs_balance && amount === null) {
             return cb('not enough drugs');
           }
           if (cost < user.drugs_balance && !amount) {
