@@ -67,7 +67,7 @@ const building_handler = {
             amount = parseFloat(amount.split(' ')[0]).toFixed(3);
             utils.costToSteem(cost, result => {
               if (result)
-                if (result <= amount || result - (result / 100) * 5 <= amount) {
+                if (result <= amount || (result - ((result / 100) * 5)) <= amount) {
                   cost = 0;
                   timer = 1;
                   building_handler.upgradeBuilding(
@@ -97,6 +97,7 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
+    console.log(hq_level, building_level, building_placeholder)
     return building_placeholder.coeff * 400 * (building_level ^ (2 / hq_level));
   },
   calculateCost(building_level, building_placeholder) {

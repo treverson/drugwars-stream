@@ -62,7 +62,6 @@ const player_handler = {
               .toISOString()
               .slice(0, 19)
               .replace('T', ' ');
-              console.log(user.drugs_balance)
             const differenceprod = now.getTime() - user.last_update.getTime();
             let drugs_balance =
               user.drugs_balance +
@@ -78,7 +77,9 @@ const player_handler = {
               weapons_balance = weapons_balance * (operation_center.lvl * 0.005);
               console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
-            console.log(user.drugs_balance)
+            console.log(
+              `User ${user.username} old drug balance : ${drugs_balance} old weapon balance : ${weapons_balance}`,
+            );
             const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
             db.query(query, (err, result) => {
               if (err) throw err;
@@ -88,7 +89,7 @@ const player_handler = {
                 console.log(
                   `user - Updated user ${
                     user.username
-                  } new drug balance : ${drugs_balance}new weapon balance : ${weapons_balance}`,
+                  } new drug balance : ${drugs_balance} new weapon balance : ${weapons_balance}`,
                 );
                 cb(user);
               }
