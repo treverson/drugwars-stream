@@ -72,13 +72,12 @@ const battle_handler = {
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
                                     }
                                 }
-                                query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
+                                query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`)
                                 if(user_defender.length>0)
                                 {
                                     for(i=0;i<user_defender.length;i++)
                                     {
-                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
-                                        username = '${defender.username}'`)
+                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit= '${user_defender[i].id}' username = '${defender.username}'`)
                                     }
                                 }
                                 else{
@@ -89,7 +88,7 @@ const battle_handler = {
                                     }
                                 }
                                 query = query.join(' ; ')
-                                db.query(query, [defender.username], function (err, result) {
+                                db.query(query, function (err, result) {
                                 if(err)
                                 console.log(err)
                                 else
