@@ -31,13 +31,13 @@ const building_handler = {
         const now = new Date();
         console.log(character_buildings)
         console.log(character_buildings.filter(
-          item => item.building === 'headquarters',
+          item => item.building === 'headquarters'
         )[0])
         console.log(character_buildings.filter(
-          item => item.building === 'headquarters',
+          item => item.building === 'headquarters'
         ))
         const headquarters = character_buildings.filter(
-          item => item.building === 'headquarters',
+          item => item.building === 'headquarters'
         )[0];
         // CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
         var character_buildings = JSON.parse(JSON.stringify(character_buildings));
