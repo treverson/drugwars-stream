@@ -77,7 +77,7 @@ const battle_handler = {
                                 {
                                     for(i=0;i<user_defender.length;i++)
                                     {
-                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit= '${user_defender[i].id}' username = '${defender.username}'`)
+                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit= '${user_defender[i].id}' AND username = '${defender.username}'`)
                                     }
                                 }
                                 else{
