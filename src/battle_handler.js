@@ -54,10 +54,6 @@ const battle_handler = {
                                 .slice(0, 19)
                                 .replace('T', ' ');
                                 let query = []
-                                query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
-                                query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`)
-
                                 if(user_attacker.length>0)
                                 {
                                 
@@ -88,6 +84,9 @@ const battle_handler = {
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance/2 WHERE username = '${defender.username}'`)
                                     }
                                 }
+                                query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
+                                query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+                                VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`)
                                 query = query.join(' ; ')
                                 db.query(query, function (err, result) {
                                 if(err)
