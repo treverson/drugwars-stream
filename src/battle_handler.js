@@ -54,17 +54,17 @@ const battle_handler = {
                                 .slice(0, 19)
                                 .replace('T', ' ');
                                 let query = []
+                                query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
+                                query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+                                VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
+
                                 if(user_attacker.length>0)
                                 {
-                                    query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
-                                    query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                    VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
+                                
                                     for(i=0;i<user_attacker.length;i++)
                                     {
                                         query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit = '${user_attacker[i].id}' AND
                                         username = '${attacker.username}'`)
-                                        query.push(`DELETE FROM battles_units WHERE unit = '${user_attacker[i].id}' AND
-                                        username = '${attacker.username}' AND battle_key = '${battle_key}'`)
                                     }
                                     if(user_defender.length<1)
                                     {
@@ -72,19 +72,12 @@ const battle_handler = {
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
                                     }
                                 }
-                                else{
-                                    query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
-                                    query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                    VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
-                                    query.push(`DELETE FROM battles_units WHERE username = '${attacker.username}'   
-                                    DELETE FROM battles WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
-                                    query = query.join(';')
-                                }
+                                query.push(`DELETE FROM battles WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
                                 if(user_defender.length>0)
                                 {
                                     for(i=0;i<user_defender.length;i++)
                                     {
-                                        query.push(`UPDATE users_units SET amount=amount-${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
+                                        query.push(`UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
                                         username = '${defender.username}'`)
                                     }
                                 }

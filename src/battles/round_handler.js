@@ -17,13 +17,13 @@ var round_handler = {
 
                 const round_attackers = unit_logic.chooseNextAttackersByPriority(attacker.units)
                 const round_defenders = building_logic.chooseNextDefenders(defender.buildings)
+                thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
+                defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.defense}}
                 if (round_attackers && round_defenders) {
                     for (at = 0; at < bl; at++) {
                         if (round_attackers && round_defenders) {
-                            thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
-                            defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense}}
-                            round_defenders.pv = round_defenders.defense
-                            round_defenders.defense = round_defenders.defense - round_attackers.damage
+
+                            round_defenders.defense = (round_defenders.defense - round_attackers.damage)
                             round_attackers.pv = round_attackers.pv - round_defenders.damage
                             round_attackers.amount = Math.round(round_attackers.pv / round_attackers.defense)
                             for (u in attacker.units) {
