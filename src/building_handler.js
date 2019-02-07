@@ -42,14 +42,14 @@ const building_handler = {
         building_level += 1;
         // CHECK HEADQUARTER LEVEL
         var headquarters = character_buildings.filter(item => item.building === 'headquarters' )
-        headquarters.lvl = headquarters[0].lvl
+        headquarters = headquarters[0]
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
         // CHECK LAST UPDATE
         if (next_update <= now) {
           let timer = building_handler.calculateTime(
-            headquarters.level,
+            headquarters.lvl,
             building_level,
             building_placeholder,
           );
