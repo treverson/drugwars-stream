@@ -3,7 +3,7 @@ var building_logic = require('./building_logic')
 var unit_logic = require('./unit_logic')
 
 
-const round_handler = {
+var round_handler = {
     executeBattleFirstStep: function (attacker, defender, cb) {
         var round = 15;
         attacker.units = unit_logic.cleanArmy(attacker.units)
@@ -11,7 +11,7 @@ const round_handler = {
         var rc = []
         for (current_round = 1; current_round < round; current_round++) {
             var bl = defender.buildings.length
-            if (defender.buildings && defender.buildings.length > 0) {
+            if (defender.buildings && defender.buildings.length > 0  && attacker.units.length>0) {
                 //ATTACKER HIT BUILDINGS
                 var thisround = {}
 

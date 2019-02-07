@@ -1,9 +1,18 @@
-const data = require('../gamedata/buildings.json')
+const {promisify} = require('util')
+const fs = require('fs')
+const readFileAsync = promisify(fs.readFile)
 var buildings = []
-for (i = 0; i < data.length; i++) {
-    buildings.push(data[i])
-
-}
+    readFileAsync(`${__dirname}/../gamedata/buildings.json`, {encoding: 'utf8'})
+    .then(contents => {
+      const obj = JSON.parse(contents)
+      for(i in obj)
+      {
+        buildings.push(obj[i])
+      }
+    })
+    .catch(error => {
+        console.log(error)
+    })
 
 const building_logic = {
     removeProductionBuilding: function (user_buildings) {

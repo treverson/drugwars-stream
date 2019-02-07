@@ -53,17 +53,17 @@ const battle_handler = {
                                 .toISOString()
                                 .slice(0, 19)
                                 .replace('T', ' ');
+                                let query = []
                                 if(user_attacker.length>0)
                                 {
-                                    let query = []
                                     query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
                                     query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
                                     VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
                                     for(i=0;i<user_attacker.length;i++)
                                     {
-                                        query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit='${user_attacker[i].id}' AND
+                                        query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit = '${user_attacker[i].id}' AND
                                         username = '${attacker.username}'`)
-                                        query.push(`DELETE FROM battles_units WHERE unit='${user_attacker[i].id}' AND
+                                        query.push(`DELETE FROM battles_units WHERE unit = '${user_attacker[i].id}' AND
                                         username = '${attacker.username}' AND battle_key = '${battle_key}'`)
                                     }
                                     if(user_defender.length<1)
@@ -71,62 +71,38 @@ const battle_handler = {
                                         var reward = defender_account[0].drugs_balance / 2
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
                                     }
-                                    query = query.join(';')
-                                    db.query(query, (err, result) => {
-                                        if (err || !result || !result[0]) {
-                                          console.log(`error for updating attacker units ${err}`);
-                                        }
-                                        console.log(`Updated attackers unit play`);
-                                      });
                                 }
                                 else{
-                                    let query = []
                                     query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
                                     query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
                                     VALUES ('${attacker.username}','${defender.username}','${rc}','${now}','${battle_key}')`)
                                     query.push(`DELETE FROM battles_units WHERE username = '${attacker.username}'   
                                     DELETE FROM battles WHERE username ='${attacker.username}' AND battle_key= '${battle_key}'`)
                                     query = query.join(';')
-                                    db.query(query, function (err, result) {
-                                    if(err)
-                                    console.log(err)
-                                    else
-                                    console.log('removed all battles units for ' + attacker.username)
-                                    console.log(result)
-                                    })
                                 }
                                 if(user_defender.length>0)
                                 {
-                                    let query = []
                                     for(i=0;i<user_defender.length;i++)
                                     {
                                         query.push(`UPDATE users_units SET amount=amount-${user_defender[i].amount} WHERE unit='${user_defender[i].id}' 
                                         username = '${defender.username}'`)
                                     }
-                                    query = query.join(';')
-                                    db.query(query, (err, result) => {
-                                        if (err || !result || !result[0]) {
-                                          console.log(`error for updating defenders units ${err}`);
-                                        }
-                                        console.log(`Updated attackers unit play`);
-                                      });
                                 }
                                 else{
-                                    let query = []
                                     query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`)
                                     if(user_attacker.length>0)
                                     {
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance/2 WHERE username = '${defender.username}'`)
                                     }
-                                    query = query.join(';')
-                                    db.query(query, [defender.username], function (err, result) {
-                                    if(err)
-                                    console.log(err)
-                                    else
-                                    console.log('removed all base units for ' + defender.username)
-                                    console.log(result)
-                                    })
                                 }
+                                query = query.join(' ; ')
+                                db.query(query, [defender.username], function (err, result) {
+                                if(err)
+                                console.log(err)
+                                else
+                                console.log('removed all base units for ' + defender.username)
+                                console.log(result)
+                                })
                                 console.log(user_attacker && user_defender)
                                 // return cb(true)
                                 socket.emit('attackresult', attacker.username,JSON.parse(rc));
