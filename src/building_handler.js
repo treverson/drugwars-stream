@@ -5,7 +5,7 @@ const {promisify} = require('util')
 const fs = require('fs')
 const readFileAsync = promisify(fs.readFile)
 var buildings = []
-    readFileAsync(`${__dirname}/../gamedata/buildings.json`, {encoding: 'utf8'})
+    readFileAsync(`${__dirname}/../src/gamedata/buildings.json`, {encoding: 'utf8'})
     .then(contents => {
       const obj = JSON.parse(contents)
       for(i in obj)
