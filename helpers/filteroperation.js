@@ -17,42 +17,47 @@ const bc_operation = {
       } catch (error) {
         console.log(error);
       }
-      player.checkIfExist(op.username, exist => {
-        if (exist && op.defender) {
-          player.checkIfExist(op.defender, exist => {
-            if (exist)
-              player.checkArmy(op.username, op.army, result => {
-                if (result === 'success') {
-                  console.log('enough units');
-                  attack.startAttack(
-                    op.username,
-                    op.army,
-                    op.defender,
-                    tx.block_num,
-                    tx.transaction_id,
-                    result => {
-                      if (result) {
-                        attack.addAttack(result.key, result.target_block);
-                        socket.emit('refresh', op.username,op.defender);
-                        socket.emit('attack', op.username,op.defender);
-                        socket.emit('receiving_attack', op.defender, op.username);
-                      } else {
-                        console.log('couldnt start attack');
-                      }
-                    },
-                  );
-                } else {
-                  console.log('couldnt start attack not enough units');
-                }
-              });
-            else {
-              console.log('defender doesnt exist');
-            }
-          });
-        } else {
-          console.log('users doesnt exist');
-        }
-      });
+      if(op.username != op.defender){
+        player.checkIfExist(op.username, exist => {
+          if (exist && op.defender) {
+            player.checkIfExist(op.defender, exist => {
+              if (exist)
+                player.checkArmy(op.username, op.army, result => {
+                  if (result === 'success') {
+                    console.log('enough units');
+                    attack.startAttack(
+                      op.username,
+                      op.army,
+                      op.defender,
+                      tx.block_num,
+                      tx.transaction_id,
+                      result => {
+                        if (result) {
+                          attack.addAttack(result.key, result.target_block);
+                          socket.emit('refresh', op.username,op.defender);
+                          socket.emit('attack', op.username,op.defender);
+                          socket.emit('receiving_attack', op.defender, op.username);
+                        } else {
+                          console.log('couldnt start attack');
+                        }
+                      },
+                    );
+                  } else {
+                    console.log('couldnt start attack not enough units');
+                  }
+                });
+              else {
+                console.log('defender doesnt exist');
+              }
+            });
+          } else {
+            console.log('users doesnt exist');
+          }
+        });
+      }
+      else{
+        console.log('user cant attack himself');
+      }
     }
 
     if (tx.operations[0][0] === 'custom_json' && tx.operations[0][1].id === 'dw-char') {
