@@ -17,8 +17,8 @@ var round_handler = {
 
                 const round_attackers = unit_logic.chooseNextAttackersByPriority(attacker.units)
                 const round_defenders = building_logic.chooseNextDefenders(defender.buildings)
-                thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
-                defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.defense}}
+                thisround.start = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount ,type:'building'},
+                defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.defense, type:'building'}}
                 if (round_attackers && round_defenders) {
                     for (at = 0; at < bl; at++) {
                         if (round_attackers && round_defenders) {
@@ -60,8 +60,8 @@ var round_handler = {
                         console.log('no more buildings')
                         current_round = 15
                     }
-                    thisround.end = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount },
-                    defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense}}
+                    thisround.end = { attacker:{ attacker: round_attackers.id, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount,type:'building' },
+                    defender : {defender: round_defenders.id, damage: round_defenders.damage, pv: round_defenders.pv,defense: round_defenders.defense,type:'building'}}
                     rc.push(thisround)
                 }
 
