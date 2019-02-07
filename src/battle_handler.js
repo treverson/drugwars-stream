@@ -62,7 +62,7 @@ const battle_handler = {
                                         query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit = '${user_attacker[i].id}' AND
                                         username = '${attacker.username}'`)
                                     }
-                                    if(user_defender.length<1)
+                                    if(!user_defender || user_defender.length<1)
                                     {
                                         var reward = defender_account[0].drugs_balance / 2
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
