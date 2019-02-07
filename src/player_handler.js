@@ -63,18 +63,14 @@ const player_handler = {
               .slice(0, 19)
               .replace('T', ' ');
             const differenceprod = now.getTime() - user.last_update.getTime();
-            let drugs_balance =
-              user.drugs_balance +
-              Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
-            let weapons_balance =
-              user.weapons_balance +
-              Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0));
+            var drugs_balance =user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
+            var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0));
             if (buildings.filter(item => item.building === 'operation_center')[0]) {
               const operation_center = buildings.filter(
                 item => item.building === 'operation_center',
               )[0];
-              drugs_balance = drugs_balance * (operation_center.lvl * 0.005);
-              weapons_balance = weapons_balance * (operation_center.lvl * 0.005);
+              drugs_balance = drugs_balance + (drugs_balance * (operation_center.lvl * 0.005))
+              weapons_balance = weapons_balance + (weapons_balance* (operation_center.lvl * 0.005))
               console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
             console.log(
@@ -82,7 +78,7 @@ const player_handler = {
             );
             const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
             db.query(query, (err, result) => {
-              if (err) throw err;
+              if (err) console.log(err) ;
               else {
                 user.drugs_balance = drugs_balance;
                 user.weapons_balance = weapons_balance;
