@@ -29,6 +29,13 @@ const building_handler = {
 
         const building_placeholder = buildings.filter(item => item.id === building_name)[0];
         const now = new Date();
+        console.log(character_buildings)
+        console.log(character_buildings.filter(
+          item => item.building === 'headquarters',
+        )[0])
+        console.log(character_buildings.filter(
+          item => item.building === 'headquarters',
+        ))
         const headquarters = character_buildings.filter(
           item => item.building === 'headquarters',
         )[0];
@@ -111,7 +118,6 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
-    console.log(hq_level, building_level, building_placeholder)
     return building_placeholder.coeff * 400 * (building_level ^ (2 / hq_level));
   },
   calculateCost(building_level, building_placeholder) {
