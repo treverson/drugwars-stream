@@ -27,12 +27,12 @@ const building_handler = {
       } else {
         // CHOOSE THE PLACEHOLDER
 
-        const building_placeholder = buildings.filter(item => item.id === building_name)[0];
-        const now = new Date();
+        var building_placeholder = buildings.filter(item => item.id === building_name)[0];
+        var now = new Date();
         // CHECK FOR EXISTANT BUILDING AND ADD 1 LEVEL
         var character_buildings = JSON.parse(JSON.stringify(character_buildings));
         if (character_buildings.filter(item => item.building === building_name)[0]) {
-          const building = character_buildings.filter(item => item.building === building_name);
+          var building = character_buildings.filter(item => item.building === building_name);
           var next_update = new Date(Date.parse(building[0].next_update));
           var building_level = building[0].lvl;
         } else {
