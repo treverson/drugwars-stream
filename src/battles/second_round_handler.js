@@ -105,7 +105,7 @@ const second_round_handler = {
                                     delete cunits[u]
                                 }
                                 else {
-                                    cunits[u].amount = round_attackers.amount
+                                    cunits[u].amount = round_defenders.amount
                                 }
                             cunits = cunits.filter(function (el) {
                                 return el != null;
