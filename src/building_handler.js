@@ -141,7 +141,7 @@ const building_handler = {
     if(building_placeholder.id != "headquarters")
     return (building_placeholder.coeff*2000)*((Math.sqrt(625+100*((building_level+1)*250))-25)/50)/hq_level
     else
-    return 2500*((Math.sqrt(625+100*(building_level*250))-25)/50)
+    return 2500*((Math.sqrt(625+100*((building_level+1)*250))-25)/50)
   },
   calculateDrugsCost(building_level, building_placeholder) {
     if(building_placeholder.drugs_cost && building_level>0)
