@@ -9,10 +9,9 @@ const battle_handler = {
         let query = `SELECT * FROM battles WHERE battle_key = ? ;
         SELECT * FROM battles_units WHERE battle_key = ?`
         db.query(query, [battle_key, battle_key], function (err, attacker_result) {
-            if (err) {
+            if (err || !attacker_result) {
                 console.log(err)
             }
-                console.log(attacker_result)
                 var [[battle], units] = attacker_result;
                 var attacker = {}
                 attacker.username = battle.username
