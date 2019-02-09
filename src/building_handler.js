@@ -1,21 +1,48 @@
 const db = require('../helpers/db');
 const player = require('./player_handler');
 const utils = require('../helpers/utils');
-const {promisify} = require('util')
+const { promisify } = require('util')
 const fs = require('fs')
 const readFileAsync = promisify(fs.readFile)
 var buildings = []
-    readFileAsync(`${__dirname}/../src/gamedata/buildings.json`, {encoding: 'utf8'})
-    .then(contents => {
-      const obj = JSON.parse(contents)
-      for(i in obj)
-      {
-        buildings.push(obj[i])
-      }
-    })
-    .catch(error => {
-        console.log(error)
-    })
+readFileAsync(`${__dirname}/../src/gamedata/buildings.json`, { encoding: 'utf8' })
+  .then(contents => {
+    const obj = JSON.parse(contents)
+    for (i in obj) {
+      buildings.push(obj[i])
+    }
+  })
+  .catch(error => {
+    console.log(error)
+  })
+
+function ifCanBuy(user, d_cost,w_cost,a_cost) {
+  if (d_cost && w_cost && a_cost) {
+    if (d_cost < user.drugs_balance && w_cost < user.weapons_balance && a_cost < user.alcohols_balance) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+  else if (d_cost && w_cost) {
+    if (d_cost < user.drugs_balance && w_cost < user.weapons_balance) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+  else (d_cost && a_cost)
+  {
+    if (d_cost < user.drugs_balance && a_cost < user.alcohols_balance) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+}
 
 const building_handler = {
   tryUpdateBuilding(user, building_name, amount, cb) {
@@ -30,17 +57,15 @@ const building_handler = {
         var character_buildings = JSON.parse(JSON.stringify(character_buildings));
         var now = new Date();
         // CHECK FOR EXISTANT BUILDING AND GET NEXT LEVEL/UPDATE
+        var building_level = 0;
+        var next_update = now;
         if (character_buildings.filter(item => item.building === building_name)[0]) {
           var building = character_buildings.filter(item => item.building === building_name);
-          var next_update = new Date(Date.parse(building[0].next_update));
-          var building_level = building[0].lvl;
-        } else {
-          var building_level = 0;
-          var next_update = now;
+          next_update = new Date(Date.parse(building[0].next_update));
+          building_level = building[0].lvl;
         }
-        building_level += 1;
         // ADD HEADQUARTER & CHECK LEVEL
-        var headquarters = character_buildings.filter(item => item.building === 'headquarters' )[0]
+        var headquarters = character_buildings.filter(item => item.building === 'headquarters')[0]
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
           return cb('hq level to low');
         }
@@ -52,15 +77,17 @@ const building_handler = {
             building_placeholder,
           );
           console.log(building_name);
-          console.log('timer : '+timer);
-          console.log('cost : '+timer);
           console.log(user)
-          let cost = building_handler.calculateCost(building_level, building_placeholder);
+          var d_cost = building_handler.calculateDrugsCost(building_level,building_placeholder)
+          var w_cost = building_handler.calculateWeaponsCost(building_level,building_placeholder)
+          var a_cost = building_handler.calculateAlcoholsCost(building_level,building_placeholder)
+          console.log('timer : ' + timer);
+          console.log('cost : ' + d_cost, w_cost, a_cost);
           // CHECK DRUGS COST BALANCE
-          if (cost > user.drugs_balance && amount === null) {
+          if (!ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
             return cb('not enough drugs');
           }
-          if (cost < user.drugs_balance && !amount) {
+          if (ifCanBuy(user, d_cost,w_cost,a_cost) && !amount) {
             building_handler.upgradeBuilding(
               user,
               now,
@@ -68,7 +95,9 @@ const building_handler = {
               building_name,
               timer,
               building_placeholder,
-              cost,
+              d_cost,
+              w_cost,
+              a_cost,
               result => {
                 if (result) return cb(result);
               },
@@ -76,10 +105,9 @@ const building_handler = {
           }
           if (amount != null) {
             amount = parseFloat(amount.split(' ')[0]).toFixed(3);
-            utils.costToSteem(cost, result => {
+            utils.costToSteem(building_placeholder.drugs_cost, result => {
               if (result)
                 if (result <= amount || (result - ((result / 100) * 5)) <= amount) {
-                  cost = 0;
                   timer = 1;
                   building_handler.upgradeBuilding(
                     user,
@@ -88,7 +116,9 @@ const building_handler = {
                     building_name,
                     timer,
                     building_placeholder,
-                    cost,
+                    0,
+                    0,
+                    0,
                     result => {
                       if (result) return cb(result);
                     },
@@ -108,15 +138,27 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
-    return building_placeholder.coeff * 400 * (building_level ^ (2 / hq_level));
+    return building_placeholder.coeff * 400 * building_level ^ (2 / hq_level);
   },
-  calculateCost(building_level, building_placeholder) {
-    return building_placeholder.base_price * (building_level * building_placeholder.coeff);
+  calculateDrugsCost(building_level, building_placeholder) {
+    if(building_placeholder.drugs_cost && building_level>0)
+    return building_placeholder.drugs_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    else return building_placeholder.drugs_cost
+  },
+  calculateWeaponsCost(building_level, building_placeholder) {
+    if(building_placeholder.weapons_cost && building_level>0)
+    return building_placeholder.weapons_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    else return building_placeholder.weapons_cost
+  },
+  calculateAlcoholsCost(building_level, building_placeholder) {
+    if(building_placeholder.alcohols_cost && building_level>0)
+    return building_placeholder.alcohols_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    else return building_placeholder.alcohols_cost
   },
   calculateProductionRate(building_level, building_placeholder) {
-    return building_placeholder.production_rate * (building_level * building_placeholder.coeff);
+    return building_placeholder.production_rate * building_level * building_placeholder.coeff;
   },
-  upgradeBuilding(user, now, building_level, building_name, timer, building_placeholder, cost, cb) {
+  upgradeBuilding(user, now, building_level, building_name, timer, building_placeholder, d_cost,w_cost,a_cost, cb) {
     let query;
     const next_update_time = new Date(now.getTime() + timer * 1000)
       .toISOString()
@@ -125,43 +167,45 @@ const building_handler = {
     // IF PRODUCE WEAPON OR DRUGS
     if (building_placeholder.production_rate > 0) {
       const old_rate = building_handler.calculateProductionRate(
-        building_level - 1,
+        building_level,
         building_placeholder,
       );
       const new_production_rate = building_handler.calculateProductionRate(
-        building_level,
+        building_level+1,
         building_placeholder,
       );
       // IF PRODUCE WEAPON
       if (building_placeholder.production_type === 'weapon') {
         user.weapon_production_rate = user.weapon_production_rate - old_rate + new_production_rate;
-        query = `UPDATE users SET weapon_production_rate=${
-          user.weapon_production_rate
-        }, drugs_balance=drugs_balance-${cost} WHERE username='${user.username}';
-                INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${
-                  user.username
-                }','${building_placeholder.id}', ${building_level},'${next_update_time}') 
-                ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`;
-      } else {
+        query = `UPDATE users SET weapon_production_rate=${user.weapon_production_rate}, drugs_balance=drugs_balance-${d_cost},
+        weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost} 
+        WHERE username='${user.username}';INSERT INTO users_buildings (username , building, lvl, next_update) 
+                VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
+                ON DUPLICATE KEY UPDATE lvl=lvl+1, next_update='${next_update_time}'`;
+      } else if (building_placeholder.production_type === 'drug') {
         user.drug_production_rate = user.drug_production_rate - old_rate + new_production_rate;
-        query = `UPDATE users SET drug_production_rate=${
-          user.drug_production_rate
-        }, drugs_balance=drugs_balance-${cost} WHERE username='${user.username}';
-                INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${
-                  user.username
-                }','${building_placeholder.id}', ${building_level},'${next_update_time}') 
-                ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`;
+        query = `UPDATE users SET drug_production_rate=${user.drug_production_rate},  drugs_balance=drugs_balance-${d_cost},
+        weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost} 
+        WHERE username='${user.username}'; INSERT INTO users_buildings (username , building, lvl, next_update) 
+                VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
+                ON DUPLICATE KEY UPDATE lvl=lvl+1, next_update='${next_update_time}'`;
+      }
+      else if (building_placeholder.production_type === 'alcohol') {
+        user.alcohol_production_rate = user.alcohol_production_rate - old_rate + new_production_rate;
+        query = `UPDATE users SET alcohol_production_rate=${user.alcohol_production_rate}, drugs_balance=drugs_balance-${d_cost},
+        weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost} 
+        WHERE username='${user.username}'; INSERT INTO users_buildings (username , building, lvl, next_update) 
+                VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}') 
+                ON DUPLICATE KEY UPDATE lvl=lvl+1, next_update='${next_update_time}'`;
       }
     }
     // IF DOESNT PRODUCE ANYTHING
     else {
-      query = `UPDATE users SET drugs_balance=drugs_balance-${cost} WHERE username='${
-        user.username
-      }';
-            INSERT INTO users_buildings (username , building, lvl, next_update) VALUES ('${
-              user.username
-            }','${building_placeholder.id}', ${building_level},'${next_update_time}')
-            ON DUPLICATE KEY UPDATE lvl=${building_level}, next_update='${next_update_time}'`;
+      query = `UPDATE users SET drugs_balance=drugs_balance-${d_cost},
+      weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost}  WHERE username='${user.username}';
+            INSERT INTO users_buildings (username , building, lvl, next_update) 
+            VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
+            ON DUPLICATE KEY UPDATE lvl=lvl+1, next_update='${next_update_time}'`;
     }
     db.query(query, (err, result) => {
       if (err) {

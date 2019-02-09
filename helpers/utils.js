@@ -12,7 +12,7 @@ const utils = {
             try {
               var ticker = JSON.parse(xtr.responseText);
             } catch (e) {}
-            const price = parseFloat(int / 100000 / ticker[0].price_usd).toFixed(3);
+            const price = parseFloat(int / 10000 / ticker[0].price_usd).toFixed(3);
             cb(price);
           }
         } else {

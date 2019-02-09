@@ -75,9 +75,7 @@ const player_handler = {
               alcohols_balance = alcohols_balance + (alcohols_balance* (operation_center.lvl * 0.005))
               console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
-            console.log(
-              `User ${user.username} old drug balance : ${drugs_balance} old weapon balance : ${weapons_balance} old alcohol balance : ${alcohols_balance}`,
-            );
+
             const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, alcohols_balance=${alcohols_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
             db.query(query, (err, result) => {
               if (err) console.log(err) ;
