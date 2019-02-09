@@ -3,7 +3,10 @@ const db = require('../helpers/db');
 const attackblocks = [];
 const battle = require('./battle_handler');
 
+var key
 function resolveAttack(attack) {
+    if(key != attack.battle_key)
+    key = attack.battle_key
     console.log(`revolsing battle ${attack.battle_key}`);
     battle.launchBattle(attack.battle_key);
 }
