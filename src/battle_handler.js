@@ -67,7 +67,7 @@ const battle_handler = {
                                     {
                                         var reward = defender_account[0].drugs_balance / 2
                                         query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${attacker.username}'`)
-                                        rc.push({reward:reward})
+                                        rc.reward = reward
                                     }
                                 }
                                 query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`)
