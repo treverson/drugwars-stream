@@ -5,7 +5,7 @@ const db = mysql.createPool({
   user: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DB,
-  connectionLimit: 15,
+  connectionLimit: 50,
   multipleStatements: true,
 });
 
