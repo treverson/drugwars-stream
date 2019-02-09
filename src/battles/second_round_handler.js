@@ -63,7 +63,18 @@ const second_round_handler = {
         var rc = {}
         var aunits = attacker
         var cunits = defender
-        rc.start ={attacker_units: attacker,defender:defender}
+        const start = {}
+        start.attacker  = []
+        start.defender  = []
+        for(w=0;w<attacker.length;w++)
+        {
+            start.attacker.push(attacker[w])
+        }
+        for(z=0;z<defender.length;z++)
+        {
+            start.defender.push(defender[z])
+        }
+        rc.start = start
         rc.rounds=[]
         for (i = 1; i < 6; i++) {
             var round_attackers = second_round_handler.chooseNextAttackersByPriority(aunits)
