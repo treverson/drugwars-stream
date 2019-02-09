@@ -9,5 +9,4 @@ const db = mysql.createPool({
   multipleStatements: true,
 });
 
-
 module.exports = db;
