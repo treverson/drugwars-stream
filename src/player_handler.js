@@ -16,9 +16,10 @@ const player_handler = {
       .toISOString()
       .slice(0, 19)
       .replace('T', ' ');
-    const query = `INSERT INTO users (username, drugs_balance, drug_production_rate, weapons_balance, weapon_production_rate, last_update, xp, picture, referrer ) VALUES ('${player}', 1000, 0.20, 1000, 0.20,'${now}', 1, ${icon},'${referrer}'); \n\
+    const query = `INSERT INTO users (username, drugs_balance, weapons_balance, alcohols_balance, last_update, xp, picture, referrer ) VALUES ('${player}', 500, 1000, 1000,'${now}', 1, ${icon},'${referrer}'); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','headquarters','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','crackhouse','${now}',1); \n\
+                     INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','traditional_alcohol','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','ammunition','${now}',1); \n\
                      `;
     db.query(query, (err, result) => {
@@ -31,14 +32,13 @@ const player_handler = {
     });
   },
   addXp(name, xp, cb) {
-    console.log(name);
-    const query = `UPDATE users SET xp= xp+${xp} WHERE username='${name}'`;
+    const query = `UPDATE users SET xp=xp+${xp} WHERE username='${name}'`;
     db.query(query, (err, result) => {
       if (err) {
         console.log(`coudlnt add xp for ${name}`);
         return cb(true);
       }
-      console.log(`${xp}XP added to character${name}`);
+      console.log(`${xp}XP added to user ${name}`);
       cb(true);
     });
   },
@@ -64,6 +64,7 @@ const player_handler = {
               .replace('T', ' ');
             const differenceprod = now.getTime() - user.last_update.getTime();
             var drugs_balance =user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
+            var alcohols_balance =user.alcohols_balance + Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2));
             var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(0));
             if (buildings.filter(item => item.building === 'operation_center')[0]) {
               const operation_center = buildings.filter(
@@ -71,21 +72,23 @@ const player_handler = {
               )[0];
               drugs_balance = drugs_balance + (drugs_balance * (operation_center.lvl * 0.005))
               weapons_balance = weapons_balance + (weapons_balance* (operation_center.lvl * 0.005))
+              alcohols_balance = alcohols_balance + (alcohols_balance* (operation_center.lvl * 0.005))
               console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
             console.log(
-              `User ${user.username} old drug balance : ${drugs_balance} old weapon balance : ${weapons_balance}`,
+              `User ${user.username} old drug balance : ${drugs_balance} old weapon balance : ${weapons_balance} old alcohol balance : ${alcohols_balance}`,
             );
-            const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
+            const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, alcohols_balance=${alcohols_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
             db.query(query, (err, result) => {
               if (err) console.log(err) ;
               else {
                 user.drugs_balance = drugs_balance;
                 user.weapons_balance = weapons_balance;
+                user.alcohols_balance = alcohols_balance;
                 console.log(
                   `user - Updated user ${
                     user.username
-                  } new drug balance : ${drugs_balance} new weapon balance : ${weapons_balance}`,
+                  } new drug balance : ${drugs_balance} new weapon balance : ${weapons_balance} new alcohol balance : ${alcohols_balance}`,
                 );
                 cb(user);
               }
