@@ -1,52 +1,94 @@
 const express = require('express');
+const Promise = require('bluebird');
+const bcOperation = require('./helpers/filteroperation');
+const attack = require('./src/attack_handler');
+const client = require('./helpers/client');
+const redis = require('./helpers/redis');
 
 const app = express();
 const port = process.env.PORT || 4000;
-const bc_operation = require('./helpers/filteroperation');
-const attack = require('./src/attack_handler');
-const { Client, BlockchainMode } = require('dsteem');
+const server = app.listen(port, () => console.log(`Listening on ${port}`));
 
-const client = new Client('https://api.steemit.com');
-
-app.listen(port, () => console.log(`Listening on ${port}`));
-
-const stream = client.blockchain.getBlockStream({ mode: BlockchainMode.Latest });
-
-client.blockchain
-  .getCurrentBlockNum()
-  .then(res => {
-    console.log(res)
-    attack.loadAttacks(res);
-  })
-  .catch(err => {
-    console.log(err);
+/** Work to do before streaming the chain */
+const init = () =>
+  new Promise((resolve, reject) => {
+    client.blockchain
+      .getCurrentBlockNum()
+      .then(blockNum => {
+        console.log('Current block num', blockNum);
+        attack.loadAttacks(blockNum);
+        resolve();
+      })
+      .catch(err => {
+        console.log(err);
+        reject();
+      });
   });
 
-stream
-  .on('data', block => {
-    if (block != null) {
-      try {
-        var object = JSON.stringify(block.transactions);
-        object.replace('\\', '');
-        object = JSON.parse(object);
-      } catch (error) {
-        console.log(error);
-      }
-      for (i = 0; i < object.length; i++) {
-
-        var bloc 
-        if(bloc!=object[i].block_num)
-        {
-          console.log(object[i].block_num)
-          bloc = object[i].block_num
-          attack.checkAttacks(object[i]);
-        }
-
-        bc_operation.filter(object[i]);
-      }
+/** Work to do at each new irreversible block */
+const work = (block, blockNum) =>
+  new Promise((resolve, reject) => {
+    console.log('Work at block', blockNum);
+    if (block.transactions.length > 0) {
+      block.transactions.forEach(tx => {
+        attack.checkAttacks(tx);
+        bcOperation.filter(tx);
+        resolve();
+      });
+    } else {
+      resolve();
     }
-  })
-  .on('end', () => {
-    // done
-    console.log('END');
   });
+
+let lastIrreversibleBlockNum = 0;
+const stream = setInterval(() => {
+  client.database.getDynamicGlobalProperties().then(props => {
+    lastIrreversibleBlockNum = parseInt(props.last_irreversible_block_num);
+  });
+}, 3000);
+
+const handleBlock = blockNum => {
+  if (lastIrreversibleBlockNum >= blockNum) {
+    client.database
+      .getBlock(blockNum)
+      .then(block => {
+        work(block, blockNum).then(() => {
+          redis
+            .setAsync('block_height', blockNum)
+            .then(() => {
+              console.log(`New block height is ${blockNum} ${block.timestamp}`);
+              handleBlock(blockNum + 1);
+            })
+            .catch(err => {
+              console.error("Failed to set 'block_height' on Redis", err);
+              handleBlock(blockNum);
+            });
+        });
+      })
+      .catch(err => {
+        console.error(`Request 'getBlock' failed at block num: ${blockNum}, retry`, err);
+        handleBlock(blockNum);
+      });
+  } else {
+    Promise.delay(100).then(() => {
+      handleBlock(blockNum);
+    });
+  }
+};
+
+const start = () => {
+  init().then(() => {
+    redis
+      .getAsync('block_height')
+      .then(blockHeight => {
+        console.log(`Last loaded block was ${blockHeight}`);
+        const nextBlockNum = blockHeight ? parseInt(blockHeight) + 1 : 1;
+        handleBlock(nextBlockNum);
+      })
+      .catch(err => {
+        console.error("Failed to get 'block_height' on Redis", err);
+      });
+  });
+};
+
+start();
