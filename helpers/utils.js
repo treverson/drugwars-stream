@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-
+const fs = require('fs')
 function costToSteem(int, cb) {
   fetch('https://api.coinmarketcap.com/v1/ticker/steem/')
     .then(res =>
@@ -24,6 +24,15 @@ function ifCanBuy(user, d_cost,w_cost,a_cost) {
     }
 }
 
+function readJson(path, cb){
+  fs.readFile(require.resolve(path), (err, data) => {
+    if (err)
+    return cb(err)
+    else
+      return cb(JSON.parse(data))
+  })
+}
+
 module.exports = {
-  costToSteem,ifCanBuy
+  costToSteem,ifCanBuy,readJson
 };

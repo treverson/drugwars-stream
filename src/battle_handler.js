@@ -45,10 +45,10 @@ const battle_handler = {
                     // round.executeBattleFirstStep(attacker, defender, function (attacker_res,defender_res,frc) {
                     //     if (attacker_res && defender_res)
                     //     {
-                            second_round.continueBattle(attacker, defender,function(user_attacker,user_defender,rc){
-                                var final_result = {attacker:attacker_res,defender:defender_res}
-                                rc.push(final_result)
-                                var rc = rc
+                            second_round.continueBattle(attacker.units, defender.units,function(user_attacker,user_defender,rc){
+                                //var final_result = {attacker:user_attacker,defender:user_defender}
+                                // rc.push(final_result)
+                                // var rc = rc
                                 const now = new Date()
                                 .toISOString()
                                 .slice(0, 19)
@@ -66,7 +66,7 @@ const battle_handler = {
                                     if(!user_defender || user_defender.length<1)
                                     {
                                         var reward = defender_account[0].drugs_balance / 2
-                                        query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward} WHERE username = '${attacker.username}'`)
+                                        query.push(`UPDATE users SET drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username = '${attacker.username}'`)
                                         rc.push({reward:reward})
                                     }
                                 }
@@ -83,7 +83,7 @@ const battle_handler = {
                                     query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`)
                                     if(user_attacker.length>0)
                                     {
-                                        query.push(`UPDATE users SET drugs_balance=drugs_balance/2 WHERE username = '${defender.username}'`)
+                                        query.push(`UPDATE users SET drugs_balance=drugs_balance/2, wins=wins+1 WHERE username = '${defender.username}'`)
                                     }
                                 }
                                 query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
