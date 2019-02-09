@@ -71,7 +71,7 @@ const attack_handler = {
       attackblocks.push(attack)    
   },
   checkAttacks:function(object){
-      if(attackblocks.filter(function (item) { return item.target_block === object.block_num}).length>0)
+      if(attackblocks.filter(function (item) { return item.target_block < object.block_num}).length>0)
       {
           var attack = attackblocks.filter(function (item) { return item.target_block === object.block_num})
           console.log(attack)
