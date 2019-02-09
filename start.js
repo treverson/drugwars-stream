@@ -22,31 +22,31 @@ client.blockchain
     console.log(err);
   });
 
-stream
-  .on('data', block => {
-    if (block != null) {
-      try {
-        var object = JSON.stringify(block.transactions);
-        object.replace('\\', '');
-        object = JSON.parse(object);
-      } catch (error) {
-        console.log(error);
-      }
-      for (i = 0; i < object.length; i++) {
+// stream
+//   .on('data', block => {
+//     if (block != null) {
+//       try {
+//         var object = JSON.stringify(block.transactions);
+//         object.replace('\\', '');
+//         object = JSON.parse(object);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//       for (i = 0; i < object.length; i++) {
 
-        var bloc 
-        if(bloc!=object[i].block_num)
-        {
-          console.log(object[i].block_num)
-          bloc = object[i].block_num
-          attack.checkAttacks(object[i]);
-        }
+//         var bloc 
+//         if(bloc!=object[i].block_num)
+//         {
+//           console.log(object[i].block_num)
+//           bloc = object[i].block_num
+//           attack.checkAttacks(object[i]);
+//         }
 
-        bc_operation.filter(object[i]);
-      }
-    }
-  })
-  .on('end', () => {
-    // done
-    console.log('END');
-  });
+//         bc_operation.filter(object[i]);
+//       }
+//     }
+//   })
+//   .on('end', () => {
+//     // done
+//     console.log('END');
+//   });
