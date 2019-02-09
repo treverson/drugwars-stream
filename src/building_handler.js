@@ -162,7 +162,7 @@ const building_handler = {
     return building_placeholder.production_rate * building_level * building_placeholder.coeff;
   },
   calculateCap(building_level) {
-    return (10000+(25000*(building_level+1))) +(10000+(25000*(building_level+1))/100*10)
+    return (10000+(25000*(building_level))) +(10000+(25000*(building_level))/100*10)
   },
   upgradeBuilding(user, now, building_level, building_name, timer, building_placeholder, d_cost,w_cost,a_cost, cb) {
     let query;
