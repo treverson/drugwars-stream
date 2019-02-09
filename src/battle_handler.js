@@ -12,7 +12,7 @@ const battle_handler = {
             if (err) {
                 console.log(err)
             }
-
+                console.log(attacker_result)
                 var [[battle], units] = attacker_result;
                 var attacker = {}
                 attacker.username = battle.username
