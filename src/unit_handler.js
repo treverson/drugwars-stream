@@ -44,6 +44,7 @@ const unit_handler = {
             var d_cost = unit_handler.calculateDrugsCost(unit_amount,unit_placeholder)
             var w_cost = unit_handler.calculateWeaponsCost(unit_amount,unit_placeholder)
             var a_cost = unit_handler.calculateAlcoholsCost(unit_amount,unit_placeholder)
+            console.log(d_cost,w_cost,a_cost)
             // CHECK WEAPONS COST BALANCE
             if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
               return cb('not enough weapons');

@@ -16,31 +16,12 @@ function costToSteem(int, cb) {
 
 
 function ifCanBuy(user, d_cost,w_cost,a_cost) {
-  if (d_cost && w_cost && a_cost) {
     if (d_cost < user.drugs_balance && w_cost < user.weapons_balance && a_cost < user.alcohols_balance) {
       return true
     }
     else {
       return false
     }
-  }
-  else if (d_cost && w_cost) {
-    if (d_cost < user.drugs_balance && w_cost < user.weapons_balance) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-  else (d_cost && a_cost)
-  {
-    if (d_cost < user.drugs_balance && a_cost < user.alcohols_balance) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
 }
 
 module.exports = {
