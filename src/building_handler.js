@@ -138,10 +138,10 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
-    if(building_placeholder.id === "headquarters")
-    return 2500*((Math.sqrt(625+100*(hq_level*250))-25)/50)
+    if(building_placeholder.id != "headquarters")
+    return (building_placeholder.coeff*2000)*((Math.sqrt(625+100*((building_level+1)*250))-25)/50)/hq_level
     else
-    return (building_placeholder.coeff*2000)*((Math.sqrt(625+100*(building_level+1*250))-25)/50)/hq_level
+    return 2500*((Math.sqrt(625+100*(building_level*250))-25)/50)
   },
   calculateDrugsCost(building_level, building_placeholder) {
     if(building_placeholder.drugs_cost && building_level>0)
@@ -207,7 +207,7 @@ const building_handler = {
       query = `UPDATE users SET drugs_balance=drugs_balance-${d_cost},
       weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost}  WHERE username='${user.username}';
             INSERT INTO users_buildings (username , building, lvl, next_update) 
-            VALUES ('${user.username}','${building_placeholder.id}', ${building_level},'${next_update_time}')
+            VALUES ('${user.username}','${building_placeholder.id}', 1,'${next_update_time}')
             ON DUPLICATE KEY UPDATE lvl=lvl+1, next_update='${next_update_time}'`;
     }
     db.query(query, (err, result) => {
