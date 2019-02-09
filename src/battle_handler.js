@@ -42,10 +42,10 @@ const battle_handler = {
                     for (i = 0; i < units.length; i++) {
                         defender.units.push(units[i])
                     }
-                    round.executeBattleFirstStep(attacker, defender, function (attacker_res,defender_res,frc) {
-                        if (attacker_res && defender_res)
-                        {
-                            second_round.continueBattle(attacker_res, defender_res,frc ,function(user_attacker,user_defender,rc){
+                    // round.executeBattleFirstStep(attacker, defender, function (attacker_res,defender_res,frc) {
+                    //     if (attacker_res && defender_res)
+                    //     {
+                            second_round.continueBattle(attacker, defender,function(user_attacker,user_defender,rc){
                                 var final_result = {attacker:attacker_res,defender:defender_res}
                                 rc.push(final_result)
                                 var rc = rc
@@ -104,8 +104,8 @@ const battle_handler = {
                                 socket.emit('attackresult', attacker.username,rc);
                                 socket.emit('attackresult', defender.username,rc);
                             })
-                        }
-                    })
+                    //     }
+                    // })
     
                 })
 

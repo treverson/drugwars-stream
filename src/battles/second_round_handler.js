@@ -2,11 +2,12 @@
 var unit_logic = require('./unit_logic')
 
 const second_round_handler = {
-    continueBattle:function(attacker, defender,rc, cb) {
+    continueBattle:function(attacker, defender, cb) {
+        var rc = {}
         var aunits = attacker.units
         var cunits = defender.units
         cunits = unit_logic.cleanArmy(cunits)
-        for (i = 1; i < 5; i++) {
+        for (i = 1; i < 6; i++) {
             var round_attackers = unit_logic.chooseNextAttackersByPriority(aunits)
             var round_defenders = unit_logic.chooseNextAttackersByPriority(cunits)
             if (round_attackers && round_defenders) {
