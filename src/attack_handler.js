@@ -8,10 +8,12 @@ function resolveAttack(attack) {
     if(key != attack.battle_key)
     key = attack.battle_key
     console.log(`revolsing battle ${attack.battle_key}`);  
-    for (u in attackblocks) {
-        if (attackblocks[u] && attackblocks[u].battle_key === attack.battle_key)
+    for (i=0;i<attackblocks.length;i++) {
+        if (attackblocks[i] && attackblocks[i].battle_key === attack.battle_key)
+        {
             battle.launchBattle(attack.battle_key);
-            delete attackblocks[u]
+            delete attackblocks[i]
+        }
     }
 }
 
