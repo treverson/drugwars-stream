@@ -19,7 +19,7 @@ const player_handler = {
     const query = `INSERT INTO users (username, drugs_balance, weapons_balance, alcohols_balance, last_update, xp, picture, referrer ) VALUES ('${player}', 500, 1000, 1000,'${now}', 1, ${icon},'${referrer}'); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','headquarters','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','crackhouse','${now}',1); \n\
-                     INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','traditional_alcohol','${now}',1); \n\
+                     INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','t_distillery','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','ammunition','${now}',1); \n\
                      `;
     db.query(query, (err, result) => {
