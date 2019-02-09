@@ -138,7 +138,9 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
+    if(building_level>0)
     return building_placeholder.coeff * 400 * building_level ^ (2 / hq_level);
+    else return building_placeholder.coeff * 400 * 1 ^ (2 / hq_level);
   },
   calculateDrugsCost(building_level, building_placeholder) {
     if(building_placeholder.drugs_cost && building_level>0)
