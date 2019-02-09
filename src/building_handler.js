@@ -16,33 +16,6 @@ readFileAsync(`${__dirname}/../src/gamedata/buildings.json`, { encoding: 'utf8' 
     console.log(error)
   })
 
-function ifCanBuy(user, d_cost,w_cost,a_cost) {
-  if (d_cost && w_cost && a_cost) {
-    if (d_cost < user.drugs_balance && w_cost < user.weapons_balance && a_cost < user.alcohols_balance) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-  else if (d_cost && w_cost) {
-    if (d_cost < user.drugs_balance && w_cost < user.weapons_balance) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-  else (d_cost && a_cost)
-  {
-    if (d_cost < user.drugs_balance && a_cost < user.alcohols_balance) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-}
 
 const building_handler = {
   tryUpdateBuilding(user, building_name, amount, cb) {
@@ -84,10 +57,10 @@ const building_handler = {
           console.log('timer : ' + timer);
           console.log('cost : ' + d_cost, w_cost, a_cost);
           // CHECK DRUGS COST BALANCE
-          if (!ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
+          if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
             return cb('not enough drugs');
           }
-          if (ifCanBuy(user, d_cost,w_cost,a_cost) && !amount) {
+          if (utils.ifCanBuy(user, d_cost,w_cost,a_cost) &&  amount === null) {
             building_handler.upgradeBuilding(
               user,
               now,
@@ -105,7 +78,7 @@ const building_handler = {
           }
           if (amount != null) {
             amount = parseFloat(amount.split(' ')[0]).toFixed(3);
-            utils.costToSteem(building_placeholder.drugs_cost, result => {
+            utils.costToSteem(d_cost, result => {
               if (result)
                 if (result <= amount || (result - ((result / 100) * 5)) <= amount) {
                   timer = 1;

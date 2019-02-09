@@ -41,20 +41,21 @@ const unit_handler = {
               unit_placeholder,
             );
             console.log(timer);
-            let cost = unit_handler.calculateCost(unit_amount, unit_placeholder);
-            console.log(cost);
+            var d_cost = unit_handler.calculateDrugsCost(unit_amount,unit_placeholder)
+            var w_cost = unit_handler.calculateWeaponsCost(unit_amount,unit_placeholder)
+            var a_cost = unit_handler.calculateAlcoholsCost(unit_amount,unit_placeholder)
             // CHECK WEAPONS COST BALANCE
-            if (cost > user.weapons_balance && !amount) {
+            if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
               return cb('not enough weapons');
             }
-            if (cost < user.weapons_balance && !amount) {
-              unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, cost, result => {
+            if (utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
+              unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, result => {
                 if (result) return cb(result);
               });
             }
             if (amount != null) {
               amount = parseFloat(amount.split(' ')[0]).toFixed(3);
-              utils.costToSteem(cost, result => {
+              utils.costToSteem(w_cost, result => {
                 if (result)
                   if (result <= amount || result - (result / 100) * 5 <= amount) {
                     cost = 0;
@@ -65,7 +66,9 @@ const unit_handler = {
                       unit_name,
                       unit_amount,
                       timer,
-                      cost,
+                      0,
+                      0,
+                      0,
                       result => {
                         if (result) return cb(result);
                       },
@@ -85,19 +88,32 @@ const unit_handler = {
       },
     );
   },
+  calculateDrugsCost(unit_amount, unit_placeholder) {
+    if(unit_placeholder.drugs_cost)
+    return unit_placeholder.drugs_cost * unit_amount
+    else return unit_placeholder.drugs_cost
+  },
+  calculateWeaponsCost(unit_amount, unit_placeholder) {
+    if(unit_placeholder.weapons_cost)
+    return unit_placeholder.weapons_cost * unit_amount
+    else return unit_placeholder.weapons_cost
+  },
+  calculateAlcoholsCost(unit_amount, unit_placeholder) {
+    if(unit_placeholder.alcohols_cost)
+    return unit_placeholder.alcohols_cost * unit_amount
+    else return unit_placeholder.alcohols_cost
+  },
   calculateTime(training_facility, unit_amount, unit_placeholder) {
-    return unit_placeholder.coeff * 100 * (unit_amount ^ (2 / training_facility.lvl));
+    return ((unit_placeholder.coeff * 80) - (training_facility.lvl*10/100)) * unit_amount
   },
-  calculateCost(unit_amount, unit_placeholder) {
-    return unit_placeholder.base_price * unit_amount;
-  },
-  AddUnits(user, now, unit_name, unit_amount, timer, cost, cb) {
+  AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, cb) {
     let query;
     const next_update_time = new Date(now.getTime() + timer * 1000)
       .toISOString()
       .slice(0, 19)
       .replace('T', ' ');
-    query = `UPDATE users SET weapons_balance=weapons_balance-${cost} WHERE username='${
+    query = `UPDATE users SET drugs_balance=drugs_balance-${d_cost},
+    weapons_balance=weapons_balance-${w_cost}, alcohols_balance=alcohols_balance-${a_cost} WHERE username='${
       user.username
     }'; \n\
             INSERT INTO users_units (username, unit, amount, next_update) VALUES ('${
