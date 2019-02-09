@@ -62,9 +62,8 @@ const second_round_handler = {
     continueBattle:function(attacker, defender, cb) {
         var rc = {}
         var aunits = attacker
-        console.log(attacker)
         var cunits = defender
-        rc.start ={attacker_units: aunits,defender:cunits}
+        rc.start ={attacker_units: aunits[0],defender:cunits[0]}
         rc.rounds=[]
         for (i = 1; i < 6; i++) {
             var round_attackers = second_round_handler.chooseNextAttackersByPriority(aunits)
@@ -122,14 +121,14 @@ const second_round_handler = {
                         {
 
                             console.log('defender win')
-                            rc.winner = 'attacker'
+                            rc.winner = 'defender'
                             i=6
                         }
                         else if(second_round_handler.chooseNextAttackersByPriority(aunits) && !second_round_handler.chooseNextDefAttackersByPriority(cunits))
                         {
 
                             console.log('attacker win')
-                            rc.winner = 'defender'
+                            rc.winner = 'attacker'
                             i=6
                         }
                     }
