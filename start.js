@@ -40,15 +40,16 @@ const work = (block, blockNum) =>
     }
   });
 
-let lastIrreversibleBlockNum = 0;
+let lastBlockNum = 0;
 const stream = setInterval(() => {
   client.database.getDynamicGlobalProperties().then(props => {
-    lastIrreversibleBlockNum = parseInt(props.last_irreversible_block_num);
+    // lastBlockNum = parseInt(props.last_irreversible_block_num);
+    lastBlockNum = parseInt(props.head_block_number);
   });
 }, 3000);
 
 const handleBlock = blockNum => {
-  if (lastIrreversibleBlockNum >= blockNum) {
+  if (lastBlockNum >= blockNum) {
     client.database
       .getBlock(blockNum)
       .then(block => {
