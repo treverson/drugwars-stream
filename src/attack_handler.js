@@ -5,14 +5,11 @@ const battle = require('./battle_handler');
 
 function resolveAttack(attack) {
     for (i = 0; i < attackblocks.length; i++) {
-        if (attackblocks[i].battle_key === attack.battle_key) {
+        if (attackblocks[i]&&attackblocks[i].battle_key&&attackblocks[i].battle_key === attack.battle_key) {
             console.log('launching battle')
             battle.launchBattle(attack.battle_key);
             delete attackblocks[i]
         }
-        attackblocks = attackblocks.filter(function (el) {
-            return el != null;
-        });
     }
 }
 
