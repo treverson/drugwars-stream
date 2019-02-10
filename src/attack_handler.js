@@ -3,18 +3,14 @@ const db = require('../helpers/db');
 const attackblocks = [];
 const battle = require('./battle_handler');
 
-var key
 function resolveAttack(attack) {
-    if(key != attack.battle_key)
-    key = attack.battle_key
-    console.log(`revolsing battle ${attack.battle_key}`);  
     for (i=0;i<attackblocks.length;i++) {
         if (attackblocks[i] && attackblocks[i].battle_key === attack.battle_key)
         {
+            console.log('launching battle')
             battle.launchBattle(attack.battle_key);
             delete attackblocks[i]
         }
-    }
 }
 
 
