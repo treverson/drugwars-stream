@@ -138,7 +138,7 @@
     "weapons_cost":17500,
     "alcohols_cost":25000,
     "base_price": 250,
-    "coeff": 7,
+    "coeff": 6,
     "attack": 0,
     "defense": 0
 },
@@ -155,7 +155,7 @@
     "weapons_cost":35000,
     "alcohols_cost":45000,
     "base_price": 250,
-    "coeff": 10,
+    "coeff": 8,
     "attack": 0,
     "defense": 0
 },
@@ -238,7 +238,7 @@
     "weapons_cost":0,
     "alcohols_cost":12000,
     "base_price": 250,
-    "coeff": 7,
+    "coeff": 6,
     "attack": 0,
     "defense": 0
 },
@@ -255,7 +255,7 @@
     "weapons_cost":0,
     "alcohols_cost":50000,
     "base_price": 250,
-    "coeff": 10,
+    "coeff": 8,
     "attack": 0,
     "defense": 0
 },
@@ -338,7 +338,7 @@
     "weapons_cost":12000,
     "alcohols_cost":0,
     "base_price": 250,
-    "coeff": 7,
+    "coeff": 6,
     "attack": 0,
     "defense": 0
 },
@@ -355,7 +355,7 @@
     "weapons_cost":50000,
     "alcohols_cost":0,
     "base_price": 250,
-    "coeff": 10,
+    "coeff": 8,
     "attack": 0,
     "defense": 0
 },

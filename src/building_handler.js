@@ -118,17 +118,17 @@ const building_handler = {
   },
   calculateDrugsCost(building_level, building_placeholder) {
     if(building_placeholder.drugs_cost && building_level>0)
-    return building_placeholder.drugs_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    return building_placeholder.drugs_cost * (building_level+1*(building_level+1)*(2*(building_level+1)))/5
     else return building_placeholder.drugs_cost
   },
   calculateWeaponsCost(building_level, building_placeholder) {
     if(building_placeholder.weapons_cost && building_level>0)
-    return building_placeholder.weapons_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    return building_placeholder.weapons_cost * (building_level+1*(building_level+1)*(2*(building_level+1)))/5
     else return building_placeholder.weapons_cost
   },
   calculateAlcoholsCost(building_level, building_placeholder) {
     if(building_placeholder.alcohols_cost && building_level>0)
-    return building_placeholder.alcohols_cost * (building_level *( building_level + 1)) * (2* building_level + 1)/6
+    return building_placeholder.alcohols_cost * (building_level+1*(building_level+1)*(2*(building_level+1)))/5
     else return building_placeholder.alcohols_cost
   },
   calculateProductionRate(building_level, building_placeholder) {
