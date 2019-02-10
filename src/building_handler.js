@@ -32,7 +32,8 @@ const building_handler = {
         // CHECK FOR EXISTANT BUILDING AND GET NEXT LEVEL/UPDATE
         var building_level = 0;
         var next_update = now;
-        console.log(building_placeholder)
+       if(building_placeholder)
+       {
         if (character_buildings.filter(item => item.building === building_name)[0]) {
           var building = character_buildings.filter(item => item.building === building_name);
           next_update = new Date(Date.parse(building[0].next_update));
@@ -109,6 +110,10 @@ const building_handler = {
         } else {
           return cb('need to wait');
         }
+       }else {
+        return cb('building doesnt exist');
+      }
+
       }
     });
   },
