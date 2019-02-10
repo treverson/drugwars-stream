@@ -36,6 +36,8 @@ const building_handler = {
           var building = character_buildings.filter(item => item.building === building_name);
           next_update = new Date(Date.parse(building[0].next_update));
           building_level = building[0].lvl;
+          
+        }
         // ADD HEADQUARTER & CHECK LEVEL
         var headquarters = character_buildings.filter(item => item.building === 'headquarters')[0]
         if (headquarters.lvl < building_level && building_name != 'headquarters') {
@@ -106,11 +108,6 @@ const building_handler = {
         } else {
           return cb('need to wait');
         }
-        }
-        else{
-          return cb('this building doesnt exit');
-        }
-
       }
     });
   },
