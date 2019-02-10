@@ -5,7 +5,6 @@ function costToSteem(int, cb) {
     .then(res =>
       res.json().then(result => {
         const price = parseFloat(int / 10000 / result[0].price_usd).toFixed(3);
-        console.log(price)
         cb(price);
       }),
     )
