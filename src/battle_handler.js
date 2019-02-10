@@ -59,7 +59,7 @@ const battle_handler = {
                                     for(i=0;i<user_attacker.length;i++)
                                     {
                                         if(user_attacker[i].amount>0)
-                                        query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' AND
+                                        query.push(`UPDATE users_units SET xp=xp+25, amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' AND
                                         username = '${attacker.username}'`)
                                     }
                                     if(!user_defender || user_defender.length<1)
@@ -82,7 +82,7 @@ const battle_handler = {
                                     query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`)
                                     if(user_attacker.length>0)
                                     {
-                                        query.push(`UPDATE users SET drugs_balance=drugs_balance/2, wins=wins+1 WHERE username = '${defender.username}'`)
+                                        query.push(`UPDATE users SET xp=xp+50,  drugs_balance=drugs_balance/2, wins=wins+1 WHERE username = '${defender.username}'`)
                                     }
                                 }
                                 query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`)
