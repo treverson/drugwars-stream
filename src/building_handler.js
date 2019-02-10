@@ -32,6 +32,7 @@ const building_handler = {
         // CHECK FOR EXISTANT BUILDING AND GET NEXT LEVEL/UPDATE
         var building_level = 0;
         var next_update = now;
+        console.log(building_placeholder)
         if (character_buildings.filter(item => item.building === building_name)[0]) {
           var building = character_buildings.filter(item => item.building === building_name);
           next_update = new Date(Date.parse(building[0].next_update));
@@ -112,7 +113,7 @@ const building_handler = {
     });
   },
   calculateTime(hq_level, building_level, building_placeholder) {
-    if(building_placeholder.id != "headquarters")
+    if(building_placeholder && building_placeholder.id != "headquarters")
     return (building_placeholder.coeff*2000)*((Math.sqrt(625+100*((building_level+1)*250))-25)/50)/hq_level
     else
     return 2500*((Math.sqrt(625+100*((building_level+1)*250))-25)/50)
