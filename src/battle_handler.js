@@ -19,11 +19,11 @@ const battle_handler = {
             units = JSON.parse(JSON.stringify(units))
             attacker.units = []
             for (i = 0; i < units.length; i++) {
-                if (units.amount > 0) {
+                if (units[i].amount > 0) {
                     attacker.units.push(units[i])
                 }
             }
-            if (units.length > 0) {
+            if (attacker.units.length > 0) {
                 let query = `SELECT * FROM users_buildings WHERE username = ? ;
                     SELECT * FROM users_units WHERE username = ?;
                     SELECT * FROM users WHERE username = ?`
