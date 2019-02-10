@@ -12,6 +12,7 @@ function resolveAttack(attack) {
             delete attackblocks[i]
         }
 }
+}
 
 
 const attack_handler = {
