@@ -62,6 +62,11 @@ const player_handler = {
               .toISOString()
               .slice(0, 19)
               .replace('T', ' ');
+              console.log(
+                `User ${
+                  user.username
+                } old drug balance : ${user.drugs_balance} old weapon balance : ${user.weapons_balance} old alcohol balance : ${user.alcohols_balance}`,
+              );
             const differenceprod = now.getTime() - user.last_update.getTime();
             var drugs_balance =user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
             var alcohols_balance =user.alcohols_balance + Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2));
