@@ -31,7 +31,13 @@ const work = (block, blockNum) =>
     console.log('Work at block', blockNum);
     if (block.transactions.length > 0) {
       block.transactions.forEach(tx => {
-        attack.checkAttacks(tx);
+        attack.checkAttacks(tx,function(result)
+        {
+          if(result)
+          {
+            console.log('checked attacks')
+          }
+        });
         bcOperation.filter(tx);
         resolve();
       });

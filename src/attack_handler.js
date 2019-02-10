@@ -3,12 +3,21 @@ const db = require('../helpers/db');
 const attackblocks = [];
 const battle = require('./battle_handler');
 
-function resolveAttack(attack) {
+function resolveAttack(attack,cb) {
     for (i = 0; i < attackblocks.length; i++) {
         if (attackblocks[i]&&attackblocks[i].battle_key&&attackblocks[i].battle_key === attack.battle_key) {
-            console.log('launching battle')
-            battle.launchBattle(attack.battle_key);
-            delete attackblocks[i]
+            console.log('launching battle ' + attack.battle_key)
+            battle.launchBattle(attack.battle_key,function(result){
+                if(result)
+                {
+                    console.log('finished battle ' + attack.battle_key)
+                    delete attackblocks[i]
+                    cb(true)
+                }
+                else{
+                    cb(false)
+                }
+            })
         }
     }
 }
@@ -69,13 +78,19 @@ const attack_handler = {
         var attack = { battle_key: key, target_block: target_block }
         attackblocks.push(attack)
     },
-    checkAttacks: function (object) {
+    checkAttacks: function (object,cb) {
         if (attackblocks.filter(function (item) { return item.target_block === object.block_num }).length > 0) {
             var attack = attackblocks.filter(function (item) { return item.target_block === object.block_num })
-            console.log(attack)
             console.log('resolving fights with target block ' + attack[0].target_block)
-            resolveAttack(attack[0])
+            resolveAttack(attack[0],function(result){
+                if(result)
+                cb(true)
+                else{
+                    console.log('couldnt resolve fight with target block ' + attack[0].target_block)
+                }
+            })
         }
+        else cb(false)
     }
 }
 
