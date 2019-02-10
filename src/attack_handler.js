@@ -79,8 +79,8 @@ const attack_handler = {
         attackblocks.push(attack)
     },
     checkAttacks: function (object,cb) {
-        if (attackblocks.filter(function (item) { return item.target_block < object.block_num }).length > 0) {
-            var attack = attackblocks.filter(function (item) { return item.target_block < object.block_num })
+        if (attackblocks.filter(function (item) { return item.target_block === object.block_num }).length > 0) {
+            var attack = attackblocks.filter(function (item) { return item.target_block === object.block_num })
             console.log('resolving fights with target block ' + attack[0].target_block)
             resolveAttack(attack[0],function(result){
                 if(result)
