@@ -16,7 +16,7 @@ const player_handler = {
       .toISOString()
       .slice(0, 19)
       .replace('T', ' ');
-    const query = `INSERT INTO users (username, drugs_balance, weapons_balance, alcohols_balance, last_update, xp, picture, referrer ) VALUES ('${player}', 1500, 3000, 3000,'${now}', 1, ${icon},'${referrer}'); \n\
+    const query = `INSERT INTO users (username, drugs_balance, weapons_balance, alcohols_balance, last_update, xp, picture, referrer ) VALUES ('${player}', 2500, 5000, 5000,'${now}', 1, ${icon},'${referrer}'); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','headquarters','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','crackhouse','${now}',1); \n\
                      INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','ammunition','${now}',1); \n\
