@@ -23,7 +23,7 @@ const battle_handler = {
                     attacker.units.push(units[i])
                 }
             }
-            if (attacker.units.length > 0) {
+            if (units.length > 0) {
                 let query = `SELECT * FROM users_buildings WHERE username = ? ;
                     SELECT * FROM users_units WHERE username = ?;
                     SELECT * FROM users WHERE username = ?`
