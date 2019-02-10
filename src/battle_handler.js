@@ -57,7 +57,7 @@ const battle_handler = {
                                 {
                                     for(i=0;i<user_attacker.length;i++)
                                     {
-                                        if(user_attacker[i].amount>0)
+                                        if(user_attacker[i].amount>=1)
                                         query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' AND
                                         username = '${attacker.username}'`)
                                     }
