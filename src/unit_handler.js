@@ -56,7 +56,6 @@ const unit_handler = {
             }
             if (amount != null) {
               amount = parseFloat(amount.split(' ')[0]).toFixed(3);
-              console.log(w_cost)
               utils.costToSteem(w_cost, result => {
                 if (result)
                   if (result <= amount || result - (result / 100) * 5 <= amount) {
