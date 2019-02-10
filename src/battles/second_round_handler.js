@@ -123,7 +123,6 @@ const second_round_handler = {
                                 return el != null;
                             })
                         }
-                        rc.rounds.push({roundnumber:i})
                         rc.rounds.push({ attacker :{attacker: round_attackers.id,start_amount:round_attackers.start_amount, damage: round_attackers.damage, pv:round_attackers.pv, amount: round_attackers.amount}, 
                         defender : { defender: round_defenders.id,start_amount:round_defenders.start_amount, damage: round_defenders.damage, pv:round_defenders.pv, amount: round_defenders.amount }})  
                         
