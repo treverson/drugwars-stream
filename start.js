@@ -24,20 +24,22 @@ const init = () =>
         reject();
       });
   });
-
+var blck;
 /** Work to do at each new irreversible block */
 const work = (block, blockNum) =>
   new Promise((resolve, reject) => {
     console.log('Work at block', blockNum);
     if (block.transactions.length > 0) {
       block.transactions.forEach(tx => {
-        attack.checkAttacks(tx,function(result)
-        {
-          if(result)
-          {
-            console.log('checked attacks')
-          }
-        });
+        if (blck != blockNum) {
+          blck = blockNum
+          attack.checkAttacks(tx, function (result) {
+            if (result) {
+              console.log('checked attacks')
+            }
+          });
+        }
+
         bcOperation.filter(tx);
         resolve();
       });
