@@ -15,7 +15,7 @@ const work = (block, blockNum) => new Promise((resolve, reject) => {
   const promises = [];
 
   /** Work to do for each blocks */
-  let query = 'SELECT * FROM battles WHERE target_block >= ? ORDER BY target_block ASC';
+  let query = 'SELECT * FROM battles WHERE target_block <= ? ORDER BY target_block ASC';
   db.queryAsync(query, [blockNum]).then(attacks => {
 
     if (attacks.length > 0) {
