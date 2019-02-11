@@ -19,6 +19,7 @@ const unit_handler = {
           // CHOOSE THE PLACEHOLDER
           console.log(unit_name);
           const unit_placeholder = units.filter(item => item.id === unit_name)[0];
+          if (!unit_placeholder) return cb('Unit not recognized', unit_name);
           const now = new Date();
           // CHECK FOR TRAINING FACILITY
           const training_facility = character_buildings.filter(
