@@ -7,7 +7,7 @@ const db = require('../helpers/db');
 const pool_handler = {
   send(op, cb) {
     let amount = op.amount.split(' ')[0];
-    amount = (amount / 100) * 89;
+    amount = (amount / 100) * 80;
     amount = parseFloat(amount).toFixed(3);
     const transfer = amount.concat(' ', 'STEEM');
     const transf = new Object();
