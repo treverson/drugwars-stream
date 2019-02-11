@@ -5,13 +5,13 @@ const { resolveBattle } = require('./attack_handler');
 
 /** Work to do before streaming the chain */
 const init = () => new Promise((resolve, reject) => {
-  console.log('Nothing to init');
+  console.log('[init] Nothing to init');
   resolve();
 });
 
 /** Work to do at each new irreversible block */
 const work = (block, blockNum) => new Promise((resolve, reject) => {
-  console.log('Work at block', blockNum);
+  console.log('[work] Work at block', blockNum);
   const promises = [];
 
   /** Work to do for each blocks */
@@ -34,14 +34,14 @@ const work = (block, blockNum) => new Promise((resolve, reject) => {
     /** Resolve all promises in serie */
     if (promises.length > 0) {
       Promise.each(promises, (p) => p).then(() =>{
-        console.log('Work done on', promises.length, blockNum);
+        console.log('[work] Work done on', promises.length, blockNum);
         resolve();
       }).catch((e) => {
-        console.log('Promises failed', e);
+        console.log('[work] Promises failed', e);
         reject();
       });
     } else {
-      console.log('No work async to do');
+      console.log('[work] No work async to do');
       resolve();
     }
   });
