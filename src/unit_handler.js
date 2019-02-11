@@ -27,64 +27,71 @@ const unit_handler = {
           if (!training_facility && !training_facility.lvl < 1) {
             return cb('training facility to low');
           }
-          if (character_units.filter(item => item.unit === unit_name)[0]) {
-            const unit = character_units.filter(item => item.unit === unit_name);
-            var next_update = new Date(Date.parse(unit[0].next_update));
-          } else {
-            var next_update = now;
+          if(unit_placeholder)
+          {
+            if (character_units.filter(item => item.unit === unit_name)[0]) {
+              const unit = character_units.filter(item => item.unit === unit_name);
+              var next_update = new Date(Date.parse(unit[0].next_update));
+            } else {
+              var next_update = now;
+            }
+            // CHECK LAST UPDATE
+            if (next_update <= now) {
+              let timer = unit_handler.calculateTime(
+                training_facility,
+                unit_amount,
+                unit_placeholder,
+              );
+              console.log(timer);
+              var d_cost = unit_handler.calculateDrugsCost(unit_amount,unit_placeholder)
+              var w_cost = unit_handler.calculateWeaponsCost(unit_amount,unit_placeholder)
+              var a_cost = unit_handler.calculateAlcoholsCost(unit_amount,unit_placeholder)
+              console.log(d_cost,w_cost,a_cost)
+              // CHECK WEAPONS COST BALANCE
+              if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
+                return cb('not enough weapons');
+              }
+              if (utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
+                unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, result => {
+                  if (result) return cb(result);
+                });
+              }
+              if (amount != null) {
+                amount = parseFloat(amount.split(' ')[0]).toFixed(3);
+                utils.costToSteem(w_cost, result => {
+                  if (result)
+                    if (result <= amount || result - (result / 100) * 5 <= amount) {
+                      cost = 0;
+                      timer = 1;
+                      unit_handler.AddUnits(
+                        user,
+                        now,
+                        unit_name,
+                        unit_amount,
+                        timer,
+                        0,
+                        0,
+                        0,
+                        result => {
+                          if (result) return cb(result);
+                        },
+                      );
+                    } else
+                      return cb(
+                        `you must send more STEEM the difference was :${parseFloat(
+                          result - amount,
+                        ).toFixed(3)} STEEM`,
+                      );
+                });
+              }
+            } else {
+              return cb('need to wait');
+            }
           }
-          // CHECK LAST UPDATE
-          if (next_update <= now) {
-            let timer = unit_handler.calculateTime(
-              training_facility,
-              unit_amount,
-              unit_placeholder,
-            );
-            console.log(timer);
-            var d_cost = unit_handler.calculateDrugsCost(unit_amount,unit_placeholder)
-            var w_cost = unit_handler.calculateWeaponsCost(unit_amount,unit_placeholder)
-            var a_cost = unit_handler.calculateAlcoholsCost(unit_amount,unit_placeholder)
-            console.log(d_cost,w_cost,a_cost)
-            // CHECK WEAPONS COST BALANCE
-            if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
-              return cb('not enough weapons');
-            }
-            if (utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
-              unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, result => {
-                if (result) return cb(result);
-              });
-            }
-            if (amount != null) {
-              amount = parseFloat(amount.split(' ')[0]).toFixed(3);
-              utils.costToSteem(w_cost, result => {
-                if (result)
-                  if (result <= amount || result - (result / 100) * 5 <= amount) {
-                    cost = 0;
-                    timer = 1;
-                    unit_handler.AddUnits(
-                      user,
-                      now,
-                      unit_name,
-                      unit_amount,
-                      timer,
-                      0,
-                      0,
-                      0,
-                      result => {
-                        if (result) return cb(result);
-                      },
-                    );
-                  } else
-                    return cb(
-                      `you must send more STEEM the difference was :${parseFloat(
-                        result - amount,
-                      ).toFixed(3)} STEEM`,
-                    );
-              });
-            }
-          } else {
-            return cb('need to wait');
+          else{
+            return cb('unit doesnt exist');
           }
+          
         }
       },
     );
