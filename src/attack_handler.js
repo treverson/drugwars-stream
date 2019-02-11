@@ -1,29 +1,18 @@
 const db = require('../helpers/db');
-
-const attackblocks = [];
 const battle = require('./battle_handler');
 
-function resolveAttack(attack, cb) {
-    for (let i = 0; i < attackblocks.length; i++) {
-        if (attackblocks[i] && attackblocks[i].battle_key && attackblocks[i].battle_key === attack.battle_key) {
-            console.log('launching battle ' + attack.battle_key)
-            battle.launchBattle(attack.battle_key,function(result){
-                if(result)
-                {
-                    console.log('finished battle ' + attack.battle_key)
-                    delete attackblocks[i]
-                    cb(true)
-                }
-                else{
-                    cb(false)
-                }
-            })
-        }
-    }
-}
-
-
 const attack_handler = {
+    resolveBattle: (attack) => new Promise((resolve, reject) => {
+      console.log(`Launching battle @${attack.username} VS @${attack.defender} #${attack.battle_key}`);
+      battle.launchBattle(attack.battle_key, (result) => {
+        if (result) {
+          console.log('Finished battle', attack.battle_key);
+          resolve();
+        } else {
+          reject();
+        }
+      })
+    }),
     startAttack: function (username, army, defender, block_num, key, cb) {
         var now = new Date();
         var query = []
@@ -53,45 +42,6 @@ const attack_handler = {
             cb(attack)
         })
     },
-    loadAttacks: function (latest_block) {
-        let query = "SELECT * FROM battles";
-        db.query(query, function (err, result) {
-            if (err || !result || !result[0]) {
-                console.log('no attack to load')
-                return
-            }
-            else {
-                console.log(result)
-                for (i = 0; i < result.length; i++) {
-                    if (result[i].target_block && result[i].target_block < latest_block) {
-                        resolveAttack(result[i])
-                    }
-                    else {
-                        var attack = { battle_key: result[i].battle_key, target_block: result[i].target_block }
-                        attackblocks.push(attack)
-                    }
-                }
-            }
-        });
-    },
-    addAttack: function (key, target_block) {
-        var attack = { battle_key: key, target_block: target_block }
-        attackblocks.push(attack)
-    },
-    checkAttacks: function (object,cb) {
-        if (attackblocks.filter(function (item) { return item.target_block === object.block_num }).length > 0) {
-            var attack = attackblocks.filter(function (item) { return item.target_block === object.block_num })
-            console.log('resolving fights with target block ' + attack[0].target_block)
-            resolveAttack(attack[0],function(result){
-                if(result)
-                cb(true)
-                else{
-                    console.log('couldnt resolve fight with target block ' + attack[0].target_block)
-                }
-            })
-        }
-        else cb(false)
-    }
 }
 
 module.exports = attack_handler;
