@@ -3,9 +3,9 @@ const db = require('../helpers/db');
 const attackblocks = [];
 const battle = require('./battle_handler');
 
-function resolveAttack(attack,cb) {
-    for (i = 0; i < attackblocks.length; i++) {
-        if (attackblocks[i]&&attackblocks[i].battle_key&&attackblocks[i].battle_key === attack.battle_key) {
+function resolveAttack(attack, cb) {
+    for (let i = 0; i < attackblocks.length; i++) {
+        if (attackblocks[i] && attackblocks[i].battle_key && attackblocks[i].battle_key === attack.battle_key) {
             console.log('launching battle ' + attack.battle_key)
             battle.launchBattle(attack.battle_key,function(result){
                 if(result)

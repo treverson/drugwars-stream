@@ -15,12 +15,8 @@ const init = () =>
     client.blockchain
       .getCurrentBlockNum()
       .then(blockNum => {
+        attack.loadAttacks(blockNum);
         console.log('Current block num', blockNum);
-        try {
-          attack.loadAttacks(blockNum);
-        } catch (e) {
-          console.error('Failed to load attacks', e);
-        }
         resolve();
       })
       .catch(err => {
@@ -28,6 +24,7 @@ const init = () =>
         reject();
       });
   });
+
 var blck;
 /** Work to do at each new irreversible block */
 const work = (block, blockNum) =>
