@@ -29,7 +29,7 @@ var blck;
 const work = (block, blockNum) =>
   new Promise((resolve, reject) => {
     console.log('Work at block', blockNum);
-    if (block.transactions.length > 0) {
+    if (block.transactions && block.transactions.length > 0) {
       block.transactions.forEach(tx => {
         if (blck != blockNum) {
           blck = blockNum
