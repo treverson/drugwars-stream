@@ -33,7 +33,6 @@ const bc_operation = {
                       tx.transaction_id,
                       result => {
                         if (result) {
-                          attack.addAttack(result.key, result.target_block);
                           socket.emit('refresh', op.username,op.defender);
                           socket.emit('attack', op.username,op.defender);
                           socket.emit('receiving_attack', op.defender, op.username);
