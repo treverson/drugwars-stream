@@ -1,53 +1,12 @@
 const express = require('express');
 const Promise = require('bluebird');
-const bcOperation = require('./helpers/filteroperation');
-const attack = require('./src/attack_handler');
 const client = require('./helpers/client');
 const redis = require('./helpers/redis');
+const { init, work } = require('./src');
 
 const app = express();
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => console.log(`Listening on ${port}`));
-
-/** Work to do before streaming the chain */
-const init = () =>
-  new Promise((resolve, reject) => {
-    client.blockchain
-      .getCurrentBlockNum()
-      .then(blockNum => {
-        attack.loadAttacks(blockNum);
-        console.log('Current block num', blockNum);
-        resolve();
-      })
-      .catch(err => {
-        console.log(err);
-        reject();
-      });
-  });
-
-var blck;
-/** Work to do at each new irreversible block */
-const work = (block, blockNum) =>
-  new Promise((resolve, reject) => {
-    console.log('Work at block', blockNum);
-    if (block.transactions && block.transactions.length > 0) {
-      block.transactions.forEach(tx => {
-        if (blck != blockNum) {
-          blck = blockNum
-          attack.checkAttacks(tx, function (result) {
-            if (result) {
-              console.log('checked attacks')
-            }
-          });
-        }
-
-        bcOperation.filter(tx);
-        resolve();
-      });
-    } else {
-      resolve();
-    }
-  });
 
 let lastBlockNum = 0;
 const stream = setInterval(() => {
