@@ -16,7 +16,11 @@ const init = () =>
       .getCurrentBlockNum()
       .then(blockNum => {
         console.log('Current block num', blockNum);
-        attack.loadAttacks(blockNum);
+        try {
+          attack.loadAttacks(blockNum);
+        } catch (e) {
+          console.error('Failed to load attacks', e);
+        }
         resolve();
       })
       .catch(err => {
