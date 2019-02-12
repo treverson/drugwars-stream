@@ -137,9 +137,9 @@ const launchBattle = (battle_key, cb) => {
               .slice(0, 19)
               .replace('T', ' ');
             let query = [];
-            for (i = 0; i < user_attacker.length; i++) {
-              if (user_attacker[i].amount >= 1)
-                query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' 
+            for (i = 0; i < attacker.units.length; i++) {
+              if (attacker.units[i].amount >= 1)
+                query.push(`UPDATE users_units SET amount=amount+${attacker.units[i].amount} WHERE unit ='${attacker.units[i].unit}' 
                             AND username = '${attacker.username}'`);
               query.push(
                 `UPDATE users SET xp=xp+1,  drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
