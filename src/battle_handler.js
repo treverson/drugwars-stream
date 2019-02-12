@@ -120,6 +120,10 @@ const launchBattle = (battle_key, cb) => {
           }
           else {
             let query = []
+            const now = new Date()
+            .toISOString()
+            .slice(0, 19)
+            .replace('T', ' ');
             const reward = defender_account[0].drugs_balance / 2;
             for (i = 0; i < attacker.units.length; i++) {
               if (attacker.units[i].amount >= 1)
