@@ -47,6 +47,7 @@ const launchBattle = (battle_key, cb) => {
           for (i = 0; i < def_units.length; i++) {
             defender.units.push(def_units[i]);
           }
+          console.log('[battle - defender units]', def_units)
             secondRound.continueBattle(
               attacker.units,
               defender.units,
