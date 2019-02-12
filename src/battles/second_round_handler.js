@@ -123,14 +123,14 @@ const second_round_handler = {
         !second_round_handler.chooseNextAttackersByPriority(aunits) &&
         second_round_handler.chooseNextDefAttackersByPriority(cunits)
       ) {
-        console.log('defender win');
+        console.log('[second-round] defender win');
         rc.winner = 'defender';
         i = 6;
       } else if (
         second_round_handler.chooseNextAttackersByPriority(aunits) &&
         !second_round_handler.chooseNextDefAttackersByPriority(cunits)
       ) {
-        console.log('attacker win');
+        console.log('[second-round] attacker win');
         rc.winner = 'attacker';
         i = 6;
       }

@@ -5,7 +5,7 @@ const player_handler = {
     const query = 'SELECT * FROM users WHERE username = ?';
     db.query(query, [username], (err, result) => {
       if (err || !result || !result[0]) {
-        console.log(`${username} doesnt exist`);
+        console.log(`[player] ${username} doesnt exist`);
         return cb(null);
       }
       cb(true);
@@ -23,10 +23,10 @@ const player_handler = {
       INSERT INTO users_buildings (username,building,next_update,lvl) VALUES ('${player}','t_distillery','${now}',1);`;
     db.query(query, (err, result) => {
       if (err || !result || !result[0]) {
-        console.log(`coudlnt create a character for username ${player}${err}`);
+        console.log(`[player] coudlnt create a character for username ${player}${err}`);
         return cb(true);
       }
-      console.log(`User : ${player} is now ready to play`);
+      console.log(`[player] User : ${player} is now ready to play`);
       cb(null);
     });
   },
@@ -34,10 +34,10 @@ const player_handler = {
     const query = `UPDATE users SET xp=xp+${xp} WHERE username='${name}'`;
     db.query(query, (err, result) => {
       if (err) {
-        console.log(`coudlnt add xp for ${name}`);
+        console.log(`[player] coudlnt add xp for ${name}`);
         return cb(true);
       }
-      console.log(`${xp}XP added to user ${name}`);
+      console.log(`[player] ${xp}XP added to user ${name}`);
       cb(true);
     });
   },
@@ -45,14 +45,14 @@ const player_handler = {
     let query = 'SELECT * FROM users WHERE username = ?';
     db.query(query, [username], (err, result) => {
       if (err || !result || !result[0] || result[0] === null) {
-        console.log(err);
+        console.log('[player]', err);
         cb(null);
       } else {
         const user = result[0];
         query = 'SELECT * FROM users_buildings WHERE username = ?';
         db.query(query, [user.username], (err, result) => {
           if (err) {
-            console.log(err);
+            console.error('[player]', err);
             cb(null);
           } else {
             const buildings = JSON.parse(JSON.stringify(result));
@@ -62,7 +62,7 @@ const player_handler = {
               .slice(0, 19)
               .replace('T', ' ');
             console.log(
-              `User ${user.username} old drug balance : ${
+              `[player] User ${user.username} old drug balance : ${
                 user.drugs_balance
               } old weapon balance : ${user.weapons_balance} old alcohol balance : ${
                 user.alcohols_balance
@@ -89,20 +89,20 @@ const player_handler = {
               drugs_balance += drugs_balance * (operation_center.lvl * 0.005);
               weapons_balance += weapons_balance * (operation_center.lvl * 0.005);
               alcohols_balance += alcohols_balance * (operation_center.lvl * 0.005);
-              console.log(`applied bonus %${operation_center.lvl * 0.005}`);
+              console.log(`[player] applied bonus %${operation_center.lvl * 0.005}`);
             }
             if (drugs_balance > d_cap) drugs_balance = d_cap;
             if (weapons_balance > w_cap) weapons_balance = w_cap;
             if (alcohols_balance > a_cap) alcohols_balance = a_cap;
             const query = `UPDATE users SET drugs_balance=${drugs_balance}, weapons_balance=${weapons_balance}, alcohols_balance=${alcohols_balance}, last_update='${nowtomysql}' WHERE username='${username}'`;
             db.query(query, (err, result) => {
-              if (err) console.log(err);
+              if (err) console.error('[player]', err);
               else {
                 user.drugs_balance = drugs_balance;
                 user.weapons_balance = weapons_balance;
                 user.alcohols_balance = alcohols_balance;
                 console.log(
-                  `user - Updated user ${
+                  `[player] user - Updated user ${
                     user.username
                   } new drug balance : ${drugs_balance} new weapon balance : ${weapons_balance} new alcohol balance : ${alcohols_balance}`,
                 );
@@ -124,7 +124,7 @@ const player_handler = {
           SELECT * FROM heist WHERE username = ?';
       db.query(query, [character.username, character.username], (err, result) => {
         if (err) {
-          console.log(err);
+          console.error('[player]', err);
           cb(null);
         } else {
           const [[buildings], [heist]] = result;
@@ -145,10 +145,10 @@ const player_handler = {
     const query = `UPDATE users SET drugs_balance=drugs_balance-${amount} WHERE username='${username}'`;
     db.query(query, (err, result) => {
       if (err) {
-        console.log(err);
+        console.error('[player]', err);
         cb(null);
       } else {
-        console.log(`Upgraded balance : for : ${username}`);
+        console.log(`[player] Upgraded balance : for : ${username}`);
         cb(true);
       }
     });
@@ -157,7 +157,7 @@ const player_handler = {
     const query = 'SELECT * FROM users_units WHERE username = ?';
     db.query(query, [username], (err, result) => {
       if (err || !result || !result[0]) {
-        console.log(`${username} doesnt have units`);
+        console.log(`[player] ${username} doesnt have units`);
         return cb(null);
       }
       for (i = 0; i < army.length; i++) {
@@ -166,7 +166,7 @@ const player_handler = {
             result.filter(item => item.unit === army[i].unit).amount <
             parseFloat(army[i].amount).toFixed(0)
           )
-            cb(console.log(`no units${army[i].unit}`));
+            cb(console.log(`[player] no units${army[i].unit}`));
         }
       }
       cb('success');

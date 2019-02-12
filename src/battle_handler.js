@@ -10,12 +10,12 @@ const launchBattle = (battle_key, cb) => {
       SELECT * FROM battles_units WHERE battle_key = ?`;
   db.query(query, [battle_key, battle_key], (err, attacker_result) => {
     if (err || !attacker_result || !attacker_result[0]) {
-      console.log(err);
+      console.err('[battle]', err);
     }
     let [[battle], units] = attacker_result;
     const attacker = {};
     attacker.username = battle.username;
-    console.log(battle);
+    console.log('[battle]', JSON.stringify(battle));
     units = JSON.parse(JSON.stringify(units));
     attacker.units = [];
     for (i = 0; i < units.length; i++) {
@@ -32,7 +32,7 @@ const launchBattle = (battle_key, cb) => {
         [battle.defender, battle.defender, battle.defender],
         (err, defender_result) => {
           if (err) {
-            console.log(err);
+            console.error('[battle]', err);
           }
           let [buildings, units, defender_account] = defender_result;
           const defender = {};
@@ -112,7 +112,7 @@ const launchBattle = (battle_key, cb) => {
               query = query.join(' ; ');
               db.query(query, (err, result) => {
                 if (err) {
-                  console.log(err);
+                  console.error('[battle]', err);
                   cb(false);
                 } else socket.emit('refresh', attacker.username);
                 socket.emit('refresh', defender.username);
@@ -126,7 +126,7 @@ const launchBattle = (battle_key, cb) => {
       );
     } else {
       cb(true);
-      console.log('attacker have no units');
+      console.log('[battle] attacker have no units');
     }
   });
 };

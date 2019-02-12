@@ -12,11 +12,11 @@ const unit_handler = {
       [user.username, user.username],
       (err, [character_units, character_buildings]) => {
         if (err) {
-          console.log(err);
+          console.error('[unit]', err);
           cb(null);
         } else {
           // CHOOSE THE PLACEHOLDER
-          console.log(unit_name);
+          console.log(`[unit] ${unit_name}`);
           const unit_placeholder = units.filter(item => item.id === unit_name)[0];
           if (!unit_placeholder) return cb('Unit not recognized', unit_name);
           const now = new Date();
@@ -41,11 +41,11 @@ const unit_handler = {
                 unit_amount,
                 unit_placeholder,
               );
-              console.log(timer);
+              console.log(`[unit] ${timer}`);
               const d_cost = unit_handler.calculateDrugsCost(unit_amount, unit_placeholder);
               const w_cost = unit_handler.calculateWeaponsCost(unit_amount, unit_placeholder);
               const a_cost = unit_handler.calculateAlcoholsCost(unit_amount, unit_placeholder);
-              console.log(d_cost, w_cost, a_cost);
+              console.log('[unit]', d_cost, w_cost, a_cost);
               // CHECK WEAPONS COST BALANCE
               if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
                 return cb('not enough weapons');
@@ -134,10 +134,10 @@ const unit_handler = {
             ON DUPLICATE KEY UPDATE amount=amount+${unit_amount}, next_update='${next_update_time}'`;
     db.query(query, (err, result) => {
       if (err) {
-        console.log(result);
+        console.error('[unit]', result, err);
         cb(err);
       } else {
-        console.log(`Addd ${unit_amount} units :${unit_name} for : ${user.username}`);
+        console.log(`[unit] Add ${unit_amount} units :${unit_name} for : ${user.username}`);
         cb('success');
       }
     });

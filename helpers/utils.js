@@ -9,7 +9,7 @@ function costToSteem(int, cb) {
       }),
     )
     .catch(err => {
-      console.log('Error: API not responding!', err);
+      console.log('[utils] Error: API not responding!', err);
       cb(null);
     });
 }

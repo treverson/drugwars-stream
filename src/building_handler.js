@@ -1,5 +1,4 @@
 const db = require('../helpers/db');
-const player = require('./player_handler');
 const utils = require('../helpers/utils');
 const { promisify } = require('util');
 const fs = require('fs');
@@ -14,7 +13,7 @@ readFileAsync(`${__dirname}/../src/gamedata/buildings.json`, { encoding: 'utf8' 
     }
   })
   .catch(error => {
-    console.log(error);
+    console.error('[building]', error);
   });
 
 const building_handler = {
@@ -22,7 +21,7 @@ const building_handler = {
     const query = 'SELECT * FROM users_buildings WHERE username = ?';
     db.query(query, [user.username], (err, character_buildings) => {
       if (err) {
-        console.log(err);
+        console.error('[building]', err);
         cb(null);
       } else {
         // CHOOSE THE PLACEHOLDER
@@ -52,8 +51,8 @@ const building_handler = {
               building_level,
               building_placeholder,
             );
-            console.log(building_name);
-            console.log(user);
+            console.log('[building]', building_name);
+            console.log('[building]', JSON.stringify(user));
             const d_cost = building_handler.calculateDrugsCost(
               building_level,
               building_placeholder,
@@ -66,8 +65,8 @@ const building_handler = {
               building_level,
               building_placeholder,
             );
-            console.log(`timer : ${timer}`);
-            console.log(`cost : ${d_cost}`, w_cost, a_cost);
+            console.log(`[building] timer : ${timer}`);
+            console.log(`[building] cost : ${d_cost}`, w_cost, a_cost);
             // CHECK DRUGS COST BALANCE
             if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
               return cb('not enough drugs');
@@ -257,10 +256,12 @@ const building_handler = {
     }
     db.query(query, (err, result) => {
       if (err) {
-        console.log(err);
+        console.error('[building]', err);
         cb(err);
       } else {
-        console.log(`Upgraded character building : ${building_name} for : ${user.username}`);
+        console.log(
+          `[building] Upgraded character building : ${building_name} for : ${user.username}`,
+        );
         cb('success');
       }
     });

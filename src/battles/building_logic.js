@@ -11,7 +11,7 @@ readFileAsync(`${__dirname}/../gamedata/buildings.json`, { encoding: 'utf8' })
     }
   })
   .catch(error => {
-    console.log(error);
+    console.error('[building]', error);
   });
 
 const building_logic = {

@@ -57,11 +57,11 @@ const round_handler = {
             }
           }
           if (attacker.units && attacker.units.length > 0 && defender.buildings.length > 1)
-            console.log('there is still defense buildings : battle continue');
+            console.log('[round] there is still defense buildings : battle continue');
           else if (attacker.units.length < 1) {
             current_round = 15;
           } else if (defender.buildings.length < 1) {
-            console.log('no more buildings');
+            console.log('[round] no more buildings');
             current_round = 15;
           }
           thisround.end = {

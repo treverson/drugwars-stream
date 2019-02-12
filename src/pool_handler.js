@@ -13,11 +13,11 @@ const send = (op, cb) => {
   transf.memo = 'Pool contribution';
   client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
     result => {
-      console.log(`sent:${transfer}`, `to pool included in block: ${result.block_num}`);
+      console.log(`[pool] sent:${transfer}`, `to pool included in block: ${result.block_num}`);
       cb(true);
     },
     error => {
-      console.error(error);
+      console.error('[pool]', error);
       cb(null);
     },
   );
@@ -34,11 +34,14 @@ const refund = (op, reason, cb) => {
   transf.memo = `DrugWars Refund : ${reason}`;
   client.broadcast.transfer(transf, PrivateKey.fromString(process.env.DW_DEALER_KEY)).then(
     result => {
-      console.log(`refund for ${reason}${transfer}`, `included in block: ${result.block_num}`);
+      console.log(
+        `[pool] refund for ${reason}${transfer}`,
+        `included in block: ${result.block_num}`,
+      );
       cb(true);
     },
     error => {
-      console.error(error);
+      console.error('[pool]', error);
       cb(null);
     },
   );
