@@ -125,11 +125,9 @@ const launchBattle = (battle_key, cb) => {
         },
       );
     } else {
-      let query = []
-      query.push(
-        `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`,
-      );
-      query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
+      console.log('[battle] attacker have no units');
+      const query = `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'; 
+                     DELETE FROM battles WHERE battle_key = '${battle_key}'`
       db.query(query, (err, result) => {
         if (err) {
           console.error('[battle]', err);
@@ -138,7 +136,6 @@ const launchBattle = (battle_key, cb) => {
           console.error('[battle]', ' attacked had no units');
         cb(true);
       });
-      console.log('[battle] attacker have no units');
     }
   });
 };
