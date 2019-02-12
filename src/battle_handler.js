@@ -129,47 +129,6 @@ const launchBattle = (battle_key, cb) => {
               },
             );
           }
-          else {
-            var rc = {}
-            rc = { attacker: attacker, defender: defender }
-            const now = new Date()
-              .toISOString()
-              .slice(0, 19)
-              .replace('T', ' ');
-            let query = [];
-            for (i = 0; i < user_attacker.length; i++) {
-              if (user_attacker[i].amount >= 1)
-                query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' 
-                            AND username = '${attacker.username}'`);
-              query.push(
-                `UPDATE users SET xp=xp+1,  drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
-              );
-              query.push(
-                `DELETE FROM battles_units WHERE username ='${
-                attacker.username
-                }' AND battle_key = '${battle_key}'`,
-              );
-              query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
-              query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                          VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
-
-              db.query(query, (err, result) => {
-                if (err) {
-                  console.error('[battle]', err);
-                  cb(false);
-                } else
-                  console.error('[battle]', ' defender had no units');
-                socket.emit('refresh', attacker.username);
-                socket.emit('refresh', defender.username);
-                socket.emit('attackresult', attacker.username, rc);
-                socket.emit('attackresult', defender.username, rc);
-                cb(true);
-              });
-
-
-            }
-          }
-
         },
       );
     } else {
