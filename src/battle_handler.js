@@ -47,81 +47,127 @@ const launchBattle = (battle_key, cb) => {
           for (i = 0; i < units.length; i++) {
             defender.units.push(units[i]);
           }
-          // round.executeBattleFirstStep(attacker, defender, function (attacker_res,defender_res,frc) {
-          //     if (attacker_res && defender_res)
-          //     {
-          secondRound.continueBattle(
-            attacker.units,
-            defender.units,
-            (user_attacker, user_defender, rc) => {
-              // var final_result = {attacker:user_attacker,defender:user_defender}
-              // rc.push(final_result)
-              // var rc = rc
-              const now = new Date()
-                .toISOString()
-                .slice(0, 19)
-                .replace('T', ' ');
-              let query = [];
-              if (user_attacker.length > 0) {
-                for (i = 0; i < user_attacker.length; i++) {
-                  if (user_attacker[i].amount >= 1)
-                    query.push(`UPDATE users_units SET amount=amount+${
-                      user_attacker[i].amount
-                      } WHERE unit ='${user_attacker[i].unit}' AND
-                                          username = '${attacker.username}'`);
-                }
-                if (!user_defender || user_defender.length < 1) {
-                  const reward = defender_account[0].drugs_balance / 2;
-                  query.push(
-                    `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${
-                    attacker.username
-                    }'`,
-                  );
-                  rc.reward = reward;
-                }
-              }
-              if (user_defender.length > 0) {
-                for (i = 0; i < user_defender.length; i++) {
-                  if (user_defender[i].amount && user_defender[i].amount > 0)
-                    query.push(
-                      `UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit='${
-                      user_defender[i].unit
-                      }' AND username = '${defender.username}'`,
-                    );
-                }
-              } else {
-                query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`);
+          if (defender.units.length > 0) {
+            secondRound.continueBattle(
+              attacker.units,
+              defender.units,
+              (user_attacker, user_defender, rc) => {
+                // var final_result = {attacker:user_attacker,defender:user_defender}
+                // rc.push(final_result)
+                // var rc = rc
+                const now = new Date()
+                  .toISOString()
+                  .slice(0, 19)
+                  .replace('T', ' ');
+                let query = [];
                 if (user_attacker.length > 0) {
-                  query.push(
-                    `UPDATE users SET xp=xp+25,  drugs_balance=drugs_balance/2, wins=wins+1 WHERE username = '${
-                    defender.username
-                    }'`,
-                  );
+                  for (i = 0; i < user_attacker.length; i++) {
+                    if (user_attacker[i].amount >= 1)
+                      query.push(`UPDATE users_units SET amount=amount+${
+                        user_attacker[i].amount
+                        } WHERE unit ='${user_attacker[i].unit}' AND
+                                            username = '${attacker.username}'`);
+                  }
+                  if (!user_defender || user_defender.length < 1) {
+                    const reward = defender_account[0].drugs_balance / 2;
+                    query.push(
+                      `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${
+                      attacker.username
+                      }'`,
+                    );
+                    rc.reward = reward;
+                  }
                 }
-              }
+                if (user_defender.length > 0) {
+                  for (i = 0; i < user_defender.length; i++) {
+                    if (user_defender[i].amount && user_defender[i].amount > 0)
+                      query.push(
+                        `UPDATE users_units SET amount=${user_defender[i].amount} WHERE unit='${
+                        user_defender[i].unit
+                        }' AND username = '${defender.username}'`,
+                      );
+                  }
+                } else {
+                  query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`);
+                  if (user_attacker.length > 0) {
+                    query.push(
+                      `UPDATE users SET xp=xp+25,  drugs_balance=drugs_balance/2, wins=wins+1 WHERE username = '${
+                      defender.username
+                      }'`,
+                    );
+                  }
+                }
+                query.push(
+                  `DELETE FROM battles_units WHERE username ='${
+                  attacker.username
+                  }' AND battle_key = '${battle_key}'`,
+                );
+                query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
+                query.push(
+                  `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${
+                  attacker.username
+                  }'`,
+                );
+                query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+                                    VALUES ('${attacker.username}','${
+                  defender.username
+                  }','${JSON.stringify(rc)}','${now}','${battle_key}')`);
+                const reward = defender_account[0].drugs_balance / 2;
+                rc.reward = reward;
+                query = query.join(' ; ');
+                db.query(query, (err, result) => {
+                  if (err) {
+                    console.error('[battle]', err);
+                    cb(false);
+                  } else
+                    socket.emit('refresh', attacker.username);
+                  socket.emit('refresh', defender.username);
+                  socket.emit('attackresult', attacker.username, rc);
+                  socket.emit('attackresult', defender.username, rc);
+                  cb(true);
+                });
+              },
+            );
+          }
+          else {
+            var rc = {}
+            rc = { attacker: attacker, defender: defender }
+            const now = new Date()
+              .toISOString()
+              .slice(0, 19)
+              .replace('T', ' ');
+            let query = [];
+            for (i = 0; i < user_attacker.length; i++) {
+              if (user_attacker[i].amount >= 1)
+                query.push(`UPDATE users_units SET amount=amount+${user_attacker[i].amount} WHERE unit ='${user_attacker[i].unit}' 
+                            AND username = '${attacker.username}'`);
               query.push(
-                `DELETE FROM battles_units WHERE username ='${
-                attacker.username
-                }' AND battle_key = '${battle_key}'`,
+                `UPDATE users SET xp=xp+1,  drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
+              );
+              query.push(
+                `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`,
               );
               query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
               query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                  VALUES ('${attacker.username}','${
-                defender.username
-                }','${JSON.stringify(rc)}','${now}','${battle_key}')`);
-              query = query.join(' ; ');
+                          VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
+
               db.query(query, (err, result) => {
                 if (err) {
                   console.error('[battle]', err);
                   cb(false);
-                } else socket.emit('refresh', attacker.username);
+                } else
+                  console.error('[battle]', ' defender had no units');
+                socket.emit('refresh', attacker.username);
                 socket.emit('refresh', defender.username);
                 socket.emit('attackresult', attacker.username, rc);
                 socket.emit('attackresult', defender.username, rc);
                 cb(true);
               });
-            },
-          );
+
+
+            }
+          }
+
         },
       );
     } else {
