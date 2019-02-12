@@ -17,7 +17,7 @@ const bc_operation = {
       } catch (error) {
         console.log(error);
       }
-      if(op.username != op.defender){
+      if (op.username != op.defender) {
         player.checkIfExist(op.username, exist => {
           if (exist && op.defender) {
             player.checkIfExist(op.defender, exist => {
@@ -33,8 +33,8 @@ const bc_operation = {
                       tx.transaction_id,
                       result => {
                         if (result) {
-                          socket.emit('refresh', op.username,op.defender);
-                          socket.emit('attack', op.username,op.defender);
+                          socket.emit('refresh', op.username, op.defender);
+                          socket.emit('attack', op.username, op.defender);
                           socket.emit('receiving_attack', op.defender, op.username);
                         } else {
                           console.log('couldnt start attack');
@@ -53,8 +53,7 @@ const bc_operation = {
             console.log('users doesnt exist');
           }
         });
-      }
-      else{
+      } else {
         console.log('user cant attack himself');
       }
     }

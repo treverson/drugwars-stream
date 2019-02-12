@@ -1,6 +1,6 @@
+const mysql = require('mysql');
 const prefixJson = require('./prefix.json');
 
-const mysql = require('mysql');
 const player = require('./player_handler');
 
 const pool = mysql.createPool({

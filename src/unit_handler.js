@@ -5,9 +5,8 @@ const units = require('./gamedata/units.json');
 
 const unit_handler = {
   tryAddUnit(user, unit_name, unit_amount, amount, cb) {
-    const query =
-      'SELECT * FROM users_units WHERE username = ?; \n\
-            SELECT * FROM users_buildings WHERE username = ?';
+    const query = `SELECT * FROM users_units WHERE username = ?; \n\
+      SELECT * FROM users_buildings WHERE username = ?`;
     db.query(
       query,
       [user.username, user.username],
@@ -28,8 +27,7 @@ const unit_handler = {
           if (!training_facility && !training_facility.lvl < 1) {
             return cb('training facility to low');
           }
-          if(unit_placeholder)
-          {
+          if (unit_placeholder) {
             if (character_units.filter(item => item.unit === unit_name)[0]) {
               const unit = character_units.filter(item => item.unit === unit_name);
               var next_update = new Date(Date.parse(unit[0].next_update));
@@ -44,18 +42,28 @@ const unit_handler = {
                 unit_placeholder,
               );
               console.log(timer);
-              var d_cost = unit_handler.calculateDrugsCost(unit_amount,unit_placeholder)
-              var w_cost = unit_handler.calculateWeaponsCost(unit_amount,unit_placeholder)
-              var a_cost = unit_handler.calculateAlcoholsCost(unit_amount,unit_placeholder)
-              console.log(d_cost,w_cost,a_cost)
+              const d_cost = unit_handler.calculateDrugsCost(unit_amount, unit_placeholder);
+              const w_cost = unit_handler.calculateWeaponsCost(unit_amount, unit_placeholder);
+              const a_cost = unit_handler.calculateAlcoholsCost(unit_amount, unit_placeholder);
+              console.log(d_cost, w_cost, a_cost);
               // CHECK WEAPONS COST BALANCE
-              if (!utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
+              if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
                 return cb('not enough weapons');
               }
-              if (utils.ifCanBuy(user, d_cost,w_cost,a_cost) && amount === null) {
-                unit_handler.AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, result => {
-                  if (result) return cb(result);
-                });
+              if (utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
+                unit_handler.AddUnits(
+                  user,
+                  now,
+                  unit_name,
+                  unit_amount,
+                  timer,
+                  d_cost,
+                  w_cost,
+                  a_cost,
+                  result => {
+                    if (result) return cb(result);
+                  },
+                );
               }
               if (amount != null) {
                 amount = parseFloat(amount.split(' ')[0]).toFixed(3);
@@ -88,34 +96,29 @@ const unit_handler = {
             } else {
               return cb('need to wait');
             }
-          }
-          else{
+          } else {
             return cb('unit doesnt exist');
           }
-          
         }
       },
     );
   },
   calculateDrugsCost(unit_amount, unit_placeholder) {
-    if(unit_placeholder.drugs_cost)
-    return unit_placeholder.drugs_cost * unit_amount
-    else return unit_placeholder.drugs_cost
+    if (unit_placeholder.drugs_cost) return unit_placeholder.drugs_cost * unit_amount;
+    return unit_placeholder.drugs_cost;
   },
   calculateWeaponsCost(unit_amount, unit_placeholder) {
-    if(unit_placeholder.weapons_cost)
-    return unit_placeholder.weapons_cost * unit_amount
-    else return unit_placeholder.weapons_cost
+    if (unit_placeholder.weapons_cost) return unit_placeholder.weapons_cost * unit_amount;
+    return unit_placeholder.weapons_cost;
   },
   calculateAlcoholsCost(unit_amount, unit_placeholder) {
-    if(unit_placeholder.alcohols_cost)
-    return unit_placeholder.alcohols_cost * unit_amount
-    else return unit_placeholder.alcohols_cost
+    if (unit_placeholder.alcohols_cost) return unit_placeholder.alcohols_cost * unit_amount;
+    return unit_placeholder.alcohols_cost;
   },
   calculateTime(training_facility, unit_amount, unit_placeholder) {
-    return ((unit_placeholder.coeff * 80) - (training_facility.lvl*10/100)) * unit_amount
+    return (unit_placeholder.coeff * 80 - (training_facility.lvl * 10) / 100) * unit_amount;
   },
-  AddUnits(user, now, unit_name, unit_amount, timer, d_cost,w_cost,a_cost, cb) {
+  AddUnits(user, now, unit_name, unit_amount, timer, d_cost, w_cost, a_cost, cb) {
     let query;
     const next_update_time = new Date(now.getTime() + timer * 1000)
       .toISOString()
