@@ -16,7 +16,6 @@ const unit_handler = {
           cb(null);
         } else {
           // CHOOSE THE PLACEHOLDER
-          console.log(`[unit] ${unit_name}`);
           const unit_placeholder = units.filter(item => item.id === unit_name)[0];
           if (!unit_placeholder) return cb('Unit not recognized', unit_name);
           const now = new Date();
@@ -41,11 +40,10 @@ const unit_handler = {
                 unit_amount,
                 unit_placeholder,
               );
-              console.log(`[unit] ${timer}`);
+              console.log(`[unit] ${unit_name}, timer :${timer}, ${d_cost}, ${w_cost}, ${a_cost} for ${user.username}`);
               const d_cost = unit_handler.calculateDrugsCost(unit_amount, unit_placeholder);
               const w_cost = unit_handler.calculateWeaponsCost(unit_amount, unit_placeholder);
               const a_cost = unit_handler.calculateAlcoholsCost(unit_amount, unit_placeholder);
-              console.log('[unit]', d_cost, w_cost, a_cost);
               // CHECK WEAPONS COST BALANCE
               if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
                 return cb('not enough weapons');
@@ -137,7 +135,7 @@ const unit_handler = {
         console.error('[unit]', result, err);
         cb(err);
       } else {
-        console.log(`[unit] Add ${unit_amount} units :${unit_name} for : ${user.username}`);
+        console.log(`[unit] Added ${unit_amount} units : ${unit_name} for : ${user.username}`);
         cb('success');
       }
     });

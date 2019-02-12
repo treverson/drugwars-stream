@@ -14,7 +14,7 @@ const bc_operation = {
       try {
         var op = JSON.parse(tx.operations[0][1].json);
       } catch (error) {
-        console.log('[filter]', error);
+        console.log('[filter attack]', error);
       }
       if (op.username !== op.defender) {
         player.checkIfExist(op.username, exist => {
@@ -23,7 +23,7 @@ const bc_operation = {
               if (exist)
                 player.checkArmy(op.username, op.army, result => {
                   if (result === 'success') {
-                    console.log('[filter] enough units');
+                    console.log('[filter attack] enough units');
                     attack.startAttack(
                       op.username,
                       op.army,
@@ -36,24 +36,24 @@ const bc_operation = {
                           socket.emit('attack', op.username, op.defender);
                           socket.emit('receiving_attack', op.defender, op.username);
                         } else {
-                          console.log('[filter] couldnt start attack');
+                          console.log('[filter attack] couldnt start attack');
                         }
                       },
                     );
                   } else {
-                    console.log('[filter] couldnt start attack not enough units');
+                    console.log('[filter attack] couldnt start attack not enough units');
                   }
                 });
               else {
-                console.log('[filter] defender doesnt exist');
+                console.log('[filter attack] defender doesnt exist');
               }
             });
           } else {
-            console.log('[filter] users doesnt exist');
+            console.log('[filter attack] users doesnt exist');
           }
         });
       } else {
-        console.log('[filter] user cant attack himself');
+        console.log('[filter attack] user cant attack himself');
       }
     }
 
@@ -61,13 +61,13 @@ const bc_operation = {
       try {
         var op = JSON.parse(tx.operations[0][1].json);
       } catch (error) {
-        console.log('[filter]', error);
+        console.log('[filter creation]', error);
       }
       player.checkIfExist(op.username, exist => {
         if (!exist) {
           player.createNew(op.username, op.icon, op.referrer, error => {
             if (error) {
-              console.log('[filter] couldnt create charachter');
+              console.log('[filter creation] couldnt create charachter');
             } else {
               socket.emit('refresh', op.username);
             }
@@ -79,7 +79,7 @@ const bc_operation = {
       try {
         var op = JSON.parse(tx.operations[0][1].json);
       } catch (error) {
-        console.log('[filter]', error);
+        console.log('[filter upgrade]', error);
       }
       player.getUpdateCharacter(op.username, character => {
         if (character)
@@ -88,7 +88,7 @@ const bc_operation = {
               player.addXp(op.username, 5, result => {
                 if (result) socket.emit('refresh', op.username);
               });
-            } else console.log('[filter]', result);
+            } else console.log('[filter upgrade]', result);
           });
       });
     }
@@ -96,14 +96,14 @@ const bc_operation = {
       try {
         var op = JSON.parse(tx.operations[0][1].json);
       } catch (error) {
-        console.log('[filter]', error);
+        console.log('[filter unit]', error);
       }
       player.getUpdateCharacter(op.username, character => {
         if (character) {
           if (!op.unit || !op.unit_amount || op.unit_amount < 1) {
             const reason = 'cant buy 0 unit';
             pool.refund(op, reason, result => {
-              if (result) console.log('[filter]', result);
+              if (result) console.log('[filter unit]', result);
             });
           }
           unit.tryAddUnit(character, op.unit, op.unit_amount, null, result => {
@@ -111,7 +111,7 @@ const bc_operation = {
               player.addXp(op.username, 5, result => {
                 if (result) socket.emit('refresh', op.username);
               });
-            } else console.log('[filter]', result);
+            } else console.log('[filter unit]', result);
           });
         }
       });
@@ -126,11 +126,11 @@ const bc_operation = {
         if (character) {
           if (character.drugs_balance >= op.amount)
             heist.addToPool(character, Number(op.amount), result => {
-              if (result) console.log('[filter]', result);
+              if (result) console.log('[filter heist]', result);
               socket.emit('refresh', op.username);
             });
           else {
-            console.log('[filter] not enough drugs to deposit to heist');
+            console.log('[filter heist] not enough drugs to deposit to heist');
           }
         }
       });
@@ -147,15 +147,15 @@ const bc_operation = {
                 player.addXp(op.from, 5, result => {
                   if (result) socket.emit('refresh', op.username);
                 });
-                console.log('[filter]', result);
+                console.log('[filter upgrade]', result);
                 socket.emit('refresh', op.from);
                 pool.send(op, result => {
-                  if (result) console.log('[filter]', result);
+                  if (result) console.log('[filter upgrade]', result);
                 });
               } else {
                 const reason = `couldnt not upgrade building ${result}`;
                 pool.refund(op, reason, result => {
-                  if (result) console.log('[filter]', result);
+                  if (result) console.log('[filter upgrade]', result);
                 });
               }
             });
@@ -166,7 +166,7 @@ const bc_operation = {
             if (!op.unit || !op.unit_amount || op.unit_amount < 1) {
               var reason = 'cant buy 0 unit';
               pool.refund(op, reason, result => {
-                if (result) console.log('[filter]', result);
+                if (result) console.log('[filter unit]', result);
               });
             } else
               unit.tryAddUnit(character, op.unit, op.unit_amount, op.amount, result => {
@@ -177,12 +177,12 @@ const bc_operation = {
                   console.log('[filter]', result);
                   socket.emit('refresh', op.from);
                   pool.send(op, result => {
-                    if (result) console.log('[filter]', result);
+                    if (result) console.log('[filter unit]', result);
                   });
                 } else {
                   const reason = `couldnt not create unit ${result}`;
                   pool.refund(op, reason, result => {
-                    if (result) console.log('[filter]', result);
+                    if (result) console.log('[filter unit]', result);
                   });
                 }
               });

@@ -121,7 +121,8 @@ const launchBattle = (battle_key, cb) => {
           );
         },
       );
-    } else {
+    } 
+    else {
       console.log('[battle] attacker have no units');
       const query = `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'; 
                      DELETE FROM battles WHERE battle_key = '${battle_key}'`
