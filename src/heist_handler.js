@@ -6,16 +6,14 @@ const addToPool = (user, amount, cb) => {
     .toISOString()
     .slice(0, 19)
     .replace('T', ' ');
-  const query = `INSERT INTO heist (username, drugs, last_update) VALUES ('${
-    user.username
-  }', ${amount},'${now}')
-    ON DUPLICATE KEY UPDATE drugs=drugs+${amount}, last_update='${now}'`;
+  const query = `INSERT INTO heist (username, drugs, last_update) VALUES ('${user.username}', ${amount},'${now}')
+                 ON DUPLICATE KEY UPDATE drugs=drugs+${amount}, last_update='${now}'`;
   db.query(query, (err, result) => {
     if (err) {
       return cb(null);
     }
     player.removeDrugs(user.username, amount, success => {
-      if (success) cb(true);
+      if (success) cb(user.username + 'invested ' + amount + ' in the heist');
     });
   });
 };
