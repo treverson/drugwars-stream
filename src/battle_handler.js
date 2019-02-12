@@ -47,7 +47,6 @@ const launchBattle = (battle_key, cb) => {
           for (i = 0; i < def_units.length; i++) {
             defender.units.push(def_units[i]);
           }
-          if (defender.units > 0) {
             secondRound.continueBattle(
               attacker.units,
               defender.units,
@@ -118,44 +117,44 @@ const launchBattle = (battle_key, cb) => {
               },
             );
           }
-          else {
-            let query = []
-            const now = new Date()
-            .toISOString()
-            .slice(0, 19)
-            .replace('T', ' ');
-            const reward = defender_account[0].drugs_balance / 2;
-            for (i = 0; i < attacker.units.length; i++) {
-              if (attacker.units[i].amount >= 1)
-                query.push(`UPDATE users_units SET amount=amount+${attacker.units[i].amount} WHERE unit ='${attacker.units[i].unit}' AND username = '${attacker.username}'`);
-            }
-            query.push(
-              `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${attacker.username}'`)
-            query.push(
-              `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
-            );
-            let rc = {}
-            rc.reward = reward;
-            rc.start = { attacker: attacker, defender: defender }
-            query.push(
-              `DELETE FROM battles_units WHERE username ='${
-              attacker.username
-              }' AND battle_key = '${battle_key}'`,
-            );
-            query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
-            query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                                VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
-            query = query.join(' ; ');
-            db.query(query, (err, result) => {
-              if (err) {
-                console.error('[battle]', err);
-                cb(false);
-              } else
-                console.error('[battle]', ' defender had no units');
-              cb(true);
-            });
-          }
-        },
+        //   else {
+        //     let query = []
+        //     const now = new Date()
+        //     .toISOString()
+        //     .slice(0, 19)
+        //     .replace('T', ' ');
+        //     const reward = defender_account[0].drugs_balance / 2;
+        //     for (i = 0; i < attacker.units.length; i++) {
+        //       if (attacker.units[i].amount >= 1)
+        //         query.push(`UPDATE users_units SET amount=amount+${attacker.units[i].amount} WHERE unit ='${attacker.units[i].unit}' AND username = '${attacker.username}'`);
+        //     }
+        //     query.push(
+        //       `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${attacker.username}'`)
+        //     query.push(
+        //       `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
+        //     );
+        //     let rc = {}
+        //     rc.reward = reward;
+        //     rc.start = { attacker: attacker, defender: defender }
+        //     query.push(
+        //       `DELETE FROM battles_units WHERE username ='${
+        //       attacker.username
+        //       }' AND battle_key = '${battle_key}'`,
+        //     );
+        //     query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
+        //     query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+        //                         VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
+        //     query = query.join(' ; ');
+        //     db.query(query, (err, result) => {
+        //       if (err) {
+        //         console.error('[battle]', err);
+        //         cb(false);
+        //       } else
+        //         console.error('[battle]', ' defender had no units');
+        //       cb(true);
+        //     });
+        //   }
+        // },
       )
     }
     else {
