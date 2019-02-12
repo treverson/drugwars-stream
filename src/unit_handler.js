@@ -93,10 +93,10 @@ const unit_handler = {
                 });
               }
             } else {
-              return cb('need to wait');
+              return cb('need to wait to recruit '+unit_name);
             }
           } else {
-            return cb('unit doesnt exist');
+            return cb(unit_name + ' unit doesnt exist');
           }
         }
       },
