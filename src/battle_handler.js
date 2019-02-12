@@ -130,13 +130,13 @@ const launchBattle = (battle_key, cb) => {
             );
           }
           else {
-            var rc = {}
+            let rc = {}
             rc = { attacker: attacker, defender: defender }
             const now = new Date()
               .toISOString()
               .slice(0, 19)
               .replace('T', ' ');
-            let query = [];
+            const query = [];
             for (i = 0; i < attacker.units.length; i++) {
               if (attacker.units[i].amount >= 1)
                 query.push(`UPDATE users_units SET amount=amount+${attacker.units[i].amount} WHERE unit ='${attacker.units[i].unit}' 
