@@ -40,10 +40,11 @@ const unit_handler = {
                 unit_amount,
                 unit_placeholder,
               );
-              console.log(`[unit] ${unit_name}, timer :${timer}, ${d_cost}, ${w_cost}, ${a_cost} for ${user.username}`);
               const d_cost = unit_handler.calculateDrugsCost(unit_amount, unit_placeholder);
               const w_cost = unit_handler.calculateWeaponsCost(unit_amount, unit_placeholder);
               const a_cost = unit_handler.calculateAlcoholsCost(unit_amount, unit_placeholder);
+              console.log(`[unit] ${unit_name}, timer :${timer}, ${d_cost}, ${w_cost}, ${a_cost} for ${user.username}`);
+
               // CHECK WEAPONS COST BALANCE
               if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
                 return cb('not enough weapons');
