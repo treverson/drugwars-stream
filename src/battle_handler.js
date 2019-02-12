@@ -34,20 +34,20 @@ const launchBattle = (battle_key, cb) => {
           if (err) {
             console.error('[battle]', err);
           }
-          let [buildings, units, defender_account] = defender_result;
+          let [buildings, def_units, defender_account] = defender_result;
           const defender = {};
           defender.username = battle.defender;
-          units = JSON.parse(JSON.stringify(units));
+          def_units = JSON.parse(JSON.stringify(def_units));
           buildings = JSON.parse(JSON.stringify(buildings));
           defender.units = [];
           defender.buildings = [];
           for (i = 0; i < buildings.length; i++) {
             defender.buildings.push(buildings[i]);
           }
-          for (i = 0; i < units.length; i++) {
-            defender.units.push(units[i]);
+          for (i = 0; i < def_units.length; i++) {
+            defender.units.push(def_units[i]);
           }
-          if (units.length > 0) {
+          if (defender.units > 0) {
             secondRound.continueBattle(
               attacker.units,
               defender.units,
