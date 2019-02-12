@@ -141,38 +141,36 @@ const launchBattle = (battle_key, cb) => {
               if (attacker.units[i].amount >= 1)
                 query.push(`UPDATE users_units SET amount=amount+${attacker.units[i].amount} WHERE unit ='${attacker.units[i].unit}' 
                             AND username = '${attacker.username}'`);
-              query.push(
-                `UPDATE users SET xp=xp+1,  drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
-              );
-              query.push(
-                `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`,
-              );
-              const reward = defender.drugs_balance / 2;
-              query.push(
-                `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${
-                attacker.username
-                }'`,
-              );
-              rc.reward = reward
-              query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
-              query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
-                          VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
-
-              db.query(query, (err, result) => {
-                if (err) {
-                  console.error('[battle]', err);
-                  cb(false);
-                } else
-                  console.error('[battle]', ' defender had no units');
-                socket.emit('refresh', attacker.username);
-                socket.emit('refresh', defender.username);
-                socket.emit('attackresult', attacker.username, rc);
-                socket.emit('attackresult', defender.username, rc);
-                cb(true);
-              });
-
-
             }
+            query.push(
+              `UPDATE users SET xp=xp+1,  drugs_balance=drugs_balance/2, loses=loses+1 WHERE username = '${defender.username}'`,
+            );
+            query.push(
+              `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`,
+            );
+            const reward = defender.drugs_balance / 2;
+            query.push(
+              `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${reward}, wins=wins+1 WHERE username='${
+              attacker.username
+              }'`,
+            );
+            rc.reward = reward
+            query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
+            query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
+                        VALUES ('${attacker.username}','${defender.username}','${JSON.stringify(rc)}','${now}','${battle_key}')`);
+
+            db.query(query, (err, result) => {
+              if (err) {
+                console.error('[battle]', err);
+                cb(false);
+              } else
+                console.error('[battle]', ' defender had no units');
+              socket.emit('refresh', attacker.username);
+              socket.emit('refresh', defender.username);
+              socket.emit('attackresult', attacker.username, rc);
+              socket.emit('attackresult', defender.username, rc);
+              cb(true);
+            });
           }
 
         },
