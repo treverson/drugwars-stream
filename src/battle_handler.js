@@ -125,7 +125,6 @@ const launchBattle = (battle_key, cb) => {
         },
       );
     } else {
-      cb(true);
       let query = []
       query.push(
         `DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`,
