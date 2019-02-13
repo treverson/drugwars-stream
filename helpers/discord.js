@@ -1,4 +1,5 @@
 const Promise = require('bluebird');
+const numeral = require('numeral');
 const Discord = require('discord.js');
 const db = require('./db');
 
@@ -29,7 +30,7 @@ const getDailyMessage = () => new Promise((resolve, reject) => {
     users.forEach(user => {
       i++;
       const dailyProductionRate = user.drug_production_rate * 60 * 60 * 24;
-      message += `\n**${i}: ${user.username}** ${dailyProductionRate} DRUGS /day`;
+      message += `\n**${i}: ${user.username}** ${numeral(dailyProductionRate).format('0a')} DRUGS /day`;
     });
     resolve(message);
   }).catch(e => {
