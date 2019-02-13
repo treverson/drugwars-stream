@@ -119,8 +119,8 @@ const launchBattle = (battle_key, cb) => {
                       } else {
                         console.error('[battle]',  `defender lost units total reward drugs ${d_reward}, weapons ${w_reward},alcohol ${a_reward},`);
 
-                        socket.emit('attackresult', attacker.username, rc);
-                        socket.emit('attackresult', defender.username, rc);
+                        //socket.emit('attackresult', attacker.username, rc);
+                        //socket.emit('attackresult', defender.username, rc);
                         cb(true);
                       }
                     });
@@ -165,8 +165,8 @@ const launchBattle = (battle_key, cb) => {
                   } else
                     console.error('[battle]',  `defender had no units total reward drugs ${d_reward}, weapons ${w_reward},alcohol ${a_reward},`);
 
-                    socket.emit('attackresult', attacker.username, rc);
-                    socket.emit('attackresult', defender.username, rc);
+                    //socket.emit('attackresult', attacker.username, rc);
+                    //socket.emit('attackresult', defender.username, rc);
                   cb(true);
                 });
               }
