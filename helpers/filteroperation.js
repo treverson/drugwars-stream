@@ -26,7 +26,7 @@ const handleAttack = (op, tx) => {
                   tx.transaction_id,
                   result => {
                     if (result) {
-                      socket.emit('refresh', op.username, op.defender);
+                      // socket.emit('refresh', op.username, op.defender);
                       socket.emit('attack', op.username, op.defender);
                       socket.emit('receiving_attack', op.defender, op.username);
                     } else {
