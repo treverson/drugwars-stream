@@ -10,52 +10,52 @@ const socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
 const bc_operation = {
   filter(tx) {
-    // if (tx.operations[0][0] === 'custom_json' && tx.operations[0][1].id === 'dw-attack') {
-    //   try {
-    //     var op = JSON.parse(tx.operations[0][1].json);
-    //   } catch (error) {
-    //     console.log('[filter attack]', error);
-    //   }
-    //   if (op.username !== op.defender) {
-    //     player.checkIfExist(op.username, exist => {
-    //       if (exist && op.defender) {
-    //         player.checkIfExist(op.defender, exist => {
-    //           if (exist)
-    //             player.checkArmy(op.username, op.army, result => {
-    //               if (result === 'success') {
-    //                 console.log('[filter attack] enough units');
-    //                 attack.startAttack(
-    //                   op.username,
-    //                   op.army,
-    //                   op.defender,
-    //                   tx.block_num,
-    //                   tx.transaction_id,
-    //                   result => {
-    //                     if (result) {
-    //                       socket.emit('refresh', op.username, op.defender);
-    //                       socket.emit('attack', op.username, op.defender);
-    //                       socket.emit('receiving_attack', op.defender, op.username);
-    //                     } else {
-    //                       console.log('[filter attack] couldnt start attack');
-    //                     }
-    //                   },
-    //                 );
-    //               } else {
-    //                 console.log('[filter attack] couldnt start attack not enough units');
-    //               }
-    //             });
-    //           else {
-    //             console.log('[filter attack] defender doesnt exist');
-    //           }
-    //         });
-    //       } else {
-    //         console.log('[filter attack] users doesnt exist');
-    //       }
-    //     });
-    //   } else {
-    //     console.log('[filter attack] user cant attack himself');
-    //   }
-    // }
+    if (tx.operations[0][0] === 'custom_json' && tx.operations[0][1].id === 'dw-attack') {
+      try {
+        var op = JSON.parse(tx.operations[0][1].json);
+      } catch (error) {
+        console.log('[filter attack]', error);
+      }
+      if (op.username !== op.defender) {
+        player.checkIfExist(op.username, exist => {
+          if (exist && op.defender) {
+            player.checkIfExist(op.defender, exist => {
+              if (exist)
+                player.checkArmy(op.username, op.army, result => {
+                  if (result === 'success') {
+                    console.log('[filter attack] enough units');
+                    attack.startAttack(
+                      op.username,
+                      op.army,
+                      op.defender,
+                      tx.block_num,
+                      tx.transaction_id,
+                      result => {
+                        if (result) {
+                          socket.emit('refresh', op.username, op.defender);
+                          socket.emit('attack', op.username, op.defender);
+                          socket.emit('receiving_attack', op.defender, op.username);
+                        } else {
+                          console.log('[filter attack] couldnt start attack');
+                        }
+                      },
+                    );
+                  } else {
+                    console.log('[filter attack] couldnt start attack not enough units');
+                  }
+                });
+              else {
+                console.log('[filter attack] defender doesnt exist');
+              }
+            });
+          } else {
+            console.log('[filter attack] users doesnt exist');
+          }
+        });
+      } else {
+        console.log('[filter attack] user cant attack himself');
+      }
+    }
 
     if (tx.operations[0][0] === 'custom_json' && tx.operations[0][1].id === 'dw-char') {
       try {
