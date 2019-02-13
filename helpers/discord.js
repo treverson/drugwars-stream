@@ -28,7 +28,8 @@ const getDailyMessage = () => new Promise((resolve, reject) => {
   db.queryAsync('SELECT * FROM users ORDER BY drug_production_rate DESC LIMIT 20').then(users => {
     users.forEach(user => {
       i++;
-      message += `\n**${i}: ${user.username}** ${user.drug_production_rate} DRUGS /sec`;
+      const dailyProductionRate = user.drug_production_rate * 60 * 60 * 24;
+      message += `\n**${i}: ${user.username}** ${dailyProductionRate} DRUGS /day`;
     });
     resolve(message);
   }).catch(e => {
