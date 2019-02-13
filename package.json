@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.3",
+    "discord.js": "^11.4.2",
     "dsteem": "^0.11.2",
     "event-stream": "3.3.4",
     "express": "^4.16.4",
