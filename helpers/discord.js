@@ -14,7 +14,7 @@ const getHeistMessage = () => new Promise((resolve, reject) => {
   db.queryAsync('SELECT * FROM heist ORDER BY drugs DESC LIMIT 20').then(users => {
     users.forEach(user => {
       i++;
-      message += `\n**${i}: ${user.username}** ${user.drugs} DRUGS`;
+      message += `\n**${i}: ${user.username}** ${numeral(user.drugs).format('0a')} DRUGS`;
     });
     resolve(message);
   }).catch(e => {
