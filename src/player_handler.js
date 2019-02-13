@@ -69,21 +69,22 @@ const player_handler = {
               }`,
             );
             const differenceprod = now.getTime() - user.last_update.getTime();
-      
-            const d_cap = player_handler.calculateCap(buildings, 'drug_storage');
-            const w_cap = player_handler.calculateCap(buildings, 'weapon_storage');
-            const a_cap = player_handler.calculateCap(buildings, 'alcohol_storage');
-            var drugs_balance = user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
-            var alcohols_balance = user.alcohols_balance + Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2));
+            var drugs_balance =user.drugs_balance + Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2));
+            var alcohols_balance =user.alcohols_balance + Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2));
             var weapons_balance = user.weapons_balance + Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(2));
             if (buildings.filter(item => item.building === 'operation_center')[0]) {
               const operation_center = buildings.filter(
                 item => item.building === 'operation_center',
               )[0];
-              drugs_balance = user.drugs_balance + (Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2))* (operation_center.lvl * 0.005));
-              alcohols_balance = user.alcohols_balance + (Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2))* (operation_center.lvl * 0.005));
-              weapons_balance = user.weapons_balance + (Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(2))* (operation_center.lvl * 0.005));
+              drugs_balance = drugs_balance + (Number(parseFloat((differenceprod / 1000) * user.drug_production_rate).toFixed(2)) * (operation_center.lvl * 0.005))
+              weapons_balance = weapons_balance + (Number(parseFloat((differenceprod / 1000) * user.weapon_production_rate).toFixed(2))* (operation_center.lvl * 0.005))
+              alcohols_balance = alcohols_balance + (Number(parseFloat((differenceprod / 1000) * user.alcohol_production_rate).toFixed(2))* (operation_center.lvl * 0.005))
+              console.log(`applied bonus %${operation_center.lvl * 0.005}`);
             }
+            var d_cap = player_handler.calculateCap(buildings,'drug_storage')
+            var w_cap = player_handler.calculateCap(buildings,'weapon_storage')
+            var a_cap = player_handler.calculateCap(buildings,'alcohol_storage')
+           
             if (drugs_balance > d_cap) drugs_balance = d_cap;
             if (weapons_balance > w_cap) weapons_balance = w_cap;
             if (alcohols_balance > a_cap) alcohols_balance = a_cap;
