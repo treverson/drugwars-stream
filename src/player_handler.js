@@ -26,7 +26,7 @@ const player_handler = {
         console.log(`[player] coudlnt create a character for username ${player}${err}`);
         return cb(true);
       }
-      console.log(`[player] User : ${player} is now ready to play`);
+      console.log(`[player] ${player} is now ready to play`);
       cb(null);
     });
   },
@@ -62,7 +62,7 @@ const player_handler = {
               .slice(0, 19)
               .replace('T', ' ');
             console.log(
-              `[player] User ${user.username} old drug balance : ${
+              `[player] ${user.username} old drug balance : ${
                 user.drugs_balance
               } old weapon balance : ${user.weapons_balance} old alcohol balance : ${
                 user.alcohols_balance
@@ -89,7 +89,6 @@ const player_handler = {
               drugs_balance += drugs_balance * (operation_center.lvl * 0.005);
               weapons_balance += weapons_balance * (operation_center.lvl * 0.005);
               alcohols_balance += alcohols_balance * (operation_center.lvl * 0.005);
-              console.log(`[player] applied bonus %${operation_center.lvl * 0.005}`);
             }
             if (drugs_balance > d_cap) drugs_balance = d_cap;
             if (weapons_balance > w_cap) weapons_balance = w_cap;
@@ -102,7 +101,7 @@ const player_handler = {
                 user.weapons_balance = weapons_balance;
                 user.alcohols_balance = alcohols_balance;
                 console.log(
-                  `[player] user - Updated user ${
+                  `[player] user ${
                     user.username
                   } new drug balance : ${drugs_balance} new weapon balance : ${weapons_balance} new alcohol balance : ${alcohols_balance}`,
                 );

@@ -8,7 +8,7 @@ const resolveBattle = attack =>
     );
     battle.launchBattle(attack.battle_key, result => {
       if (result) {
-        console.log('[attack] Finished battle', attack.battle_key);
+        console.error('[attack] Finished battle', attack.battle_key);
         resolve();
       } else {
         reject();
@@ -27,7 +27,7 @@ const startAttack = (username, army, defender, blockNum, key, cb) => {
   const start_block = blockNum;
   const target_block = blockNum + timer * 3;
   const end_block = blockNum + timer * 3 * 2;
-  console.log(`[attack] block num : ${blockNum}target num : ${target_block}`);
+  console.error(`[attack] block num : ${blockNum} target num : ${target_block}`);
   query.push(`INSERT INTO battles (username, defender, next_update, battle_key, target_block,start_block,end_block) 
                 VALUES ('${username}','${defender}','${next_update_time}','${key}',${target_block},${start_block},${end_block})`);
   for (i = 0; i < army.length; i++) {
@@ -48,7 +48,7 @@ const startAttack = (username, army, defender, blockNum, key, cb) => {
     const attack = {};
     attack.key = key;
     attack.target_block = target_block;
-    console.log('[attack] created battle and moved units from users_units > to battles_units');
+    console.error('[attack]', 'created battle and moved units from users_units > to battles_units');
     cb(attack);
   });
 };

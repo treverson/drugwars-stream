@@ -41,10 +41,10 @@ const launchBattle = (battle_key, cb) => {
           def_units = JSON.parse(JSON.stringify(def_units));
           buildings = JSON.parse(JSON.stringify(buildings));
           defender.units = [];
-          defender.buildings = [];
-          for (i = 0; i < buildings.length; i++) {
-            defender.buildings.push(buildings[i]);
-          }
+          // defender.buildings = [];
+          // for (i = 0; i < buildings.length; i++) {
+          //   defender.buildings.push(buildings[i]);
+          // }
           for (i = 0; i < def_units.length; i++) {
             defender.units.push(def_units[i]);
           }
@@ -63,7 +63,7 @@ const launchBattle = (battle_key, cb) => {
               if (defender_account[0].alcohols_balance - a_cap > 0)
                 a_reward = defender_account[0].alcohols_balance - a_cap
               if (defender.units.length > 0) {
-                console.log('[battle - defender units]', def_units)
+                console.error('[battle - defender units]', def_units)
                 secondRound.continueBattle(
                   attacker.units,
                   defender.units,
@@ -82,7 +82,6 @@ const launchBattle = (battle_key, cb) => {
                         query.push(
                           `UPDATE users SET xp=xp+50, drugs_balance=drugs_balance+${d_reward}, weapons_balance=weapons_balance+${w_reward},alcohols_balance=alcohols_balance+${a_reward}, 
                           wins=wins+1 WHERE username='${attacker.username}'`);
-                        rc.rewards = { drugs: d_reward, weapons: w_reward, alcohol: a_reward }
                       }
                     }
                     if (user_defender.length > 0) {
@@ -101,6 +100,11 @@ const launchBattle = (battle_key, cb) => {
                           `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
                       }
                     }
+                    rc.attacker = attacker.username
+                    rc.attacker_units = attacker.units
+                    rc.defender = defender.username
+                    rc.defender_units = defender.units
+                    rc.rewards = { drugs: d_reward, weapons: w_reward, alcohol: a_reward }
                     query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`);
                     query.push(`DELETE FROM battles WHERE battle_key = '${battle_key}'`);
                     query.push(`INSERT INTO battles_history (username, defender, json, date, battle_key) 
@@ -138,7 +142,9 @@ const launchBattle = (battle_key, cb) => {
                 query.push(
                   `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
                 let rc = {}
-                rc.start = { attacker: attacker, defender: defender }
+                rc.attacker = attacker.username
+                rc.attacker_units = attacker.units
+                rc.defender = defender.username
                 rc.rewards = { drugs: d_reward, weapons: w_reward, alcohol: a_reward }
                 query.push(
                   `DELETE FROM battles_units WHERE username ='${

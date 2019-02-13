@@ -51,8 +51,7 @@ const building_handler = {
               building_level,
               building_placeholder,
             );
-            console.log('[building]', building_name);
-            console.log('[building]', JSON.stringify(user));
+        
             const d_cost = building_handler.calculateDrugsCost(
               building_level,
               building_placeholder,
@@ -65,8 +64,7 @@ const building_handler = {
               building_level,
               building_placeholder,
             );
-            console.log(`[building] timer : ${timer}`);
-            console.log(`[building] cost : ${d_cost}`, w_cost, a_cost);
+            console.log('[building]', building_name,`[building] timer : ${timer} cost : ${d_cost}, ${w_cost}, ${a_cost}`);
             // CHECK DRUGS COST BALANCE
             if (!utils.ifCanBuy(user, d_cost, w_cost, a_cost) && amount === null) {
               return cb('not enough drugs');
