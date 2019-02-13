@@ -101,8 +101,10 @@ const launchBattle = (battle_key, cb) => {
                       }
                     }
                     rc.attacker = attacker.username
+                    rc.attacker_pic = attacker.picture
                     rc.attacker_units = attacker.units
                     rc.defender = defender.username
+                    rc.defender_pic = defender.picture
                     rc.defender_units = defender.units
                     rc.rewards = { drugs: d_reward, weapons: w_reward, alcohol: a_reward }
                     query.push(`DELETE FROM battles_units WHERE username ='${attacker.username}' AND battle_key = '${battle_key}'`);
@@ -143,8 +145,10 @@ const launchBattle = (battle_key, cb) => {
                   `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
                 let rc = {}
                 rc.attacker = attacker.username
+                rc.attacker_pic = attacker.picture
                 rc.attacker_units = attacker.units
                 rc.defender = defender.username
+                rc.defender_pic = defender.picture
                 rc.rewards = { drugs: d_reward, weapons: w_reward, alcohol: a_reward }
                 query.push(
                   `DELETE FROM battles_units WHERE username ='${
