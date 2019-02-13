@@ -123,9 +123,10 @@ const handleHeist = payload => {
 };
 
 const handleTransfer = payload => {
-  if (parseFloat(payload.amount) > 50) {
-    log(`@${payload.from} just sent ${payload.amount}.`);
+  if (parseFloat(payload.amount) > 10) {
+    log(`**@${payload.from}** just sent **${payload.amount}**`);
   }
+
   const op = payload;
   player.getUpdateCharacter(op.from, character => {
     if (character) {
