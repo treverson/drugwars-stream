@@ -62,7 +62,7 @@ const launchBattle = (battle_key, cb) => {
                 w_reward = defender_account[0].weapons_balance - w_cap
               if (defender_account[0].alcohols_balance - a_cap > 0)
                 a_reward = defender_account[0].alcohols_balance - a_cap
-              if (def_units[0].length > 0) {
+              if (defender.units.length > 0) {
                 console.log('[battle - defender units]', def_units)
                 secondRound.continueBattle(
                   attacker.units,
