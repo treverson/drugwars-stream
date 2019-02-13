@@ -9,7 +9,6 @@ const resolveBattle = attack =>
     battle.launchBattle(attack.battle_key, result => {
       if (result) {
         console.error('[attack] Finished battle', attack.battle_key);
-        
         resolve();
       } else {
         reject();
