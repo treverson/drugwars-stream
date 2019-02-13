@@ -205,10 +205,10 @@ const filter = tx => {
         }
 
         switch (payload.id) {
-          case 'dw-attack': {
-            handleAttack(json, tx);
-            break;
-          }
+          // case 'dw-attack': {
+          //   handleAttack(json, tx);
+          //   break;
+          // }
           case 'dw-char': {
             handleChar(json, tx);
             break;
