@@ -113,18 +113,7 @@ const player_handler = {
     db.query(query, [username], (err, result) => {
       if (err || !result || !result[0]) return cb(null);
       const character = result[0];
-      query =
-        'SELECT * FROM users_buildings WHERE username = ?; \n\
-          SELECT * FROM heist WHERE username = ?';
-      db.query(query, [character.username, character.username], (err, result) => {
-        if (err) {
-          console.error('[player]', err);
-          cb(null);
-        } else {
-          const [[buildings], [heist]] = result;
-          cb({ character, buildings, heist });
-        }
-      });
+      cb(character)
     });
   },
   calculateCap(buildings, type) {
