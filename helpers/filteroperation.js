@@ -9,47 +9,47 @@ const log = require('./discord');
 
 const socket = new io.connect('https://websocket-drugwars.herokuapp.com/');
 
-const handleAttack = (op, tx) => {
-  if (op.username !== op.defender) {
-    player.checkIfExist(op.username, exist => {
-      if (exist && op.defender) {
-        player.checkIfExist(op.defender, exist => {
-          if (exist)
-            player.checkArmy(op.username, op.army, result => {
-              if (result === 'success') {
-                console.log('[filter attack] enough units');
-                attack.startAttack(
-                  op.username,
-                  op.army,
-                  op.defender,
-                  tx.block_num,
-                  tx.transaction_id,
-                  result => {
-                    if (result) {
-                      // socket.emit('refresh', op.username, op.defender);
-                      socket.emit('attack', op.username, op.defender);
-                      socket.emit('receiving_attack', op.defender, op.username);
-                    } else {
-                      console.log('[filter attack] couldnt start attack');
-                    }
-                  },
-                );
-              } else {
-                console.log('[filter attack] couldnt start attack not enough units');
-              }
-            });
-          else {
-            console.log('[filter attack] defender doesnt exist');
-          }
-        });
-      } else {
-        console.log('[filter attack] users doesnt exist');
-      }
-    });
-  } else {
-    console.log('[filter attack] user cant attack himself');
-  }
-};
+// const handleAttack = (op, tx) => {
+//   if (op.username !== op.defender) {
+//     player.checkIfExist(op.username, exist => {
+//       if (exist && op.defender) {
+//         player.checkIfExist(op.defender, exist => {
+//           if (exist)
+//             player.checkArmy(op.username, op.army, result => {
+//               if (result === 'success') {
+//                 console.log('[filter attack] enough units');
+//                 attack.startAttack(
+//                   op.username,
+//                   op.army,
+//                   op.defender,
+//                   tx.block_num,
+//                   tx.transaction_id,
+//                   result => {
+//                     if (result) {
+//                       // socket.emit('refresh', op.username, op.defender);
+//                       socket.emit('attack', op.username, op.defender);
+//                       socket.emit('receiving_attack', op.defender, op.username);
+//                     } else {
+//                       console.log('[filter attack] couldnt start attack');
+//                     }
+//                   },
+//                 );
+//               } else {
+//                 console.log('[filter attack] couldnt start attack not enough units');
+//               }
+//             });
+//           else {
+//             console.log('[filter attack] defender doesnt exist');
+//           }
+//         });
+//       } else {
+//         console.log('[filter attack] users doesnt exist');
+//       }
+//     });
+//   } else {
+//     console.log('[filter attack] user cant attack himself');
+//   }
+// };
 
 const handleChar = op => {
   player.checkIfExist(op.username, exist => {
