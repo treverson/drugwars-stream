@@ -8,7 +8,7 @@ const client = new Discord.Client();
 let speaker;
 
 const getHeistMessage = () => new Promise((resolve, reject) => {
-  let message = 'Heist current positions \n';
+  let message = '**here is the heist current positions:** \n';
   let i = 0;
   db.queryAsync('SELECT * FROM heist ORDER BY drugs DESC LIMIT 20').then(users => {
     users.forEach(user => {
@@ -23,7 +23,7 @@ const getHeistMessage = () => new Promise((resolve, reject) => {
 });
 
 const getDailyMessage = () => new Promise((resolve, reject) => {
-  let message = 'Drug production rate current positions \n';
+  let message = '**here is the drug production rate current positions:** \n';
   let i = 0;
   db.queryAsync('SELECT * FROM users ORDER BY drug_production_rate DESC LIMIT 20').then(users => {
     users.forEach(user => {
