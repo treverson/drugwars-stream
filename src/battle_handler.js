@@ -97,7 +97,7 @@ const launchBattle = (battle_key, cb) => {
                       query.push(`DELETE FROM users_units WHERE username = '${defender.username}'`);
                       if (user_attacker.length > 0) {
                         query.push(
-                          `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
+                          `UPDATE users SET last_update='${now}', xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
                       }
                     }
                     rc.attacker = attacker.username
@@ -141,7 +141,7 @@ const launchBattle = (battle_key, cb) => {
                   `UPDATE users SET xp=xp+25, drugs_balance=drugs_balance+${d_reward}, weapons_balance=weapons_balance+${w_reward},alcohols_balance=alcohols_balance+${a_reward}, 
                   wins=wins+1 WHERE username='${attacker.username}'`);
                 query.push(
-                  `UPDATE users SET xp=xp+1, drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
+                  `UPDATE users SET xp=xp+1, last_update='${now}', drugs_balance=drugs_balance-${d_reward}, weapons_balance=weapons_balance-${w_reward},alcohols_balance=alcohols_balance-${a_reward}, loses=loses+1 WHERE username = '${defender.username}'`);
                 let rc = {}
                 rc.attacker = attacker.username
                 rc.attacker_pic = attacker.picture
