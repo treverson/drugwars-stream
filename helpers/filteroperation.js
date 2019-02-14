@@ -102,7 +102,7 @@ const handleUnit = op => {
 const handleHeist = payload => {
   if (!payload.username || !payload.amount) return;
 
-  player.getCharacter(payload.username, character => {
+  player.getUpdateCharacter(payload.username, character => {
     if (character) {
       if (character.drugs_balance >= payload.amount)
         heist.addToPool(character, Number(payload.amount), result => {
